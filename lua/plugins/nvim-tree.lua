@@ -7,6 +7,14 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
+    lazy = true,
+    cmd = {
+      "NvimTreeToggle",
+      "NvimTreeOpen",
+      "NvimTreeFindFile",
+      "NvimTreeFindFileToggle",
+      "NvimTreeRefresh",
+    },
     dependencies = {
       "nvim-lua/plenary.nvim",
       'nvim-tree/nvim-web-devicons',

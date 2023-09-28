@@ -2,16 +2,29 @@ return {
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
+    lazy = true,
+    event = { "BufReadPost", "BufAdd", "BufNewFile" },
     dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
+      { "ray-x/lsp_signature.nvim" },
       { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
+      {
+        "glepnir/lspsaga.nvim",
+        config = function()
 
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
+        end
+      },
+      {
+        'j-hui/fidget.nvim',
+        lazy = true,
+        event = "BufReadPost",
+        tag = 'legacy',
+        config = function()
+require("fidget").setup({
+		window = { blend = 0 },
+	})
+        end
+      },
       'folke/neodev.nvim',
     },
     config = function()

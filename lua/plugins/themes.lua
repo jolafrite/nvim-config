@@ -1,3 +1,6 @@
 return {
-	{ 'catppuccin/nvim' }
+	{
+		'catppuccin/nvim',
+		event = "CursorHold",
+	}
 }

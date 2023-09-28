@@ -2,16 +2,27 @@ return {
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
+    lazy = true,
+    event = "InsertEnter",
     dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
+      {
+        'L3MON4D3/LuaSnip',
+        dependencies = { 'rafamadriz/friendly-snippets' },
+        config = function()
 
-      -- Adds LSP completion capabilities
-      'hrsh7th/cmp-nvim-lsp',
-
-      -- Adds a number of user-friendly snippets
-      'rafamadriz/friendly-snippets',
+        end
+      },
+      { "onsails/lspkind.nvim" },
+      { "lukas-reineke/cmp-under-comparator" },
+      { "saadparwaiz1/cmp_luasnip" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-nvim-lua" },
+      { "andersevenrud/cmp-tmux" },
+      { "hrsh7th/cmp-path" },
+      { "f3fora/cmp-spell" },
+      { "hrsh7th/cmp-buffer" },
+      { "kdheepak/cmp-latex-symbols" },
+      { "ray-x/cmp-treesitter" },
     },
     config = function()
       local cmp = require 'cmp'

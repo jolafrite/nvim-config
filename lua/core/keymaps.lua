@@ -15,6 +15,9 @@ keymap.set('i', '<C-h>', '<C-w>', opts)
 -- remap ^ and $ to H and L, respectively
 keymap.set('n', 'H', '^', opts)
 keymap.set('n', 'L', '$', opts)
+--
+--Doom emacs keymap for find file
+keymap.set("n", "<leader><Space>", "<cmd>Telescope find_files hidden=true no_ignore=true<cr>", opts)
 
 -- open up lazy.nvim UI
 keymap.set('n', '<leader>L', ':Lazy<CR>', opts)

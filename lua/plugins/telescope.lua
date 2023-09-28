@@ -1,9 +1,29 @@
 return {
     {
         'nvim-telescope/telescope.nvim',
+        lazy = true,
         event = 'VimEnter',
+        cmd = "Telescope",
         dependencies = {
-            'nvim-lua/plenary.nvim'
+            { "nvim-tree/nvim-web-devicons" },
+            { "nvim-lua/plenary.nvim" },
+            { "nvim-lua/popup.nvim" },
+            {
+                "ahmedkhalf/project.nvim",
+                event = "CursorHold",
+                config = function()
+
+                end
+            },
+            {
+                "nvim-telescope/telescope-frecency.nvim",
+                dependencies = {
+                    { "kkharji/sqlite.lua" },
+                }
+            },
+            { "jvgrootveld/telescope-zoxide" },
+            { "nvim-telescope/telescope-fzf-native.nvim",    build = "make" },
+            { "nvim-telescope/telescope-live-grep-args.nvim" },
         },
         config = function()
             local status_ok, telescope = pcall(require, 'telescope')

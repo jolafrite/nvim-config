@@ -1,7 +1,8 @@
 return {
   {
     'iamcco/markdown-preview.nvim',
-    build = 'cd app && npm install',
+    ft = "markdown",
+    build = ":call mkdp#util#install()",
     -- using npm to install rather than the vim function leads to significantly faster startup time
     init = function()
       vim.g.mkdp_filetypes = { 'markdown' }
@@ -10,4 +11,9 @@ return {
       vim.keymap.set('n', '<leader>m', '<Plug>MarkdownPreviewToggle', { desc = 'Markdown Preview' })
     end
   },
+  {
+    "dkarter/bullets.vim",
+    lazy = true,
+    ft = "markdown"
+  }
 }

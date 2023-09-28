@@ -1,7 +1,16 @@
 return {
   {
     'akinsho/toggleterm.nvim',
+    lazy = true,
     event = 'VimEnter',
+    cmd = {
+      "ToggleTerm",
+      "ToggleTermSetName",
+      "ToggleTermToggleAll",
+      "ToggleTermSendVisualLines",
+      "ToggleTermSendCurrentLine",
+      "ToggleTermSendVisualSelection",
+    },
     config = function()
       local status_ok, toggleterm = pcall(require, 'toggleterm')
 
