@@ -30,3 +30,4 @@ set.expandtab = true
 set.shiftround = true
 set.formatoptions:remove({ 'c', 'r', 'o' })
 set.mousemoveevent = true
+set.updatetime = 200
