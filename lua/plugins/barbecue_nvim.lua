@@ -27,7 +27,7 @@ return {
         ---Whether to attach navic to language servers automatically.
         ---
         ---@type boolean
-        attach_navic = true,
+        attach_navic = false,
 
         ---Whether to create winbar updater autocmd.
         ---

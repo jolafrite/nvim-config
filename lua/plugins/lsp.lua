@@ -5,6 +5,7 @@ return {
     lazy = true,
     event = { "BufReadPost", "BufAdd", "BufNewFile" },
     dependencies = {
+      { "SmiteshP/nvim-navic" },
       { "ray-x/lsp_signature.nvim" },
       { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
@@ -20,15 +21,15 @@ return {
         event = "BufReadPost",
         tag = 'legacy',
         config = function()
-require("fidget").setup({
-		window = { blend = 0 },
-	})
+          require("fidget").setup({
+            window = { blend = 0 },
+          })
         end
       },
       'folke/neodev.nvim',
     },
     config = function()
-      local on_attach = function(_, bufnr)
+      local on_attach = function(client, bufnr)
         -- NOTE: Remember that lua is a real programming language, and as such it is possible
         -- to define small helper and utility functions so you don't have to repeat yourself
         -- many times.
@@ -64,6 +65,10 @@ require("fidget").setup({
         nmap('<leader>wl', function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, '[W]orkspace [L]ist Folders')
+
+        if client.server_capabilities["documentSymbolProvider"] then
+          require("nvim-navic").attach(client, bufnr)
+        end
 
         -- Create a command `:Format` local to the LSP buffer
         vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
