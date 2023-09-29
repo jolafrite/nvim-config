@@ -6,8 +6,9 @@ return {
   lazy = true,
   event = { "BufReadPost", "BufAdd", "BufNewFile" },
   config = function()
-    local bufferline = require('bufferline')
-    bufferline.setup({
+    vim.opt.termguicolors = true
+
+    require('bufferline').setup({
       options = {
         offsets = {
           {
@@ -25,7 +26,23 @@ return {
         },
         indicator = {
           style = 'icon'
-        }
+        },
+        diagnostics = "nvim_lsp",
+        diagnostics_indicator = function(_, _, diagnostics_dict, context)
+          local s = " "
+
+          if context.buffer:current() then
+            return s
+          end
+
+          for e, n in pairs(diagnostics_dict) do
+            local sym = e == "error" and " "
+                or (e == "warning" and " " or "")
+            s = s .. n .. sym
+          end
+
+          return s
+        end
       }
     })
   end

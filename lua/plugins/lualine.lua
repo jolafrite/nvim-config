@@ -2,6 +2,10 @@ return {
   {
     'nvim-lualine/lualine.nvim',
     event = { "BufReadPost", "BufAdd", "BufNewFile" },
+    init = function()
+      -- disable until lualine loads
+      vim.opt.laststatus = 0
+    end,
     config = function()
       local status_ok, lualine = pcall(require, 'lualine')
       if not status_ok then
