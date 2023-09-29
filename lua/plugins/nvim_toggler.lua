@@ -12,9 +12,6 @@ return {
   "nguyenvukhang/nvim-toggler",
   event = "BufReadPost",
   config = function()
-    require("nvim-toggler").setup {
-      remove_default_keybinds = true,
-    }
+    require("nvim-toggler").setup {}
   end,
 }
-
