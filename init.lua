@@ -1,14 +1,18 @@
-require("core.options")
-require("core.keymaps")
-require("core.lazy")
-require("core.colorscheme")
+if not vim.g.vscode then
+	require("core")
+end
 
-vim.opt.guicursor = ""
+-- require("core.options")
+-- require("core.keymaps")
+-- require("core.lazy")
+-- require("core.colorscheme")
 
-vim.cmd([[autocmd FileType yaml setlocal indentexpr=]])
-vim.cmd([[autocmd FileType yml setlocal indentexpr=]])
+-- vim.opt.guicursor = ""
 
-vim.opt.termguicolors = true
+-- vim.cmd([[autocmd FileType yaml setlocal indentexpr=]])
+-- vim.cmd([[autocmd FileType yml setlocal indentexpr=]])
+
+-- vim.opt.termguicolors = true
 
 -- https://github.com/kevinfengcs88/nvim
 -- https://github.com/imbacraft/dusk.nvim
