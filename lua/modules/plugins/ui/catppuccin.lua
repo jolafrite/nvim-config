@@ -1,9 +1,9 @@
 return {
-    {
-        "catppuccin/nvim",
+    ["catppuccin/nvim"] = {
+        
         lazy = true,
 	    name = "catppuccin",
 	    event = "CursorHold",
-	    config = require("catppuccin"),
+	    config = require("ui.catppuccin"),
     }
 }
