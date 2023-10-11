@@ -6,6 +6,10 @@ local leader = ' '
 global.mapleader = leader
 global.maplocalleader = leader
 
+-- Keymaps for better default experience
+-- See `:help vim.keymap.set()`
+keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
 -- make CTRL + C behave exactly the same as ESC
 keymap.set('i', '<C-c>', '<ESC>', opts)
 
@@ -17,7 +21,7 @@ keymap.set('n', 'H', '^', opts)
 keymap.set('n', 'L', '$', opts)
 --
 --Doom emacs keymap for find file
-keymap.set("n", "<leader><Space>", "<cmd>Telescope find_files hidden=true no_ignore=true<cr>", opts)
+keymap.set('n', '<leader><leader>', '<cmd>Telescope find_files hidden=true no_ignore=true<cr>', opts)
 
 -- open up lazy.nvim UI
 keymap.set('n', '<leader>L', ':Lazy<CR>', opts)

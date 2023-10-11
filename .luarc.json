@@ -1,0 +1,12 @@
+{
+    "workspace.library": [
+        "/Users/jonathan/.local/share/nvim/site/lazy/neodev.nvim/types/stable",
+        "/Users/jonathan/homebrew/Cellar/neovim/0.9.2/share/nvim/runtime/lua",
+        "/Users/jonathan/.local/share/nvim/site/lazy/nvim-lspconfig/lua",
+        "/Users/jonathan/.local/share/nvim/site/lazy/neoconf.nvim/lua",
+        "/Users/jonathan/.local/share/nvim/site/lazy/neoconf.nvim/types",
+        "/Users/jonathan/.local/share/nvim/site/lazy/neoconf.nvim/types/lua",
+        "/Users/jonathan/.config/nvim-config/custom-config/lua",
+        "${3rd}/luv/library"
+    ]
+}

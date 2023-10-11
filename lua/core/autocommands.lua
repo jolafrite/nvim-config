@@ -1,42 +1,61 @@
--- Now use `<A-k>` or `<A-1>` to back to the `dotstutor`.
-local autocmd = {}
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
 
-function autocmd.nvim_create_augroups(definitions)
-	for group_name, definition in pairs(definitions) do
-		vim.api.nvim_command("augroup " .. group_name)
-		vim.api.nvim_command("autocmd!")
-		for _, def in ipairs(definition) do
-			local command = table.concat(vim.tbl_flatten({ "autocmd", def }), " ")
-			vim.api.nvim_command(command)
-		end
-		vim.api.nvim_command("augroup END")
+local user_cmds = augroup('user_autocommands', { clear = true })
+
+autocmd('FileType', {
+  desc = 'Use q to close the window',
+  group = user_cmds,
+  pattern = { 'help', 'man', 'fugitive', 'qf', 'notify', 'lspinfo', 'checkhealth', 'git' },
+  command = 'nnoremap <buffer> q :quit<cr>',
+})
+
+autocmd('TextYankPost', {
+  desc = 'Highlight yanked objects',
+  group = user_cmds,
+  callback = function()
+    vim.highlight.on_yank({ higroup = 'Visual', timeout = 200 })
+  end,
+})
+
+autocmd('BufRead', {
+  desc = 'Place the cursor on the last place you where in a file and center buffer around it',
+  group = user_cmds,
+  callback = function()
+    local mark = vim.api.nvim_buf_get_mark(0, '"')
+    local lcount = vim.api.nvim_buf_line_count(0)
+    if mark[1] > 0 and mark[1] <= lcount then
+      if pcall(vim.api.nvim_win_set_cursor, 0, mark) then
+        vim.cmd.normal('zz')
+      end
+    end
+  end,
+})
+
+autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
+  desc = 'Check for external changes to file and reload it',
+  group = user_cmds,
+  command = 'checktime',
+})
+
+autocmd('BufNewFile', {
+  desc = 'Load skeleton file when a new empty file is created.',
+  group = vim.api.nvim_create_augroup('init-lua', { clear = true }),
+  callback = function()
+    local skeleton_name = vim.fn.stdpath('config') .. '/templates/skeleton.' .. vim.fn.expand('<afile>:e')
+    if vim.loop.fs_stat(skeleton_name) then
+      vim.cmd.read({ args = { skeleton_name }, range = { 0, 0 } })
+    end
+  end,
+})
+
+autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
+  group = vim.api.nvim_create_augroup('lint', { clear = true }),
+  callback = function()
+    require('lint').try_lint()
+
+	if vim.fn.filereadable(".vale.ini") > 0 then
+		require("lint").try_lint({ "vale" })
 	end
-end
-
--- auto close NvimTree
-vim.api.nvim_create_autocmd("BufEnter", {
-	group = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true }),
-	pattern = "NvimTree_*",
-	callback = function()
-		local layout = vim.api.nvim_call_function("winlayout", {})
-		if
-			layout[1] == "leaf"
-			and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree"
-			and layout[3] == nil
-		then
-			vim.api.nvim_command([[confirm quit]])
-		end
-	end,
+  end,
 })
-
---Auto hide/show bufferline+statusline at Dashboard
-vim.api.nvim_create_autocmd({ "User" }, {
-	pattern = { "AlphaReady" },
-	callback = function()
-		vim.cmd([[
-            set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
-            set laststatus=1 | autocmd BufUnload <buffer> set laststatus=3
-        ]])
-	end,
-})
-
