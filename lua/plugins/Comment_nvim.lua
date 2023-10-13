@@ -9,5 +9,10 @@
 -- the configuration below.
 
 return {
-  -- "numToStr/Comment.nvim"
+  'numToStr/Comment.nvim',
+  event = 'VeryLazy',
+  config = function()
+    require('plugins/configs/Comment_nvim')
+  end,
 }
+

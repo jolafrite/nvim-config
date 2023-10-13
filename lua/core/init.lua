@@ -3,16 +3,15 @@ local global = require('core.global')
 -- Create required dirs
 local create_dirs = function()
   local data_dir = {
-    global.cache_dir .. 'backup',
-    global.cache_dir .. 'session',
-    global.cache_dir .. 'swap',
-    global.cache_dir .. 'tags',
-    global.cache_dir .. 'undo',
+    global.backup_dir,
+    global.databases_dir,
+    global.plugins_dir,
+    global.session_dir,
+    global.swap_dir,
+    global.tags_dir,
+    global.templates_dir,
+    global.undo_dir,
   }
-
-  if vim.fn.isdirectory(global.cache_dir) == 0 then
-    os.execute('mkdir -p ' .. global.cache_dir)
-  end
 
   for _, value in pairs(data_dir) do
     if vim.fn.isdirectory(value) == 0 then
@@ -25,6 +24,9 @@ local disable_default_plugins = function()
   -- disable menu loading
   vim.g.did_install_default_menus = 1
   vim.g.did_install_syntax_menu = 1
+
+  vim.g.loaded_ruby_provider = 0
+  vim.g.loaded_pert_provider = 0
 
   -- Uncomment this if you define your own filetypes in `after/ftplugin`
   -- vim.g.did_load_filetypes = 1
@@ -108,24 +110,9 @@ local load_core = function()
 
   require('core.options')
   require('core.lazy')
-
-  if vim.fn.argc(-1) == 0 then
-    vim.api.nvim_create_autocmd('User', {
-      desc = 'autocmds and mappings can wait to load',
-      group = vim.api.nvim_create_augroup('lazyvim', { clear = true }),
-      lazy = true,
-      pattern = 'VeryLazy',
-      callback = function()
-        require('core.autocommands')
-        require('core.commands')
-        require('keymaps')
-      end,
-    })
-  else
-    require('core.autocommands')
-    require('core.commands')
-    require('keymaps')
-  end
+  require('core.autocommands')
+  require('core.commands')
+  require('keymaps')
 
   local background = require('core.settings').background
   local colorscheme = require('core.settings').colorscheme

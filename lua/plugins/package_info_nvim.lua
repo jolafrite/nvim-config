@@ -9,5 +9,14 @@
 -- the configuration below.
 
 return {
-  -- "vuki656/package-info.nvim"
+  'vuki656/package-info.nvim',
+  event = 'VeryLazy',
+  ft = 'json',
+  dependencies = {
+    'MunifTanjim/nui.nvim',
+  },
+  config = function()
+    require('plugins/configs/package_info_nvim')
+  end,
 }
+

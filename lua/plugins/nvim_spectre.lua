@@ -9,5 +9,7 @@
 -- the configuration below.
 
 return {
-  -- "windwp/nvim-spectre"
+  'windwp/nvim-spectre',
+  event = 'VeryLazy',
 }
+

@@ -73,6 +73,17 @@ local mappings = {
     x = { ':TroubleToggle workspace_diagnostics<Cr>', 'Workspace Diagnostics' },
   },
 
+  n = {
+    name = 'Package Info',
+    s = { ":lua require 'package-info'.show()<Cr>", 'Show dependency versions' },
+    c = { ":lua require 'package-info'.hide()<Cr>", 'Show dependency versions' },
+    t = { ":lua require 'package-info'.toggle()<Cr>", 'Toggle dependency versions' },
+    u = { ":lua require 'package-info'.update()<Cr>", 'Update dependency version on the line' },
+    d = { ":lua require 'package-info'.delete()<Cr>", 'Delete dependency version on the line' },
+    i = { ":lua require 'package-info'.install()<Cr>", 'Install new dependency version' },
+    p = { ":lua require 'package-info'.change_version()<Cr>", 'Install a different dependency version' },
+  },
+
   r = {
     name = 'Replace',
     r = { ":lua require('spectre').open()<Cr>", 'Replace in path' },

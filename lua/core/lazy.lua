@@ -20,8 +20,8 @@ local icons = {
 local Lazy = {}
 
 function Lazy:append_nativertp()
-	package.path = package.path
-		.. string.format(';%s;%s', plugins_dir .. '/configs/?.lua', plugins_dir .. '/configs/?/init.lua')
+  package.path = package.path
+    .. string.format(';%s;%s', plugins_dir .. '/configs/?.lua', plugins_dir .. '/configs/?/init.lua')
 end
 
 function Lazy:load_plugins()
@@ -43,8 +43,8 @@ function Lazy:load_plugins()
   for _, m in ipairs(plugins_file) do
     local modules = require(m:sub(0, #m - 4))
     if type(modules) == 'table' then
-      for _, conf in ipairs(modules) do	
-		  print(vim.tbl_extend('force', { name }, conf))
+      for _, conf in ipairs(modules) do
+        print(vim.tbl_extend('force', { name }, conf))
         -- self.plugins[#self.plugins + 1] = vim.tbl_extend('force', { name }, conf)
       end
     end
@@ -63,9 +63,9 @@ function Lazy:load_lazy()
 
   local lazy_settings = {
     root = data_dir .. 'lazy', -- directory where plugins will be installed
-	default = {
-		lazy = true,
-	},
+    default = {
+      lazy = true,
+    },
     git = {
       -- log = { "-10" }, -- show the last 10 commits
       timeout = 300,
@@ -128,7 +128,7 @@ function Lazy:load_lazy()
 
   vim.opt.rtp:prepend(lazy_path)
 
-  require('lazy').setup("plugins", lazy_settings)
+  require('lazy').setup('plugins', lazy_settings)
 end
 
 Lazy:load_lazy()

@@ -11,6 +11,7 @@ telescope.load_extension('smart_history')
 telescope.load_extension('undo')
 telescope.load_extension('frecency')
 telescope.load_extension('heading')
+telescope.load_extension('package_info')
 
 telescope.setup({
   defaults = {
@@ -41,8 +42,7 @@ telescope.setup({
       ignore_patterns = { '*.git/*', '*/tmp/*', '*/node_modules/*' },
       show_scores = true,
       show_unindexed = true,
-      db_safe_mode = false,
-      auto_validate = true,
+      use_sqlite = true,
     },
     fzf = {
       fuzzy = true,
@@ -56,5 +56,6 @@ telescope.setup({
     live_grep_args = {
       auto_quoting = true,
     },
+    package_info = {},
   },
 })

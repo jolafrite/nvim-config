@@ -131,38 +131,6 @@ cmp.setup.cmdline('/', {
   }, {}),
 })
 
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-  mapping = {
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end, { 'c' }),
-
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end, { 'c' }),
-    ['<C-y>'] = {
-      c = cmp.mapping.confirm({ select = false }),
-    },
-    ['<C-q>'] = {
-      c = cmp.mapping.abort(),
-    },
-  },
-  sources = cmp.config.sources({
-    { name = 'path' },
-    { name = 'cmdline' },
-    { name = 'cmdline_history' },
-  }, {}),
-})
-
 -- autopairs
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 
