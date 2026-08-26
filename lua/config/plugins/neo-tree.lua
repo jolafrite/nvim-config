@@ -29,16 +29,16 @@ require("neo-tree").setup({
 				end,
 				desc = "Copy Path to Clipboard",
 			},
-			["O"] = {
-				function(state)
-					require("lazy.util").open(
-						state.tree:get_node().path,
-						{ system = true }
-					)
-				end,
-				desc = "Open with System Application",
-			},
-			["P"] = { "toggle_preview", config = { use_float = false } },
+		["O"] = {
+			function(state)
+				-- Replaces require("lazy.util").open(path, { system = true }),
+				-- which opens the file with the system application.
+				-- lazy.util is LazyVim-internal and not installed here.
+				vim.ui.open(state.tree:get_node().path)
+			end,
+			desc = "Open with System Application",
+		},
+		["P"] = { "toggle_preview", config = { use_float = false } },
 		},
 	},
 	default_component_configs = {
