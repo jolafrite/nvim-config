@@ -1,3 +1,4 @@
+require("config.plugins.nvim-lint")
 require("config.plugins.conform")
 require("config.plugins.kotlin")
 require("config.plugins.lsp_lens")
