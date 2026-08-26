@@ -18,7 +18,12 @@ require("gitsigns").setup({
 		local gs = package.loaded.gitsigns
 
 		local function map(mode, l, r, desc)
-			vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, silent = true })
+			vim.keymap.set(
+				mode,
+				l,
+				r,
+				{ buffer = buffer, desc = desc, silent = true }
+			)
 		end
 
 		-- stylua: ignore start

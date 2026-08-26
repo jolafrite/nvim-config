@@ -5,14 +5,14 @@ local icons = {
 	misc = { dots = "󰇘" },
 	diagnostics = {
 		Error = " ",
-		Warn  = " ",
-		Hint  = " ",
-		Info  = " ",
+		Warn = " ",
+		Hint = " ",
+		Info = " ",
 	},
 	git = {
-		added    = " ",
+		added = " ",
 		modified = " ",
-		removed  = " ",
+		removed = " ",
 	},
 }
 
@@ -68,7 +68,8 @@ local function pretty_path(opts)
 		local parts = vim.split(path, "[\\/]")
 
 		if #parts > opts.length then
-			parts = { parts[1], "…", unpack(parts, #parts - opts.length + 2, #parts) }
+			parts =
+				{ parts[1], "…", unpack(parts, #parts - opts.length + 2, #parts) }
 		end
 
 		local dir = ""
@@ -137,7 +138,9 @@ require("lualine").setup({
 	options = {
 		theme = "auto",
 		globalstatus = vim.o.laststatus == 3,
-		disabled_filetypes = { statusline = { "dashboard", "alpha", "ministarter", "snacks_dashboard" } },
+		disabled_filetypes = {
+			statusline = { "dashboard", "alpha", "ministarter", "snacks_dashboard" },
+		},
 	},
 	sections = {
 		lualine_a = { "mode" },
@@ -154,24 +157,49 @@ require("lualine").setup({
 					hint = icons.diagnostics.Hint,
 				},
 			},
-			{ "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+			{
+				"filetype",
+				icon_only = true,
+				separator = "",
+				padding = { left = 1, right = 0 },
+			},
 			pretty_path(),
 		},
 		lualine_x = {
 			{
-				function() return require("noice").api.status.command.get() end,
-				cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-				color = function() return { fg = require("snacks").util.color("Statement") } end,
+				function()
+					return require("noice").api.status.command.get()
+				end,
+				cond = function()
+					return package.loaded["noice"]
+						and require("noice").api.status.command.has()
+				end,
+				color = function()
+					return { fg = require("snacks").util.color("Statement") }
+				end,
 			},
 			{
-				function() return require("noice").api.status.mode.get() end,
-				cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-				color = function() return { fg = require("snacks").util.color("Constant") } end,
+				function()
+					return require("noice").api.status.mode.get()
+				end,
+				cond = function()
+					return package.loaded["noice"]
+						and require("noice").api.status.mode.has()
+				end,
+				color = function()
+					return { fg = require("snacks").util.color("Constant") }
+				end,
 			},
 			{
-				function() return "  " .. require("dap").status() end,
-				cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-				color = function() return { fg = require("snacks").util.color("Debug") } end,
+				function()
+					return "  " .. require("dap").status()
+				end,
+				cond = function()
+					return package.loaded["dap"] and require("dap").status() ~= ""
+				end,
+				color = function()
+					return { fg = require("snacks").util.color("Debug") }
+				end,
 			},
 			{
 				function()
@@ -185,7 +213,9 @@ require("lualine").setup({
 					local ls = lazy_status()
 					return ls ~= nil and ls.has_updates()
 				end,
-				color = function() return { fg = require("snacks").util.color("Special") } end,
+				color = function()
+					return { fg = require("snacks").util.color("Special") }
+				end,
 			},
 			{
 				"diff",

@@ -45,7 +45,9 @@ local opts = {
 wk.setup(opts)
 
 if not vim.tbl_isempty(opts.defaults) then
-	vim.notify("which-key: opts.defaults is deprecated. Please use opts.spec instead.")
+	vim.notify(
+		"which-key: opts.defaults is deprecated. Please use opts.spec instead."
+	)
 	wk.register(opts.defaults)
 end
 

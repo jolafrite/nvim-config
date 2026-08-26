@@ -45,7 +45,8 @@ vim.api.nvim_create_autocmd("FileType", {
 
 		if enabled("indent", "indents", ft) then
 			pcall(function()
-				vim.bo[ev.buf].indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+				vim.bo[ev.buf].indentexpr =
+					"v:lua.require('nvim-treesitter').indentexpr()"
 			end)
 		end
 

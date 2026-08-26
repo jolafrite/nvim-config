@@ -23,7 +23,8 @@ local opts = {
 -- Apply custom linters (LazyVim extension: deep-extend + prepend_args).
 for name, linter in pairs(opts.linters) do
 	if type(linter) == "table" and type(lint.linters[name]) == "table" then
-		lint.linters[name] = vim.tbl_deep_extend("force", lint.linters[name], linter)
+		lint.linters[name] =
+			vim.tbl_deep_extend("force", lint.linters[name], linter)
 		if type(linter.prepend_args) == "table" then
 			lint.linters[name].args = lint.linters[name].args or {}
 			vim.list_extend(lint.linters[name].args, linter.prepend_args)
@@ -38,7 +39,11 @@ local M = {}
 
 -- LazyVim.warn replacement: notify at warn level instead of dropping the feature.
 local function warn(msg, opts_)
-	vim.notify(msg, vim.log_levels.WARN, vim.tbl_deep_extend("force", { title = "nvim-lint" }, opts_ or {}))
+	vim.notify(
+		msg,
+		vim.log_levels.WARN,
+		vim.tbl_deep_extend("force", { title = "nvim-lint" }, opts_ or {})
+	)
 end
 
 function M.debounce(ms, fn)
@@ -78,7 +83,12 @@ function M.lint()
 		if not linter then
 			warn("Linter not found: " .. name)
 		end
-		return linter and not (type(linter) == "table" and linter.condition and not linter.condition(ctx))
+		return linter
+			and not (
+				type(linter) == "table"
+				and linter.condition
+				and not linter.condition(ctx)
+			)
 	end, names)
 
 	-- Run linters.
