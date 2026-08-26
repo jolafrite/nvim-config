@@ -33,7 +33,7 @@ actually uses, with the LazyVim extras deferred to a follow-up phase.
 
 ## 3. Why `vim.pack` and not `lazy.nvim`
 - **R7 (kotlin dependency):** `kotlin.nvim` declares `dependencies = { mason.nvim, mason-lspconfig.nvim }`. Only `mason.nvim` is in the lockfile; `mason-lspconfig.nvim` is missing. Task 3 must add `vim.pack.add({ 'https://github.com/neovim/nvim-mason-lspconfig' })` so kotlin's setup can resolve it. Carry in Task 3 dispatch.
-- Neovim 0.12+ ships a built-in plugin manager (`vim.pack`); the running
+- **R8 (Task 4 plugin list):** Only 2 of the 7 custom plugins are in the lockfile (`conform`, `tiny-autosave`). Five are missing: `lsp-lens`, `lightbulb`, `symbol-usage`, `workspace-diagnostics`, `kotlin`. Task 4's plugin list must be the lockfile's 72 URLs **plus** those 5 custom plugins **plus** `nvim-mason-lspconfig` (kotlin dependency, also missing). `vim.pack` installs them fresh and adds them to the lockfile on first run. Carry in Task 4 dispatch.
   build is 0.13-dev, which has it.
 - `vim.pack` removes a dependency (no `lazy.nvim` clone, no `lazy-lock.json`
   churn) and bootstraps from a committed lockfile on new machines.

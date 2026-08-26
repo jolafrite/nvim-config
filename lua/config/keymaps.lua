@@ -8,16 +8,11 @@ end
 local searching_brave = function()
 	open_url("https://search.brave.com/search?q=" .. vim.fn.expand("<cword>"))
 end
-vim.keymap.set(
-	"n",
-	"<leader>?",
-	searching_brave,
-	{
-		noremap = true,
-		silent = true,
-		desc = "Search Current Word on Brave Search",
-	}
-)
+vim.keymap.set("n", "<leader>?", searching_brave, {
+	noremap = true,
+	silent = true,
+	desc = "Search Current Word on Brave Search",
+})
 
 vim.keymap.set("n", "+", "<C-a>", opts)
 vim.keymap.set("n", "-", "<C-x>", opts)
@@ -71,4 +66,3 @@ local linters = function()
 	vim.notify(linters, { title = "Linter" })
 end
 vim.keymap.set("n", "<leader>ciL", linters, { desc = "Lint" })
-
