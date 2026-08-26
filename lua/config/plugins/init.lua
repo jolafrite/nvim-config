@@ -1,0 +1,6 @@
+require("plugins.conform")
+require("plugins.kotlin")
+require("plugins.lsp_lens")
+require("plugins.nvim_lightbulb")
+require("plugins.symbol_usage")
+require("plugins.workspace_diagnostics")
