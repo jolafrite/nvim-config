@@ -3,6 +3,7 @@ vim.loader.enable()
 vim.pack.add({
   'https://github.com/comfysage/artio.nvim',
   'https://github.com/lewis6991/async.nvim',
+  'https://github.com/saghen/blink.lib',
   'https://github.com/saghen/blink.cmp',
   'https://github.com/Kaiser-Yang/blink-cmp-git',
   'https://github.com/saghen/blink.indent',
@@ -65,7 +66,7 @@ vim.pack.add({
   'https://github.com/kosayoda/nvim-lightbulb',
   'https://github.com/Wansmer/symbol-usage.nvim',
   'https://github.com/artemave/workspace-diagnostics.nvim',
-  'https://github.com/neovim/nvim-mason-lspconfig',
+  'https://github.com/mason-org/mason-lspconfig.nvim',
 })
 
 require("config.init")
