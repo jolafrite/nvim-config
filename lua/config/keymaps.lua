@@ -66,3 +66,4 @@ local linters = function()
 	vim.notify(linters, { title = "Linter" })
 end
 vim.keymap.set("n", "<leader>ciL", linters, { desc = "Lint" })
+vim.keymap.set("n", "<leader>ue", "<cmd>LspLensToggle<cr>", { desc = "Toggle Lsp Lens" })
