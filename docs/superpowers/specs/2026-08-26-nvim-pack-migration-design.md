@@ -70,7 +70,7 @@ actually uses, with the LazyVim extras deferred to a follow-up phase.
 ```
 
 ## 5. Cutover mechanism (symlink)
-
+Note: the original spec also defines a keymap `<leader>ue → :LspLensToggle`. Port that keymap into `lua/config/keymaps.lua` (append to the keymaps section — do not rewrite the file), since `vim.pack` has no `keys` key.
 ```
 ~/.config/nvim-source/     ← existing lazyvim config, untouched (rename from ~/.config/nvim)
 ~/.config/nvim-pack/       ← new vim.pack config

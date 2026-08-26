@@ -67,7 +67,10 @@ end
 vim.g.lazyvim_python_lsp = "basedpyright"
 vim.g.lazyvim_python_ruff = "ruff"
 
--- LazyVim.terminal.setup("pwsh") -- LazyVim global not available under vim.pack; win32 terminal setup deferred to Phase 2
+-- Deferred to Phase 2: the LazyVim global is not available under vim.pack.
+-- if vim.fn.has("win32") == 1 then
+--   LazyVim.terminal.setup("pwsh")
+-- end
 
 vim.g.deprecation_warnings = true
 vim.env.FZF_DEFAULT_OPTS = ""
