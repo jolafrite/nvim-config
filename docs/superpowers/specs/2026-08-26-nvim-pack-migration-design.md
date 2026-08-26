@@ -13,8 +13,7 @@ Migrate Jonathan's Neovim config from the LazyVim distribution (backed by
 Neovim's native `vim.pack` plugin manager. The new config must be
 functionally equivalent to the current one for the features Jonathan
 actually uses, with the LazyVim extras deferred to a follow-up phase.
-
-## 2. Scope
+- **R7 (kotlin dependency):** `kotlin.nvim` declares `dependencies = { mason.nvim, mason-lspconfig.nvim }`. Only `mason.nvim` is in the lockfile; `mason-lspconfig.nvim` is missing. Task 3 must add `vim.pack.add({ 'https://github.com/neovim/nvim-mason-lspconfig' })` so kotlin's setup can resolve it. Carry in Task 3 dispatch.
 
 ### In scope (Phase 1)
 
@@ -33,7 +32,7 @@ actually uses, with the LazyVim extras deferred to a follow-up phase.
 - Any new features or config changes beyond what exists today.
 
 ## 3. Why `vim.pack` and not `lazy.nvim`
-
+- **R7 (kotlin dependency):** `kotlin.nvim` declares `dependencies = { mason.nvim, mason-lspconfig.nvim }`. Only `mason.nvim` is in the lockfile; `mason-lspconfig.nvim` is missing. Task 3 must add `vim.pack.add({ 'https://github.com/neovim/nvim-mason-lspconfig' })` so kotlin's setup can resolve it. Carry in Task 3 dispatch.
 - Neovim 0.12+ ships a built-in plugin manager (`vim.pack`); the running
   build is 0.13-dev, which has it.
 - `vim.pack` removes a dependency (no `lazy.nvim` clone, no `lazy-lock.json`
