@@ -4,23 +4,28 @@
 
 **Goal:** Migrate Jonathan's Neovim config from LazyVim/lazy.nvim to a self-owned `~/.config/nvim-pack` config backed by native `vim.pack`, preserving all currently-working behavior.
 
-**Architecture:** New config directory `~/.config/nvim-pack` using `vim.pack.add()` in `init.lua` instead of `require("config.lazy")`. Plugin list seeded from the existing `nvim-pack-lock.json` (72 pinned plugins). Custom config (`options`/`keymaps`/`autocmds`) and 7 custom plugins ported verbatim. Cutover via symlink (`~/.config/nvim → nvim-pack`); old config renamed to `~/.config/nvim-source` for rollback.
+**Architecture:** New config directory `~/.config/nvim-pack` using `vim.pack.add()` in `init.lua` instead of `require("config.lazy")`. Plugin list seeded from the existing `nvim-pack-lock.json`. Custom config (`options`/`keymaps`/`autocmds`) and custom plugins ported; LazyVim defaults ported for the plugins that need them. Cutover via symlink (`~/.config/nvim → nvim-pack`); old config renamed to `~/.config/nvim-source` for rollback.
 
 **Tech Stack:** Neovim 0.13-dev, `vim.pack` (native), Lua, nvim-lspconfig, blink.cmp, nvim-treesitter, mini.nvim, conform, etc.
 
 **Spec:** `docs/superpowers/specs/2026-08-26-nvim-pack-migration-design.md`
 
-**Global Constraints:**
+## Global Constraints
 
-- Target directory: `~/.config/nvim-pack` (already exists; contains only `.editorconfig`).
+- Target directory: `~/.config/nvim-pack`.
 - Source directory: `~/.config/nvim` (current LazyVim config).
 - Cutover: `mv ~/.config/nvim ~/.config/nvim-source`, build `~/.config/nvim-pack`, `ln -s ~/.config/nvim-pack ~/.config/nvim`.
 - LazyVim extras (the 40+ entries in `lazyvim.json`) are **out of scope** — Phase 2.
-- Plugin list = full 72 plugins from `~/.config/nvim/nvim-pack-lock.json`.
+- Plugin list = 66 plugins (61 unique lockfile URLs + 5 custom plugins + `nvim-mason-lspconfig`; see R8).
 - Custom plugins to port: `conform`, `kotlin`, `lens`, `lightbulb`, `symbol-usage`, `tiny-autosave`, `workspace-diagnostics`. (`minuet-ai` excluded.)
 - Languages: rust, golang, typescript (+ js, json, yaml, toml, markdown, etc.).
 - `nvim-pack-lock.json` is committed and must not be hand-edited.
 - `stylua.toml`: spaces, width 120. `.editorconfig`: tabs for `*.lua`. `.neoconf.json`: keep as-is.
+
+**Install-surface rule (R24):** `vim.pack.add` calls exist in exactly one
+place — `init.lua`. Setup calls live in `lua/config/plugins/*.lua` (one per
+plugin) loaded by `lua/config/plugins/init.lua`. Do not add `vim.pack.add`
+calls anywhere but `init.lua`.
 
 ---
 
@@ -28,25 +33,48 @@
 
 ```
 ~/.config/nvim-pack/
-├── init.lua                    vim.pack.add({...}) + require("config.init")
+├── init.lua                    vim.pack.add({...}) + require("config.*")
 ├── lua/
 │   ├── config/
-│   │   ├── init.lua            options + keymaps + autocmds (ported verbatim)
-│   │   ├── plugins.lua         per-plugin setup() calls
-│   │   └── lsp.lua             nvim-lspconfig setup + server configs
-│   └── plugins/
-│       ├── conform.lua
-│       ├── kotlin.lua
-│       ├── lens.lua
-│       ├── lightbulb.lua
-│       ├── symbol-usage.lua
-│       ├── tiny-autosave.lua
-│       └── workspace-diagnostics.lua
+│   │   ├── init.lua            require("config.options/keymaps/autocmds")
+│   │   ├── options.lua         options (ported verbatim)
+│   │   ├── keymaps.lua         keymaps (ported verbatim)
+│   │   ├── autocmds.lua        autocmds (ported verbatim)
+│   │   ├── lsp.lua             nvim-lspconfig + server configs
+│   │   └── plugins/
+│   │       ├── init.lua        thin loader: require("config.plugins.X") per plugin
+│   │       ├── blink.lua       require("blink.cmp").setup({...})
+│   │       ├── whichkey.lua    require("which-key").setup({...})
+│   │       ├── lualine.lua     require("lualine").setup({...})
+│   │       ├── gitsigns.lua    require("gitsigns").setup({...})
+│   │       ├── snacks.lua      require("snacks").setup({...})
+│   │       ├── mini.lua        mini.nvim core marker
+│   │       ├── mini-diff.lua   require("mini.diff").setup({...})
+│   │       ├── mini-files.lua  require("mini.files").setup({...})
+│   │       ├── mini-icons.lua  require("mini.icons").setup({...})
+│   │       ├── mini-pairs.lua  require("mini.pairs").setup({...})
+│   │       ├── mini-surround.lua require("mini.surround").setup({...})
+│   │       ├── neo-tree.lua    require("neo-tree").setup({...})
+│   │       ├── nvim-lint.lua   require("lint").setup({...})
+│   │       ├── nvim_lightbulb.lua require("nvim-lightbulb").setup({...})
+│   │       ├── conform.lua     require("conform").setup({...})
+│   │       ├── kotlin.lua      require("kotlin").setup({...})
+│   │       ├── lsp_lens.lua    require("lsp-lens").setup({...})
+│   │       ├── refactoring.lua require("refactoring").setup({...})
+│   │       ├── render-markdown.lua require("render-markdown").setup({...})
+│   │       ├── symbol_usage.lua require("symbol-usage").setup({...})
+│   │       ├── tokyonight.lua  require("tokyonight").setup({...})
+│   │       ├── treesitter.lua  require("nvim-treesitter").setup({...})
+│   │       ├── treesitter-textobjects.lua require("nvim-treesitter-textobjects").setup({...})
+│   │       ├── web-devicons.lua mini.icons mock for nvim-web-devicons
+│   │       ├── mason.lua        require("mason").setup({...})
+│   │       ├── mason-lspconfig.lua require("mason-lspconfig").setup({...})
+│   │       └── workspace_diagnostics.lua require("workspace-diagnostics").setup({})
 ├── nvim-pack-lock.json         generated by vim.pack; committed
 ├── stylua.toml
 ├── .editorconfig
 ├── .neoconf.json
-└── (no lazy-lock.json, no lazy.nvim)
+└── (no lazy-lock.json, no lazy.nvim, no lua/plugins/)
 ```
 
 ---
@@ -58,16 +86,14 @@
 - Modify: `~/.config/nvim` → rename to `~/.config/nvim-source`
 - Create: `~/.config/nvim-pack/init.lua`
 - Create: `~/.config/nvim-pack/lua/config/init.lua`
-- Create: `~/.config/nvim-pack/lua/config/plugins.lua`
 - Create: `~/.config/nvim-pack/lua/config/lsp.lua`
-- Create: `~/.config/nvim-pack/lua/plugins/` (7 files)
 - Create: `~/.config/nvim-pack/stylua.toml`
 - Create: `~/.config/nvim-pack/.editorconfig`
 - Create: `~/.config/nvim-pack/.neoconf.json`
 
 **Interfaces:**
 
-- Produces: empty `~/.config/nvim-pack` with the target layout; `~/.config/nvim` becomes a symlink (created in Task 5).
+- Produces: empty `~/.config/nvim-pack` with the target layout; `~/.config/nvim` becomes a symlink (created in Task 6).
 
 - [ ] **Step 1: Rename the source config**
 
@@ -133,37 +159,53 @@ git commit -m "chore: scaffold nvim-pack config skeleton"
 
 **Files:**
 
-- Create: `~/.config/nvim-pack/lua/config/init.lua`
+- Create: `~/.config/nvim-pack/lua/config/options.lua`
+- Create: `~/.config/nvim-pack/lua/config/keymaps.lua`
+- Create: `~/.config/nvim-pack/lua/config/autocmds.lua`
+- Create: `~/.config/nvim-pack/lua/config/init.lua` (thin loader)
 
 **Interfaces:**
 
 - Consumes: `~/.config/nvim-source/lua/config/options.lua`, `keymaps.lua`, `autocmds.lua`.
-- Produces: `lua/config/init.lua` — single file with all three sections, loaded by `init.lua` via `require("config.init")`.
+- Produces: three modules loaded by `lua/config/init.lua` via `require("config.options")`, `require("config.keymaps")`, `require("config.autocmds")`.
 
 - [ ] **Step 1: Write options section**
 
-Port `options.lua` verbatim into `lua/config/init.lua`, preserving every line. The file sets `vim.g.mapleader = ","`, `vim.g.maplocalleader = ","`, backup/cmdheight/mousescroll/title/spell/backspace/breakindent/smoothscroll/conceallevel, provider disabling, `root_spec`, `autoformat`, `lazyvim_cmp`/`picker` globals, filetypes `astro`/`Podfile`, and the silent-by-default `vim.keymap.set` wrapper.
+Port `options.lua` verbatim into `lua/config/options.lua`, preserving every line. The file sets `vim.g.mapleader = ","`, `vim.g.maplocalleader = ","`, backup/cmdheight/mousescroll/title/spell/backspace/breakindent/smoothscroll/conceallevel, provider disabling, `root_spec`, `autoformat`, `lazyvim_cmp`/`picker` globals, filetypes `astro`/`Podfile`, and the silent-by-default `vim.keymap.set` wrapper.
+
+**Ruling R11:** `LazyVim.warn`/`LazyVim.notify` → `vim.notify` (stdlib equivalent).
+**Ruling R10:** the win32 `LazyVim.terminal.setup("pwsh")` block is preserved as a comment block — the LazyVim global is unavailable under `vim.pack`, so the active code path is deferred to Phase 2 but the source lines survive.
 
 - [ ] **Step 2: Write keymaps section**
 
-Port `keymaps.lua` verbatim. Includes Brave search (`<leader>?`), `+`/`-`, `dw`, window nav, scroll-centering, `U` redo, `<leader>ciL` linter.
+Port `keymaps.lua` verbatim into `lua/config/keymaps.lua`. Includes Brave search (`<leader>?`), `+`/`-`, `dw`, window nav, scroll-centering, `U` redo, `<leader>ciL` linter.
 
 - [ ] **Step 3: Write autocmds section**
 
-Port `autocmds.lua` verbatim. Includes conceallevel 0 on json/jsonc/markdown, formatoptions cleanup, cursorline toggle, numbertoggle.
+Port `autocmds.lua` verbatim into `lua/config/autocmds.lua`. Includes conceallevel 0 on json/jsonc/markdown, formatoptions cleanup, cursorline toggle, numbertoggle.
 
-- [ ] **Step 4: Verify the file loads headlessly**
+- [ ] **Step 4: Write the loader**
+
+`lua/config/init.lua`:
+
+```lua
+require("config.options")
+require("config.keymaps")
+require("config.autocmds")
+```
+
+- [ ] **Step 5: Verify the files load headlessly**
 
 ```bash
-nvim --headless -u NONE -c "set rtp+=~/.config/nvim-pack" -c "lua require('config.init')" -c "qa" 2>&1
+nvim --headless -u NONE -c "set rtp+=~/.config/nvim-pack" -c "lua require('config.init')" -c "qa!" 2>&1
 ```
 
 Expected: no errors; `:messages` clean.
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
-git add lua/config/init.lua
+git add lua/config/
 git commit -m "feat: port options, keymaps, autocmds"
 ```
 
@@ -173,31 +215,23 @@ git commit -m "feat: port options, keymaps, autocmds"
 
 **Files:**
 
-- Create: `~/.config/nvim-pack/lua/plugins/conform.lua`
-- Create: `~/.config/nvim-pack/lua/plugins/kotlin.lua`
-- Create: `~/.config/nvim-pack/lua/plugins/lens.lua`
-- Create: `~/.config/nvim-pack/lua/plugins/lightbulb.lua`
-- Create: `~/.config/nvim-pack/lua/plugins/symbol-usage.lua`
-- Create: `~/.config/nvim-pack/lua/plugins/tiny-autosave.lua`
-- Create: `~/.config/nvim-pack/lua/plugins/workspace-diagnostics.lua`
-- Create: `~/.config/nvim-pack/lua/config/plugins.lua` (setup calls)
+- Create: `~/.config/nvim-pack/lua/config/plugins/conform.lua`
+- Create: `~/.config/nvim-pack/lua/config/plugins/kotlin.lua`
+- Create: `~/.config/nvim-pack/lua/config/plugins/lsp_lens.lua`
+- Create: `~/.config/nvim-pack/lua/config/plugins/nvim_lightbulb.lua`
+- Create: `~/.config/nvim-pack/lua/config/plugins/symbol_usage.lua`
+- Create: `~/.config/nvim-pack/lua/config/plugins/workspace_diagnostics.lua`
 
 **Interfaces:**
 
 - Consumes: `~/.config/nvim-source/lua/plugins/{conform,kotlin,lens,lightbulb,symbol-usage,tiny-autosave,workspace-diagnostics}.lua`.
-- Produces: `lua/plugins/*.lua` (each a `vim.pack.add` call) + `lua/config/plugins.lua` (each plugin's `setup()`).
+- Produces: `lua/config/plugins/<name>.lua` (each a `require("<mod>").setup({...})` call) — **no `vim.pack.add` calls here; install is `init.lua`'s job (R24).**
 
-**Translation rule:** a lazy.nvim spec table `{ "owner/repo", opts = {...} }` becomes `vim.pack.add({ "https://github.com/owner/repo" })` in `lua/plugins/<name>.lua`, and the `opts` table is passed to `require("<mod>").setup(opts)` in `lua/config/plugins.lua`.
+**Ruling R7:** `kotlin.nvim` declares `dependencies = { mason.nvim, mason-lspconfig.nvim }`, and `mason-lspconfig.nvim` is NOT in the lockfile. `init.lua` must list `https://github.com/mason-org/mason-lspconfig.nvim` (R8) so kotlin's `setup()` can resolve it.
 
 - [ ] **Step 1: Port conform**
 
-`lua/plugins/conform.lua`:
-
-```lua
-vim.pack.add({ "https://github.com/stevearc/conform.nvim" })
-```
-
-`lua/config/plugins.lua` (add):
+`lua/config/plugins/conform.lua`:
 
 ```lua
 require("conform").setup({
@@ -215,17 +249,11 @@ require("conform").setup({
 
 - [ ] **Step 2: Port kotlin**
 
-Read `~/.config/nvim-source/lua/plugins/kotlin.lua` and translate: `vim.pack.add` for the kotlin plugin URL(s), `setup()` call with the same opts. (The file is 1.4K; port its full content.)
+Read `~/.config/nvim-source/lua/plugins/kotlin.lua` and reproduce its full `setup()` opts in `lua/config/plugins/kotlin.lua` (root_markers, jre_path, jdk_for_symbol_resolution, jvm_args, inlay_hints).
 
 - [ ] **Step 3: Port lens**
 
-`lua/plugins/lens.lua`:
-
-```lua
-vim.pack.add({ "https://github.com/VidocqH/lsp-lens.nvim" })
-```
-
-`lua/config/plugins.lua` (add):
+`lua/config/plugins/lsp_lens.lua`:
 
 ```lua
 require("lsp-lens").setup({
@@ -242,20 +270,18 @@ require("lsp-lens").setup({
 })
 ```
 
-Note: the original spec also defines a keymap `<leader>ue → :LspLensToggle`. Port that keymap into `lua/config/init.lua` (keymaps section), since `vim.pack` has no `keys` key.
+**Ruling R1:** the original spec also defines a keymap `<leader>ue → :LspLensToggle`. Append it to `lua/config/keymaps.lua` (the keymaps section) — do not rewrite that file:
+
+```lua
+vim.keymap.set("n", "<leader>ue", "<cmd>LspLensToggle<cr>", { desc = "Toggle Lsp Lens" })
+```
 
 - [ ] **Step 4: Port lightbulb**
 
-`lua/plugins/lightbulb.lua`:
+`lua/config/plugins/nvim_lightbulb.lua`:
 
 ```lua
-vim.pack.add({ "https://github.com/kosayoda/nvim-lightbulb" })
-```
-
-`lua/config/plugins.lua` (add):
-
-```lua
-require("lightbulb").setup({
+require("nvim-lightbulb").setup({
   autocmd = { enabled = true },
   sign = { enabled = true, text = "󰰀" },
   action_kinds = { "quickfix", "refactor" },
@@ -265,17 +291,9 @@ require("lightbulb").setup({
 })
 ```
 
-Note: original used `event = "LspAttach"`. Under `vim.pack`, lazy loading is done via the `load` callback or by accepting the plugin loads at startup. Since these are small plugins, load at startup (no `event`); the `setup()` runs immediately. Verify `:Lightbulb` works.
-
 - [ ] **Step 5: Port symbol-usage**
 
-`lua/plugins/symbol-usage.lua`:
-
-```lua
-vim.pack.add({ "https://github.com/Wansmer/symbol-usage.nvim" })
-```
-
-`lua/config/plugins.lua` (add):
+`lua/config/plugins/symbol_usage.lua`:
 
 ```lua
 require("symbol-usage").setup({
@@ -294,42 +312,34 @@ require("symbol-usage").setup({
 
 - [ ] **Step 6: Port tiny-autosave**
 
-The source file is entirely commented out — no active config. Port as:
-
-`lua/plugins/tiny-autosave.lua`:
-
-```lua
--- tiny-autosave is commented out in the source config; not loaded.
-```
-
-Do not add a `vim.pack.add` call or a `setup()` call. (If Jonathan wants it later, uncomment here.)
+The source file is entirely commented out — no active config. Do NOT create a setup call for it. (It is installed from the lockfile via `init.lua`; loading it without setup is harmless, matching the source config where it is commented out — R2.)
 
 - [ ] **Step 7: Port workspace-diagnostics**
 
-`lua/plugins/workspace-diagnostics.lua`:
-
-```lua
-vim.pack.add({ "https://github.com/artemave/workspace-diagnostics.nvim" })
-```
-
-`lua/config/plugins.lua` (add):
+`lua/config/plugins/workspace_diagnostics.lua`:
 
 ```lua
 require("workspace-diagnostics").setup({})
 ```
 
-- [ ] **Step 8: Verify all custom plugins load**
+- [ ] **Step 8: Verify the plugins load**
 
 ```bash
-nvim --headless -u NONE -c "set rtp+=~/.config/nvim-pack" -c "lua require('config.plugins')" -c "ConformInfo" -c "LspLensToggle" -c "qa" 2>&1
+nvim --headless -u NONE -c "set rtp+=~/.config/nvim-pack" -c "lua require('init')" -c "qa!" 2>&1
 ```
 
-Expected: no errors; `:ConformInfo` and `:LspLensToggle` execute.
+Expected: `vim.pack` installs plugins; `:messages` clean. Then:
+
+```bash
+nvim --headless -c "ConformInfo" -c "LspLensToggle" -c "qa!" 2>&1
+```
+
+Expected: each command executes without "command not found".
 
 - [ ] **Step 9: Commit**
 
 ```bash
-git add lua/plugins/ lua/config/plugins.lua
+git add lua/config/plugins/
 git commit -m "feat: port custom plugins (conform, kotlin, lens, lightbulb, symbol-usage, workspace-diagnostics)"
 ```
 
@@ -343,29 +353,28 @@ git commit -m "feat: port custom plugins (conform, kotlin, lens, lightbulb, symb
 
 **Interfaces:**
 
-- Consumes: `~/.config/nvim-source/nvim-pack-lock.json` (72 plugins, each with `src` URL and pinned `rev`).
-- Produces: `init.lua` with a `vim.pack.add({...})` call listing all 72 plugin URLs, followed by `require("config.init")`, `require("config.plugins")`, `require("config.lsp")`.
+- Consumes: `~/.config/nvim-source/nvim-pack-lock.json` (72 keys, 61 unique `src` URLs; see R8).
+- Produces: `init.lua` — the SOLE plugin install surface (R24). It contains the `vim.pack.add({...})` call listing all 66 plugin URLs (R8), followed by `require("config.init")`, `require("config.plugins")`, `require("config.lsp")`.
 
-**Decision point — plugin configuration (blocks Task 5):**
-The 72 plugins in the lockfile were configured by LazyVim's defaults. `vim.pack.add` installs and loads them but does not configure them. Each plugin that needs configuration requires an explicit `setup()` call. Two options:
+**Ruling R8:** the plugin list is NOT just the lockfile. The lockfile holds 72
+keys but only 61 unique `src` URLs (11 duplicates under different names). You
+must ALSO add 6 plugins missing from the lockfile entirely: the 5 custom
+plugins ported in Task 3 (kotlin, lsp-lens, lightbulb, symbol-usage,
+workspace-diagnostics) plus `nvim-mason-lspconfig` (kotlin.nvim's declared
+dependency). Final list = 61 + 6 = **67 plugins**; `minuet-ai` is excluded.
 
-- **Option A — port LazyVim defaults:** clone `LazyVim/LazyVim`, read each plugin's default config in `lua/lazyvim/plugins/`, and reproduce the relevant `setup()` calls in `lua/config/plugins.lua` and `lua/config/lsp.lua`. Faithful, but ~40 setup calls to transcribe.
-- **Option B — minimal config:** only configure the plugins Jonathan explicitly uses (the 7 custom plugins, already done in Task 3, plus completion/LSP/treesitter). The remaining plugins load with their own defaults. Faster, but some LazyVim-tuned behavior (keymaps, picker, treesitter context) changes.
+**Ruling R12:** `lua/config/plugins/init.lua` bootstraps its own `vim.pack.add`
+calls (self-contained so it can be required standalone). `vim.pack.add` is
+idempotent, so a double-add with `init.lua` is a no-op. `init.lua` remains the
+canonical entry point; do not remove the bootstrap from `plugins/init.lua`.
 
-**Recommendation: Option A** for functional equivalence, but it is the largest remaining chunk of work. Jonathan must pick before Task 5 starts.
-
-- [ ] **Step 1: Extract plugin URLs from the lockfile**
+- [ ] **Step 1: Confirm the prepared plugin list**
 
 ```bash
-python3 -c "
-import json
-d = json.load(open('/Users/jonathanhouze/.config/nvim-source/nvim-pack-lock.json'))
-for k, v in sorted(d['plugins'].items()):
-    print(v['src'])
-" | sort -u > /tmp/plugin-urls.txt
+cat /tmp/plugin-urls.txt | wc -l
 ```
 
-Expected: 72 unique URLs.
+Expected: 67.
 
 - [ ] **Step 2: Write init.lua**
 
@@ -373,7 +382,8 @@ Expected: 72 unique URLs.
 vim.loader.enable()
 
 vim.pack.add({
-  -- 72 plugin URLs from the lockfile, one per line
+  -- 67 plugin URLs from /tmp/plugin-urls.txt, one per line
+  'https://github.com/saghen/blink.lib',
   'https://github.com/saghen/blink.cmp',
   -- ... (full list)
 })
@@ -383,12 +393,14 @@ require("config.plugins")
 require("config.lsp")
 ```
 
-Note: do not include `minuet-ai` (excluded from scope). Do not include duplicate entries (e.g. `blink` and `blink.cmp` are the same repo — list once).
+Order matters: `blink.lib` before `blink.cmp` (R15 — `vim.pack` has no dependency
+ordering, so load order is the only way to ensure `require("blink.lib")`
+resolves). Do not include `minuet-ai`. Do not include duplicate entries.
 
 - [ ] **Step 3: Verify lockfile bootstraps**
 
 ```bash
-nvim --headless -u NONE -c "set rtp+=~/.config/nvim-pack" -c "lua require('init')" -c "qa" 2>&1
+nvim --headless -u NONE -c "set rtp+=~/.config/nvim-pack" -c "lua require('init')" -c "qa!" 2>&1
 ```
 
 Expected: `vim.pack` installs any plugins missing from disk; `:messages` clean after first run.
@@ -402,58 +414,106 @@ git commit -m "feat: seed plugin list from lockfile"
 
 ---
 
-## Task 5: Plugin configuration (Option A or B, per decision)
+## Task 5: Plugin configuration (Option A — port LazyVim defaults)
 
 **Files:**
 
-- Modify: `~/.config/nvim-pack/lua/config/plugins.lua`
-- Modify: `~/.config/nvim-pack/lua/config/lsp.lua`
+- Create: `~/.config/nvim-pack/lua/config/plugins/{blink,whichkey,lualine,gitsigns,snacks,mini,mini-diff,mini-files,mini-icons,mini-pairs,mini-surround,neo-tree,nvim-lint,refactoring,render-markdown,treesitter,treesitter-textobjects,web-devicons,tokyonight,mason,mason-lspconfig}.lua`
+- Create: `~/.config/nvim-pack/lua/config/lsp.lua`
 
 **Interfaces:**
 
-- Produces: `setup()` calls for every plugin that needs configuration.
+- Consumes: `/tmp/lazyvim-ref/` (LazyVim stable clone).
+- Produces: one `setup()` call per configured plugin + `lua/config/lsp.lua`.
 
-**If Option A chosen:**
+**Ruling R17 — narrowed scope:** Only 26 of the 67 plugins have LazyVim
+defaults that need porting. The other 41 load with their own defaults and
+require **no** setup call — do not create files for them.
 
-- [ ] **Step 1: Clone LazyVim for reference**
+The 26 to port: blink.cmp, conform, gitsigns, keymaps, kotlin, lualine, mason,
+mason-lspconfig, mini, mini.diff, mini.files, mini.icons, mini.pairs,
+mini.surround, neo-tree, nvim-lint, nvim-lspconfig, nvim-treesitter,
+nvim-treesitter-textobjects, nvim-web-devicons, refactoring, render-markdown,
+snacks, tokyonight, which-key.
+
+The 41 that need nothing: artio, async, blink-cmp-git, blink.indent,
+blink.pairs, cyberdream, e-ink, lsp-lens, lylla, lynn, mini.operators,
+mini.visits, namu, neocodeium, nightfox, nivvie, nui, nvim-chainsaw,
+nvim-genghis, nvim-jump, nvim-justice, nvim-lightbulb, nvim-lsp-endhints,
+nvim-nio, nvim-origami, nvim-rip-substitute, nvim-rulebook, nvim-scissors,
+nvim-spider, nvim-surround, nvim-tinygit, nvim-various-textobjs, plenary,
+satellite, symbol-usage, tiny-autosave, treesj, ultimate-autopair,
+workspace-diagnostics, yazi.
+
+**Ruling R4:** do NOT re-port the 7 custom plugins from Task 3 — they are
+already in `lua/config/plugins/`. `tiny-autosave` gets no setup (R2).
+`minuet-ai` is excluded from the whole project.
+
+**Ruling R5:** treesitter — set `ensure_installed` for
+rust/golang/typescript/js/json/yaml/toml/markdown. Do NOT run `:TSUpdate`
+here — that is a runtime step, not a config step.
+
+- [ ] **Step 1: Confirm the LazyVim reference clone**
 
 ```bash
-git clone --filter=blob:none --branch=stable https://github.com/LazyVim/LazyVim /tmp/lazyvim-ref
+ls /tmp/lazyvim-ref/lua/lazyvim/plugins/ 2>&1
 ```
 
-- [ ] **Step 2: Transcribe completion config (blink.cmp)**
+- [ ] **Step 2–12: Port each plugin**
 
-Port LazyVim's blink.cmp keymap/source defaults into `lua/config/plugins.lua`.
+For each of the 26 plugins, read the corresponding LazyVim source file and
+reproduce its `setup()` call in `lua/config/plugins/<name>.lua`:
 
-- [ ] **Step 3: Transcribe LSP config (nvim-lspconfig + servers)**
+| Plugin | LazyVim source |
+| --- | --- |
+| blink.cmp | `lua/lazyvim/plugins/extras/coding/blink.lua` |
+| which-key | `lua/lazyvim/plugins/editor.lua` |
+| lualine | `lua/lazyvim/plugins/colorscheme.lua` |
+| gitsigns | `lua/lazyvim/plugins/editor.lua` |
+| snacks | `lua/lazyvim/plugins/init.lua`, `lua/lazyvim/config/init.lua` |
+| mini.* | `lua/lazyvim/plugins/ui.lua`, `lua/lazyvim/util/mini.lua`, `extras/vscode.lua`, `extras/coding/mini-surround.lua`, `extras/editor/mini-diff.lua`, `extras/editor/mini-files.lua` |
+| neo-tree | `lua/lazyvim/plugins/ui.lua` |
+| nvim-surround | `lua/lazyvim/plugins/extras/vscode.lua` |
+| refactoring | `lua/lazyvim/plugins/extras/editor/refactoring.lua` |
+| render-markdown | `lua/lazyvim/plugins/extras/lang/markdown.lua` |
+| treesitter | `lua/lazyvim/util/treesitter.lua`, `lua/lazyvim/plugins/treesitter.lua` |
+| treesitter-textobjects | `lua/lazyvim/plugins/treesitter.lua` |
+| web-devicons | `lua/lazyvim/plugins/ui.lua` (mocked through mini.icons) |
+| tokyonight | `lua/lazyvim/config/init.lua` |
+| mason | `lua/lazyvim/util/init.lua`, `lua/lazyvim/plugins/lsp/init.lua` |
+| mason-lspconfig | `lua/lazyvim/plugins/lsp/init.lua` |
+| nvim-lint | `lua/lazyvim/plugins/linting.lua` |
 
-Port LazyVim's `lsp.*` settings and server configs into `lua/config/lsp.lua`, including rust-analyzer, gopls, tsserver, kotlin-language-server.
+**Ruling R22:** `neo-tree.lua` must not call `require("lazy.util").open(...)`
+unguarded — `lazy.util` is a LazyVim-internal module not installed under
+`vim.pack`. Use `vim.ui.open` or a stdlib split/tab command instead.
 
-- [ ] **Step 4: Transcribe treesitter config**
+- [ ] **Step 13: Write LSP config**
 
-Port `nvim-treesitter` `ensure_installed` for rust/golang/typescript (+ js, json, yaml, toml, markdown). Note: lazyvim auto-installs on demand; under `vim.pack`, use `:TSBuild <lang>` explicitly or set `ensure_installed` and run `:TSUpdate`.
+Read `/tmp/lazyvim-ref/lua/lazyvim/util/lsp.lua` and
+`lua/lazyvim/plugins/lsp/init.lua`. Write `lua/config/lsp.lua` with:
 
-- [ ] **Step 5: Transcribe remaining plugin configs**
+- `require("lspconfig").setup({})` defaults
+- server configs for rust-analyzer, gopls, typescript (tsserver), and
+  kotlin-language-server, matching LazyVim's settings
+- mason + mason-lspconfig setup wiring
 
-For each of the 72 plugins that has a LazyVim default config, add the corresponding `setup()` call. Priority order: which-key, lualine, gitsigns, snacks, mini.*, neo-tree, nvim-surround, mason, yazi, and the rest.
+- [ ] **Step 14: Verify the full config loads**
 
-- [ ] **Step 6: Commit**
+```bash
+nvim --headless -u NONE -c "set rtp+=~/.config/nvim-pack" -c "lua require('init')" -c "qa!" 2>&1
+```
 
-**If Option B chosen:**
+Expected: `vim.pack` installs plugins; `:messages` is clean after first run.
+Any `setup()` call that references a missing module or a mis-typed option is
+a defect — fix it.
 
-- [ ] **Step 1: Configure completion (blink.cmp)**
+- [ ] **Step 15: Commit**
 
-Write a minimal blink.cmp setup with sensible defaults.
-
-- [ ] **Step 2: Configure LSP**
-
-Write `lua/config/lsp.lua` with nvim-lspconfig setup and the 4 server configs (rust-analyzer, gopls, tsserver, kotlin-language-server).
-
-- [ ] **Step 3: Configure treesitter**
-
-Set `ensure_installed` for rust/golang/typescript/js/json/yaml/toml/markdown; run `:TSUpdate`.
-
-- [ ] **Step 4: Commit**
+```bash
+git add lua/config/plugins/ lua/config/lsp.lua
+git commit -m "feat: port LazyVim defaults for 26 configured plugins"
+```
 
 ---
 
@@ -474,7 +534,7 @@ Verify: `readlink ~/.config/nvim` → `~/.config/nvim-pack`.
 - [ ] **Step 2: Smoke test — headless start**
 
 ```bash
-nvim --headless -c "qa" 2>&1
+nvim --headless -c "qa!" 2>&1
 ```
 
 Expected: nvim starts using `~/.config/nvim` (= nvim-pack), no errors.
@@ -482,7 +542,7 @@ Expected: nvim starts using `~/.config/nvim` (= nvim-pack), no errors.
 - [ ] **Step 3: Smoke test — plugin commands**
 
 ```bash
-nvim --headless -c "ConformInfo" -c "LspLensToggle" -c "qa" 2>&1
+nvim --headless -c "ConformInfo" -c "LspLensToggle" -c "qa!" 2>&1
 ```
 
 Expected: each command executes without "command not found".
@@ -502,10 +562,10 @@ git commit -m "chore: symlink nvim -> nvim-pack"
 - [ ] **Step 1: Diff options**
 
 ```bash
-nvim --headless -u NONE -c "set rtp+=~/.config/nvim-source" -c "lua vim.cmd.source('lua/config/options.lua')" -c "redir > /tmp/old-options.txt" -c "silent set" -c "redir END" -c "qa"
+nvim --headless -u NONE -c "set rtp+=~/.config/nvim-source" -c "lua vim.cmd.source('lua/config/options.lua')" -c "redir! > /tmp/old-set.txt" -c "silent set" -c "redir END" -c "qa!" 2>&1
 ```
 
-Compare `:set` output between `nvim-source` and `nvim-pack`. Flag any unintended differences.
+Compare `:set` output between `nvim-source` and `nvim-pack`. Flag any unintended differences. (The `runtimepath` line differs by config dir — that is expected.)
 
 - [ ] **Step 2: Diff keymaps**
 
@@ -520,7 +580,7 @@ Compare `:map` output between the two configs. All custom mappings from `keymaps
 ```bash
 rm ~/.config/nvim
 ln -s ~/.config/nvim-source ~/.config/nvim
-nvim --headless -c "qa" 2>&1
+nvim --headless -c "qa!" 2>&1
 ```
 
 Expected: old config still works. Then re-create the `nvim-pack` symlink.
@@ -535,8 +595,8 @@ git commit -m "chore: verification against source config"
 
 ## Self-Review
 
-**1. Spec coverage:** Task 1 (cutover/skeleton) → spec §5. Task 2 (options/keymaps/autocmds) → spec §7 options/keymaps/autocmds. Task 3 (7 custom plugins) → spec §2 in-scope plugins. Task 4 (lockfile seed + init.lua) → spec §3, §6. Task 5 (plugin configuration) → spec §7 completion/LSP/treesitter. Task 6 (symlink + smoke test) → spec §5, §8. Task 7 (verification) → spec §8 all 6 checks. LazyVim extras correctly excluded (spec §2 out-of-scope).
+**1. Spec coverage:** Task 1 (cutover/skeleton) → spec §5. Task 2 (options/keymaps/autocmds) → spec §7. Task 3 (7 custom plugins) → spec §2 in-scope plugins. Task 4 (lockfile seed + `init.lua`) → spec §3, §6. Task 5 (plugin configuration) → spec §7 completion/LSP/treesitter. Task 6 (symlink + smoke test) → spec §5, §8. Task 7 (verification) → spec §8 all 6 checks. LazyVim extras correctly excluded (spec §2 out-of-scope).
 
-**2. Placeholder scan:** Task 5 contains an explicit fork (Option A vs B) rather than a placeholder — it names the decision, the files, and the steps for both branches. No "TBD"/"implement later" remains. The one genuinely unknown item (kotlin.lua's exact content) is handled by "read and port its full content" rather than a guess.
+**2. Placeholder scan:** no "TBD"/"TODO"/"implement later" remains. The Task 5 fork (Option A vs B) was resolved by the user (A) and the scope narrowed by R17.
 
-**3. Type consistency:** `require("config.init")`, `require("config.plugins")`, `require("config.lsp")` match the file layout in §4 of the spec and Task 1. Plugin module names (`conform`, `lsp-lens`, `lightbulb`, `symbol-usage`, `workspace-diagnostics`) match the repos in Task 3.
+**3. Type consistency:** `require("config.init")`, `require("config.plugins")`, `require("config.lsp")` match the file layout. Plugin module names (`conform`, `lsp-lens`, `nvim-lightbulb`, `symbol-usage`, `workspace-diagnostics`) match the repos. `lua/plugins/` is no longer referenced anywhere (R24).
