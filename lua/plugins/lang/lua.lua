@@ -1,13 +1,21 @@
 -- Lua language support.
 local function setup(args)
-  require('utils').install_with_mason { 'lua-language-server', 'stylua' }
+  local bufnr = args.buf
+
+  -- Safe Mason install; ignore errors if a download is already in flight
+  pcall(function()
+    require('utils').install_with_mason { 'lua-language-server', 'stylua' }
+  end)
+
+  -- Prevent duplicate server attachments on the same buffer
+  if #vim.lsp.get_clients({ bufnr = bufnr, name = 'lua_ls' }) > 0 then return end
 
   ---@type vim.lsp.Config
   local server = {
     name = 'lua_ls',
     cmd = { 'lua-language-server' },
     filetypes = { 'lua' },
-    root_dir = require('utils').root.get { buf = args.buf, normalize = false },
+    root_dir = require('utils').root.get { buf = bufnr, normalize = false },
     on_init = function(client)
       client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
     end,
@@ -19,15 +27,18 @@ local function setup(args)
         },
         signatureHelp = { enabled = true },
         format = { enable = false },
+        completion = { callSnippet = 'Replace' },
+        hint = { enable = true },
         workspace = {
           checkThirdParty = false,
-          -- NOTE: this is a lot slower and will cause issues when working on your own configuration.
-          --  See https://github.com/neovim/nvim-lspconfig/issues/3189
-          library = vim.tbl_extend('force', vim.api.nvim_get_runtime_file('', true), {
+          -- lazydev supplies Neovim API types, so avoid scanning the whole runtime tree
+          library = {
+            vim.env.VIMRUNTIME,
             '${3rd}/luv/library',
             '${3rd}/busted/library',
-          }),
+          },
         },
+        telemetry = { enable = false },
       },
     },
   }
@@ -35,8 +46,13 @@ local function setup(args)
   vim.lsp.config('lua_ls', server)
   vim.lsp.start(server)
 
-  local conform = require 'conform'
-  conform.formatters_by_ft.lua = { 'stylua' }
+  -- Register conform formatter without breaking startup if conform is unavailable
+  pcall(function()
+    local conform = require 'conform'
+    if conform and conform.formatters_by_ft then
+      conform.formatters_by_ft.lua = { 'stylua' }
+    end
+  end)
 end
 
 require('utils').on_file_types({ 'lua' }, setup)
