@@ -1,6 +1,7 @@
 local gh = require('utils').gh
 
 vim.pack.add {
+  gh 'xzbdmw/colorful-menu.nvim',
   gh 'saghen/blink.lib',
   gh 'saghen/blink.cmp',
   gh 'saghen/blink.indent',
@@ -8,6 +9,7 @@ vim.pack.add {
   gh 'Kaiser-Yang/blink-cmp-git',
 }
 
+require('colorful-menu').setup({})
 require('blink.cmp').setup {
   snippets = {
     preset = 'default',
@@ -26,6 +28,17 @@ require('blink.cmp').setup {
     },
     menu = {
       draw = {
+        columns = { { "kind_icon" }, { "label", gap = 1 } },
+        components = {
+          label = {
+            text = function(ctx)
+              return require("colorful-menu").blink_components_text(ctx)
+            end,
+            highlight = function(ctx)
+              return require("colorful-menu").blink_components_highlight(ctx)
+            end,
+          },
+        },
         treesitter = { 'lsp' },
       },
     },
