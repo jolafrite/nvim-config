@@ -12,48 +12,37 @@ vim.diagnostic.config {
   },
 }
 
-vim.keymap.set('n', '<leader>ue', '<cmd>LspLensToggle<cr>', { desc = 'Toggle Lsp Lens' })
+vim.lsp.config['*'] = {
+  capabilities = (function()
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.workspace = capabilities.workspace or {}
+    capabilities.workspace.fileOperations = {
+      didRename = true,
+      willRename = true,
+    }
+    return capabilities
+  end)(),
+  on_attach = function(client, bufnr)
+		-- stylua: ignore
+		local keys = {
+			{ "<leader>cl", function() Snacks.picker.lsp_config() end,            desc = "Lsp Info" },
+			{ "gd",         function() Snacks.picker.lsp_definitions() end,       desc = "Goto Definition",       has = "definition" },
+			{ "gr",         function() Snacks.picker.lsp_references() end,        nowait = true,                  desc = "References" },
+			{ "gI",         function() Snacks.picker.lsp_implementations() end,   desc = "Goto Implementation" },
+			{ "gy",         function() Snacks.picker.lsp_type_definitions() end,  desc = "Goto T[y]pe Definition" },
+			{ "<leder>ss", function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols",           has = "documentSymbol" },
+			{ "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols", has = "workspace/symbols" },
+			{ "gai",        function() Snacks.picker.lsp_incoming_calls() end,    desc = "C[a]lls Incoming",      has = "callHierarchy/incomingCalls" },
+			{ "gao",        function() Snacks.picker.lsp_outgoing_calls() end,    desc = "C[a]lls Outgoing",      has = "callHierarchy/outgoingCalls" },
 
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('mt-lsp-attach', { clear = true }),
-  callback = function(event)
-    local map = function(keys, func, desc, mode)
-      mode = mode or 'n'
-      vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-    end
-
-    map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
-    map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
-    map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if client and client:supports_method('textDocument/documentHighlight', event.buf) then
-      local highlight_augroup = vim.api.nvim_create_augroup('my-lsp-highlight', { clear = false })
-      vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-        buffer = event.buf,
-        group = highlight_augroup,
-        callback = vim.lsp.buf.document_highlight,
-      })
-
-      vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-        buffer = event.buf,
-        group = highlight_augroup,
-        callback = vim.lsp.buf.clear_references,
-      })
-
-      vim.api.nvim_create_autocmd('LspDetach', {
-        group = vim.api.nvim_create_augroup('my-lsp-detach', { clear = true }),
-        callback = function(event2)
-          vim.lsp.buf.clear_references()
-          vim.api.nvim_clear_autocmds { group = 'my-lsp-highlight', buffer = event2.buf }
-        end,
-      })
-    end
-
-    if client and client:supports_method('textDocument/inlayHint', event.buf) then
-      map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, '[T]oggle Inlay [H]ints')
+			{ "<leader>ca", vim.lsp.buf.code_action,                              desc = "Code Action",           mode = { "n", "x" },                has = "codeAction" },
+		}
+    for _, key in ipairs(keys) do
+      if not key.has or client.supports_method(key.has) then vim.keymap.set('n', key[1], key[2], { desc = key.desc, buffer = bufnr }) end
     end
   end,
-})
+}
+
+vim.keymap.set('n', '<leader>ue', '<cmd>LspLensToggle<cr>', { desc = 'Toggle Lsp Lens' })
 
 -- vim: ts=2 sts=2 sw=2 et
