@@ -5,7 +5,6 @@ M.on_file_types = function(patterns, fn)
   local list = type(patterns) == 'string' and { patterns } or patterns
   vim.api.nvim_create_autocmd('FileType', {
     pattern = list,
-    once = true,
     callback = function(args)
       fn(args)
       -- Run any plugin-provided ftplugin for this filetype so plugins

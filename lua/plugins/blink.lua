@@ -9,7 +9,7 @@ vim.pack.add {
   gh 'Kaiser-Yang/blink-cmp-git',
 }
 
-require('colorful-menu').setup({})
+require('colorful-menu').setup {}
 require('blink.cmp').setup {
   snippets = {
     preset = 'default',
@@ -28,15 +28,11 @@ require('blink.cmp').setup {
     },
     menu = {
       draw = {
-        columns = { { "kind_icon" }, { "label", gap = 1 } },
+        columns = { { 'kind_icon' }, { 'label', gap = 1 } },
         components = {
           label = {
-            text = function(ctx)
-              return require("colorful-menu").blink_components_text(ctx)
-            end,
-            highlight = function(ctx)
-              return require("colorful-menu").blink_components_highlight(ctx)
-            end,
+            text = function(ctx) return require('colorful-menu').blink_components_text(ctx) end,
+            highlight = function(ctx) return require('colorful-menu').blink_components_highlight(ctx) end,
           },
         },
         treesitter = { 'lsp' },
@@ -52,7 +48,34 @@ require('blink.cmp').setup {
   },
 
   sources = {
-    default = { 'lsp', 'path', 'snippets', 'buffer' },
+    default = { 'lazydev', 'lsp', 'snippets', 'path', 'buffer', 'emoji' },
+    providers = {
+      buffer = {
+        name = 'buffer',
+        max_items = 4,
+      },
+      emoji = {
+        name = 'Emoji',
+        module = 'blink-emoji',
+      },
+      lazydev = {
+        name = 'LazyDev',
+        module = 'lazydev.integrations.blink',
+        fallbacks = { 'LSP' },
+      },
+      lsp = {
+        name = 'LSP',
+      },
+      path = {
+        name = 'path',
+        opts = {
+          get_cwd = function(_) return vim.fn.getcwd() end,
+        },
+      },
+      snippets = {
+        name = 'snippets',
+      },
+    },
   },
 
   cmdline = {
