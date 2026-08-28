@@ -1,0 +1,12 @@
+{
+  "runtime.version": "LuaJIT 2.1",
+  "diagnostics": {
+    "globals": ["vim", "Snacks"],
+    "disable": {
+      "undefined-doc-name": {
+        "Snacks": true,
+        "snacks": true
+      }
+    }
+  }
+}
