@@ -5,15 +5,13 @@
 -- mason's package:install:success handler (see lua/plugins/mason.lua) fires
 -- `do FileType` again, re-triggering this autocmd once the tools are ready.
 
-local function find_root_dir(buf_path)
-	-- root_dir must resolve to a real directory: lua_ls scans it for
-	-- .luarc.json/.luarc.jsonc. The function form isn't invoked by
-	-- vim.lsp.start in this Neovim, so compute the path here and pass a
-	-- string instead. Walk up from the buffer's directory, not getcwd(),
-	-- so scratch files outside the repo still get a workspace root.
-	local markers = vim.fs.find({ '.luarc.json', '.luarc.jsonc', '.git' },
-		{ path = vim.fs.dirname(buf_path), upward = true })[1]
-	return markers and vim.fs.dirname(markers) or vim.fs.dirname(buf_path)
+-- Root directory for lua_ls workspace discovery. Delegates to
+-- utils.root.get, which walks the default spec (lsp, { '.git', 'lua' },
+-- cwd) so the LSP root_dir and a .git marker both feed the result,
+-- rather than only the first .luarc.json/.git marker walking up from
+-- the buffer's directory.
+local function root_dir(buf_path)
+	return require('utils').root.get({ buf = 0, normalize = false })
 end
 
 local function setup(args)
@@ -25,7 +23,7 @@ local function setup(args)
 		cmd = { 'lua-language-server' },
 		filetypes = { 'lua' },
 		root_markers = { '.git' },
-		root_dir = find_root_dir(vim.api.nvim_buf_get_name(args.buf)),
+		root_dir = root_dir(vim.api.nvim_buf_get_name(args.buf)),
 		on_init = function(client)
 			client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
 		end,
