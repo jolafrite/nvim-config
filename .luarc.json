@@ -6,7 +6,8 @@
       "undefined-doc-name": {
         "Snacks": true,
         "snacks": true
-      }
+      },
+      "deprecated": true
     }
   }
 }

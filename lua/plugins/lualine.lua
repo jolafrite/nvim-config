@@ -74,12 +74,12 @@ local function pretty_path(opts)
 
 		if #parts > opts.length then
 			parts =
-			{ parts[1], "…", table.unpack(parts, #parts - opts.length + 2, #parts) }
+			{ parts[1], "…", unpack(parts, #parts - opts.length + 2, #parts) }
 		end
 
 		local dir = ""
 		if #parts > 1 then
-			dir = table.concat({ table.unpack(parts, 1, #parts - 1) }, sep) .. sep
+			dir = table.concat({ unpack(parts, 1, #parts - 1) }, sep) .. sep
 		end
 
 		local readonly = vim.bo.readonly and opts.readonly_icon or ""

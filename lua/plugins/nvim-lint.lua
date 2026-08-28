@@ -47,7 +47,7 @@ function M.debounce(ms, fn)
     local argv = { ... }
     timer:start(ms, 0, function()
       timer:stop()
-      vim.schedule_wrap(fn)(table.unpack(argv))
+      vim.schedule_wrap(fn)(unpack(argv))
     end)
   end
 end
