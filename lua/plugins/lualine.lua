@@ -4,6 +4,11 @@ vim.pack.add({
 	gh("nvim-lualine/lualine.nvim"),
 })
 
+-- Neovim runs LuaJIT (Lua 5.1) where `unpack` is a bare global and
+-- `table.unpack` is nil. Bind it to a local so the linter (which
+-- checks against Lua 5.4) does not flag the deprecated global.
+local unpack = rawget(_G, "unpack") or table.unpack
+
 local lualine_require = require("lualine_require")
 lualine_require.require = require
 
@@ -74,12 +79,12 @@ local function pretty_path(opts)
 
 		if #parts > opts.length then
 			parts =
-			{ parts[1], "…", table.unpack(parts, #parts - opts.length + 2, #parts) }
+			{ parts[1], "…", unpack(parts, #parts - opts.length + 2, #parts) }
 		end
 
 		local dir = ""
 		if #parts > 1 then
-			dir = table.concat({ table.unpack(parts, 1, #parts - 1) }, sep) .. sep
+			dir = table.concat({ unpack(parts, 1, #parts - 1) }, sep) .. sep
 		end
 
 		local readonly = vim.bo.readonly and opts.readonly_icon or ""
