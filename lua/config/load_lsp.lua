@@ -11,4 +11,5 @@ vim.diagnostic.config {
 }
 
 vim.keymap.set('n', '<leader>ue', '<cmd>LspLensToggle<cr>', { desc = 'Toggle Lsp Lens' })
+
 -- vim: ts=2 sts=2 sw=2 et
