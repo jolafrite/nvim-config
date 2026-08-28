@@ -25,7 +25,7 @@ vim.lsp.config['*'] = {
   on_attach = function(client, bufnr)
 		-- stylua: ignore
 		local keys = {
-			{ "<leader>cl", function() vim.lsp.buf.info() end,                                                 desc = "Lsp Info" },
+			{ "<leader>cl", function() vim.lsp.status() end,                                                 desc = "Lsp Info" },
 			{ "gd",         function() Snacks.picker.lsp_definitions() end,       desc = "Goto Definition",       has = "definition" },
 			{ "gr",         function() Snacks.picker.lsp_references() end,        nowait = true,                  desc = "References" },
 			{ "gI",         function() Snacks.picker.lsp_implementations() end,   desc = "Goto Implementation" },
