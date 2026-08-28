@@ -4,6 +4,11 @@ vim.pack.add({
 	gh("nvim-lualine/lualine.nvim"),
 })
 
+-- Neovim runs LuaJIT (Lua 5.1) where `unpack` is a bare global and
+-- `table.unpack` is nil. Bind it to a local so the linter (which
+-- checks against Lua 5.4) does not flag the deprecated global.
+local unpack = rawget(_G, "unpack") or table.unpack
+
 local lualine_require = require("lualine_require")
 lualine_require.require = require
 
