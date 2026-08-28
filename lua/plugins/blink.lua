@@ -8,6 +8,7 @@ vim.pack.add {
   gh 'saghen/blink.pairs',
   gh 'Kaiser-Yang/blink-cmp-git',
   gh 'saghen/blink-emoji.nvim',
+  gh 'saghen/lazydev.nvim'
 }
 
 require('colorful-menu').setup {}
