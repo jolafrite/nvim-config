@@ -10,6 +10,11 @@ vim.pack.add {
 -- table, a debounce helper, and the autocmd that triggers linting on
 -- BufWritePost / BufReadPost / InsertLeave.
 
+-- Neovim runs LuaJIT (Lua 5.1) where `unpack` is a bare global and
+-- `table.unpack` is nil. Bind it to a local so the linter (which
+-- checks against Lua 5.4) does not flag the deprecated global.
+local unpack = rawget(_G, 'unpack') or table.unpack
+
 local lint = require 'lint'
 
 local opts = {
@@ -47,7 +52,7 @@ function M.debounce(ms, fn)
     local argv = { ... }
     timer:start(ms, 0, function()
       timer:stop()
-      vim.schedule_wrap(fn)(table.unpack(argv))
+      vim.schedule_wrap(fn)(unpack(argv))
     end)
   end
 end

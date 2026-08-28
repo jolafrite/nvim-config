@@ -4,6 +4,7 @@ require 'config.autocmds'
 require 'config.pack'
 require 'plugins'
 require 'config.load_lsp'
+require 'plugins.lang'
 
 pcall(vim.cmd.colorscheme, "shades-of-purple")
 
