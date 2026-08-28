@@ -55,10 +55,6 @@ require('blink.cmp').setup {
         name = 'buffer',
         max_items = 4,
       },
-      emoji = {
-        name = 'Emoji',
-        module = 'blink-emoji',
-      },
       lazydev = {
         name = 'LazyDev',
         module = 'lazydev.integrations.blink',
