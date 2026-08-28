@@ -16,19 +16,19 @@ vim.opt.encoding = 'utf-8'
 vim.opt.fileencoding = 'utf-8'
 
 vim.g.root_spec = {
-  'lsp',
-  {
-    '.git',
-    'lua',
-    '.obsidian',
-    'package.json',
-    'Makefile',
-    'go.mod',
-    'cargo.toml',
-    'pyproject.toml',
-    'src',
-  },
-  'cwd',
+	'lsp',
+	{
+		'.git',
+		'lua',
+		'.obsidian',
+		'package.json',
+		'Makefile',
+		'go.mod',
+		'cargo.toml',
+		'pyproject.toml',
+		'src',
+	},
+	'cwd',
 }
 
 vim.opt.backup = true
@@ -63,18 +63,18 @@ vim.cmd [[au BufNewFile,BufRead Podfile setf ruby]]
 local keymap_set = vim.keymap.set
 ---@diagnostic disable-next-line: duplicate-set-field
 vim.keymap.set = function(mode, lhs, rhs, opts)
-  opts = opts or {}
-  opts.silent = opts.silent ~= false
-  return keymap_set(mode, lhs, rhs, opts)
+	opts = opts or {}
+	opts.silent = opts.silent ~= false
+	return keymap_set(mode, lhs, rhs, opts)
 end
 
 vim.g.lazyvim_python_lsp = 'basedpyright'
 vim.g.lazyvim_python_ruff = 'ruff'
 
--- Deferred to Phase 2: the terminal integration global is not available under vim.pack.
--- if vim.fn.has("win32") == 1 then
---   terminal.setup("pwsh")
--- end
+-- Set up the shell wrapper for pwsh on Windows.
+if vim.fn.has('win32') == 1 then
+	require('utils').terminal.setup('pwsh')
+end
 
 vim.g.deprecation_warnings = true
 vim.env.FZF_DEFAULT_OPTS = ''

@@ -27,29 +27,11 @@ local icons = {
 	},
 }
 
--- minimal root detector using vim.g.root_spec
-local function root_get()
-	local spec = vim.g.root_spec or { "lsp", { ".git" }, "cwd" }
-	for _, entry in ipairs(spec) do
-		if type(entry) == "function" then
-			local ok, res = pcall(entry, 0)
-			if ok and res then
-				if type(res) == "table" then
-					res = res[1]
-				end
-				if res then
-					return res
-				end
-			end
-		end
-	end
-	return vim.uv.cwd()
-end
-
-local function root_cwd()
-	return vim.uv.cwd()
-end
-
+-- Project root. utils.root.get handles every vim.g.root_spec entry type
+-- (string detector, table of patterns, function), whereas the local
+-- implementation below only understood function entries.
+local root_get = require('utils').root.get
+local root_cwd = require('utils').root.cwd
 local function pretty_path(opts)
 	opts = vim.tbl_extend("force", {
 		relative = "cwd",

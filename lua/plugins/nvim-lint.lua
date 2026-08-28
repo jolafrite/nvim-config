@@ -6,13 +6,6 @@ vim.pack.add {
 
 -- nvim-lint configuration: mirrors the default linting setup.
 --
--- Provides the `<leader>ciL` keymap (in keymaps.lua) with the linters_by_ft
--- table, a debounce helper, and the autocmd that triggers linting on
--- BufWritePost / BufReadPost / InsertLeave.
-
--- Neovim runs LuaJIT (Lua 5.1) where `unpack` is a bare global and
--- `table.unpack` is nil. Bind it to a local so the linter (which
--- checks against Lua 5.4) does not flag the deprecated global.
 local unpack = rawget(_G, 'unpack') or table.unpack
 
 local lint = require 'lint'
@@ -58,10 +51,6 @@ function M.debounce(ms, fn)
 end
 
 function M.lint()
-  -- Use nvim-lint's logic first:
-  -- * checks if linters exist for the full filetype first
-  -- * otherwise will split filetype by "." and add all those linters
-  -- * this differs from conform.nvim which only uses the first filetype that has a formatter
   local names = lint._resolve_linter_by_ft(vim.bo.filetype)
 
   -- Create a copy of the names table to avoid modifying the original.

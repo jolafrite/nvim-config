@@ -1,104 +1,29 @@
+-- Re-exports the purpose-grouped modules in lua/utils/. Nothing here is
+-- implemented: each function lives in its own file so consumers can require
+-- the single module they need without pulling in the whole package.
 local M = {}
 
-M.gh = function(repo) return 'https://github.com/' .. repo end
-M.cb = function(repo) return 'https://codeberg.org/' .. repo end
+M.gh = require('utils.gh').gh
+M.cb = require('utils.gh').cb
 
-M.install_with_mason = function(patterns)
-  local list = type(patterns) == 'string' and { patterns } or patterns
+M.on_file_types = require('utils.autocmds').on_file_types
+M.on_buf_read = require('utils.autocmds').on_buf_read
 
-  local ok, mr = pcall(require, 'mason-registry')
-  if not ok then
-    vim.notify(('mason-registry unavailable: %s'):format(mr), vim.log.levels.WARN)
-    return
-  end
+M.on_lsp_attach = require('utils.lsp').on_lsp_attach
+M.get_lua_filenames_without_extension = require('utils.lsp')
+.get_lua_filenames_without_extension
 
-  mr.refresh(function()
-    for _, tool in ipairs(list) do
-      local ok_p, p = pcall(mr.get_package, tool)
-      if not ok_p then
-        vim.notify(('mason: unknown package %q'):format(tool), vim.log.levels.WARN)
-      elseif not p:is_installed() then
-        p:install()
-      end
-    end
-  end)
-end
+M.install_with_mason = require('utils.install').install_with_mason
+M.run_build = require('utils.install').run_build
 
--- Register an autocmd that fires once per matching filetype, runs the callback.
-M.on_file_types = function(patterns, fn)
-  local list = type(patterns) == 'string' and { patterns } or patterns
-  vim.api.nvim_create_autocmd('FileType', {
-    pattern = list,
-    once = true,
-    callback = function(args)
-      fn(args)
-      -- Run any plugin-provided ftplugin for this filetype so plugins
-      -- that ship runtime files still see their ftplugin load.
-      vim.cmd('runtime! ftplugin/' .. vim.bo.filetype .. '.lua')
-      vim.cmd('runtime! ftplugin/' .. vim.bo.filetype .. '.vim')
-    end,
-  })
-end
+M.get_filename = require('utils.path').get_filename
 
--- Register a callback that runs once when the first LSP client attaches.
-M.on_lsp_attach = function(fn)
-  vim.api.nvim_create_autocmd('LSPAttach', {
-    once = true,
-    callback = function(args) fn(args) end,
-  })
-end
-
--- Register a callback that runs once when the first real buffer is
--- opened. Equivalent to on_file_types('*') but reads as intent.
-M.on_buf_read = function(fn)
-  vim.api.nvim_create_autocmd('BufReadPost', {
-    once = true,
-    callback = function(args) fn(args) end,
-  })
-end
-
-M.run_build = function(name, cmd, cwd)
-  local result = vim.system(cmd, { cwd = cwd }):wait()
-  if result.code ~= 0 then
-    local stderr = result.stderr or ''
-    local stdout = result.stdout or ''
-    local output = stderr ~= '' and stderr or stdout
-    if output == '' then output = 'No output from build command.' end
-    vim.notify(('Build failed for %s:\n%s'):format(name, output), vim.log.levels.ERROR)
-  end
-end
-
-M.get_filename = function(path)
-  -- Find the last occurrence of the path separator.
-  local separator = package.config:sub(1, 1) -- Get OS specific path separator
-  local pos = string.find(path, separator, nil, true)
-  local last_pos = pos
-  while pos do
-    last_pos = pos
-    pos = string.find(path, separator, pos + 1, true)
-  end
-
-  if last_pos then
-    return path:sub(last_pos + 1)
-  else
-    -- If no separator is found, the whole path is the filename.
-    return path
-  end
-end
-
-M.get_lua_filenames_without_extension = function()
-  local filenames = vim.fn.glob(vim.fn.stdpath 'config' .. '/lsp/*.lua')
-  local filename_table = vim.split(filenames, '\n')
-  local result = {}
-  for _, path in ipairs(filename_table) do
-    local fn = M.get_filename(path)
-    if fn:match 'init%.lua$' then goto continue end
-    local name = vim.fn.fnamemodify(fn, ':r')
-    table.insert(result, name)
-    ::continue::
-  end
-  return result
-end
+M.json = require('utils.json')
+M.terminal = require('utils.terminal')
+M.inject = require('utils.inject')
+M.mini = require('utils.mini')
+M.treesitter = require('utils.treesitter')
+M.root = require('utils.root')
 
 return M
 
