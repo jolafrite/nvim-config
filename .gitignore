@@ -1,3 +1,4 @@
 .ua/intermediate/
 .ua/tmp/
 .ua/diff-overlay.json
+.worktrees/

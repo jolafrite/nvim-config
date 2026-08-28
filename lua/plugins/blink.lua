@@ -7,6 +7,7 @@ vim.pack.add {
   gh 'saghen/blink.indent',
   gh 'saghen/blink.pairs',
   gh 'Kaiser-Yang/blink-cmp-git',
+  gh 'saghen/lazydev.nvim'
 }
 
 require('colorful-menu').setup {}
