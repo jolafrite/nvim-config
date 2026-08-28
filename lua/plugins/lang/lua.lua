@@ -13,7 +13,11 @@ local function setup(args)
     end,
     settings = {
       Lua = {
-        format = { enable = false }, -- Disable formatting (formatting is done by stylua)
+        runtime = {
+          version = 'LuaJIT',
+        },
+        signatureHelp = { enabled = true },
+        format = { enable = false },
       },
     },
   }
