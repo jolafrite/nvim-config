@@ -7,7 +7,6 @@ vim.pack.add {
   gh 'saghen/blink.indent',
   gh 'saghen/blink.pairs',
   gh 'Kaiser-Yang/blink-cmp-git',
-  gh 'moyiz/blink-emoji.nvim',
   gh 'folke/lazydev.nvim'
 }
 
@@ -50,7 +49,7 @@ require('blink.cmp').setup {
   },
 
   sources = {
-    default = { 'lazydev', 'lsp', 'snippets', 'path', 'buffer', 'emoji' },
+    default = { 'lazydev', 'lsp', 'snippets', 'path', 'buffer' },
     providers = {
       buffer = {
         name = 'buffer',
