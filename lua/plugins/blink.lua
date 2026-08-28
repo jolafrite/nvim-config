@@ -7,7 +7,7 @@ vim.pack.add {
   gh 'saghen/blink.indent',
   gh 'saghen/blink.pairs',
   gh 'Kaiser-Yang/blink-cmp-git',
-  gh 'saghen/lazydev.nvim'
+  gh 'saghen/blink-emoji.nvim',
 }
 
 require('colorful-menu').setup {}
@@ -63,6 +63,7 @@ require('blink.cmp').setup {
         name = 'LazyDev',
         module = 'lazydev.integrations.blink',
         fallbacks = { 'LSP' },
+        score_offset = 100,
       },
       lsp = {
         name = 'LSP',
