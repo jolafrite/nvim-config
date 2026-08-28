@@ -1,0 +1,3137 @@
+{
+  "nodes": [
+    {
+      "id": "config:.luarc.json",
+      "type": "config",
+      "name": ".luarc.json",
+      "filePath": ".luarc.json",
+      "summary": "Lua-language-server configuration declaring Neovim globals (vim, Snacks) and suppressing undefined-doc-name diagnostics for the Snacks plugin API.",
+      "tags": [
+        "configuration",
+        "lua",
+        "lsp",
+        "diagnostics",
+        "editor"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.neoconf.json",
+      "type": "config",
+      "name": ".neoconf.json",
+      "filePath": ".neoconf.json",
+      "summary": "neoconf/neodev configuration enabling the neodev library and lua_ls plugin for the Neovim Lua LSP workspace.",
+      "tags": [
+        "configuration",
+        "lua",
+        "lsp",
+        "neovim",
+        "neodev"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CONTRIBUTING.md",
+      "type": "document",
+      "name": "CONTRIBUTING.md",
+      "filePath": "CONTRIBUTING.md",
+      "summary": "Contribution guide covering development setup, prerequisites (Neovim, Jujutsu), repository cloning, and running the config via `nvim -u ./init.lua`.",
+      "tags": [
+        "documentation",
+        "development",
+        "onboarding",
+        "contributing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:KEYMAP.md",
+      "type": "document",
+      "name": "KEYMAP.md",
+      "filePath": "KEYMAP.md",
+      "summary": "Comprehensive keymap reference for the nvim-pack config (leader `,`), organized into 20 sections covering movement, windows, editing, LSP, buffers, Snacks pickers, git, terminal, and toggles.",
+      "tags": [
+        "documentation",
+        "keymap",
+        "reference",
+        "neovim",
+        "user-guide"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Single-title project README for the nvim-config Neovim configuration.",
+      "tags": [
+        "documentation",
+        "overview",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:nvim-pack-lock.json",
+      "type": "config",
+      "name": "nvim-pack-lock.json",
+      "filePath": "nvim-pack-lock.json",
+      "summary": "Generated lock file pinning 82 bundled Neovim plugins (SchemaStore, snacks.nvim, nvim-treesitter, which-key.nvim, etc.) resolved by nvim-pack for reproducible plugin installs.",
+      "tags": [
+        "configuration",
+        "lock-file",
+        "plugin-management",
+        "dependencies",
+        "nvim-pack"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:stylua.toml",
+      "type": "config",
+      "name": "stylua.toml",
+      "filePath": "stylua.toml",
+      "summary": "Stylua Lua formatter configuration with 160-column width, 2-space indent, single-quote preference, no call parentheses, and sorted requires.",
+      "tags": [
+        "configuration",
+        "formatter",
+        "lua",
+        "linting",
+        "code-style"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:init.lua",
+      "type": "file",
+      "name": "init.lua",
+      "filePath": "init.lua",
+      "summary": "Neovim configuration entry point. Requires the config submodules in load order (options, keymaps, autocmds, pack, plugins, load_lsp) and applies the shades-of-purple colorscheme at startup.",
+      "tags": [
+        "entry-point",
+        "bootstrap",
+        "config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/config/autocmds.lua",
+      "type": "file",
+      "name": "autocmds.lua",
+      "filePath": "lua/config/autocmds.lua",
+      "summary": "Registers Neovim autocmds for filetype concealment, formatoptions cleanup, cursorline toggling per window, and relative/absolute line-number switching on focus/insert events.",
+      "tags": [
+        "autocmd",
+        "config",
+        "editor-behavior"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/config/keymaps.lua",
+      "type": "file",
+      "name": "keymaps.lua",
+      "filePath": "lua/config/keymaps.lua",
+      "summary": "Comprehensive default keymap set covering search, window movement, line moving, diagnostics navigation, quickfix/location lists, and editor primitives. Defines local helpers open_url, searching_brave, and diagnostic_goto.",
+      "tags": [
+        "keymaps",
+        "config",
+        "editor",
+        "bindings"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:lua/config/load_lsp.lua",
+      "type": "file",
+      "name": "load_lsp.lua",
+      "filePath": "lua/config/load_lsp.lua",
+      "summary": "Configures vim.diagnostic virtual_text and severity signs, then binds the LspLensToggle leader mapping. Minimal LSP-adjacent setup loaded after plugins.",
+      "tags": [
+        "lsp",
+        "diagnostics",
+        "config",
+        "keymaps"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/config/lsp.lua",
+      "type": "file",
+      "name": "lsp.lua",
+      "filePath": "lua/config/lsp.lua",
+      "summary": "Fully commented-out legacy LSP configuration documenting vim.lsp.config setups for 20+ language servers (rust-analyzer, gopls, clangd, lua_ls, pyright, ruff, ts_ls, and more). Inactive in the current runtime; per-language configs now live in lua/plugins/lang/*.",
+      "tags": [
+        "lsp",
+        "legacy",
+        "stub",
+        "documentation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/config/options.lua",
+      "type": "file",
+      "name": "options.lua",
+      "filePath": "lua/config/options.lua",
+      "summary": "Sets global Neovim options and globals: encoding, backup dir, leader key, root-detection spec, spell, backspace, conceallevel, and disabled providers. Wraps vim.keymap.set to force silent=true by default.",
+      "tags": [
+        "config",
+        "options",
+        "globals",
+        "editor"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/config/pack.lua",
+      "type": "file",
+      "name": "pack.lua",
+      "filePath": "lua/config/pack.lua",
+      "summary": "PackChanged autocmd hook that runs post-install builds for telescope-fzf-native.nvim and LuaSnip, and triggers TSUpdate after nvim-treesitter install/update.",
+      "tags": [
+        "plugin",
+        "build",
+        "autocmd",
+        "config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/health.lua",
+      "type": "file",
+      "name": "health.lua",
+      "filePath": "lua/health.lua",
+      "summary": "Neovim health check module returned as a table. Validates Neovim version >= 0.12 and presence of external tools (git, make, unzip, rg), emitting ok/warn via vim.health.",
+      "tags": [
+        "health",
+        "diagnostics",
+        "validation",
+        "module"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:lua/health.lua:check_version",
+      "type": "function",
+      "name": "check_version",
+      "filePath": "lua/health.lua",
+      "lineRange": [
+        8,
+        20
+      ],
+      "summary": "Reports the running Neovim version, erroring if vim.version.ge is missing or the version is below 0.12.",
+      "tags": [
+        "health",
+        "version-check",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/health.lua:check_external_reqs",
+      "type": "function",
+      "name": "check_external_reqs",
+      "filePath": "lua/health.lua",
+      "lineRange": [
+        22,
+        34
+      ],
+      "summary": "Verifies that git, make, unzip, and rg are executable, reporting each as ok or warn through vim.health.",
+      "tags": [
+        "health",
+        "external-requirements",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/health.lua:check",
+      "type": "function",
+      "name": "check",
+      "filePath": "lua/health.lua",
+      "lineRange": [
+        37,
+        51
+      ],
+      "summary": "Entry point invoked by :checkhealth; starts the kickstart.nvim health report, prints system info, then runs version and external-requirement checks.",
+      "tags": [
+        "health",
+        "entry-point",
+        "diagnostics"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/go.lua",
+      "type": "file",
+      "name": "go.lua",
+      "filePath": "lua/plugins/lang/go.lua",
+      "summary": "Go language support: pulls go.nvim via vim.pack.add, configures gofumpt/goimports formatting, wires conform formatters and lint linters, and binds localleader go/test/format keymaps.",
+      "tags": [
+        "language",
+        "go",
+        "lsp",
+        "formatting",
+        "keymaps"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/plugins/lang/lua.lua",
+      "type": "file",
+      "name": "lua.lua",
+      "filePath": "lua/plugins/lang/lua.lua",
+      "summary": "Lua language support: registers lua_ls with runtime/diagnostics/telemetry settings and configures stylua as the conform formatter for Lua files.",
+      "tags": [
+        "language",
+        "lua",
+        "lsp",
+        "formatting"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/python.lua",
+      "type": "file",
+      "name": "python.lua",
+      "filePath": "lua/plugins/lang/python.lua",
+      "summary": "Python language support: merge-configures pyright and ruff LSP servers and disables ruff hover in favor of pyright via snacks.util.lsp.on.",
+      "tags": [
+        "language",
+        "python",
+        "lsp"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/rust.lua",
+      "type": "file",
+      "name": "rust.lua",
+      "filePath": "lua/plugins/lang/rust.lua",
+      "summary": "Rust support: wires rustfmt as the conform formatter and clippy as the lint linter, overriding clippy's ignore_exitcode so cargo clippy exit code 101 does not break linting.",
+      "tags": [
+        "language",
+        "rust",
+        "formatting",
+        "linting"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/typescript.lua",
+      "type": "file",
+      "name": "typescript.lua",
+      "filePath": "lua/plugins/lang/typescript.lua",
+      "summary": "TypeScript language support: merge-configures ts_ls with explicit --stdio and filetypes covering javascript/typescript and their JSX variants, preserving base cmd/filetypes from config.lsp.",
+      "tags": [
+        "language",
+        "typescript",
+        "lsp"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/00-snacks.lua",
+      "type": "file",
+      "name": "00-snacks.lua",
+      "filePath": "lua/plugins/00-snacks.lua",
+      "summary": "Snacks.nvim plugin spec: registers the folke/snacks.nvim package via vim.pack.add, runs require('snacks').setup(), and defines the bulk of the <leader>s* picker, <leader>u* toggle, and <leader>g* git keymaps. Loaded first (00- prefix) so other modules can depend on Snacks being available.",
+      "tags": [
+        "plugin-spec",
+        "keymaps",
+        "snacks",
+        "entry-point",
+        "completion"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:lua/plugins/artio.lua",
+      "type": "file",
+      "name": "artio.lua",
+      "filePath": "lua/plugins/artio.lua",
+      "summary": "Minimal plugin spec registering comfysage/artio.nvim via vim.pack.add with no configuration.",
+      "tags": [
+        "plugin-spec",
+        "plugin-registry"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/async.lua",
+      "type": "file",
+      "name": "async.lua",
+      "filePath": "lua/plugins/async.lua",
+      "summary": "Minimal plugin spec registering lewis6991/async.nvim via vim.pack.add with no configuration.",
+      "tags": [
+        "plugin-spec",
+        "plugin-registry"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/better-type-hover.lua",
+      "type": "file",
+      "name": "better-type-hover.lua",
+      "filePath": "lua/plugins/better-type-hover.lua",
+      "summary": "Deferred plugin spec: installs Sebastian-Nielsen/better-type-hover on first FileType event for typescript/typescriptreact and binds <C-P> to better_type_hover scoped to the buffer.",
+      "tags": [
+        "plugin-spec",
+        "lsp",
+        "typescript",
+        "deferred-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/blink.lua",
+      "type": "file",
+      "name": "blink.lua",
+      "filePath": "lua/plugins/blink.lua",
+      "summary": "Blink.cmp completion spec: adds saghen/blink.lib, blink.cmp, blink.indent, blink.pairs, and Kaiser-Yang/blink-cmp-git, configures completion sources/keymaps/cmdline, and compiles the native Rust fuzzy matcher via blink.build():pwait() on startup.",
+      "tags": [
+        "plugin-spec",
+        "completion",
+        "autocompletion",
+        "build"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/plugins/bufferline.lua",
+      "type": "file",
+      "name": "bufferline.lua",
+      "filePath": "lua/plugins/bufferline.lua",
+      "summary": "Bufferline spec: adds akinsho/bufferline.nvim, runs setup(), re-runs setup on session restore via BufAdd/BufDelete autocmd, and binds <leader>b* pin/close/navigation keymaps plus <S-h>/<S-l>/[b/]b/[B>]B movement.",
+      "tags": [
+        "plugin-spec",
+        "buffer-management",
+        "keymaps"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/plugins/conform.lua",
+      "type": "file",
+      "name": "conform.lua",
+      "filePath": "lua/plugins/conform.lua",
+      "summary": "Conform.nvim formatter spec: adds stevearc/conform.nvim, configures gocondense for Go, registers a toggleable BufWritePre autocmd that calls conform.format on save, and exposes M.format_on_save/M.toggle/M.is_on plus <leader>cf/<leader>cF keymaps.",
+      "tags": [
+        "plugin-spec",
+        "formatting",
+        "autocmd",
+        "keymaps"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/plugins/core.lua",
+      "type": "file",
+      "name": "core.lua",
+      "filePath": "lua/plugins/core.lua",
+      "summary": "Core plugin spec registering the base nvim-tree/nvim-web-devicons dependency via vim.pack.add.",
+      "tags": [
+        "plugin-spec",
+        "plugin-registry",
+        "icons"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/cyberdream.lua",
+      "type": "file",
+      "name": "cyberdream.lua",
+      "filePath": "lua/plugins/cyberdream.lua",
+      "summary": "Minimal plugin spec registering scottmckendry/cyberdream.nvim (colorscheme) via vim.pack.add with no configuration.",
+      "tags": [
+        "plugin-spec",
+        "plugin-registry",
+        "colorscheme"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/e-ink.lua",
+      "type": "file",
+      "name": "e-ink.lua",
+      "filePath": "lua/plugins/e-ink.lua",
+      "summary": "Minimal plugin spec registering e-ink-colorscheme/e-ink.nvim (colorscheme) via vim.pack.add with no configuration.",
+      "tags": [
+        "plugin-spec",
+        "plugin-registry",
+        "colorscheme"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/fidget.lua",
+      "type": "file",
+      "name": "fidget.lua",
+      "filePath": "lua/plugins/fidget.lua",
+      "summary": "Deferred plugin spec: installs j-hui/fidget.nvim and runs its setup() on LSP attach via utils.on_lsp_attach.",
+      "tags": [
+        "plugin-spec",
+        "lsp",
+        "deferred-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/flash.lua",
+      "type": "file",
+      "name": "flash.lua",
+      "filePath": "lua/plugins/flash.lua",
+      "summary": "Flash.nvim spec: installs folke/flash.nvim on first FileType (coordinated with treesitter.lua), runs setup(), and binds s/S/r/R/<c-s>/<c-space> jump and treesitter-search keymaps.",
+      "tags": [
+        "plugin-spec",
+        "navigation",
+        "keymaps",
+        "deferred-load"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/plugins/gitsigns.lua",
+      "type": "file",
+      "name": "gitsigns.lua",
+      "filePath": "lua/plugins/gitsigns.lua",
+      "summary": "GitSigns.nvim spec: adds lewis6991/gitsigns.nvim, configures custom sign text and an on_attach handler that binds ]h/[h navigation and <leader>gh* stage/reset/blame/diff keymaps per buffer.",
+      "tags": [
+        "plugin-spec",
+        "git",
+        "keymaps",
+        "lsp-attach"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/plugins/grug-far.lua",
+      "type": "file",
+      "name": "grug-far.lua",
+      "filePath": "lua/plugins/grug-far.lua",
+      "summary": "Grug-far.nvim search/replace spec: installs MagicDuck/grug-far.nvim on first FileType, configures headerMaxWidth, and binds <leader>sr to open a transient grug-far panel prefilled to the current file extension.",
+      "tags": [
+        "plugin-spec",
+        "search",
+        "deferred-load",
+        "keymaps"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/guihua.lua",
+      "type": "file",
+      "name": "guihua.lua",
+      "filePath": "lua/plugins/guihua.lua",
+      "summary": "Minimal plugin spec registering ray-x/guihua.lua (GUI toolkit dependency) via vim.pack.add with no configuration.",
+      "tags": [
+        "plugin-spec",
+        "plugin-registry",
+        "dependency"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/init.lua",
+      "type": "file",
+      "name": "init.lua",
+      "filePath": "lua/plugins/init.lua",
+      "summary": "Plugin loader: globs lua/plugins/*.lua at startup and loadfile's each non-init spec file, stripping numeric load-order prefixes and guarding against double-loading via package.loaded. This is the entry point that activates every top-level plugin spec in the directory.",
+      "tags": [
+        "entry-point",
+        "plugin-loader",
+        "bootstrap"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/keymaps.lua",
+      "type": "file",
+      "name": "keymaps.lua",
+      "filePath": "lua/plugins/keymaps.lua",
+      "summary": "Plugin spec registering comfysage/keymaps.nvim via vim.pack.add; provides the which-key integration for editor keymaps.",
+      "tags": [
+        "plugin-spec",
+        "keymaps",
+        "which-key"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/kulala.lua",
+      "type": "file",
+      "name": "kulala.lua",
+      "filePath": "lua/plugins/kulala.lua",
+      "summary": "Kulala.nvim HTTP client spec: adds mistweaverco/kulala.nvim, resolves the node binary path via system('which node'), configures global_keymaps under <leader>R, and registers the setup.",
+      "tags": [
+        "plugin-spec",
+        "http-client",
+        "keymaps"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/angular.lua",
+      "type": "file",
+      "name": "angular.lua",
+      "filePath": "lua/plugins/lang/angular.lua",
+      "summary": "Angular language support: configures the angularls LSP server and, via snacks.util.lsp.on, disables its renameProvider to work around a duplicate-rename bug.",
+      "tags": [
+        "lsp",
+        "language-support",
+        "treesitter"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/clangd.lua",
+      "type": "file",
+      "name": "clangd.lua",
+      "filePath": "lua/plugins/lang/clangd.lua",
+      "summary": "Clangd language support: configures the clangd LSP server with root-marker discovery, utf-16 offset encoding, and a command line enabling background indexing, clang-tidy, and IWYU header insertion.",
+      "tags": [
+        "lsp",
+        "language-support",
+        "cpp"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/cmake.lua",
+      "type": "file",
+      "name": "cmake.lua",
+      "filePath": "lua/plugins/lang/cmake.lua",
+      "summary": "CMake language support: configures the neocmake LSP server and assigns the cmakelint linter to cmake files.",
+      "tags": [
+        "lsp",
+        "language-support",
+        "linting"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/docker.lua",
+      "type": "file",
+      "name": "docker.lua",
+      "filePath": "lua/plugins/lang/docker.lua",
+      "summary": "Docker language support: configures the dockerls and docker_compose_language_service LSP servers and assigns the hadolint linter to dockerfile files.",
+      "tags": [
+        "lsp",
+        "language-support",
+        "linting"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/git.lua",
+      "type": "file",
+      "name": "git.lua",
+      "filePath": "lua/plugins/lang/git.lua",
+      "summary": "Git language support module: intentionally contains no LSP setup; treesitter parsers (git_config, gitcommit, git_rebase, gitignore, gitattributes) are registered in treesitter.lua instead.",
+      "tags": [
+        "language-support",
+        "treesitter",
+        "placeholder"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/init.lua",
+      "type": "file",
+      "name": "init.lua",
+      "filePath": "lua/plugins/lang/init.lua",
+      "summary": "Language-module barrel: requires each config.lang.* module (angular through zig) that configures treesitter and LSP for that language family.",
+      "tags": [
+        "entry-point",
+        "barrel",
+        "language-support"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/java.lua",
+      "type": "file",
+      "name": "java.lua",
+      "filePath": "lua/plugins/lang/java.lua",
+      "summary": "Registers jdtls LSP config guarded behind pcall(require,\"jdtls\") so the server is registered but never enabled without nvim-jdtls installed.",
+      "tags": [
+        "lsp-config",
+        "language-support",
+        "guard"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/json.lua",
+      "type": "file",
+      "name": "json.lua",
+      "filePath": "lua/plugins/lang/json.lua",
+      "summary": "Registers jsonls with schemastore schema extension and JSON formatting/validation enabled.",
+      "tags": [
+        "lsp-config",
+        "language-support",
+        "json"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/markdown.lua",
+      "type": "file",
+      "name": "markdown.lua",
+      "filePath": "lua/plugins/lang/markdown.lua",
+      "summary": "Registers marksman LSP and prettier/markdownlint-cli2/markdown-toc conform formatters plus markdownlint-cli2 linter for Markdown and MDX.",
+      "tags": [
+        "lsp-config",
+        "conform",
+        "lint",
+        "language-support"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/sql.lua",
+      "type": "file",
+      "name": "sql.lua",
+      "filePath": "lua/plugins/lang/sql.lua",
+      "summary": "Registers sqls LSP and sqlfluff conform formatter (ANSI dialect) for SQL, MySQL, and PL/SQL.",
+      "tags": [
+        "lsp-config",
+        "conform",
+        "language-support"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/svelte.lua",
+      "type": "file",
+      "name": "svelte.lua",
+      "filePath": "lua/plugins/lang/svelte.lua",
+      "summary": "Registers svelte LSP, depends on typescript/ts_ls loaded in lsp.lua.",
+      "tags": [
+        "lsp-config",
+        "language-support",
+        "svelte"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/tailwind.lua",
+      "type": "file",
+      "name": "tailwind.lua",
+      "filePath": "lua/plugins/lang/tailwind.lua",
+      "summary": "Registers tailwindcss LSP with HTML-eex include-languages mapping for Elixir filetypes.",
+      "tags": [
+        "lsp-config",
+        "language-support",
+        "tailwind"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/toml.lua",
+      "type": "file",
+      "name": "toml.lua",
+      "filePath": "lua/plugins/lang/toml.lua",
+      "summary": "Registers taplo LSP for TOML.",
+      "tags": [
+        "lsp-config",
+        "language-support",
+        "toml"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/terraform.lua",
+      "type": "file",
+      "name": "terraform.lua",
+      "filePath": "lua/plugins/lang/terraform.lua",
+      "summary": "Registers terraformls LSP plus terraform_fmt conform and terraform_validate linter for Terraform/HCL.",
+      "tags": [
+        "lsp-config",
+        "conform",
+        "lint",
+        "language-support",
+        "terraform"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/zig.lua",
+      "type": "file",
+      "name": "zig.lua",
+      "filePath": "lua/plugins/lang/zig.lua",
+      "summary": "Registers zls LSP for Zig.",
+      "tags": [
+        "lsp-config",
+        "language-support",
+        "zig"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lynn.lua",
+      "type": "file",
+      "name": "lynn.lua",
+      "filePath": "lua/plugins/lynn.lua",
+      "summary": "Installs comfysage/lynn.nvim via vim.pack.add using the utils.gh helper.",
+      "tags": [
+        "plugin-install",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/namu.lua",
+      "type": "file",
+      "name": "namu.lua",
+      "filePath": "lua/plugins/namu.lua",
+      "summary": "Installs bassamsdata/namu.nvim via vim.pack.add using the utils.gh helper.",
+      "tags": [
+        "plugin-install",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/neocodeium.lua",
+      "type": "file",
+      "name": "neocodeium.lua",
+      "filePath": "lua/plugins/neocodeium.lua",
+      "summary": "Installs monkoose/neocodeium via vim.pack.add using the utils.gh helper.",
+      "tags": [
+        "plugin-install",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nivvie.lua",
+      "type": "file",
+      "name": "nivvie.lua",
+      "filePath": "lua/plugins/nivvie.lua",
+      "summary": "Installs comfysage/nivvie.nvim via vim.pack.add using the utils.gh helper.",
+      "tags": [
+        "plugin-install",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-chainsaw.lua",
+      "type": "file",
+      "name": "nvim-chainsaw.lua",
+      "filePath": "lua/plugins/nvim-chainsaw.lua",
+      "summary": "Installs chrisgrieser/nvim-chainsaw via vim.pack.add using the utils.gh helper.",
+      "tags": [
+        "plugin-install",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-genghis.lua",
+      "type": "file",
+      "name": "nvim-genghis.lua",
+      "filePath": "lua/plugins/nvim-genghis.lua",
+      "summary": "Installs chrisgrieser/nvim-genghis via vim.pack.add using the utils.gh helper.",
+      "tags": [
+        "plugin-install",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lsp_lens.lua",
+      "type": "file",
+      "name": "lsp_lens.lua",
+      "filePath": "lua/plugins/lsp_lens.lua",
+      "summary": "Defers lsp-lens.nvim install to first LSPAttach and configures a reference-count lens in the signcolumn.",
+      "tags": [
+        "plugin-config",
+        "deferred-load",
+        "lsp"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lualine.lua",
+      "type": "file",
+      "name": "lualine.lua",
+      "filePath": "lua/plugins/lualine.lua",
+      "summary": "Configures lualine statusline with custom root-directory component, pretty-path component, diagnostics/git/diff sections, and noice/dap/lazy extension integrations.",
+      "tags": [
+        "statusline",
+        "plugin-config",
+        "ui"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:lua/plugins/mason.lua",
+      "type": "file",
+      "name": "mason.lua",
+      "filePath": "lua/plugins/mason.lua",
+      "summary": "Sets up mason with an ensure_installed list (stylua, shfmt, sqlfluff, markdownlint-cli2, ...) and auto-installs tools via mason-registry on refresh.",
+      "tags": [
+        "plugin-config",
+        "tool-management",
+        "mason"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/plugins/mini.lua",
+      "type": "file",
+      "name": "mini.lua",
+      "filePath": "lua/plugins/mini.lua",
+      "summary": "Installs mini.nvim modules (diff, surround, pairs, files, icons, visits, operators) and configures diff signs, surround mappings, file explorer, and mocks nvim-web-devicons through mini.icons.",
+      "tags": [
+        "plugin-config",
+        "mini"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/plugins/neo-tree.lua",
+      "type": "file",
+      "name": "neo-tree.lua",
+      "filePath": "lua/plugins/neo-tree.lua",
+      "summary": "Defers neo-tree install to first FileType, configures filesystem/buffers/git_status sources with custom mappings, and refreshes git_status on TermClose for lazygit.",
+      "tags": [
+        "plugin-config",
+        "file-tree"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/plugins/noice.lua",
+      "type": "file",
+      "name": "noice.lua",
+      "filePath": "lua/plugins/noice.lua",
+      "summary": "Configures noice notification UI with LSP markdown override, message routing presets, and keymaps for cmdline redirection and notification scrolling.",
+      "tags": [
+        "plugin-config",
+        "notifications",
+        "keymaps"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:lua/plugins/lualine.lua:root_get",
+      "type": "function",
+      "name": "root_get",
+      "filePath": "lua/plugins/lualine.lua",
+      "lineRange": [
+        26,
+        42
+      ],
+      "summary": "Minimal root detector that walks vim.g.root_spec entries, calling functions and returning the first non-nil result.",
+      "tags": [
+        "root-detection",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/lualine.lua:pretty_path",
+      "type": "function",
+      "name": "pretty_path",
+      "filePath": "lua/plugins/lualine.lua",
+      "lineRange": [
+        48,
+        88
+      ],
+      "summary": "Returns a lualine component function that renders the current buffer path relative to cwd, truncating long paths with an ellipsis.",
+      "tags": [
+        "statusline",
+        "path-formatting",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:lua/plugins/lualine.lua:root_dir",
+      "type": "function",
+      "name": "root_dir",
+      "filePath": "lua/plugins/lualine.lua",
+      "lineRange": [
+        90,
+        128
+      ],
+      "summary": "Returns a lualine section spec showing the project root name with a directory icon, classifying the buffer as cwd/subdirectory/parent/other.",
+      "tags": [
+        "statusline",
+        "root-detection",
+        "component-builder"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/plugins/nvim-justice.lua",
+      "type": "file",
+      "name": "nvim-justice.lua",
+      "filePath": "lua/plugins/nvim-justice.lua",
+      "summary": "Registers the nvim-justice plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-lsp-endhints.lua",
+      "type": "file",
+      "name": "nvim-lsp-endhints.lua",
+      "filePath": "lua/plugins/nvim-lsp-endhints.lua",
+      "summary": "Registers the nvim-lsp-endhints plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-origami.lua",
+      "type": "file",
+      "name": "nvim-origami.lua",
+      "filePath": "lua/plugins/nvim-origami.lua",
+      "summary": "Registers the nvim-origami plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-rip-substitute.lua",
+      "type": "file",
+      "name": "nvim-rip-substitute.lua",
+      "filePath": "lua/plugins/nvim-rip-substitute.lua",
+      "summary": "Registers the nvim-rip-substitute plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-rulebook.lua",
+      "type": "file",
+      "name": "nvim-rulebook.lua",
+      "filePath": "lua/plugins/nvim-rulebook.lua",
+      "summary": "Registers the nvim-rulebook plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-scissors.lua",
+      "type": "file",
+      "name": "nvim-scissors.lua",
+      "filePath": "lua/plugins/nvim-scissors.lua",
+      "summary": "Registers the nvim-scissors plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-spider.lua",
+      "type": "file",
+      "name": "nvim-spider.lua",
+      "filePath": "lua/plugins/nvim-spider.lua",
+      "summary": "Registers the nvim-spider plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-surround.lua",
+      "type": "file",
+      "name": "nvim-surround.lua",
+      "filePath": "lua/plugins/nvim-surround.lua",
+      "summary": "Registers the nvim-surround plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-tinygit.lua",
+      "type": "file",
+      "name": "nvim-tinygit.lua",
+      "filePath": "lua/plugins/nvim-tinygit.lua",
+      "summary": "Registers the nvim-tinygit plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-various-textobjs.lua",
+      "type": "file",
+      "name": "nvim-various-textobjs.lua",
+      "filePath": "lua/plugins/nvim-various-textobjs.lua",
+      "summary": "Registers the nvim-various-textobjs plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim_lightbulb.lua",
+      "type": "file",
+      "name": "nvim_lightbulb.lua",
+      "filePath": "lua/plugins/nvim_lightbulb.lua",
+      "summary": "Lazily loads the nvim-lightbulb plugin on first LSPAttach, configuring quickfix and refactor action signs.",
+      "tags": [
+        "plugin",
+        "lazy-load",
+        "lsp",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/pack_float.lua",
+      "type": "file",
+      "name": "pack_float.lua",
+      "filePath": "lua/plugins/pack_float.lua",
+      "summary": "Interactive vim.pack plugin manager UI as a floating window with refresh, update, uninstall, and key navigation.",
+      "tags": [
+        "ui",
+        "plugin-manager",
+        "vim-pack",
+        "floating-window"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:lua/plugins/plenary.lua",
+      "type": "file",
+      "name": "plenary.lua",
+      "filePath": "lua/plugins/plenary.lua",
+      "summary": "Registers the plenary.nvim plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/refactoring.lua",
+      "type": "file",
+      "name": "refactoring.lua",
+      "filePath": "lua/plugins/refactoring.lua",
+      "summary": "Lazily loads the refactoring.nvim plugin on first LSPAttach, providing an LSP-driven refactor menu.",
+      "tags": [
+        "plugin",
+        "lazy-load",
+        "lsp",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/render-markdown.lua",
+      "type": "file",
+      "name": "render-markdown.lua",
+      "filePath": "lua/plugins/render-markdown.lua",
+      "summary": "Lazily loads render-markdown.nvim on first markdown FileType, configuring heading, code block, and checkbox rendering.",
+      "tags": [
+        "plugin",
+        "lazy-load",
+        "markdown",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/satellite.lua",
+      "type": "file",
+      "name": "satellite.lua",
+      "filePath": "lua/plugins/satellite.lua",
+      "summary": "Registers the satellite.nvim plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/shades-of-purple.lua",
+      "type": "file",
+      "name": "shades-of-purple.lua",
+      "filePath": "lua/plugins/shades-of-purple.lua",
+      "summary": "Registers the shades-of-purple.nvim plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/symbol_usage.lua",
+      "type": "file",
+      "name": "symbol_usage.lua",
+      "filePath": "lua/plugins/symbol_usage.lua",
+      "summary": "Lazily loads symbol-usage.nvim on first LSPAttach, showing reference counts as virtual text at end of line.",
+      "tags": [
+        "plugin",
+        "lazy-load",
+        "lsp",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/tiny-autosave.lua",
+      "type": "file",
+      "name": "tiny-autosave.lua",
+      "filePath": "lua/plugins/tiny-autosave.lua",
+      "summary": "Registers the tiny-autosave.nvim plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/todo-comments.lua",
+      "type": "file",
+      "name": "todo-comments.lua",
+      "filePath": "lua/plugins/todo-comments.lua",
+      "summary": "Lazily loads todo-comments.nvim on first BufReadPost, providing comment scanning with keymaps and Trouble/Telescope integration.",
+      "tags": [
+        "plugin",
+        "lazy-load",
+        "comments",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/treesj.lua",
+      "type": "file",
+      "name": "treesj.lua",
+      "filePath": "lua/plugins/treesj.lua",
+      "summary": "Registers the treesj plugin via vim.pack.add using the gh URL helper.",
+      "tags": [
+        "plugin",
+        "vim-pack",
+        "lazy-load"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/treesitter.lua",
+      "type": "file",
+      "name": "treesitter.lua",
+      "filePath": "lua/plugins/treesitter.lua",
+      "summary": "Configures nvim-treesitter with indent, highlight, and fold features, plus a FileType autocmd for lazy per-buffer setup across 25 languages.",
+      "tags": [
+        "plugin",
+        "treesitter",
+        "highlighting",
+        "indenting",
+        "folding"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/plugins/treesitter-manager.lua",
+      "type": "file",
+      "name": "treesitter-manager.lua",
+      "filePath": "lua/plugins/treesitter-manager.lua",
+      "summary": "Lazily loads tree-sitter-manager on first BufReadPost and registers a :TSUpgrade command for bulk parser removal and reinstall.",
+      "tags": [
+        "plugin",
+        "lazy-load",
+        "treesitter",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/treesitter-textobjects.lua",
+      "type": "file",
+      "name": "treesitter-textobjects.lua",
+      "filePath": "lua/plugins/treesitter-textobjects.lua",
+      "summary": "Registers nvim-treesitter-textobjects and sets up movement keymaps for function, class, and parameter textobjects via a FileType autocmd.",
+      "tags": [
+        "plugin",
+        "treesitter",
+        "textobjects",
+        "keymaps"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:lua/plugins/trouble.lua",
+      "type": "file",
+      "name": "trouble.lua",
+      "filePath": "lua/plugins/trouble.lua",
+      "summary": "Lazily loads trouble.nvim on first file open, providing a diagnostics/location-list/quickfix viewer with extensive keymaps.",
+      "tags": [
+        "plugin",
+        "lazy-load",
+        "diagnostics",
+        "vim-pack"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:setup_highlights",
+      "type": "function",
+      "name": "setup_highlights",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        42,
+        60
+      ],
+      "summary": "Defines and applies highlight groups for the pack_float UI, linking to standard Neovim highlight categories.",
+      "tags": [
+        "ui",
+        "highlights",
+        "rendering"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:setup",
+      "type": "function",
+      "name": "setup",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        62,
+        65
+      ],
+      "summary": "Public setup function that merges user options into the module config via deep extend.",
+      "tags": [
+        "api",
+        "configuration",
+        "setup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:set_plugins",
+      "type": "function",
+      "name": "set_plugins",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        105,
+        126
+      ],
+      "summary": "Updates the module state with a new plugin list, sorting loaded and not-loaded groups separately.",
+      "tags": [
+        "state",
+        "plugin-list",
+        "sorting"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:replace_plugin",
+      "type": "function",
+      "name": "replace_plugin",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        128,
+        140
+      ],
+      "summary": "Replaces a single plugin entry in the state by name and triggers a re-render.",
+      "tags": [
+        "state",
+        "plugin-list",
+        "rendering"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:reset_data",
+      "type": "function",
+      "name": "reset_data",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        142,
+        152
+      ],
+      "summary": "Clears all plugin state, lookup tables, and status tracking for a fresh start.",
+      "tags": [
+        "state",
+        "reset",
+        "cleanup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:set_lines",
+      "type": "function",
+      "name": "set_lines",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        165,
+        181
+      ],
+      "summary": "Writes content lines and highlight annotations to the floating buffer, clearing previous content first.",
+      "tags": [
+        "ui",
+        "rendering",
+        "buffer"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:build_content",
+      "type": "function",
+      "name": "build_content",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        184,
+        398
+      ],
+      "summary": "Builds the full UI content from plugin state, generating header lines, plugin rows with status indicators, and footer keymaps.",
+      "tags": [
+        "ui",
+        "rendering",
+        "content"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:set_update_status",
+      "type": "function",
+      "name": "set_update_status",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        409,
+        420
+      ],
+      "summary": "Records per-plugin update status (pending, current, up-to-date) for display in the refresh UI.",
+      "tags": [
+        "state",
+        "updates",
+        "status"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:setup_update_autocmds",
+      "type": "function",
+      "name": "setup_update_autocmds",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        443,
+        456
+      ],
+      "summary": "Registers PackChanged autocmds that track per-plugin update progress while an update is in flight.",
+      "tags": [
+        "autocmd",
+        "updates",
+        "events"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:load_commits",
+      "type": "function",
+      "name": "load_commits",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        459,
+        482
+      ],
+      "summary": "Fetches the most recent commit hash for a plugin via git in the background, updating the UI when done.",
+      "tags": [
+        "git",
+        "async",
+        "updates"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:refresh_local",
+      "type": "function",
+      "name": "refresh_local",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        496,
+        513
+      ],
+      "summary": "Refreshes the plugin list from local state after an update completes, re-rendering the UI on the next tick.",
+      "tags": [
+        "refresh",
+        "updates",
+        "async"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:refresh_fetch_async",
+      "type": "function",
+      "name": "refresh_fetch_async",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        516,
+        585
+      ],
+      "summary": "Async refresh that fetches remote refs and commit data for all plugins, tracking progress and failures.",
+      "tags": [
+        "refresh",
+        "git",
+        "async",
+        "fetching"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:close",
+      "type": "function",
+      "name": "close",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        596,
+        608
+      ],
+      "summary": "Closes the floating window, clears buffer autocmds, and tears down update tracking autocmds.",
+      "tags": [
+        "ui",
+        "cleanup",
+        "window"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:update_plugins",
+      "type": "function",
+      "name": "update_plugins",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        611,
+        645
+      ],
+      "summary": "Updates the specified plugins via vim.pack, showing live progress in the UI and refreshing on completion.",
+      "tags": [
+        "updates",
+        "vim-pack",
+        "progress"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:update_current",
+      "type": "function",
+      "name": "update_current",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        648,
+        662
+      ],
+      "summary": "Updates the plugin currently under the cursor, showing a notification on completion.",
+      "tags": [
+        "updates",
+        "ui",
+        "interaction"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:uninstall_current",
+      "type": "function",
+      "name": "uninstall_current",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        675,
+        713
+      ],
+      "summary": "Uninstalls the plugin under the cursor via vim.pack, removing it from the loaded list and re-rendering.",
+      "tags": [
+        "uninstall",
+        "vim-pack",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:jump",
+      "type": "function",
+      "name": "jump",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        716,
+        743
+      ],
+      "summary": "Jumps the cursor to the next or previous plugin in the list, wrapping around the boundaries.",
+      "tags": [
+        "ui",
+        "navigation",
+        "keymaps"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:toggle_details",
+      "type": "function",
+      "name": "toggle_details",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        746,
+        755
+      ],
+      "summary": "Toggles the details panel visibility for the plugin under the cursor, re-rendering the UI.",
+      "tags": [
+        "ui",
+        "details",
+        "interaction"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:setup_keymaps",
+      "type": "function",
+      "name": "setup_keymaps",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        767,
+        782
+      ],
+      "summary": "Sets up all buffer-local keymaps for the floating window: close, refresh, update, uninstall, jump, and details toggle.",
+      "tags": [
+        "ui",
+        "keymaps",
+        "setup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:lua/plugins/pack_float.lua:open",
+      "type": "function",
+      "name": "open",
+      "filePath": "lua/plugins/pack_float.lua",
+      "lineRange": [
+        785,
+        844
+      ],
+      "summary": "Public entry point that creates the floating window, loads plugin data, sets up keymaps, and triggers a refresh.",
+      "tags": [
+        "api",
+        "ui",
+        "float",
+        "entry-point"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:lua/plugins/treesitter-textobjects.lua:attach",
+      "type": "function",
+      "name": "attach",
+      "filePath": "lua/plugins/treesitter-textobjects.lua",
+      "lineRange": [
+        38,
+        82
+      ],
+      "summary": "Attaches treesitter textobject movement keymaps to a buffer, resolving query descriptions and handling diff-mode edge cases.",
+      "tags": [
+        "treesitter",
+        "keymaps",
+        "textobjects",
+        "movement"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:lua/plugins/treesitter-manager.lua:TSUpgrade",
+      "type": "function",
+      "name": "TSUpgrade",
+      "filePath": "lua/plugins/treesitter-manager.lua",
+      "lineRange": [
+        17,
+        38
+      ],
+      "summary": "User command callback that removes and reinstalls all installed treesitter parsers with a progress wait.",
+      "tags": [
+        "treesitter",
+        "command",
+        "maintenance"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/lang/kotlin.lua",
+      "type": "file",
+      "name": "kotlin.lua",
+      "filePath": "lua/plugins/lang/kotlin.lua",
+      "summary": "Plugin registration / config stub for kotlin.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nightfox.lua",
+      "type": "file",
+      "name": "nightfox.lua",
+      "filePath": "lua/plugins/nightfox.lua",
+      "summary": "Plugin registration / config stub for nightfox.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nui.lua",
+      "type": "file",
+      "name": "nui.lua",
+      "filePath": "lua/plugins/nui.lua",
+      "summary": "Plugin registration / config stub for nui.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-jump.lua",
+      "type": "file",
+      "name": "nvim-jump.lua",
+      "filePath": "lua/plugins/nvim-jump.lua",
+      "summary": "Plugin registration / config stub for nvim-jump.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-lint.lua",
+      "type": "file",
+      "name": "nvim-lint.lua",
+      "filePath": "lua/plugins/nvim-lint.lua",
+      "summary": "Plugin registration / config stub for nvim-lint.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/nvim-nio.lua",
+      "type": "file",
+      "name": "nvim-nio.lua",
+      "filePath": "lua/plugins/nvim-nio.lua",
+      "summary": "Plugin registration / config stub for nvim-nio.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/schemastore.lua",
+      "type": "file",
+      "name": "schemastore.lua",
+      "filePath": "lua/plugins/schemastore.lua",
+      "summary": "Plugin registration / config stub for schemastore.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/ultimate-autopair.lua",
+      "type": "file",
+      "name": "ultimate-autopair.lua",
+      "filePath": "lua/plugins/ultimate-autopair.lua",
+      "summary": "Plugin registration / config stub for ultimate-autopair.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/vim-illuminate.lua",
+      "type": "file",
+      "name": "vim-illuminate.lua",
+      "filePath": "lua/plugins/vim-illuminate.lua",
+      "summary": "Plugin registration / config stub for vim-illuminate.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/whichkey.lua",
+      "type": "file",
+      "name": "whichkey.lua",
+      "filePath": "lua/plugins/whichkey.lua",
+      "summary": "Plugin registration / config stub for whichkey.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/workspace_diagnostics.lua",
+      "type": "file",
+      "name": "workspace_diagnostics.lua",
+      "filePath": "lua/plugins/workspace_diagnostics.lua",
+      "summary": "Plugin registration / config stub for workspace_diagnostics.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/yanky.lua",
+      "type": "file",
+      "name": "yanky.lua",
+      "filePath": "lua/plugins/yanky.lua",
+      "summary": "Plugin registration / config stub for yanky.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/plugins/yazi.lua",
+      "type": "file",
+      "name": "yazi.lua",
+      "filePath": "lua/plugins/yazi.lua",
+      "summary": "Plugin registration / config stub for yazi.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:lua/utils/init.lua",
+      "type": "file",
+      "name": "init.lua",
+      "filePath": "lua/utils/init.lua",
+      "summary": "Plugin registration / config stub for init.lua (vim.pack.add).",
+      "tags": [
+        "neovim",
+        "plugin",
+        "stub"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:KEYMAP.md",
+      "target": "file:lua/config/keymaps.lua",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:KEYMAP.md",
+      "target": "file:lua/config/lsp.lua",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CONTRIBUTING.md",
+      "target": "file:init.lua",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.luarc.json",
+      "target": "file:lua/config/keymaps.lua",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:stylua.toml",
+      "target": "file:lua/config/keymaps.lua",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:init.lua",
+      "target": "file:lua/config/options.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:init.lua",
+      "target": "file:lua/config/keymaps.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:init.lua",
+      "target": "file:lua/config/autocmds.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:init.lua",
+      "target": "file:lua/config/pack.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:init.lua",
+      "target": "file:lua/config/load_lsp.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:init.lua",
+      "target": "file:lua/plugins/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/health.lua",
+      "target": "function:lua/health.lua:check_version",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/health.lua",
+      "target": "function:lua/health.lua:check_external_reqs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/health.lua",
+      "target": "function:lua/health.lua:check",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/lang/go.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lang/go.lua",
+      "target": "file:lua/plugins/conform.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lang/lua.lua",
+      "target": "file:lua/plugins/conform.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lang/python.lua",
+      "target": "file:lua/plugins/conform.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lang/rust.lua",
+      "target": "file:lua/plugins/conform.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/00-snacks.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/artio.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/async.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/better-type-hover.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/blink.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/bufferline.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/conform.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/core.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/cyberdream.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/e-ink.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/fidget.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/flash.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/gitsigns.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/grug-far.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/guihua.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/keymaps.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/init.lua",
+      "target": "file:lua/plugins/kulala.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lang/angular.lua",
+      "target": "file:lua/plugins/00-snacks.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lang/markdown.lua",
+      "target": "file:lua/plugins/conform.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lang/sql.lua",
+      "target": "file:lua/plugins/conform.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lang/terraform.lua",
+      "target": "file:lua/plugins/conform.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lang/markdown.lua",
+      "target": "file:lua/plugins/nvim-lint.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lang/rust.lua",
+      "target": "file:lua/plugins/nvim-lint.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lang/terraform.lua",
+      "target": "file:lua/plugins/nvim-lint.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lang/python.lua",
+      "target": "file:lua/plugins/00-snacks.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lualine.lua",
+      "target": "function:lua/plugins/lualine.lua:root_get",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/lualine.lua",
+      "target": "function:lua/plugins/lualine.lua:pretty_path",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/lualine.lua",
+      "target": "function:lua/plugins/lualine.lua:root_dir",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/lualine.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lsp_lens.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lynn.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/mason.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/mini.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/namu.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/neo-tree.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/neocodeium.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/nivvie.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/noice.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/nvim-chainsaw.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/nvim-genghis.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lualine.lua",
+      "target": "file:lua/plugins/noice.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lualine.lua",
+      "target": "file:lua/plugins/00-snacks.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/lualine.lua",
+      "target": "file:lua/plugins/neo-tree.lua",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:setup_highlights",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:setup",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:set_plugins",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:replace_plugin",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:reset_data",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:set_lines",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:build_content",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:set_update_status",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:setup_update_autocmds",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:load_commits",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:refresh_local",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:refresh_fetch_async",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:close",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:update_plugins",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:update_current",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:uninstall_current",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:jump",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:toggle_details",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:setup_keymaps",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/pack_float.lua",
+      "target": "function:lua/plugins/pack_float.lua:open",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/treesitter-textobjects.lua",
+      "target": "function:lua/plugins/treesitter-textobjects.lua:attach",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/plugins/treesitter-manager.lua",
+      "target": "function:lua/plugins/treesitter-manager.lua:TSUpgrade",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:lua/config/pack.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/00-snacks.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/artio.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/async.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/better-type-hover.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/blink.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/bufferline.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/conform.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/core.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/cyberdream.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/e-ink.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/fidget.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/flash.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/gitsigns.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/grug-far.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/guihua.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/keymaps.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/kulala.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/lang/kotlin.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nightfox.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nui.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-jump.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-justice.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-lint.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-lsp-endhints.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-nio.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-origami.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-rip-substitute.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-rulebook.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-scissors.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-spider.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-surround.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-tinygit.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim-various-textobjs.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/nvim_lightbulb.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/plenary.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/refactoring.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/render-markdown.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/satellite.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/schemastore.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/shades-of-purple.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/symbol_usage.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/tiny-autosave.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/todo-comments.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/treesitter-manager.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/treesitter-textobjects.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/treesitter.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/treesj.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/trouble.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/ultimate-autopair.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/vim-illuminate.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/whichkey.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/workspace_diagnostics.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/yanky.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:lua/plugins/yazi.lua",
+      "target": "file:lua/utils/init.lua",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:bootstrap",
+      "name": "Bootstrap Layer",
+      "description": "Neovim entry point (init.lua) and health-check module (health.lua) that bootstrap the runtime, register plugins, and validate the environment at startup.",
+      "nodeIds": [
+        "file:init.lua",
+        "file:lua/health.lua"
+      ]
+    },
+    {
+      "id": "layer:config",
+      "name": "Core Configuration Layer",
+      "description": "Editor options, keymaps, autocmds, LSP diagnostics, pack hooks, and legacy LSP reference, plus root-level tooling configuration (.luarc.json, .neoconf.json, stylua.toml, nvim-pack-lock.json) and user-facing documentation (README.md, KEYMAP.md, CONTRIBUTING.md).",
+      "nodeIds": [
+        "config:.luarc.json",
+        "config:.neoconf.json",
+        "config:nvim-pack-lock.json",
+        "config:stylua.toml",
+        "document:CONTRIBUTING.md",
+        "document:KEYMAP.md",
+        "document:README.md",
+        "file:lua/config/autocmds.lua",
+        "file:lua/config/keymaps.lua",
+        "file:lua/config/load_lsp.lua",
+        "file:lua/config/lsp.lua",
+        "file:lua/config/options.lua",
+        "file:lua/config/pack.lua"
+      ]
+    },
+    {
+      "id": "layer:plugins",
+      "name": "Plugin Layer",
+      "description": "All 88 vim.pack plugin modules under lua/plugins/ (including lua/plugins/lang/ language server configs), each registering a third-party Neovim plugin and its setup, with heavy cross-dependency coupling among themselves.",
+      "nodeIds": [
+        "file:lua/plugins/lang/go.lua",
+        "file:lua/plugins/lang/lua.lua",
+        "file:lua/plugins/lang/python.lua",
+        "file:lua/plugins/lang/rust.lua",
+        "file:lua/plugins/lang/typescript.lua",
+        "file:lua/plugins/00-snacks.lua",
+        "file:lua/plugins/artio.lua",
+        "file:lua/plugins/async.lua",
+        "file:lua/plugins/better-type-hover.lua",
+        "file:lua/plugins/blink.lua",
+        "file:lua/plugins/bufferline.lua",
+        "file:lua/plugins/conform.lua",
+        "file:lua/plugins/core.lua",
+        "file:lua/plugins/cyberdream.lua",
+        "file:lua/plugins/e-ink.lua",
+        "file:lua/plugins/fidget.lua",
+        "file:lua/plugins/flash.lua",
+        "file:lua/plugins/gitsigns.lua",
+        "file:lua/plugins/grug-far.lua",
+        "file:lua/plugins/guihua.lua",
+        "file:lua/plugins/init.lua",
+        "file:lua/plugins/keymaps.lua",
+        "file:lua/plugins/kulala.lua",
+        "file:lua/plugins/lang/angular.lua",
+        "file:lua/plugins/lang/clangd.lua",
+        "file:lua/plugins/lang/cmake.lua",
+        "file:lua/plugins/lang/docker.lua",
+        "file:lua/plugins/lang/git.lua",
+        "file:lua/plugins/lang/init.lua",
+        "file:lua/plugins/lang/java.lua",
+        "file:lua/plugins/lang/json.lua",
+        "file:lua/plugins/lang/markdown.lua",
+        "file:lua/plugins/lang/sql.lua",
+        "file:lua/plugins/lang/svelte.lua",
+        "file:lua/plugins/lang/tailwind.lua",
+        "file:lua/plugins/lang/toml.lua",
+        "file:lua/plugins/lang/terraform.lua",
+        "file:lua/plugins/lang/zig.lua",
+        "file:lua/plugins/lynn.lua",
+        "file:lua/plugins/namu.lua",
+        "file:lua/plugins/neocodeium.lua",
+        "file:lua/plugins/nivvie.lua",
+        "file:lua/plugins/nvim-chainsaw.lua",
+        "file:lua/plugins/nvim-genghis.lua",
+        "file:lua/plugins/lsp_lens.lua",
+        "file:lua/plugins/lualine.lua",
+        "file:lua/plugins/mason.lua",
+        "file:lua/plugins/mini.lua",
+        "file:lua/plugins/neo-tree.lua",
+        "file:lua/plugins/noice.lua",
+        "file:lua/plugins/nvim-justice.lua",
+        "file:lua/plugins/nvim-lsp-endhints.lua",
+        "file:lua/plugins/nvim-origami.lua",
+        "file:lua/plugins/nvim-rip-substitute.lua",
+        "file:lua/plugins/nvim-rulebook.lua",
+        "file:lua/plugins/nvim-scissors.lua",
+        "file:lua/plugins/nvim-spider.lua",
+        "file:lua/plugins/nvim-surround.lua",
+        "file:lua/plugins/nvim-tinygit.lua",
+        "file:lua/plugins/nvim-various-textobjs.lua",
+        "file:lua/plugins/nvim_lightbulb.lua",
+        "file:lua/plugins/pack_float.lua",
+        "file:lua/plugins/plenary.lua",
+        "file:lua/plugins/refactoring.lua",
+        "file:lua/plugins/render-markdown.lua",
+        "file:lua/plugins/satellite.lua",
+        "file:lua/plugins/shades-of-purple.lua",
+        "file:lua/plugins/symbol_usage.lua",
+        "file:lua/plugins/tiny-autosave.lua",
+        "file:lua/plugins/todo-comments.lua",
+        "file:lua/plugins/treesj.lua",
+        "file:lua/plugins/treesitter.lua",
+        "file:lua/plugins/treesitter-manager.lua",
+        "file:lua/plugins/treesitter-textobjects.lua",
+        "file:lua/plugins/trouble.lua",
+        "file:lua/plugins/lang/kotlin.lua",
+        "file:lua/plugins/nightfox.lua",
+        "file:lua/plugins/nui.lua",
+        "file:lua/plugins/nvim-jump.lua",
+        "file:lua/plugins/nvim-lint.lua",
+        "file:lua/plugins/nvim-nio.lua",
+        "file:lua/plugins/schemastore.lua",
+        "file:lua/plugins/ultimate-autopair.lua",
+        "file:lua/plugins/vim-illuminate.lua",
+        "file:lua/plugins/whichkey.lua",
+        "file:lua/plugins/workspace_diagnostics.lua",
+        "file:lua/plugins/yanky.lua",
+        "file:lua/plugins/yazi.lua"
+      ]
+    },
+    {
+      "id": "layer:shared",
+      "name": "Shared Utility Layer",
+      "description": "Cross-cutting Lua helpers (lua/utils/init.lua) that every other module depends on, acting as the foundation of the dependency hierarchy.",
+      "nodeIds": [
+        "file:lua/utils/init.lua"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Project Overview",
+      "description": "Start with README.md to understand the project's purpose, architecture, and how to get started. This single-title document outlines what the nvim-config Neovim configuration provides and serves as the roadmap for the tour ahead.",
+      "nodeIds": [
+        "document:README.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Bootstrap Entry Point",
+      "description": "The Neovim configuration entry point. Requires the config submodules in load order (options, keymaps, autocmds, pack, plugins, load_lsp) and applies the shades-of-purple colorscheme at startup. This file gives you the bird's-eye view of the project's runtime structure and dependency hierarchy.",
+      "nodeIds": [
+        "file:init.lua",
+        "file:lua/health.lua"
+      ],
+      "languageLesson": "Neovim's init.lua is the equivalent of .vimrc \u2014 it is loaded automatically at startup and orchestrates the entire configuration. The health.lua module follows the standard Neovim health check pattern, returning a table with check_version, check_external_reqs, and check functions that integrate with :checkhealth."
+    },
+    {
+      "order": 3,
+      "title": "Shared Utility Foundation",
+      "description": "The shared Lua helper module that every other module depends on, acting as the foundation of the dependency hierarchy. With 68 incoming edges from across the plugin layer, this module provides cross-cutting utilities (URL helpers, LSP attach hooks, filetype gating) that plugin specs call repeatedly rather than re-implementing.",
+      "nodeIds": [
+        "file:lua/utils/init.lua"
+      ],
+      "languageLesson": "This module uses the Lua module pattern with a local M = {} table. The utils.gh helper constructs GitHub raw URLs from owner/repo/shorthand, a pattern repeated across dozens of plugin stubs \u2014 notice how the shared helper prevents URL string duplication across 80+ plugin files."
+    },
+    {
+      "order": 4,
+      "title": "Core Configuration Layer",
+      "description": "The foundational editor configuration: options.lua sets global options (encoding, backup dir, leader key, root-detection spec, spell, backspace, conceallevel) and wraps vim.keymap.set to force silent=true by default; keymaps.lua defines the comprehensive default keymap set covering search, window movement, diagnostics navigation, and editor primitives; autocmds.lua registers filetype concealment, formatoptions cleanup, cursorline toggling, and relative/absolute line-number switching.",
+      "nodeIds": [
+        "file:lua/config/options.lua",
+        "file:lua/config/keymaps.lua",
+        "file:lua/config/autocmds.lua"
+      ],
+      "languageLesson": "The keymap wrapper in options.lua demonstrates a common Lua pattern: a local function that captures default arguments via closure and delegates to vim.keymap.set, enforcing silent=true across the entire codebase without repeating the argument in every call."
+    },
+    {
+      "order": 5,
+      "title": "Plugin Loader",
+      "description": "The plugin loader that activates every top-level plugin spec in the directory. Globs lua/plugins/*.lua at startup and loadfile's each non-init spec file, stripping numeric load-order prefixes and guarding against double-loading via package.loaded. This is the gateway through which all 88 plugin modules flow into the runtime.",
+      "nodeIds": [
+        "file:lua/plugins/init.lua"
+      ],
+      "languageLesson": "The loader uses loadfile() rather than require() deliberately: numeric prefixes like 00-snacks.lua break Lua's module resolution (require looks for lua/plugins/00-snacks.lua which is an invalid identifier), but loadfile loads by path. The package.loaded guard prevents re-executing top-level vim.pack.add calls on every boot."
+    },
+    {
+      "order": 6,
+      "title": "Package Management & Build Hooks",
+      "description": "The pack.lua PackChanged autocmd hook runs post-install builds for telescope-fzf-native.nvim and LuaSnip, and triggers TSUpdate after nvim-treesitter install/update. This ensures that compiled dependencies are rebuilt whenever the plugin set changes, bridging the gap between vim.pack's install lifecycle and plugins that require native compilation.",
+      "nodeIds": [
+        "file:lua/config/pack.lua",
+        "config:nvim-pack-lock.json"
+      ],
+      "languageLesson": "The nvim-pack-lock.json is a generated lock file pinning 82 bundled Neovim plugins with exact versions. It serves the same purpose as npm's package-lock.json or Cargo's Cargo.lock: reproducible installs across machines by recording the resolved versions of every dependency."
+    },
+    {
+      "order": 7,
+      "title": "First Plugin: Snacks.nvim",
+      "description": "The first-loaded plugin spec (00- prefix): registers folke/snacks.nvim via vim.pack.add, runs require('snacks').setup(), and defines the bulk of the <leader>s* picker, <leader>u* toggle, and <leader>g* git keymaps. Loaded first so other modules can depend on Snacks being available \u2014 it is the single most depended-upon plugin in the configuration.",
+      "nodeIds": [
+        "file:lua/plugins/00-snacks.lua"
+      ],
+      "languageLesson": "The 00- prefix is a deliberate load-order convention: by loading before all other plugins, Snacks.nvim's global state (pickers, git integration, util helpers) is available when later modules call require('snacks').setup() or snacks.util.lsp.on() \u2014 a form of implicit dependency ordering through file naming."
+    },
+    {
+      "order": 8,
+      "title": "Treesitter Foundation",
+      "description": "Configures nvim-treesitter with indent, highlight, and fold features, plus a FileType autocmd for lazy per-buffer setup across 25 languages. This is the syntactic backbone of the entire editor: it provides the parse trees that power syntax highlighting, code folding, textobjects, and incremental selection that nearly every other plugin builds upon.",
+      "nodeIds": [
+        "file:lua/plugins/treesitter.lua"
+      ],
+      "languageLesson": "nvim-treesitter's incremental selection uses the parser's AST to select ranges of code at increasing granularity \u2014 from the current node up to the root. The FileType autocmd defers parser loading until a file is actually opened, keeping startup fast while supporting 25 languages on demand."
+    },
+    {
+      "order": 9,
+      "title": "Formatting & Linting System",
+      "description": "Conform.nvim registers a toggleable BufWritePre autocmd that calls conform.format on save, exposing M.format_on_save/M.toggle/M.is_on plus <leader>cf/<leader>cF keymaps. The language-specific modules (go.lua, lua.lua, python.lua, rust.lua, typescript.lua) wire per-language formatters and linters into Conform and nvim-lint, creating a unified auto-format pipeline that works across all supported languages.",
+      "nodeIds": [
+        "file:lua/plugins/conform.lua",
+        "file:lua/plugins/nvim-lint.lua",
+        "file:lua/plugins/lang/go.lua",
+        "file:lua/plugins/lang/python.lua"
+      ],
+      "languageLesson": "The language modules follow a consistent pattern: each pulls its formatter (gofumpt, stylua, ruff, rustfmt) into conform.formatters and its linter (golangci-lint, ruff, clippy) into nvim-lint.linters_by_ft \u2014 demonstrating how a shared plugin abstraction (Conform for formatting, nvim-lint for linting) avoids per-plugin configuration duplication."
+    },
+    {
+      "order": 10,
+      "title": "Language Module Barrel",
+      "description": "The language-module barrel that requires each config.lang.* module (angular through zig) in a single require chain. Each sub-module configures treesitter parsers, LSP servers, formatters, and linters for its language family \u2014 this barrel is the single point through which all language support flows into the runtime.",
+      "nodeIds": [
+        "file:lua/plugins/lang/init.lua"
+      ],
+      "languageLesson": "This is a Lua barrel file: a single init file that requires every language module in sequence. The pattern is identical to a JavaScript barrel index.ts \u2014 a one-line-per-language require chain that centralizes language configuration and makes it easy to add or remove a language by editing one file."
+    },
+    {
+      "order": 11,
+      "title": "Statusline & UI Integration",
+      "description": "Configures lualine statusline with custom root-directory component, pretty-path component, diagnostics/git/diff sections, and noice/dap/lazy extension integrations. The statusline pulls information from multiple plugins (diagnostics from vim.diagnostic, git from gitsigns, search from noice) and composes them into a single cohesive status bar.",
+      "nodeIds": [
+        "file:lua/plugins/lualine.lua"
+      ],
+      "languageLesson": "Lualine's extension system is a form of composition: rather than hardcoding statusline sections, the config registers extensions for noice (command-line messages), dap (debugger state), and lazy (plugin manager status). Each extension is a table of sections that lualine renders conditionally \u2014 a plug-and-play statusline architecture."
+    },
+    {
+      "order": 12,
+      "title": "LSP Tooling & Diagnostics",
+      "description": "load_lsp.lua configures vim.diagnostic virtual_text and severity signs, then binds the LspLensToggle leader mapping. The legacy lsp.lua file contains fully commented-out LSP configuration documenting vim.lsp.config setups for 20+ language servers \u2014 it is inactive in the current runtime, with per-language configs now living in lua/plugins/lang/*. This layer bridges the gap between the LSP servers configured in the language modules and the user-facing diagnostic display.",
+      "nodeIds": [
+        "file:lua/config/load_lsp.lua",
+        "file:lua/config/lsp.lua"
+      ],
+      "languageLesson": "The commented-out lsp.lua serves as a historical artifact and reference: it documents the pre-plugin LSP setup pattern (vim.lsp.config per server) that has been replaced by the per-language module approach. This is a common pattern in evolving codebases \u2014 the old approach is preserved as documentation rather than deleted, so newcomers can understand what changed and why."
+    },
+    {
+      "order": 13,
+      "title": "Plugin Manager UI",
+      "description": "An interactive vim.pack plugin manager UI as a floating window with refresh, update, uninstall, and key navigation. This is the user-facing tool for managing the plugin set at runtime \u2014 it wraps vim.pack's API behind a friendly floating-window interface with commit loading, update status display, and one-key-per-plugin navigation.",
+      "nodeIds": [
+        "file:lua/plugins/pack_float.lua"
+      ],
+      "languageLesson": "The pack_float module demonstrates the NUI (Native UI) pattern in Neovim: it builds a floating window buffer with virtual text for plugin status, then uses vim.api.nvim_create_autocmd to refresh content on BufEnter and TermClose events. The 20+ functions (setup, set_plugins, build_content, load_commits, etc.) follow a clear separation between data fetching (async refresh_fetch) and UI rendering (set_lines)."
+    },
+    {
+      "order": 14,
+      "title": "Developer Tooling Configuration",
+      "description": "Root-level tooling configuration: .luarc.json declares Neovim globals (vim, Snacks) and suppresses undefined-doc-name diagnostics for the Snacks plugin API; .neoconf.json enables the neodev library and lua_ls plugin for the Neovim Lua LSP workspace; stylua.toml configures the Stylua Lua formatter with 160-column width, 2-space indent, single-quote preference, and sorted requires. Together these files ensure the configuration codebase itself is properly linted, formatted, and type-checked.",
+      "nodeIds": [
+        "config:.luarc.json",
+        "config:.neoconf.json",
+        "config:stylua.toml"
+      ]
+    },
+    {
+      "order": 15,
+      "title": "Documentation & Contribution Guide",
+      "description": "KEYMAP.md is a comprehensive keymap reference organized into 20 sections covering movement, windows, editing, LSP, buffers, Snacks pickers, git, terminal, and toggles \u2014 it documents the complete keybinding surface. CONTRIBUTING.md covers development setup, prerequisites (Neovim, Jujutsu), repository cloning, and running the config via nvim -u ./init.lua, providing the onboarding path for external contributors.",
+      "nodeIds": [
+        "document:KEYMAP.md",
+        "document:CONTRIBUTING.md"
+      ],
+      "languageLesson": "KEYMAP.md's 20-section organization mirrors the layered architecture of the config itself: it groups keymaps by functional area (movement, windows, LSP, buffers) rather than by the file that defines them, making it useful as a user-facing reference regardless of which plugin module happens to own each binding."
+    }
+  ],
+  "project": {
+    "name": "nvim-pack",
+    "languages": [
+      "json",
+      "lua",
+      "markdown",
+      "toml"
+    ],
+    "frameworks": [
+      "Neovim"
+    ],
+    "description": "Neovim configuration managed by nvim-pack, bundling 97 Lua plugin modules and 4 config files (options, keymaps, autocmds, pack) into a modular runtime. Note: this project has over 100 source files; consider scoping analysis to a subdirectory for faster results.",
+    "analyzedAt": "2026-08-28T05:56:24Z",
+    "gitCommitHash": "ae406eb361e0c56e1a580be8e249d4e7d1a64f68"
+  }
+}
