@@ -40,20 +40,12 @@ local opts = {
 }
 
 TS.setup(opts)
-
-local function have(ft, query)
-	local lang = vim.treesitter.language.get_lang(ft)
-	if not lang then
-		return false
-	end
-	return pcall(vim.treesitter.query.get, lang, query)
-end
+local have = require('utils').treesitter.have
 
 local function enabled(feat, query, ft)
 	local f = opts[feat] or {}
 	return f.enable ~= false and have(ft, query)
 end
-
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("lazyvim_treesitter", { clear = true }),
 	callback = function(ev)
