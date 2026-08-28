@@ -1,158 +1,215 @@
--- LSP configuration: mirrors LazyVim's defaults for the servers that
--- are configured by the lang extras (rust, go, typescript, kotlin).
-
-local function lspconfig_setup()
-	local lspconfig = require("lspconfig")
-
-	-- Default capabilities applied to all servers.
-	local capabilities = vim.lsp.make_client_capabilities()
-	capabilities.workspace = capabilities.workspace or {}
-	capabilities.workspace.fileOperations = {
-		didRename = true,
-		willRename = true,
-	}
-
-	-- Default options for vim.lsp.config("*").
-	lspconfig.setup({
-		capabilities = capabilities,
-	})
-
-	-- rust-analyzer
-	lspconfig.rust_analyzer.setup({
-		cargo = { allFeatures = true, loadOutDirsFromCheck = true, buildScripts = { enable = true } },
-		checkOnSave = true,
-		diagnostics = { enable = true },
-		procMacro = { enable = true },
-		files = {
-			exclude = {
-				".direnv",
-				".git",
-				".jj",
-				".github",
-				".gitlab",
-				"bin",
-				"node_modules",
-				"target",
-				"venv",
-				".venv",
-			},
-			watcher = "client",
-		},
-	})
-
-	-- gopls
-	lspconfig.gopls.setup({
-		init_options = { semanticTokens = true },
-		settings = {
-			gopls = {
-				gofumpt = true,
-				codelenses = {
-					gc_details = false,
-					generate = true,
-					regenerate_cgo = true,
-					run_govulncheck = true,
-					test = true,
-					tidy = true,
-					upgrade_dependency = true,
-					vendor = true,
-				},
-				hints = {
-					assignVariableTypes = true,
-					compositeLiteralFields = true,
-					compositeLiteralTypes = true,
-					constantValues = true,
-					functionTypeParameters = true,
-					parameterNames = true,
-					rangeVariableTypes = true,
-				},
-				analyses = {
-					nilness = true,
-					unusedparams = true,
-					unusedwrite = true,
-					useany = true,
-				},
-				usePlaceholders = true,
-				completeUnimported = true,
-				staticcheck = true,
-				directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
-			},
-		},
-	})
-
-	-- Workaround for gopls not supporting semanticTokensProvider.
-	require("snacks").util.lsp.on({ name = "gopls" }, function(_, client)
-		if
-			client.config
-			and client.config.init_options
-			and client.config.init_options.semanticTokens
-			and not client.server_capabilities.semanticTokensProvider
-		then
-			local semantic = client.config.capabilities.textDocument.semanticTokens
-			client.server_capabilities.semanticTokensProvider = {
-				full = true,
-				legend = {
-					tokenTypes = semantic.tokenTypes,
-					tokenModifiers = semantic.tokenModifiers,
-				},
-				range = true,
-			}
-		end
-	end)
-
-	-- tsserver (typescript-language-server)
-	lspconfig.tsserver.setup({})
-
-	-- kotlin-language-server
-	lspconfig.kotlin_language_server.setup({})
-end
-
-local function mason_setup()
-	local ensure_installed = {
-		"stylua",
-		"shfmt",
-	}
-
-	require("mason").setup({
-		ensure_installed = ensure_installed,
-	})
-
-	local mr = require("mason-registry")
-	mr:on("package:install:success", function()
-		vim.defer_fn(function()
-			-- trigger FileType event to possibly load this newly installed LSP server
-			vim.cmd([[do FileType]])
-		end, 100)
-	end)
-
-	mr.refresh(function()
-		for _, tool in ipairs(ensure_installed) do
-			local p = mr.get_package(tool)
-			if not p:is_installed() then
-				p:install()
-			end
-		end
-	end)
-end
-
-local function mason_lspconfig_setup()
-	-- Ensure the LSP servers we want are installed by mason-lspconfig.
-	require("mason-lspconfig").setup({
-		ensure_installed = {
-			"rust-analyzer",
-			"gopls",
-			"tsserver",
-			"kotlin-language-server",
-		},
-		automatic_enable = { exclude = {} },
-	})
-end
-
-local M = {}
-
-function M.setup()
-	lspconfig_setup()
-	mason_setup()
-	mason_lspconfig_setup()
-end
-
-return M
+-- -- LSP configuration: native `vim.lsp`
+--
+-- vim.diagnostic.config { virtual_text = true }
+--
+-- -- Default capabilities applied to all servers. `vim.lsp.config["*"]`
+-- -- merges into every enabled config (see :h vim.lsp.config).
+-- vim.lsp.config['*'] = {
+--   capabilities = (function()
+--     local capabilities = vim.lsp.protocol.make_client_capabilities()
+--     capabilities.workspace = capabilities.workspace or {}
+--     capabilities.workspace.fileOperations = {
+--       didRename = true,
+--       willRename = true,
+--     }
+--     return capabilities
+--   end)(),
+--   on_attach = function(client, bufnr)
+-- 		-- stylua: ignore
+-- 		local keys = {
+-- 			{ "<leader>cl", function() Snacks.picker.lsp_config() end,            desc = "Lsp Info" },
+-- 			{ "gd",         function() Snacks.picker.lsp_definitions() end,       desc = "Goto Definition",       has = "definition" },
+-- 			{ "gr",         function() Snacks.picker.lsp_references() end,        nowait = true,                  desc = "References" },
+-- 			{ "gI",         function() Snacks.picker.lsp_implementations() end,   desc = "Goto Implementation" },
+-- 			{ "gy",         function() Snacks.picker.lsp_type_definitions() end,  desc = "Goto T[y]pe Definition" },
+-- 			{ "<leader>ss", function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols",           has = "documentSymbol" },
+-- 			{ "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols", has = "workspace/symbols" },
+-- 			{ "gai",        function() Snacks.picker.lsp_incoming_calls() end,    desc = "C[a]lls Incoming",      has = "callHierarchy/incomingCalls" },
+-- 			{ "gao",        function() Snacks.picker.lsp_outgoing_calls() end,    desc = "C[a]lls Outgoing",      has = "callHierarchy/outgoingCalls" },
+--
+-- 			{ "<leader>ca", vim.lsp.buf.code_action,                              desc = "Code Action",           mode = { "n", "x" },                has = "codeAction" },
+-- 		}
+--     for _, key in ipairs(keys) do
+--       if not key.has or client.supports_method(key.has) then vim.keymap.set('n', key[1], key[2], { desc = key.desc, buffer = bufnr }) end
+--     end
+--   end,
+-- }
+--
+-- -- rust-analyzer
+-- vim.lsp.config.rust_analyzer = {
+--   cargo = {
+--     allFeatures = true,
+--     loadOutDirsFromCheck = true,
+--     buildScripts = { enable = true },
+--   },
+--   checkOnSave = true,
+--   diagnostics = { enable = true },
+--   procMacro = { enable = true },
+--   files = {
+--     exclude = {
+--       '.direnv',
+--       '.git',
+--       '.jj',
+--       '.github',
+--       '.gitlab',
+--       'bin',
+--       'node_modules',
+--       'target',
+--       'venv',
+--       '.venv',
+--     },
+--     watcher = 'client',
+--   },
+--   cmd = { 'rust-analyzer' },
+--   filetypes = { 'rust' },
+-- }
+--
+-- -- gopls
+-- vim.lsp.config.gopls = {
+--   cmd = { 'gopls' },
+--   filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+-- }
+--
+-- -- Workaround for gopls not supporting semanticTokensProvider.
+-- -- Synthesise a semanticTokensProvider from the client's
+-- -- capabilities so highlighting still works.
+-- require('snacks').util.lsp.on({ name = 'gopls' }, function(_, client)
+--   if client.config and client.config.init_options and client.config.init_options.semanticTokens and not client.server_capabilities.semanticTokensProvider then
+--     local semantic = client.config.capabilities.textDocument.semanticTokens
+--     client.server_capabilities.semanticTokensProvider = {
+--       full = true,
+--       legend = {
+--         tokenTypes = semantic.tokenTypes,
+--         tokenModifiers = semantic.tokenModifiers,
+--       },
+--       range = true,
+--     }
+--   end
+-- end)
+--
+-- -- kotlin-language-server
+-- vim.lsp.config.kotlin_language_server = { cmd = { 'kotlin-language-server' }, filetypes = { 'kotlin' } }
+--
+-- -- Servers registered by config.lang.* modules. Each carries its own cmd so
+-- -- the launch command never depends on a plugin's mapping table. The mason
+-- -- binary names are the source of truth (see stdpath("data")/mason/bin).
+-- vim.lsp.config.lua_ls = { cmd = { 'lua-language-server' }, filetypes = { 'lua' } }
+-- vim.lsp.config.clangd = {
+--   cmd = {
+--     'clangd',
+--     '--background-index',
+--     '--clang-tidy',
+--     '--header-insertion=iwyu',
+--     '--completion-style=detailed',
+--     '--function-arg-placeholders',
+--     '--fallback-style=llvm',
+--   },
+--   filetypes = { 'c', 'cpp', 'cxx', 'h', 'hpp', 'cc', 'c++', 'cuda', 'objc', 'cuda', 'objc' },
+--   root_markers = {
+--     'compile_commands.json',
+--     'compile_flags.txt',
+--     'configure.ac',
+--     'Makefile',
+--     'configure.in',
+--     'config.h.in',
+--     'meson.build',
+--     'meson_options.txt',
+--     'build.ninja',
+--     '.git',
+--   },
+--   capabilities = {
+--     offsetEncoding = { 'utf-16' },
+--   },
+--   init_options = {
+--     usePlaceholders = true,
+--     completeUnimported = true,
+--     clangdFileStatus = true,
+--   },
+-- }
+-- vim.lsp.config.neocmake = { cmd = { 'neocmakelsp', 'stdio' }, filetypes = { 'cmake' } }
+-- vim.lsp.config.dockerls = { cmd = { 'docker-langserver', '--stdio' }, filetypes = { 'dockerfile' } }
+-- vim.lsp.config.docker_compose_language_service = {
+--   cmd = { 'docker-compose-langserver', '--stdio' },
+--   filetypes = { 'yaml', 'yml' },
+-- }
+-- vim.lsp.config.jsonls = { cmd = { 'vscode-json-language-server', '--stdio' }, filetypes = { 'json', 'jsonc', 'json5' } }
+-- vim.lsp.config.marksman = { cmd = { 'marksman' }, filetypes = { 'markdown' } }
+-- vim.lsp.config.pyright = { cmd = { 'pyright' }, filetypes = { 'python' } }
+-- vim.lsp.config.ruff = {
+--   cmd = { 'ruff' },
+--   filetypes = { 'python' },
+--   cmd_env = { RUFF_TRACE = 'messages' },
+--   init_options = {
+--     settings = {
+--       logLevel = 'error',
+--     },
+--   },
+-- }
+-- vim.lsp.config.sqls = { cmd = { 'sqls' }, filetypes = { 'sql' } }
+-- vim.lsp.config.svelte = { cmd = { 'svelteserver' }, filetypes = { 'svelte' } }
+-- vim.lsp.config.tailwindcss = {
+--   cmd = { 'tailwindcss-language-server' },
+--   filetypes = {
+--     'html',
+--     'svelte',
+--     'astro',
+--     'templ',
+--     'blade',
+--     'php',
+--     'javascriptreact',
+--     'typescriptreact',
+--     'javascript',
+--     'typescript',
+--   },
+--   settings = {
+--     tailwindCSS = {
+--       includeLanguages = {
+--         elixir = 'html-eex',
+--         eelixir = 'html-eex',
+--         heex = 'html-eex',
+--       },
+--     },
+--   },
+-- }
+-- vim.lsp.config.terraformls = { cmd = { 'terraform-ls', 'serve' }, filetypes = { 'terraform' } }
+-- vim.lsp.config.taplo = { cmd = { 'taplo', 'lsp' }, filetypes = { 'toml' } }
+-- vim.lsp.config.zls = { cmd = { 'zls' }, filetypes = { 'zig' } }
+--
+-- local M = {}
+--
+-- function M.setup()
+--   -- Enable every server that has a config registered. vim.lsp.enable()
+--   -- starts clients on FileType for enabled servers; the per-language
+--   -- configs from config.lang.* are registered by the time this runs
+--   -- (config.lang is required via config.plugins, which init.lua loads
+--   -- before config.lsp).
+--   --
+--   -- angularls is intentionally excluded: its mason binary
+--   -- (angular-language-server) is not installed in this environment, so
+--   -- enabling it would produce a failed start on every .astro buffer.
+--   vim.lsp.enable {
+--     'lua_ls',
+--     'rust_analyzer',
+--     'gopls',
+--     'ts_ls',
+--     'kotlin_language_server',
+--     'clangd',
+--     'neocmake',
+--     'dockerls',
+--     'docker_compose_language_service',
+--     'jsonls',
+--     'marksman',
+--     'pyright',
+--     'ruff',
+--     'sqls',
+--     'svelte',
+--     'tailwindcss',
+--     'terraformls',
+--     'taplo',
+--     'zls',
+--   }
+-- end
+--
+-- return M
+--
+-- -- vim: ts=2 sts=2 sw=2 et

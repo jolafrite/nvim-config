@@ -1,0 +1,83 @@
+local gh = require("utils").gh
+
+vim.pack.add({
+	gh("nvim-treesitter/nvim-treesitter"),
+})
+
+local TS = require("nvim-treesitter")
+
+local opts = {
+	indent = { enable = true },
+	highlight = { enable = true },
+	folds = { enable = true },
+	ensure_installed = {
+		"bash",
+		"c",
+		"diff",
+		"golang",
+		"html",
+		"javascript",
+		"jsdoc",
+		"json",
+		"lua",
+		"luadoc",
+		"luap",
+		"markdown",
+		"markdown_inline",
+		"printf",
+		"python",
+		"query",
+		"regex",
+		"rust",
+		"toml",
+		"tsx",
+		"typescript",
+		"vim",
+		"vimdoc",
+		"xml",
+		"yaml",
+	},
+}
+
+TS.setup(opts)
+
+local function have(ft, query)
+	local lang = vim.treesitter.language.get_lang(ft)
+	if not lang then
+		return false
+	end
+	return pcall(vim.treesitter.query.get, lang, query)
+end
+
+local function enabled(feat, query, ft)
+	local f = opts[feat] or {}
+	return f.enable ~= false and have(ft, query)
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+	group = vim.api.nvim_create_augroup("lazyvim_treesitter", { clear = true }),
+	callback = function(ev)
+		local ft = ev.match
+		if not vim.treesitter.language.get_lang(ft) then
+			return
+		end
+
+		if enabled("highlight", "highlights", ft) then
+			pcall(vim.treesitter.start, ev.buf)
+		end
+
+		if enabled("indent", "indents", ft) then
+			pcall(function()
+				vim.bo[ev.buf].indentexpr =
+				"v:lua.require('nvim-treesitter').indentexpr()"
+			end)
+		end
+
+		if enabled("folds", "folds", ft) then
+			pcall(function()
+				vim.wo[ev.buf].foldmethod = "expr"
+				vim.wo[ev.buf].foldexpr = "v:lua.require('nvim-treesitter').foldexpr()"
+			end)
+		end
+	end,
+})
