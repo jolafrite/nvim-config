@@ -7,6 +7,11 @@ local function setup(args)
     require('utils').install_with_mason { 'lua-language-server', 'stylua' }
   end)
 
+  -- Tree-sitter parsers for Lua (mirrors the mason install pattern above).
+  pcall(function()
+    require('nvim-treesitter').install { 'lua', 'luadoc', 'luap' }
+  end)
+
   -- Prevent duplicate server attachments on the same buffer
   if #vim.lsp.get_clients({ bufnr = bufnr, name = 'lua_ls' }) > 0 then return end
 

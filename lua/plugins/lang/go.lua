@@ -99,6 +99,9 @@ require("utils").install_with_mason({
 	"gomodifytags",
 	"impl",
 })
+-- Tree-sitter parsers for Go (mirrors the mason install pattern above).
+local TS = require("nvim-treesitter")
+pcall(TS.install, { "go", "gomod", "gowork", "gosum" })
 
 local go = require("go")
 

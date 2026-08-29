@@ -10,40 +10,10 @@ local opts = {
 	indent = { enable = true },
 	highlight = { enable = true },
 	folds = { enable = true },
-	ensure_installed = {
-		"bash",
-		"c",
-		"diff",
-		"golang",
-		"gomod",
-		"gowork",
-		"gosum",
-		"html",
-		"javascript",
-		"jsdoc",
-		"json",
-		"lua",
-		"luadoc",
-		"luap",
-		"markdown",
-		"markdown_inline",
-		"printf",
-		"python",
-		"query",
-		"regex",
-		"rust",
-		"toml",
-		"tsx",
-		"typescript",
-		"vim",
-		"vimdoc",
-		"xml",
-		"yaml",
-	},
 }
 
 TS.setup(opts)
-local have = require('utils').treesitter.have
+local have = require("utils").treesitter.have
 
 local function enabled(feat, query, ft)
 	local f = opts[feat] or {}
@@ -64,7 +34,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		if enabled("indent", "indents", ft) then
 			pcall(function()
 				vim.bo[ev.buf].indentexpr =
-				"v:lua.require('nvim-treesitter').indentexpr()"
+					"v:lua.require('nvim-treesitter').indentexpr()"
 			end)
 		end
 

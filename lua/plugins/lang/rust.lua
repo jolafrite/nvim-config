@@ -5,6 +5,9 @@
 -- the base cmd/filetypes set in lsp.lua. The heavy settings (clippy on save,
 -- proc-macro, file excludes) live in rustaceanvim's default_settings.
 vim.lsp.config("rust_analyzer", {})
+-- Tree-sitter parser for Rust.
+local TS = require("nvim-treesitter")
+pcall(TS.install, { "rust" })
 
 local gh = require("utils").gh
 

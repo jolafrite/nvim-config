@@ -19,3 +19,6 @@ vim.lsp.config("jsonls", {
 		},
 	},
 })
+-- Tree-sitter parser for JSON.
+local TS = require("nvim-treesitter")
+pcall(TS.install, { "json" })

@@ -20,3 +20,6 @@ vim.lsp.config("ts_ls", {
 		"typescriptreact",
 	},
 })
+-- Tree-sitter parsers for TS/JS.
+local TS = require("nvim-treesitter")
+pcall(TS.install, { "typescript", "tsx", "javascript" })
