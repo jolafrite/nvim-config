@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "R.nvim": {
+      "rev": "ef081566170e20d536bfaab168eb8841c0753b1c",
+      "src": "https://github.com/R-nvim/R.nvim"
+    },
     "SchemaStore.nvim": {
       "rev": "5f2a3b5dc13f3622000cb488c9af505b933152e3",
       "src": "https://github.com/b0o/SchemaStore.nvim"
