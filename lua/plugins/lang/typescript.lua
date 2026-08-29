@@ -1,19 +1,31 @@
--- Typescript language support.
---
--- Uses merge-form `vim.lsp.config("ts_ls", {...})` so that the base
--- `cmd`/`filetypes` set in `lsp.lua` are preserved (assignment form
--- `vim.lsp.config.ts_ls = {}` would replace and discard them).
---
--- `typescript-language-server` is unusual in two ways vs. other mason servers:
---   1. It REQUIRES `--stdio` to be passed explicitly in `cmd`. Every other
---      server here (gopls, lua-language-server, ...) is invoked with no
---      args; omitting `--stdio` makes this binary refuse to start with
---      `error: required option '--stdio' not specified`.
---   2. `filetypes` must be a table, not a function -- this Neovim's
---      `vim/lsp.lua:479` rejects a function value for `filetypes`.
 require('utils').install_with_mason {
   'oxlint',
   'prettier',
+}
+
+-- `typescript-language-server` refuses to start without an explicit `--stdio`.
+-- Inlay-hint settings are mirrored to javascript too (js_ts_settings).
+local js_ts_settings = {
+  typescript = {
+    inlayHints = {
+      enumMemberValues = { enabled = true },
+      functionLikeReturnTypes = { enabled = true },
+      parameterNames = { enabled = 'literals' },
+      parameterTypes = { enabled = true },
+      propertyDeclarationTypes = { enabled = true },
+      variableTypes = { enabled = false },
+    },
+  },
+  javascript = {
+    inlayHints = {
+      enumMemberValues = { enabled = true },
+      functionLikeReturnTypes = { enabled = true },
+      parameterNames = { enabled = 'literals' },
+      parameterTypes = { enabled = true },
+      propertyDeclarationTypes = { enabled = true },
+      variableTypes = { enabled = false },
+    },
+  },
 }
 
 vim.lsp.config('ts_ls', {
@@ -24,8 +36,14 @@ vim.lsp.config('ts_ls', {
     'typescript',
     'typescriptreact',
   },
+  root_markers = {
+    'tsconfig.json',
+    'package.json',
+    'jsconfig.json',
+    '.git',
+  },
+  settings = js_ts_settings,
 })
--- Tree-sitter parsers for TS/JS.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'typescript', 'tsx', 'javascript' })
 

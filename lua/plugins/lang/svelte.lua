@@ -1,10 +1,4 @@
--- Svelte language support (treesitter + LSP config).
---
--- Depends on typescript/ts_ls (loaded in lsp.lua before this module).
---
--- `svelte-language-server` from mason installs the `svelteserver` binary.
--- The cmd is a function so a project-local node_modules/.bin/svelteserver
--- takes precedence over the global one (matches the nvim-lspconfig default).
+-- Prefer a project-local node_modules/.bin/svelteserver over the global one.
 require('utils').install_with_mason {
   'svelte-language-server',
   'prettier',
@@ -31,6 +25,9 @@ conform.formatters.prettier = {
 conform.formatters_by_ft.svelte = { 'prettier' }
 
 require('lint').linters_by_ft.svelte = { 'oxlint' }
+
+local TS = require 'nvim-treesitter'
+pcall(TS.install, { 'svelte' })
 
 vim.lsp.enable 'svelte'
 

@@ -1,4 +1,3 @@
--- TOML language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'taplo',
 }
@@ -9,17 +8,11 @@ vim.lsp.config('taplo', {
   root_markers = { '.taplo.toml', 'taplo.toml', '.git' },
 })
 
--- Tree-sitter parser for TOML.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'toml' })
 
 local conform = require 'conform'
-conform.formatters.taplo_fmt = {
-  command = 'taplo',
-  stdin = true,
-  args = { 'fmt', '-' },
-}
-conform.formatters_by_ft.toml = { 'taplo_fmt' }
+conform.formatters_by_ft.toml = { 'taplo' }
 
 vim.lsp.enable 'taplo'
 

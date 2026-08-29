@@ -1,14 +1,14 @@
--- Docker language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'docker-language-server',
   'docker-compose-language-service',
   'dockerfmt',
+  'hadolint',
 }
 
 vim.lsp.config('dockerls', {
   cmd = { 'docker-langserver', '--stdio' },
   filetypes = { 'dockerfile' },
-  root_markers = { 'Dockerfile' },
+  root_markers = { 'Dockerfile', 'Containerfile' },
 })
 
 vim.lsp.config('docker_compose_language_service', {
@@ -26,6 +26,9 @@ conform.formatters.dockerfmt_fmt = {
 conform.formatters_by_ft.dockerfile = { 'dockerfmt_fmt' }
 
 require('lint').linters_by_ft.dockerfile = { 'hadolint' }
+
+local TS = require 'nvim-treesitter'
+pcall(TS.install, { 'dockerfile' })
 
 vim.lsp.enable 'dockerls'
 vim.lsp.enable 'docker_compose_language_service'

@@ -1,11 +1,5 @@
--- Rust language support.
---
--- LSP is provided by rustaceanvim (which wraps rust-analyzer), so the
--- standalone rust_analyzer config below is intentionally empty -- it inherits
--- the base cmd/filetypes set in lsp.lua. The heavy settings (clippy on save,
--- proc-macro, file excludes) live in rustaceanvim's default_settings.
+-- rust_analyzer is intentionally empty: rustaceanvim owns the LSP lifecycle.
 vim.lsp.config('rust_analyzer', {})
--- Tree-sitter parser for Rust.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'rust' })
 
@@ -23,11 +17,19 @@ require('utils').install_with_mason {
 
 local diagnostics = vim.g.lazyvim_rust_diagnostics or 'rust-analyzer'
 
--- rustaceanvim does NOT expose a setup() function -- it auto-attaches the
--- rust-analyzer LSP client on FileType=rust via its ftplugin. Configuration
--- goes through vim.g.rustaceanvim (a table or function returning a table).
--- DAP: rustaceanvim auto-detects codelldb from PATH (installed via mason),
--- so no manual adapter wiring is needed here.
+-- bacon-ls provides diagnostics-only when vim.g.lazyvim_rust_diagnostics = "bacon-ls".
+if diagnostics == 'bacon-ls' then
+  require('utils').install_with_mason {
+    'bacon',
+  }
+  vim.lsp.config('bacon_ls', {
+    cmd = { 'bacon-ls' },
+    filetypes = { 'rust' },
+  })
+  vim.lsp.enable 'bacon_ls'
+end
+
+-- rustaceanvim has no setup(); config goes through vim.g.rustaceanvim.
 vim.g.rustaceanvim = vim.tbl_deep_extend('keep', vim.g.rustaceanvim or {}, {
   server = {
     on_attach = function(_, bufnr)
@@ -41,9 +43,7 @@ vim.g.rustaceanvim = vim.tbl_deep_extend('keep', vim.g.rustaceanvim or {}, {
           loadOutDirsFromCheck = true,
           buildScripts = { enable = true },
         },
-        -- Add clippy lints for Rust if using rust-analyzer
         checkOnSave = diagnostics == 'rust-analyzer',
-        -- Enable diagnostics if using rust-analyzer
         diagnostics = { enable = diagnostics == 'rust-analyzer' },
         procMacro = { enable = true },
         files = {
@@ -59,7 +59,7 @@ vim.g.rustaceanvim = vim.tbl_deep_extend('keep', vim.g.rustaceanvim or {}, {
             'venv',
             '.venv',
           },
-          -- Avoid Roots Scanned hanging, see https://github.com/rust-lang/rust-analyzer/issues/12613#issuecomment-2096386344
+          -- Avoid Roots Scanned hanging: https://github.com/rust-lang/rust-analyzer/issues/12613#issuecomment-2096386344
           watcher = 'client',
         },
       },
@@ -79,13 +79,9 @@ require('conform').formatters.rustfmt = {
 
 require('lint').linters_by_ft.rust = { 'clippy' }
 
--- Overridden with ignore_exitcode=true: cargo clippy exits 101 when the code
--- doesn't compile, which is expected (can't lint uncompilable code). Without
--- the override nvim-lint reports "Linter command `cargo` exited with code: 101".
+-- cargo clippy exits 101 on uncompilable code; don't surface that as an error.
 require('lint').linters.clippy = vim.tbl_deep_extend('force', require('lint').linters.clippy, { ignore_exitcode = true })
 
--- Neotest adapter for running Rust tests via rustaceanvim, when neotest is
--- available (it's an optional dependency -- not always installed).
 pcall(function()
   require('neotest').setup {
     adapters = {

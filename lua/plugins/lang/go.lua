@@ -1,14 +1,4 @@
--- Go language support.
---
--- go.nvim is installed with lsp_cfg = false so it does NOT register a gopls
--- client on its own. We register gopls here explicitly (mirroring the LazyVim
--- default settings: gofumpt, codelenses, inlay hints, staticcheck) and then
--- let go.nvim handle the formatting/lint/test keymaps.
---
--- The gopls semanticTokensProvider workaround below is needed because gopls
--- does not advertise semanticTokensProvider in serverCapabilities; without
--- it, semantic highlighting silently degrades to nothing. See:
--- https://github.com/golang/go/issues/54531#issuecomment-1464982242
+-- go.nvim runs with lsp_cfg = false; gopls is registered here instead.
 vim.lsp.config('gopls', {
   cmd = { 'gopls' },
   filetypes = {
@@ -63,7 +53,7 @@ vim.lsp.config('gopls', {
   },
 })
 
--- Workaround for gopls not supporting semanticTokensProvider.
+-- gopls doesn't advertise semanticTokensProvider (golang/go#54531).
 require('snacks').util.lsp.on({ name = 'gopls' }, function(_, client)
   if client.config and client.config.init_options and client.config.init_options.semanticTokens and not client.server_capabilities.semanticTokensProvider then
     local semantic = client.config.capabilities.textDocument.semanticTokens
@@ -84,6 +74,7 @@ local gh = require('utils').gh
 
 vim.pack.add {
   gh 'ray-x/go.nvim',
+  gh 'fredrikaverpil/neotest-golang',
 }
 
 require('utils').install_with_mason {
@@ -94,7 +85,6 @@ require('utils').install_with_mason {
   'gomodifytags',
   'impl',
 }
--- Tree-sitter parsers for Go (mirrors the mason install pattern above).
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'go', 'gomod', 'gowork', 'gosum' })
 
@@ -121,6 +111,14 @@ require('conform').formatters.goimports = {
 require('conform').formatters_by_ft.go = { 'goimports', 'gofumpt', 'gocondense' }
 
 require('lint').linters_by_ft.go = { 'golangcilint' }
+
+pcall(function()
+  require('neotest').setup {
+    adapters = {
+      ['neotest-golang'] = {},
+    },
+  }
+end)
 
 vim.keymap.set({ 'n', 'x' }, '<localleader>gj', function() vim.cmd('GoIfErr ' .. vim.fn.expand '%:p') end, { desc = 'Add if err' })
 vim.keymap.set({ 'n', 'x' }, '<localleader>gt', function() require('go').test.run_test_near() end, { desc = 'Run test' })

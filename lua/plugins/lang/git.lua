@@ -1,7 +1,5 @@
--- Git language support (treesitter + LSP config).
---
--- No LSP server is configured for git — only treesitter parsers
--- (git_config, gitcommit, git_rebase, gitignore, gitattributes)
--- are registered in treesitter.lua. This file exists so the language
--- has its own module alongside the others; it is intentionally empty
--- of LSP setup.
+-- No LSP server for git; branch/ref completion comes from blink-cmp-git (blink.lua).
+local TS = require 'nvim-treesitter'
+pcall(TS.install, { 'git_config', 'gitcommit', 'gitattributes', 'gitignore', 'git_rebase' })
+
+-- vim: ts=2 sts=2 sw=2 et

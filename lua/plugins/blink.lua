@@ -8,6 +8,7 @@ vim.pack.add {
   gh 'saghen/blink.pairs',
   gh 'Kaiser-Yang/blink-cmp-git',
   gh 'folke/lazydev.nvim',
+  gh 'kristijanhusak/vim-dadbod-completion',
 }
 
 require('colorful-menu').setup {}
@@ -49,7 +50,7 @@ require('blink.cmp').setup {
   },
 
   sources = {
-    default = { 'lazydev', 'lsp', 'snippets', 'path', 'buffer' },
+    default = { 'lazydev', 'lsp', 'dadbod', 'snippets', 'path', 'buffer' },
     providers = {
       buffer = {
         name = 'buffer',
@@ -63,6 +64,10 @@ require('blink.cmp').setup {
       },
       lsp = {
         name = 'LSP',
+      },
+      dadbod = {
+        name = 'Dadbod',
+        module = 'vim_dadbod_completion.blink',
       },
       path = {
         name = 'path',

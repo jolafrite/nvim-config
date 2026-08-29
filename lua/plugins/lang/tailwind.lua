@@ -1,4 +1,3 @@
--- Tailwind CSS language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'tailwindcss-language-server',
   'prettier',
@@ -19,8 +18,8 @@ vim.lsp.config('tailwindcss', {
     'templ',
     'php',
     'blade',
-    'markdown',
     'mdx',
+    -- markdown excluded: tailwind in prose is noisy
   },
   settings = {
     tailwindCSS = {
