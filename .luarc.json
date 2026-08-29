@@ -15,5 +15,10 @@
       "${3rd}/luassert/library",
       "./lua"
     ]
+  },
+  "diagnostics": {
+    "globals": [
+      "vim"
+    ]
   }
 }

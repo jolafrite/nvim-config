@@ -1,9 +1,9 @@
 -- JSON language support (treesitter + LSP config).
-require('utils').install_with_mason {
-	'json-lsp',
-	'fixjson',
-	'jsonlint',
-}
+require("utils").install_with_mason({
+	"json-lsp",
+	"fixjson",
+	"jsonlint",
+})
 
 local schemastore_ok, schemastore = pcall(require, "schemastore")
 
@@ -39,6 +39,10 @@ conform.formatters_by_ft.jsonc = { "prettier", "fixjson" }
 require("lint").linters_by_ft.json = { "jsonlint" }
 require("lint").linters_by_ft.jsonc = { "jsonlint" }
 
-vim.lsp.enable 'jsonls'
+vim.lsp.enable("jsonls")
+
+-- Tree-sitter parser for JSON.
+local TS = require("nvim-treesitter")
+pcall(TS.install, { "json" })
 
 -- vim: ts=2 sts=2 sw=2 et

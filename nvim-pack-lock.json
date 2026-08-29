@@ -52,6 +52,10 @@
       "rev": "016802de402556da54c36bd7359b441266b01cdd",
       "src": "https://github.com/stevearc/conform.nvim"
     },
+    "crates.nvim": {
+      "rev": "694357861ec9ebf12475ddcdd04ea45a0923c32d",
+      "src": "https://github.com/Saecki/crates.nvim"
+    },
     "cyberdream.nvim": {
       "rev": "39e1fda12c0704e01029b286a4c7e77e33a0c5cd",
       "src": "https://github.com/scottmckendry/cyberdream.nvim"
@@ -279,6 +283,10 @@
     "render-markdown.nvim": {
       "rev": "4663eb3ecd538bd5062628fb6d95bbe6bdca78f6",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
+    },
+    "rustaceanvim": {
+      "rev": "791ef71968d542e3764174fac5264da1eac0ccf7",
+      "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "satellite.nvim": {
       "rev": "87843c9c8f28b54332497302de380a6d94c9e82b",

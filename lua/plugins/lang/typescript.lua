@@ -25,6 +25,9 @@ vim.lsp.config("ts_ls", {
 		"typescriptreact",
 	},
 })
+-- Tree-sitter parsers for TS/JS.
+local TS = require("nvim-treesitter")
+pcall(TS.install, { "typescript", "tsx", "javascript" })
 
 local conform = require("conform")
 conform.formatters.prettier = {
@@ -41,6 +44,6 @@ require("lint").linters_by_ft.javascriptreact = { "oxlint" }
 require("lint").linters_by_ft.typescript = { "oxlint" }
 require("lint").linters_by_ft.typescriptreact = { "oxlint" }
 
-vim.lsp.enable 'ts_ls'
+vim.lsp.enable('ts_ls')
 
 -- vim: ts=2 sts=2 sw=2 et

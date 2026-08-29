@@ -21,6 +21,10 @@ conform.formatters_by_ft["markdown.mdx"] =
 local lint = require("lint")
 lint.linters_by_ft.markdown = { "markdownlint-cli2" }
 
+-- Tree-sitter parsers for Markdown.
+local TS = require("nvim-treesitter")
+pcall(TS.install, { "markdown", "markdown_inline" })
+
 vim.lsp.enable 'marksman'
 
 -- vim: ts=2 sts=2 sw=2 et

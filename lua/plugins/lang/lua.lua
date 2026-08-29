@@ -4,6 +4,11 @@ require('utils').install_with_mason {
 	'selene',
 }
 
+-- Tree-sitter parsers for Lua (mirrors the mason install pattern above).
+pcall(function()
+	require('nvim-treesitter').install { 'lua', 'luadoc', 'luap' }
+end)
+
 vim.lsp.config('lua_ls', {
 	cmd = { 'lua-language-server' },
 	filetypes = { 'lua' },
@@ -30,13 +35,16 @@ vim.lsp.config('lua_ls', {
 	},
 })
 
-
 local conform = require 'conform'
 conform.formatters_by_ft.lua = { 'stylua' }
 
 local lint = require 'lint'
-if vim.uv.fs_stat(vim.fn.expand '~/.cargo/bin/selene') then lint.linters.selene.cmd =
-	vim.fn.expand '~/.cargo/bin/selene' end
+if vim.uv.fs_stat(vim.fn.expand '~/.cargo/bin/selene') then
+	lint.linters.selene.cmd =
+			vim.fn.expand '~/.cargo/bin/selene'
+end
 lint.linters_by_ft.lua = { 'selene' }
 
 vim.lsp.enable 'lua_ls'
+
+-- vim: ts=2 sts=2 sw=2 et
