@@ -17,7 +17,7 @@ vim.lsp.config('zls', {
 vim.lsp.enable 'zls'
 
 local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'zig', 'zir' })
+pcall(TS.install, { 'zig' })
 
 pcall(function()
   require('neotest').setup {

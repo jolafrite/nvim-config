@@ -9,7 +9,7 @@ vim.lsp.config('ocamllsp', {
 })
 
 local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'ocaml', 'ocaml_interface', 'reason' })
+pcall(TS.install, { 'ocaml', 'ocaml_interface' })
 
 vim.lsp.enable 'ocamllsp'
 
