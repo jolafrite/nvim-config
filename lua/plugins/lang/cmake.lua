@@ -1,6 +1,7 @@
 -- CMake language support (treesitter + LSP config).
 require('utils').install_with_mason {
 	'neocmakelsp',
+	'cmakelang',
 }
 
 vim.lsp.config('neocmake', {
@@ -8,6 +9,13 @@ vim.lsp.config('neocmake', {
 	filetypes = { 'cmake' },
 	root_markers = { '.neocmake.toml', '.git', 'build', 'cmake' },
 })
+
+local conform = require("conform")
+conform.formatters.cmake_format = {
+	command = "cmake-format",
+	stdin = true,
+}
+conform.formatters_by_ft.cmake = { "cmake_format" }
 
 local lint = require("lint")
 lint.linters_by_ft.cmake = { "cmakelint" }
