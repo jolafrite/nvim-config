@@ -23,6 +23,19 @@ require('utils').install_with_mason {
 
 local diagnostics = vim.g.lazyvim_rust_diagnostics or 'rust-analyzer'
 
+-- bacon-ls provides diagnostics-only when `vim.g.lazyvim_rust_diagnostics`
+-- is set to "bacon-ls" (rust-analyzer still provides the rest of the LSP).
+if diagnostics == 'bacon-ls' then
+  require('utils').install_with_mason {
+    'bacon',
+  }
+  vim.lsp.config('bacon_ls', {
+    cmd = { 'bacon-ls' },
+    filetypes = { 'rust' },
+  })
+  vim.lsp.enable 'bacon_ls'
+end
+
 -- rustaceanvim does NOT expose a setup() function -- it auto-attaches the
 -- rust-analyzer LSP client on FileType=rust via its ftplugin. Configuration
 -- goes through vim.g.rustaceanvim (a table or function returning a table).

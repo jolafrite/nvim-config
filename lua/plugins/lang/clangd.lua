@@ -25,6 +25,8 @@ vim.lsp.config('clangd', {
     'c++',
     'cuda',
     'objc',
+    'objcpp',
+    'proto',
   },
   root_markers = {
     'compile_commands.json',
@@ -66,6 +68,10 @@ require('lint').linters_by_ft.cxx = { 'cpplint' }
 require('lint').linters_by_ft.h = { 'cpplint' }
 require('lint').linters_by_ft.hpp = { 'cpplint' }
 require('lint').linters_by_ft.cc = { 'cpplint' }
+
+-- Tree-sitter parsers for C/C++.
+local TS = require 'nvim-treesitter'
+pcall(TS.install, { 'c', 'cpp' })
 
 vim.lsp.enable 'clangd'
 

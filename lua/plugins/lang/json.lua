@@ -9,7 +9,7 @@ local schemastore_ok, schemastore = pcall(require, 'schemastore')
 
 vim.lsp.config('jsonls', {
   cmd = { 'vscode-json-language-server', '--stdio' },
-  filetypes = { 'json', 'jsonc' },
+  filetypes = { 'json', 'jsonc', 'json5' },
   root_markers = { '.git' },
   before_init = function(_, new_config)
     new_config.settings.json.schemas = new_config.settings.json.schemas or {}
@@ -36,8 +36,8 @@ require('lint').linters_by_ft.jsonc = { 'jsonlint' }
 
 vim.lsp.enable 'jsonls'
 
--- Tree-sitter parser for JSON.
+-- Tree-sitter parsers for JSON (json5 is handled by the LSP).
 local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'json' })
+pcall(TS.install, { 'json', 'json5' })
 
 -- vim: ts=2 sts=2 sw=2 et

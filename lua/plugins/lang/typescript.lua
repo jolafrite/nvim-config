@@ -16,6 +16,30 @@ require('utils').install_with_mason {
   'prettier',
 }
 
+-- ts_ls mirrors these settings for javascript files as well.
+local js_ts_settings = {
+  typescript = {
+    inlayHints = {
+      enumMemberValues = { enabled = true },
+      functionLikeReturnTypes = { enabled = true },
+      parameterNames = { enabled = 'literals' },
+      parameterTypes = { enabled = true },
+      propertyDeclarationTypes = { enabled = true },
+      variableTypes = { enabled = false },
+    },
+  },
+  javascript = {
+    inlayHints = {
+      enumMemberValues = { enabled = true },
+      functionLikeReturnTypes = { enabled = true },
+      parameterNames = { enabled = 'literals' },
+      parameterTypes = { enabled = true },
+      propertyDeclarationTypes = { enabled = true },
+      variableTypes = { enabled = false },
+    },
+  },
+}
+
 vim.lsp.config('ts_ls', {
   cmd = { 'typescript-language-server', '--stdio' },
   filetypes = {
@@ -24,6 +48,13 @@ vim.lsp.config('ts_ls', {
     'typescript',
     'typescriptreact',
   },
+  root_markers = {
+    'tsconfig.json',
+    'package.json',
+    'jsconfig.json',
+    '.git',
+  },
+  settings = js_ts_settings,
 })
 -- Tree-sitter parsers for TS/JS.
 local TS = require 'nvim-treesitter'

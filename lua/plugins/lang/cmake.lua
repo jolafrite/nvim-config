@@ -1,7 +1,14 @@
 -- CMake language support (treesitter + LSP config).
+local gh = require('utils').gh
+
+vim.pack.add {
+  gh 'Civitasv/cmake-tools.nvim',
+}
+
 require('utils').install_with_mason {
   'neocmakelsp',
   'cmakelang',
+  'cmakelint',
 }
 
 vim.lsp.config('neocmake', {
@@ -19,6 +26,10 @@ conform.formatters_by_ft.cmake = { 'cmake_format' }
 
 local lint = require 'lint'
 lint.linters_by_ft.cmake = { 'cmakelint' }
+
+-- Tree-sitter parser for CMake.
+local TS = require 'nvim-treesitter'
+pcall(TS.install, { 'cmake' })
 
 vim.lsp.enable 'neocmake'
 
