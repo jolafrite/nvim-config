@@ -1,10 +1,8 @@
--- Helm chart language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'helm-ls',
 }
 
--- Treat templates inside a Helm chart as `helm` so helm_ls and treesitter
--- engage on them.
+-- chart templates get the helm filetype
 vim.filetype.add {
   pattern = {
     ['.*/templates/.*%.ya?ml$'] = 'helm',
@@ -18,7 +16,6 @@ vim.lsp.config('helm_ls', {
   root_markers = { 'Chart.yaml', '.git' },
 })
 
--- Tree-sitter parser for Helm (yaml with go-template).
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'helm' })
 

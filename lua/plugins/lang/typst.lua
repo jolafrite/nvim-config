@@ -1,4 +1,3 @@
--- Typst language support (tinymist LSP + typstyle formatter).
 require('utils').install_with_mason {
   'tinymist',
   'typstyle',
@@ -17,7 +16,6 @@ vim.lsp.config('tinymist', {
 local conform = require 'conform'
 conform.formatters_by_ft.typst = { { 'typstyle', lsp_format = 'prefer' } }
 
--- Tree-sitter parser for Typst.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'typst' })
 

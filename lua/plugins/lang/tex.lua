@@ -1,4 +1,3 @@
--- LaTeX language support (vimtex + texlab LSP).
 local gh = require('utils').gh
 
 vim.pack.add {
@@ -21,8 +20,7 @@ vim.lsp.config('texlab', {
 
 vim.lsp.enable 'texlab'
 
--- Tree-sitter parsers for LaTeX/BibTeX. `latex` highlighting is left to
--- vimtex; the parser is still installed for structural features.
+-- latex highlighting is left to vimtex.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'bibtex', 'latex' })
 

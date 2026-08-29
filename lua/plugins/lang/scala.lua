@@ -1,8 +1,4 @@
--- Scala language support (nvim-metals).
---
--- nvim-metals manages the Metals LSP lifecycle itself (via coursier), so
--- no `vim.lsp.config`/`vim.lsp.enable` is needed here. attach happens on
--- FileType scala/sbt.
+-- nvim-metals manages the Metals LSP lifecycle itself (no vim.lsp.enable).
 local gh = require('utils').gh
 
 vim.pack.add {
@@ -10,7 +6,6 @@ vim.pack.add {
   gh 'nvim-lua/plenary.nvim',
 }
 
--- Tree-sitter parser for Scala.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'scala' })
 

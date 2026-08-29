@@ -1,8 +1,4 @@
--- Haskell language support (haskell-tools + treesitter + LSP config).
---
--- haskell-tools manages the haskell-language-server lifecycle itself, so no
--- `vim.lsp.config`/`vim.lsp.enable` is needed here; lspconfig must NOT start
--- a second HLS client either.
+-- haskell-tools manages hls itself; don't vim.lsp.enable it.
 local gh = require('utils').gh
 
 vim.pack.add {
@@ -16,7 +12,6 @@ require('utils').install_with_mason {
   'hlint',
 }
 
--- Tree-sitter parsers for Haskell/Cabal.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'haskell', 'cabal' })
 

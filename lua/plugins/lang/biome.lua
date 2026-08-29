@@ -1,9 +1,5 @@
--- Biome (all-in-one JS/TS linter+formatter) language support.
---
--- The biome LSP is registered alongside the JS/TS servers. Formatting is
--- still owned by prettier (see typescript.lua and friends); the
--- `biome-check` conform formatter below is only *defined*, not attached, so
--- it can be opted into per-buffer without double-formatting conflicts.
+-- formatting stays owned by prettier; biome-check is defined here for
+-- per-buffer opt-in only (not attached).
 require('utils').install_with_mason {
   'biome',
 }

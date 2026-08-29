@@ -1,8 +1,5 @@
--- Ruby language support (treesitter + LSP config).
---
--- LSP for Ruby. Set `vim.g.lazyvim_ruby_lsp = "solargraph"` (in options.lua)
--- to use solargraph instead of ruby_lsp. Formatting is done with rubocop by
--- default; set `vim.g.lazyvim_ruby_formatter = "standardrb"` to switch.
+-- vim.g.lazyvim_ruby_lsp = "solargraph" / vim.g.lazyvim_ruby_formatter =
+-- "standardrb" switch the LSP/formatter.
 local lsp = vim.g.lazyvim_ruby_lsp or 'ruby_lsp'
 local formatter = vim.g.lazyvim_ruby_formatter or 'rubocop'
 
@@ -30,9 +27,7 @@ else
   vim.lsp.enable 'solargraph'
 end
 
--- If Solargraph is the LSP, rubocop diagnostics would be duplicated (it
--- already runs rubocop internally), so we only enable the rubocop LSP
--- alongside ruby_lsp.
+-- solargraph already runs rubocop internally; don't duplicate diagnostics.
 if formatter == 'rubocop' and lsp ~= 'solargraph' then
   vim.lsp.config('rubocop', {
     cmd = { 'rubocop', '--lsp' },
@@ -41,7 +36,6 @@ if formatter == 'rubocop' and lsp ~= 'solargraph' then
   vim.lsp.enable 'rubocop'
 end
 
--- Tree-sitter parser for Ruby.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'ruby' })
 

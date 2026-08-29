@@ -1,4 +1,3 @@
--- JSON language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'json-lsp',
   'fixjson',
@@ -36,7 +35,6 @@ require('lint').linters_by_ft.jsonc = { 'jsonlint' }
 
 vim.lsp.enable 'jsonls'
 
--- Tree-sitter parsers for JSON (json5 is handled by the LSP).
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'json', 'json5' })
 

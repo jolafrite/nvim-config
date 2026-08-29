@@ -1,10 +1,4 @@
--- Java language support (treesitter + LSP config).
---
--- jdtls is managed by the nvim-jdtls plugin (declared below): it computes
--- per-project `-configuration`/`-data` dirs, attaches the Eclipse JDT LS and
--- registers the standard Java keymaps (extract methods/constants, organize
--- imports, goto-super, ...). The LSP client itself is NOT started through
--- `vim.lsp.enable` -- nvim-jdtls does that directly.
+-- jdtls is managed by nvim-jdtls (below), not via vim.lsp.enable.
 local gh = require('utils').gh
 
 vim.pack.add {
@@ -15,11 +9,10 @@ require('utils').install_with_mason {
   'jdtls',
   'google-java-format',
   'checkstyle',
-  'java-debug-adapter', -- DAP once nvim-dap is wired up
-  'java-test', -- test runner once nvim-dap is wired up
+  'java-debug-adapter',
+  'java-test',
 }
 
--- Tree-sitter parser for Java.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'java' })
 
@@ -33,9 +26,7 @@ conform.formatters_by_ft.java = { 'google_java_format' }
 
 require('lint').linters_by_ft.java = { 'checkstyle' }
 
--- jdtls often needs `--jvm-arg=-javaagent:.../lombok.jar` for Lombok support.
--- The `-configuration`/`-data` dirs are per-project (derived from the root
--- dir) so unrelated projects don't share language-server state.
+-- lombok agent is added when present; -configuration/-data are per-project.
 local function jdtls_cmd(root_dir)
   local cmd = { vim.fn.exepath 'jdtls' or 'jdtls' }
   if vim.env.MASON then
@@ -56,10 +47,10 @@ local function attach_jdtls()
   local root_markers = {
     'build.gradle',
     'build.gradle.kts',
-    'build.xml', -- Ant
-    'pom.xml', -- Maven
-    'settings.gradle', -- Gradle
-    'settings.gradle.kts', -- Gradle
+    'build.xml',
+    'pom.xml',
+    'settings.gradle',
+    'settings.gradle.kts',
     '.git',
   }
   local root_dir = vim.fs.root(fname, root_markers) or vim.fn.getcwd()

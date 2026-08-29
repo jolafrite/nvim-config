@@ -1,4 +1,3 @@
--- OCaml language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'ocaml-lsp',
 }
@@ -9,7 +8,6 @@ vim.lsp.config('ocamllsp', {
   root_markers = { 'dune-project', 'dune-workspace', '*.opam', 'package.json', '.git' },
 })
 
--- Tree-sitter parsers for OCaml/Reason.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'ocaml', 'ocaml_interface', 'reason' })
 

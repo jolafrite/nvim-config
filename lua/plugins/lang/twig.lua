@@ -1,4 +1,3 @@
--- Twig language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'twiggy-language-server',
   'twigcs',
@@ -20,7 +19,6 @@ conform.formatters_by_ft.twig = { 'twig-cs-fixer' }
 local lint = require 'lint'
 lint.linters_by_ft.twig = { 'twigcs' }
 
--- Tree-sitter parser for Twig.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'twig' })
 

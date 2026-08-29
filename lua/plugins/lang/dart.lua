@@ -1,6 +1,3 @@
--- Dart language support (treesitter + LSP config).
---
--- The `dart` sdk (installed via mason) provides the language server.
 require('utils').install_with_mason {
   'dart',
 }
@@ -14,7 +11,6 @@ vim.lsp.config('dartls', {
 local conform = require 'conform'
 conform.formatters_by_ft.dart = { 'dart_format' }
 
--- Tree-sitter parser for Dart.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'dart' })
 

@@ -1,4 +1,3 @@
--- Prisma language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'prisma-language-server',
 }
@@ -9,7 +8,6 @@ vim.lsp.config('prismals', {
   root_markers = { 'schema.prisma', '.git' },
 })
 
--- Tree-sitter parser for Prisma.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'prisma' })
 

@@ -1,4 +1,3 @@
--- Rego (Open Policy Agent) language support (treesitter + LSP config).
 local rego_filetypes = { 'rego' }
 
 require('utils').install_with_mason {
@@ -16,7 +15,6 @@ vim.lsp.config('regal', {
   filetypes = rego_filetypes,
 })
 
--- Tree-sitter parser for Rego.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'rego' })
 

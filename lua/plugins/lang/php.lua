@@ -1,7 +1,4 @@
--- PHP language support (treesitter + LSP config).
---
--- LSP for PHP. Set `vim.g.lazyvim_php_lsp = "intelephense"` (in options.lua)
--- to use intelephense instead of phpactor.
+-- vim.g.lazyvim_php_lsp = "intelephense" to switch from phpactor.
 local lsp = vim.g.lazyvim_php_lsp or 'phpactor'
 
 require('utils').install_with_mason {
@@ -32,7 +29,6 @@ conform.formatters_by_ft.php = { 'php_cs_fixer' }
 local lint = require 'lint'
 lint.linters_by_ft.php = { 'phpcs' }
 
--- Tree-sitter parser for PHP.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'php' })
 

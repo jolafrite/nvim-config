@@ -1,4 +1,3 @@
--- Elixir language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'elixir-ls',
 }
@@ -16,9 +15,9 @@ lint.linters.credo = vim.tbl_deep_extend('force', lint.linters.credo or {}, {
   condition = function(ctx) return vim.fs.find({ '.credo.exs' }, { path = ctx.filename, upward = true })[1] ~= nil end,
 })
 
--- Tree-sitter parsers for Elixir (livebook uses the markdown parser).
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'elixir', 'heex', 'eex' })
+-- livebook uses the markdown parser
 vim.treesitter.language.register('markdown', 'livebook')
 
 vim.lsp.enable 'elixirls'

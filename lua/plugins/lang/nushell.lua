@@ -1,4 +1,3 @@
--- Nushell language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'nushell',
 }
@@ -8,7 +7,6 @@ vim.lsp.config('nushell', {
   filetypes = { 'nu' },
 })
 
--- Tree-sitter parser for Nushell.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'nu' })
 

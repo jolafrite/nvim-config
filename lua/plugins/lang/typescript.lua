@@ -1,22 +1,10 @@
--- Typescript language support.
---
--- Uses merge-form `vim.lsp.config("ts_ls", {...})` so that the base
--- `cmd`/`filetypes` set in `lsp.lua` are preserved (assignment form
--- `vim.lsp.config.ts_ls = {}` would replace and discard them).
---
--- `typescript-language-server` is unusual in two ways vs. other mason servers:
---   1. It REQUIRES `--stdio` to be passed explicitly in `cmd`. Every other
---      server here (gopls, lua-language-server, ...) is invoked with no
---      args; omitting `--stdio` makes this binary refuse to start with
---      `error: required option '--stdio' not specified`.
---   2. `filetypes` must be a table, not a function -- this Neovim's
---      `vim/lsp.lua:479` rejects a function value for `filetypes`.
 require('utils').install_with_mason {
   'oxlint',
   'prettier',
 }
 
--- ts_ls mirrors these settings for javascript files as well.
+-- `typescript-language-server` refuses to start without an explicit `--stdio`.
+-- Inlay-hint settings are mirrored to javascript too (js_ts_settings).
 local js_ts_settings = {
   typescript = {
     inlayHints = {
@@ -56,7 +44,6 @@ vim.lsp.config('ts_ls', {
   },
   settings = js_ts_settings,
 })
--- Tree-sitter parsers for TS/JS.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'typescript', 'tsx', 'javascript' })
 

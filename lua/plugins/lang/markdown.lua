@@ -1,10 +1,4 @@
--- Markdown language support (treesitter + LSP config).
---
--- LSP: marksman. Formatters: prettier + markdownlint-cli2 + markdown-toc.
--- Linter: markdownlint-cli2.
---
--- mdx files are treated as markdown so marksman, conform and nvim-lint all
--- engage on them.
+-- mdx files map to markdown.mdx so marksman, conform and nvim-lint all engage.
 vim.filetype.add {
   extension = { mdx = 'markdown.mdx' },
 }
@@ -36,7 +30,6 @@ conform.formatters_by_ft['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'm
 local lint = require 'lint'
 lint.linters_by_ft.markdown = { 'markdownlint-cli2' }
 
--- Tree-sitter parsers for Markdown.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'markdown', 'markdown_inline' })
 

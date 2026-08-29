@@ -1,4 +1,3 @@
--- Clangd language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'clangd',
   'clang-format',
@@ -69,7 +68,6 @@ require('lint').linters_by_ft.h = { 'cpplint' }
 require('lint').linters_by_ft.hpp = { 'cpplint' }
 require('lint').linters_by_ft.cc = { 'cpplint' }
 
--- Tree-sitter parsers for C/C++.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'c', 'cpp' })
 

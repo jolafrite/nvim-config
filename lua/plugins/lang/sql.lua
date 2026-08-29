@@ -1,10 +1,8 @@
--- SQL language support (treesitter + LSP config, dadbod databases).
 local gh = require('utils').gh
 
 local sql_ft = { 'sql', 'mysql', 'plsql' }
 
--- Disable the default `sql_completion` plugin to stay compatible with
--- blink.cmp's omnifunc while still showing syntax keywords.
+-- Disable the built-in sql_completion so blink.cmp's omnifunc keeps working.
 vim.g.omni_sql_default_compl_type = 'syntax'
 vim.g.loaded_sql_completion = true
 
@@ -28,9 +26,7 @@ vim.lsp.config('sqls', {
   settings = {},
 })
 
--- blink.cmp: the dadbod completion provider is registered in blink.lua
--- (the single source of truth for the blink config).
-
+-- The dadbod completion source is registered in blink.lua.
 local conform = require 'conform'
 conform.formatters.sqlfluff = {
   args = { 'format', '--dialect=ansi', '-' },
@@ -44,7 +40,6 @@ for _, ft in ipairs(sql_ft) do
   lint.linters_by_ft[ft] = { 'sqlfluff' }
 end
 
--- Tree-sitter parser for SQL.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'sql' })
 

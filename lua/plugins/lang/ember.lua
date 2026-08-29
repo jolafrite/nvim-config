@@ -1,4 +1,3 @@
--- Ember.js (glimmer) language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'ember-language-server',
 }
@@ -12,7 +11,6 @@ vim.lsp.config('ember', {
 local conform = require 'conform'
 conform.formatters_by_ft.glimmer = { 'prettier' }
 
--- Tree-sitter parsers for Ember/glimmer templates.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'glimmer', 'glimmer_javascript', 'glimmer_typescript', 'css' })
 

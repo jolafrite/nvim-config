@@ -1,8 +1,3 @@
--- Kotlin language support (treesitter + LSP config).
---
--- kotlin.nvim provides treesitter + formatting helpers; the LSP server
--- itself is kotlin-language-server (installed via mason). Linting and
--- formatting are handled by ktlint (mirroring the LazyVim kotlin extra).
 local gh = require('utils').gh
 
 vim.pack.add {
@@ -21,7 +16,6 @@ vim.lsp.config('kotlin_language_server', {
   filetypes = { 'kotlin' },
 })
 
--- Tree-sitter parser for Kotlin.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'kotlin' })
 
@@ -32,7 +26,6 @@ require('lint').linters_by_ft.kotlin = { 'ktlint' }
 
 vim.lsp.enable 'kotlin_language_server'
 
--- Kotlin DAP (only runs when nvim-dap is installed).
 pcall(function()
   local dap = require 'dap'
   if not dap.adapters.kotlin then
@@ -48,8 +41,6 @@ pcall(function()
       type = 'kotlin',
       request = 'launch',
       name = 'This file',
-      -- may differ: it has to correspond to the class file located at
-      -- `build/classes/`, and you have to build before you debug
       mainClass = function()
         local root = vim.fs.find('src', { path = vim.uv.cwd(), upward = true, stop = vim.env.HOME })[1] or ''
         local fname = vim.api.nvim_buf_get_name(0)

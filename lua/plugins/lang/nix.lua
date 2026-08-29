@@ -1,4 +1,3 @@
--- Nix language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'nil',
   'statix',
@@ -17,7 +16,6 @@ conform.formatters_by_ft.nix = { 'nixfmt' }
 local lint = require 'lint'
 lint.linters_by_ft.nix = { 'statix' }
 
--- Tree-sitter parser for Nix.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'nix' })
 

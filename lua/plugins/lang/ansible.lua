@@ -1,4 +1,3 @@
--- Ansible language support (treesitter + LSP config, lint).
 local gh = require('utils').gh
 
 vim.pack.add {

@@ -1,4 +1,3 @@
--- Thrift language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'thriftls',
 }
@@ -8,7 +7,6 @@ vim.lsp.config('thriftls', {
   filetypes = { 'thrift', 'thrift2' },
 })
 
--- Tree-sitter parser for Thrift.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'thrift' })
 

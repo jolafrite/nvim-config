@@ -1,4 +1,3 @@
--- Terraform language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'terraform-ls',
   'tflint',
@@ -32,7 +31,6 @@ lint.linters_by_ft.terraform = { 'tflint', 'terraform_validate' }
 lint.linters_by_ft.tf = { 'tflint', 'terraform_validate' }
 lint.linters_by_ft['terraform-vars'] = { 'tflint', 'terraform_validate' }
 
--- Tree-sitter parsers for Terraform/HCL.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'terraform', 'hcl' })
 

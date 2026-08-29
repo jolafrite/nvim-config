@@ -4,7 +4,6 @@ require('utils').install_with_mason {
   'selene',
 }
 
--- Tree-sitter parsers for Lua (mirrors the mason install pattern above).
 pcall(function() require('nvim-treesitter').install { 'lua', 'luadoc', 'luap' } end)
 
 vim.lsp.config('lua_ls', {

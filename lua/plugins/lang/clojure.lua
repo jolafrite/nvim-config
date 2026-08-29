@@ -1,4 +1,3 @@
--- Clojure language support (conjure REPL + treesitter).
 local gh = require('utils').gh
 
 vim.pack.add {
@@ -12,19 +11,14 @@ vim.pack.add {
 vim.g['conjure#mapping#doc_word'] = 'K'
 vim.g['conjure#mapping#def_word'] = 'gd'
 
--- Tree-sitter parser for Clojure.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'clojure' })
 
 require('utils').on_file_types({ 'clojure', 'edn' }, function()
-  -- REPL support via conjure.
   pcall(function() require('conjure.main').main() end)
-
-  -- s-expression editing.
   pcall(function() require('nvim-paredit').setup {} end)
 end)
 
--- Colorize the output of the conjure log buffer (baleia).
 local baleia_ok, baleia = pcall(require, 'baleia')
 if baleia_ok then
   vim.g.conjure_baleia = baleia.setup { line_starts_at = 3 }

@@ -1,4 +1,3 @@
--- Zig language support (treesitter + LSP config).
 local gh = require('utils').gh
 
 vim.pack.add {
@@ -17,11 +16,9 @@ vim.lsp.config('zls', {
 
 vim.lsp.enable 'zls'
 
--- Tree-sitter parsers for Zig.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'zig', 'zir' })
 
--- Neotest adapter for Zig (optional dependency).
 pcall(function()
   require('neotest').setup {
     adapters = {

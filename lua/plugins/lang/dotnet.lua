@@ -1,4 +1,3 @@
--- .NET (C#, F#, VB) language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'omnisharp',
   'fsautocomplete',
@@ -14,7 +13,7 @@ vim.lsp.config('omnisharp', {
     '*.csproj',
     '*.fsproj',
     'omnisharp.json',
-    'function.json', -- Azure Functions
+    'function.json',
     'paket.dependencies',
     'paket.lock',
   },
@@ -33,7 +32,6 @@ local conform = require 'conform'
 conform.formatters_by_ft.cs = { 'csharpier' }
 conform.formatters_by_ft.fsharp = { 'fantomas' }
 
--- Tree-sitter parsers for C#/F#.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'c_sharp', 'fsharp' })
 

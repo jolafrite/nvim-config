@@ -1,11 +1,4 @@
--- Angular language support (treesitter + LSP config).
---
--- Depends on typescript/ts_ls (loaded in lsp.lua before this module).
---
--- `angular-language-server` from mason installs the `ngserver` binary.
--- When @angular/language-server is installed globally, `ngserver --stdio`
--- is sufficient; the nvim-lspconfig default additionally probes
--- project-local node_modules for per-project Angular versions.
+-- Depends on the TS/JS config (typescript.lua) for script blocks.
 require('utils').install_with_mason {
   'angular-language-server',
   'prettier',
@@ -27,14 +20,10 @@ conform.formatters_by_ft.htmlangular = { 'prettier' }
 
 require('lint').linters_by_ft.htmlangular = { 'oxlint' }
 
--- Tree-sitter parsers for Angular (templates use the `angular` parser,
--- styles use `scss`).
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'angular', 'scss' })
 
--- Angular component/container templates share the .html extension but the
--- code inside them is Angular, not plain HTML. Start the `angular` parser
--- (and re-run filetype detection) so highlighting matches the template syntax.
+-- `*.component.html` / `*.container.html` are Angular templates, not plain HTML.
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
   pattern = { '*.component.html', '*.container.html' },
   callback = function()

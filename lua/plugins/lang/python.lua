@@ -1,12 +1,4 @@
--- Python language support (treesitter + LSP config).
---
--- Uses merge-form `vim.lsp.config(lsp, {...})` so that the base
--- `cmd`/`filetypes` set in `lsp.lua` are preserved (assignment form
--- `vim.lsp.config.X = {}` would replace and discard them).
---
--- LSP for Python, set `vim.g.lazyvim_python_lsp = "basedpyright"` (in
--- options.lua) to prefer basedpyright over pyright. Ruff provides
--- diagnostics+formatting on top of the type checker.
+-- Set vim.g.lazyvim_python_lsp = "basedpyright" to use it instead of pyright.
 local lsp = vim.g.lazyvim_python_lsp or 'pyright'
 local ruff = vim.g.lazyvim_python_ruff or 'ruff'
 
@@ -51,11 +43,10 @@ vim.lsp.config(ruff, {
 })
 
 require('snacks').util.lsp.on({ name = ruff }, function(_, client)
-  -- Disable hover in favor of Pyright
+  -- Disable hover in favor of the type checker.
   client.server_capabilities.hoverProvider = false
 end)
 
--- Tree-sitter parsers for Python (plus ninja/rst, used by Python tooling).
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'python', 'ninja', 'rst' })
 

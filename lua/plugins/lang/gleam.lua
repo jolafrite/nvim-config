@@ -1,4 +1,3 @@
--- Gleam language support (treesitter + LSP config).
 require('utils').install_with_mason {
   'gleam',
 }
@@ -12,7 +11,6 @@ vim.lsp.config('gleam', {
 local conform = require 'conform'
 conform.formatters_by_ft.gleam = { 'gleam' }
 
--- Tree-sitter parser for Gleam.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'gleam' })
 

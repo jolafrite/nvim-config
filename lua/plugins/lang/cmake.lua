@@ -1,4 +1,3 @@
--- CMake language support (treesitter + LSP config).
 local gh = require('utils').gh
 
 vim.pack.add {
@@ -27,7 +26,6 @@ conform.formatters_by_ft.cmake = { 'cmake_format' }
 local lint = require 'lint'
 lint.linters_by_ft.cmake = { 'cmakelint' }
 
--- Tree-sitter parser for CMake.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'cmake' })
 
