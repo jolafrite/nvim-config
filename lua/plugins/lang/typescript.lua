@@ -12,7 +12,8 @@
 --   2. `filetypes` must be a table, not a function -- this Neovim's
 --      `vim/lsp.lua:479` rejects a function value for `filetypes`.
 require('utils').install_with_mason {
-	'typescript-language-server',
+	'oxlint',
+	'prettier',
 }
 
 vim.lsp.config("ts_ls", {
@@ -24,6 +25,21 @@ vim.lsp.config("ts_ls", {
 		"typescriptreact",
 	},
 })
+
+local conform = require("conform")
+conform.formatters.prettier = {
+	command = "prettier",
+	stdin = true,
+}
+conform.formatters_by_ft.javascript = { "prettier" }
+conform.formatters_by_ft.javascriptreact = { "prettier" }
+conform.formatters_by_ft.typescript = { "prettier" }
+conform.formatters_by_ft.typescriptreact = { "prettier" }
+
+require("lint").linters_by_ft.javascript = { "oxlint" }
+require("lint").linters_by_ft.javascriptreact = { "oxlint" }
+require("lint").linters_by_ft.typescript = { "oxlint" }
+require("lint").linters_by_ft.typescriptreact = { "oxlint" }
 
 vim.lsp.enable 'ts_ls'
 
