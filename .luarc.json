@@ -1,15 +1,19 @@
 {
-  "runtime.version": "LuaJIT 2.1",
-  "diagnostics": {
-    "globals": [
-      "vim",
-      "Snacks"
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "LuaJIT",
+  "workspace": {
+    "checkThirdParty": false,
+    "ignoreDir": [
+      ".worktrees",
+      ".superpowers",
+      ".ua",
+      ".jj"
     ],
-    "disable": {
-      "undefined-doc-name": {
-        "Snacks": true,
-        "snacks": true
-      }
-    }
+    "library": [
+      "${3rd}/luv/library",
+      "${3rd}/busted/library",
+      "${3rd}/luassert/library",
+      "./lua"
+    ]
   }
 }
