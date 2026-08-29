@@ -1,63 +1,50 @@
--- Lua language support.
-local function setup(args)
-  local bufnr = args.buf
+require('utils').install_with_mason {
+	'lua-language-server',
+	'stylua',
+	'selene',
+}
 
-  -- Safe Mason install; ignore errors if a download is already in flight
-  pcall(function()
-    require('utils').install_with_mason { 'lua-language-server', 'stylua' }
-  end)
+-- Tree-sitter parsers for Lua (mirrors the mason install pattern above).
+pcall(function()
+	require('nvim-treesitter').install { 'lua', 'luadoc', 'luap' }
+end)
 
-  -- Tree-sitter parsers for Lua (mirrors the mason install pattern above).
-  pcall(function()
-    require('nvim-treesitter').install { 'lua', 'luadoc', 'luap' }
-  end)
+vim.lsp.config('lua_ls', {
+	cmd = { 'lua-language-server' },
+	filetypes = { 'lua' },
+	root_markers = {
+		'.luarc.json',
+		'.luarc.jsonc',
+		'.luacheckrc',
+		'.stylua.toml',
+		'stylua.toml',
+		'selene.toml',
+		'selene.yml',
+		'.git',
+	},
 
-  -- Prevent duplicate server attachments on the same buffer
-  if #vim.lsp.get_clients({ bufnr = bufnr, name = 'lua_ls' }) > 0 then return end
+	on_init = function(client) client.server_capabilities.documentFormattingProvider = false end,
 
-  ---@type vim.lsp.Config
-  local server = {
-    name = 'lua_ls',
-    cmd = { 'lua-language-server' },
-    filetypes = { 'lua' },
-    root_dir = require('utils').root.get { buf = bufnr, normalize = false },
-    on_init = function(client)
-      client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
-    end,
-    settings = {
-      Lua = {
-        runtime = {
-          version = 'LuaJIT',
-          path = { 'lua/?.lua', 'lua/?/init.lua' },
-        },
-        signatureHelp = { enabled = true },
-        format = { enable = false },
-        completion = { callSnippet = 'Replace' },
-        hint = { enable = true },
-        workspace = {
-          checkThirdParty = false,
-          -- lazydev supplies Neovim API types, so avoid scanning the whole runtime tree
-          library = {
-            vim.env.VIMRUNTIME,
-            '${3rd}/luv/library',
-            '${3rd}/busted/library',
-          },
-        },
-        telemetry = { enable = false },
-      },
-    },
-  }
+	settings = {
+		Lua = {
+			signatureHelp = { enabled = true },
+			format = { enable = false },
+			codeLens = { enable = true },
+			hint = { enable = true },
+		},
+	},
+})
 
-  vim.lsp.config('lua_ls', server)
-  vim.lsp.start(server)
+local conform = require 'conform'
+conform.formatters_by_ft.lua = { 'stylua' }
 
-  -- Register conform formatter without breaking startup if conform is unavailable
-  pcall(function()
-    local conform = require 'conform'
-    if conform and conform.formatters_by_ft then
-      conform.formatters_by_ft.lua = { 'stylua' }
-    end
-  end)
+local lint = require 'lint'
+if vim.uv.fs_stat(vim.fn.expand '~/.cargo/bin/selene') then
+	lint.linters.selene.cmd =
+			vim.fn.expand '~/.cargo/bin/selene'
 end
+lint.linters_by_ft.lua = { 'selene' }
 
-require('utils').on_file_types({ 'lua' }, setup)
+vim.lsp.enable 'lua_ls'
+
+-- vim: ts=2 sts=2 sw=2 et
