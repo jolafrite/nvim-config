@@ -16,7 +16,7 @@ local opts = {
   linters_by_ft = {
     fish = { 'fish' },
   },
--- Extension point: easily override linter options or add custom linters.
+  -- Extension point: easily override linter options or add custom linters.
   linters = {},
 }
 

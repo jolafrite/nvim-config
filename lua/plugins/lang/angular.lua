@@ -7,29 +7,29 @@
 -- is sufficient; the nvim-lspconfig default additionally probes
 -- project-local node_modules for per-project Angular versions.
 require('utils').install_with_mason {
-	'angular-language-server',
-	'prettier',
-	'oxlint',
+  'angular-language-server',
+  'prettier',
+  'oxlint',
 }
 
 vim.lsp.config('angularls', {
-	cmd = { 'ngserver', '--stdio' },
-	filetypes = { 'typescript', 'html', 'typescriptreact', 'htmlangular' },
-	root_markers = { 'angular.json', 'nx.json' },
+  cmd = { 'ngserver', '--stdio' },
+  filetypes = { 'typescript', 'html', 'typescriptreact', 'htmlangular' },
+  root_markers = { 'angular.json', 'nx.json' },
 })
 
-local conform = require("conform")
+local conform = require 'conform'
 conform.formatters.prettier = {
-	command = "prettier",
-	stdin = true,
+  command = 'prettier',
+  stdin = true,
 }
-conform.formatters_by_ft.htmlangular = { "prettier" }
+conform.formatters_by_ft.htmlangular = { 'prettier' }
 
-require("lint").linters_by_ft.htmlangular = { "oxlint" }
+require('lint').linters_by_ft.htmlangular = { 'oxlint' }
 
-require("snacks").util.lsp.on({ name = "angularls" }, function(_, client)
-	-- HACK: disable angular renaming capability due to duplicate rename popping up
-	client.server_capabilities.renameProvider = false
+require('snacks').util.lsp.on({ name = 'angularls' }, function(_, client)
+  -- HACK: disable angular renaming capability due to duplicate rename popping up
+  client.server_capabilities.renameProvider = false
 end)
 
 vim.lsp.enable 'angularls'

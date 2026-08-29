@@ -3,27 +3,25 @@
 -- LSP: marksman. Formatters: prettier + markdownlint-cli2 + markdown-toc.
 -- Linter: markdownlint-cli2.
 require('utils').install_with_mason {
-	'marksman',
+  'marksman',
 }
 
 vim.lsp.config('marksman', {
-	cmd = { 'marksman', 'server' },
-	filetypes = { 'markdown', 'markdown.mdx' },
-	root_markers = { '.marksman.toml', '.git' },
+  cmd = { 'marksman', 'server' },
+  filetypes = { 'markdown', 'markdown.mdx' },
+  root_markers = { '.marksman.toml', '.git' },
 })
 
-local conform = require("conform")
-conform.formatters_by_ft.markdown =
-{ "prettier", "markdownlint-cli2", "markdown-toc" }
-conform.formatters_by_ft["markdown.mdx"] =
-{ "prettier", "markdownlint-cli2", "markdown-toc" }
+local conform = require 'conform'
+conform.formatters_by_ft.markdown = { 'prettier', 'markdownlint-cli2', 'markdown-toc' }
+conform.formatters_by_ft['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' }
 
-local lint = require("lint")
-lint.linters_by_ft.markdown = { "markdownlint-cli2" }
+local lint = require 'lint'
+lint.linters_by_ft.markdown = { 'markdownlint-cli2' }
 
 -- Tree-sitter parsers for Markdown.
-local TS = require("nvim-treesitter")
-pcall(TS.install, { "markdown", "markdown_inline" })
+local TS = require 'nvim-treesitter'
+pcall(TS.install, { 'markdown', 'markdown_inline' })
 
 vim.lsp.enable 'marksman'
 

@@ -1,36 +1,29 @@
-local gh = require("utils").gh
+local gh = require('utils').gh
 
-vim.pack.add({
-	gh("lewis6991/gitsigns.nvim"),
-})
+vim.pack.add {
+  gh 'lewis6991/gitsigns.nvim',
+}
 
-require("gitsigns").setup({
-	signs = {
-		add = { text = "▎" },
-		change = { text = "▎" },
-		delete = { text = "" },
-		topdelete = { text = "" },
-		changedelete = { text = "▎" },
-		untracked = { text = "▎" },
-	},
-	signs_staged = {
-		add = { text = "▎" },
-		change = { text = "▎" },
-		delete = { text = "" },
-		topdelete = { text = "" },
-		changedelete = { text = "▎" },
-	},
-	on_attach = function(buffer)
-		local gs = package.loaded.gitsigns
+require('gitsigns').setup {
+  signs = {
+    add = { text = '▎' },
+    change = { text = '▎' },
+    delete = { text = '' },
+    topdelete = { text = '' },
+    changedelete = { text = '▎' },
+    untracked = { text = '▎' },
+  },
+  signs_staged = {
+    add = { text = '▎' },
+    change = { text = '▎' },
+    delete = { text = '' },
+    topdelete = { text = '' },
+    changedelete = { text = '▎' },
+  },
+  on_attach = function(buffer)
+    local gs = package.loaded.gitsigns
 
-		local function map(mode, l, r, desc)
-			vim.keymap.set(
-				mode,
-				l,
-				r,
-				{ buffer = buffer, desc = desc, silent = true }
-			)
-		end
+    local function map(mode, l, r, desc) vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, silent = true }) end
 
 		-- stylua: ignore start
 		map("n", "]h", function()
@@ -60,6 +53,6 @@ require("gitsigns").setup({
 		map("n", "<leader>ghd", gs.diffthis, "Diff This")
 		map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
 		map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
-		-- stylua: ignore end
-	end,
-})
+    -- stylua: ignore end
+  end,
+}

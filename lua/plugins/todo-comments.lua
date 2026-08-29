@@ -1,37 +1,20 @@
-local gh = require("utils").gh
+local gh = require('utils').gh
 
 -- Todo/FIXME/XXX comment scanner. Needs a real buffer, so load on first
 -- BufReadPost rather than at startup.
-require("utils").on_buf_read(function()
-	vim.pack.add({
-		gh("folke/todo-comments.nvim"),
-	})
+require('utils').on_buf_read(function()
+  vim.pack.add {
+    gh 'folke/todo-comments.nvim',
+  }
 
-	require("todo-comments").setup({})
+  require('todo-comments').setup {}
 end)
 
 -- stylua: ignore
 vim.keymap.set('n', ']t', function() require('todo-comments').jump_next() end,
 	{ desc = 'Next Todo Comment' })
-vim.keymap.set("n", "[t", function()
-	require("todo-comments").jump_prev()
-end, { desc = "Previous Todo Comment" })
-vim.keymap.set(
-	"n",
-	"<leader>xt",
-	"<cmd>Trouble todo toggle<cr>",
-	{ desc = "Todo (Trouble)" }
-)
-vim.keymap.set(
-	"n",
-	"<leader>xT",
-	"<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>",
-	{ desc = "Todo/Fix/Fixme (Trouble)" }
-)
-vim.keymap.set("n", "<leader>st", "<cmd>TodoTelescope<cr>", { desc = "Todo" })
-vim.keymap.set(
-	"n",
-	"<leader>sT",
-	"<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>",
-	{ desc = "Todo/Fix/Fixme (Telescope)" }
-)
+vim.keymap.set('n', '[t', function() require('todo-comments').jump_prev() end, { desc = 'Previous Todo Comment' })
+vim.keymap.set('n', '<leader>xt', '<cmd>Trouble todo toggle<cr>', { desc = 'Todo (Trouble)' })
+vim.keymap.set('n', '<leader>xT', '<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>', { desc = 'Todo/Fix/Fixme (Trouble)' })
+vim.keymap.set('n', '<leader>st', '<cmd>TodoTelescope<cr>', { desc = 'Todo' })
+vim.keymap.set('n', '<leader>sT', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', { desc = 'Todo/Fix/Fixme (Telescope)' })

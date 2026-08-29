@@ -1,5 +1,5 @@
-local gh = require("utils").gh
+local gh = require('utils').gh
 
-vim.pack.add({
-	gh("kylechui/nvim-surround"),
-})
+vim.pack.add {
+  gh 'kylechui/nvim-surround',
+}

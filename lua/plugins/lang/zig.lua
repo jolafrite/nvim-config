@@ -1,12 +1,12 @@
 -- Zig language support (treesitter + LSP config).
 require('utils').install_with_mason {
-	'zls',
+  'zls',
 }
 
 vim.lsp.config('zls', {
-	cmd = { 'zls' },
-	filetypes = { 'zig', 'zir' },
-	root_markers = { 'zls.json', 'build.zig', '.git' },
+  cmd = { 'zls' },
+  filetypes = { 'zig', 'zir' },
+  root_markers = { 'zls.json', 'build.zig', '.git' },
 })
 
 vim.lsp.enable 'zls'
