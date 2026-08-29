@@ -12,7 +12,6 @@ vim.g.lualine_info_extras = true
 
 vim.g.autoformat = true
 
-vim.opt.encoding = 'utf-8'
 vim.opt.fileencoding = 'utf-8'
 
 vim.g.root_spec = {
@@ -24,7 +23,7 @@ vim.g.root_spec = {
     'package.json',
     'Makefile',
     'go.mod',
-    'cargo.toml',
+    'Cargo.toml',
     'pyproject.toml',
     'src',
   },
@@ -36,9 +35,6 @@ vim.opt.backupdir = { vim.fn.stdpath 'state' .. '/backup' }
 vim.opt.cmdheight = 0
 vim.opt.mousescroll = 'ver:1,hor:4'
 vim.opt.title = true
-
--- Add asterisks in block comments
-vim.opt.formatoptions:append { 'r' }
 
 -- Enable spell checking
 vim.opt.spell = true
