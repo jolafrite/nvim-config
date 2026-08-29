@@ -1,9 +1,8 @@
 -- JSON language support (treesitter + LSP config).
---
--- `json-lsp` from mason installs the `vscode-json-language-server` binary.
--- Schemas are extended with schemastore when the plugin is available.
 require('utils').install_with_mason {
 	'json-lsp',
+	'fixjson',
+	'jsonlint',
 }
 
 local schemastore_ok, schemastore = pcall(require, "schemastore")
@@ -28,6 +27,17 @@ vim.lsp.config("jsonls", {
 		},
 	},
 })
+
+local conform = require("conform")
+conform.formatters.fixjson = {
+	command = "fixjson",
+	stdin = true,
+}
+conform.formatters_by_ft.json = { "prettier", "fixjson" }
+conform.formatters_by_ft.jsonc = { "prettier", "fixjson" }
+
+require("lint").linters_by_ft.json = { "jsonlint" }
+require("lint").linters_by_ft.jsonc = { "jsonlint" }
 
 vim.lsp.enable 'jsonls'
 
