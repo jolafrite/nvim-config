@@ -1,7 +1,4 @@
 -- JSON language support (treesitter + LSP config).
---
--- `json-lsp` from mason installs the `vscode-json-language-server` binary.
--- Schemas are extended with schemastore when the plugin is available.
 require('utils').install_with_mason {
 	'json-lsp',
 	'fixjson',
