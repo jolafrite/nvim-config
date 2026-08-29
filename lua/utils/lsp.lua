@@ -16,10 +16,10 @@ M.get_lua_filenames_without_extension = function()
   local result = {}
   for _, path in ipairs(filename_table) do
     local fn = get_filename(path)
-    if fn:match 'init%.lua$' then goto continue end
-    local name = vim.fn.fnamemodify(fn, ':r')
-    table.insert(result, name)
-    ::continue::
+    if not fn:match 'init%.lua$' then
+      local name = vim.fn.fnamemodify(fn, ':r')
+      table.insert(result, name)
+    end
   end
   return result
 end

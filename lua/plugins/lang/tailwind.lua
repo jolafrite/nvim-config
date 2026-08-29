@@ -1,46 +1,55 @@
 -- Tailwind CSS language support (treesitter + LSP config).
 require('utils').install_with_mason {
-	'tailwindcss-language-server',
-	'prettier',
-	'stylelint',
+  'tailwindcss-language-server',
+  'prettier',
+  'stylelint',
 }
 
-vim.lsp.config('tailwindcss',
-{
-	cmd = { 'tailwindcss-language-server', '--stdio' },
-	filetypes = {
-		'html', 'css', 'javascript', 'javascriptreact', 'typescript',
-		'typescriptreact', 'svelte', 'astro', 'templ', 'php', 'blade',
-		'markdown', 'mdx',
-	},
-	settings = {
-		tailwindCSS = {
-			includeLanguages = {
-				elixir = "html-eex",
-				eelixir = "html-eex",
-				heex = "html-eex",
-			},
-		},
-	},
+vim.lsp.config('tailwindcss', {
+  cmd = { 'tailwindcss-language-server', '--stdio' },
+  filetypes = {
+    'html',
+    'css',
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+    'svelte',
+    'astro',
+    'templ',
+    'php',
+    'blade',
+    'markdown',
+    'mdx',
+  },
+  settings = {
+    tailwindCSS = {
+      includeLanguages = {
+        elixir = 'html-eex',
+        eelixir = 'html-eex',
+        heex = 'html-eex',
+      },
+    },
+  },
 })
 
-local conform = require("conform")
+local conform = require 'conform'
 conform.formatters.prettier = {
-	command = "prettier",
-	stdin = true,
+  command = 'prettier',
+  stdin = true,
 }
-conform.formatters_by_ft.html = { "prettier" }
-conform.formatters_by_ft.css = { "prettier" }
-conform.formatters_by_ft.less = { "prettier" }
-conform.formatters_by_ft.sass = { "prettier" }
-conform.formatters_by_ft.scss = { "prettier" }
-conform.formatters_by_ft.stylus = { "prettier" }
+conform.formatters_by_ft.html = { 'prettier' }
+conform.formatters_by_ft.css = { 'prettier' }
+conform.formatters_by_ft.less = { 'prettier' }
+conform.formatters_by_ft.sass = { 'prettier' }
+conform.formatters_by_ft.scss = { 'prettier' }
+conform.formatters_by_ft.stylus = { 'prettier' }
 
-require("lint").linters_by_ft.css = { "stylelint" }
-require("lint").linters_by_ft.less = { "stylelint" }
-require("lint").linters_by_ft.sass = { "stylelint" }
-require("lint").linters_by_ft.scss = { "stylelint" }
-require("lint").linters_by_ft.stylus = { "stylelint" }
+require('lint').linters_by_ft.css = { 'stylelint' }
+require('lint').linters_by_ft.less = { 'stylelint' }
+require('lint').linters_by_ft.sass = { 'stylelint' }
+require('lint').linters_by_ft.scss = { 'stylelint' }
+require('lint').linters_by_ft.stylus = { 'stylelint' }
 
 vim.lsp.enable 'tailwindcss'
 

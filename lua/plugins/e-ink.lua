@@ -1,5 +1,5 @@
-local gh = require("utils").gh
+local gh = require('utils').gh
 
-vim.pack.add({
-	gh("e-ink-colorscheme/e-ink.nvim"),
-})
+vim.pack.add {
+  gh 'e-ink-colorscheme/e-ink.nvim',
+}

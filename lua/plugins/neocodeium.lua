@@ -1,5 +1,5 @@
-local gh = require("utils").gh
+local gh = require('utils').gh
 
-vim.pack.add({
-	gh("monkoose/neocodeium"),
-})
+vim.pack.add {
+  gh 'monkoose/neocodeium',
+}
