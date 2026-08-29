@@ -94,8 +94,8 @@ local linters = function()
   end
 
   local unique_client_names = table.concat(buf_linters, ', ')
-  local linters = string.format('%s', unique_client_names)
+  local linter_names = string.format('%s', unique_client_names)
 
-  vim.notify(linters, { title = 'Linter' })
+  vim.notify(linter_names, { title = 'Linter' })
 end
 vim.keymap.set('n', '<leader>ciL', linters, { desc = 'Lint' })

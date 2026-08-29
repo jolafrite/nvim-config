@@ -27,7 +27,7 @@ end
 function M.set_upvalue(func, name, value)
   local i = 1
   while true do
-    local n, v = debug.getupvalue(func, i)
+    local n = debug.getupvalue(func, i)
     if not n then break end
     if n == name then
       debug.setupvalue(func, i, value)
