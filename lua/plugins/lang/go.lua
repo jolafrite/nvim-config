@@ -84,6 +84,7 @@ local gh = require('utils').gh
 
 vim.pack.add {
   gh 'ray-x/go.nvim',
+  gh 'fredrikaverpil/neotest-golang',
 }
 
 require('utils').install_with_mason {
@@ -121,6 +122,16 @@ require('conform').formatters.goimports = {
 require('conform').formatters_by_ft.go = { 'goimports', 'gofumpt', 'gocondense' }
 
 require('lint').linters_by_ft.go = { 'golangcilint' }
+
+-- Neotest adapter for running Go tests (optional dependency -- neotest is not
+-- always installed).
+pcall(function()
+  require('neotest').setup {
+    adapters = {
+      ['neotest-golang'] = {},
+    },
+  }
+end)
 
 vim.keymap.set({ 'n', 'x' }, '<localleader>gj', function() vim.cmd('GoIfErr ' .. vim.fn.expand '%:p') end, { desc = 'Add if err' })
 vim.keymap.set({ 'n', 'x' }, '<localleader>gt', function() require('go').test.run_test_near() end, { desc = 'Run test' })

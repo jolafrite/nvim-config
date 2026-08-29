@@ -196,6 +196,10 @@
       "rev": "ab8a3da3a66d299ad5422b76ce5ee21b68719296",
       "src": "https://github.com/monkoose/neocodeium"
     },
+    "neotest-golang": {
+      "rev": "65b2be63c3de00e6f15c05388ebdc8d603dbd727",
+      "src": "https://github.com/fredrikaverpil/neotest-golang"
+    },
     "neotest-zig": {
       "rev": "de63f3b9a182d374d2e71cf44385326682ec90e7",
       "src": "https://github.com/lawrence-laz/neotest-zig"

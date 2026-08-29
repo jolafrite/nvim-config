@@ -19,8 +19,9 @@ vim.lsp.config('tailwindcss', {
     'templ',
     'php',
     'blade',
-    'markdown',
     'mdx',
+    -- note: markdown is intentionally excluded (mirrors the LazyVim extra);
+    -- tailwind completions/formatting in markdown docs are noisy.
   },
   settings = {
     tailwindCSS = {

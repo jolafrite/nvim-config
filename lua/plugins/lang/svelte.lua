@@ -32,6 +32,10 @@ conform.formatters_by_ft.svelte = { 'prettier' }
 
 require('lint').linters_by_ft.svelte = { 'oxlint' }
 
+-- Tree-sitter parser for Svelte.
+local TS = require 'nvim-treesitter'
+pcall(TS.install, { 'svelte' })
+
 vim.lsp.enable 'svelte'
 
 -- vim: ts=2 sts=2 sw=2 et
