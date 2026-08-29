@@ -48,6 +48,16 @@ require("snacks").util.lsp.on({ name = "ruff" }, function(_, client)
 	client.server_capabilities.hoverProvider = false
 end)
 
+local conform = require("conform")
+conform.formatters.ruff = {
+	command = "ruff",
+	stdin = true,
+	args = { "format", "-" },
+}
+conform.formatters_by_ft.python = { "ruff" }
+
+require("lint").linters_by_ft.python = { "ruff", "mypy", "flake8" }
+
 vim.lsp.enable 'pyright'
 vim.lsp.enable 'ruff'
 
