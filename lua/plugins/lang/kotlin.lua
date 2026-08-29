@@ -5,17 +5,26 @@
 local gh = require('utils').gh
 
 vim.pack.add {
-	gh 'AlexandrosAlexiou/kotlin.nvim',
+  gh 'AlexandrosAlexiou/kotlin.nvim',
 }
 
 require('utils').install_with_mason {
 	'kotlin-language-server',
+	'ktfmt',
 }
 
 vim.lsp.config('kotlin_language_server', {
 	cmd = { 'kotlin-language-server' },
 	filetypes = { 'kotlin' },
 })
+
+local conform = require("conform")
+conform.formatters.ktfmt_fmt = {
+	command = "ktfmt",
+	stdin = true,
+	args = { "--stdin" },
+}
+conform.formatters_by_ft.kotlin = { "ktfmt_fmt" }
 
 vim.lsp.enable 'kotlin_language_server'
 
