@@ -1,5 +1,3 @@
-local gh = require('utils').gh
-
 vim.diagnostic.config {
   virtual_text = true,
   signs = {
@@ -10,54 +8,75 @@ vim.diagnostic.config {
       [vim.diagnostic.severity.INFO] = '󰋽 ',
     },
   },
-}
-
--- Safely merge blink.cmp capabilities when available
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-local ok_blink, blink = pcall(require, 'blink.cmp')
-if ok_blink and blink.get_lsp_capabilities then
-  capabilities = vim.tbl_deep_extend('force', capabilities, blink.get_lsp_capabilities())
-end
-capabilities.workspace = capabilities.workspace or {}
-capabilities.workspace.fileOperations = {
-  didRename = true,
-  willRename = true,
+  severity_sort = true,
+  underline = true,
+  update_in_insert = false,
+  float = {
+    border = 'rounded',
+    source = true,
+  },
 }
 
 vim.lsp.config['*'] = {
-  capabilities = capabilities,
-  on_attach = function(client, bufnr)
-		-- stylua: ignore
-		local keys = {
-			{ "<leader>cl", function() vim.lsp.status() end,                                                 desc = "Lsp Info" },
-			{ "gd",         function() Snacks.picker.lsp_definitions() end,       desc = "Goto Definition",       has = "definition" },
-			{ "gr",         function() Snacks.picker.lsp_references() end,        nowait = true,                  desc = "References" },
-			{ "gI",         function() Snacks.picker.lsp_implementations() end,   desc = "Goto Implementation" },
-			{ "gy",         function() Snacks.picker.lsp_type_definitions() end,  desc = "Goto T[y]pe Definition" },
-			{ "<leader>ss", function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols",           has = "documentSymbol" },
-			{ "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols", has = "workspace/symbols" },
-			{ "gai",        function() Snacks.picker.lsp_incoming_calls() end,    desc = "C[a]lls Incoming",      has = "callHierarchy/incomingCalls" },
-			{ "gao",        function() Snacks.picker.lsp_outgoing_calls() end,    desc = "C[a]lls Outgoing",      has = "callHierarchy/outgoingCalls" },
+  capabilities = (function()
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.workspace = capabilities.workspace or {}
+    capabilities.workspace.fileOperations = {
+      didRename = true,
+      willRename = true,
+    }
+    return capabilities
+  end)(),
 
-			{ "<leader>ca", vim.lsp.buf.code_action,                              desc = "Code Action",           mode = { "n", "x" },                has = "codeAction" },
-		}
-    for _, key in ipairs(keys) do
-      if not key.has or client.supports_method(key.has) then
-        local mode = key.mode or 'n'
-        local opts = { desc = key.desc, buffer = bufnr }
-        if key.nowait then opts.nowait = true end
-        vim.keymap.set(mode, key[1], key[2], opts)
-      end
+  on_attach = function(client, bufnr)
+    -- Helper: register a keymap only if the server supports the method
+    local function map(modes, lhs, rhs, desc, method, opts)
+      if method and not client.supports_method(method) then return end
+      opts = vim.tbl_extend('force', { desc = desc, buffer = bufnr, silent = true }, opts or {})
+      vim.keymap.set(modes, lhs, rhs, opts)
     end
+
+    -- ── Navigation ──────────────────────────────────────────────────────
+    map('n', 'gd', function() Snacks.picker.lsp_definitions() end, 'Goto Definition', 'textDocument/definition')
+
+    map('n', 'gr', function() Snacks.picker.lsp_references() end, 'References', 'textDocument/references', { nowait = true })
+
+    map('n', 'gI', function() Snacks.picker.lsp_implementations() end, 'Goto Implementation', 'textDocument/implementation')
+
+    map('n', 'gy', function() Snacks.picker.lsp_type_definitions() end, 'Goto T[y]pe Definition', 'textDocument/typeDefinition')
+
+    -- ── Symbols ─────────────────────────────────────────────────────────
+    map('n', '<leader>ss', function() Snacks.picker.lsp_symbols() end, 'LSP Symbols', 'textDocument/documentSymbol')
+
+    map('n', '<leader>sS', function() Snacks.picker.lsp_workspace_symbols() end, 'LSP Workspace Symbols', 'workspace/symbol')
+
+    -- ── Call Hierarchy ──────────────────────────────────────────────────
+    map('n', 'gai', function() Snacks.picker.lsp_incoming_calls() end, 'C[a]lls Incoming', 'callHierarchy/incomingCalls')
+
+    map('n', 'gao', function() Snacks.picker.lsp_outgoing_calls() end, 'C[a]lls Outgoing', 'callHierarchy/outgoingCalls')
+
+    -- ── Actions (normal + visual) ───────────────────────────────────────
+    map({ 'n', 'x' }, '<leader>ca', vim.lsp.buf.code_action, 'Code Action', 'textDocument/codeAction')
+
+    -- ── Hover & Rename ──────────────────────────────────────────────────
+    map('n', 'K', vim.lsp.buf.hover, 'Hover', 'textDocument/hover')
+
+    map('n', '<leader>rn', vim.lsp.buf.rename, 'Rename', 'textDocument/rename')
+
+    -- ── LSP Info ────────────────────────────────────────────────────────
+    map('n', '<leader>cl', function() Snacks.picker.lsp_config() end, 'Lsp Info')
+
+    -- ── Diagnostics navigation ──────────────────────────────────────────
+    map('n', ']d', function() vim.diagnostic.jump { count = 1, float = true } end, 'Next Diagnostic')
+
+    map('n', '[d', function() vim.diagnostic.jump { count = -1, float = true } end, 'Prev Diagnostic')
+
+    -- map('n', '<leader>e', vim.diagnostic.open_float, 'Diagnostic Float')
+
+    map('n', '<leader>q', vim.diagnostic.setloclist, 'Diagnostic List')
   end,
 }
 
-vim.keymap.set('n', '<leader>ue', function()
-  if vim.fn.exists(':LspLensToggle') > 0 then
-    vim.cmd('LspLensToggle')
-  else
-    vim.notify('LspLens is not available', vim.log.levels.WARN)
-  end
-end, { desc = 'Toggle Lsp Lens' })
+vim.keymap.set('n', '<leader>ue', '<cmd>LspLensToggle<cr>', { desc = 'Toggle Lsp Lens' })
 
 -- vim: ts=2 sts=2 sw=2 et
