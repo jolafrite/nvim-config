@@ -7,6 +7,8 @@
 -- takes precedence over the global one (matches the nvim-lspconfig default).
 require('utils').install_with_mason {
 	'svelte-language-server',
+	'prettier',
+	'oxlint',
 }
 
 vim.lsp.config('svelte', {
@@ -22,6 +24,15 @@ vim.lsp.config('svelte', {
 	end,
 	filetypes = { 'svelte' },
 })
+
+local conform = require("conform")
+conform.formatters.prettier = {
+	command = "prettier",
+	stdin = true,
+}
+conform.formatters_by_ft.svelte = { "prettier" }
+
+require("lint").linters_by_ft.svelte = { "oxlint" }
 
 vim.lsp.enable 'svelte'
 
