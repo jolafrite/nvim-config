@@ -12,12 +12,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'toml' })
 
 local conform = require 'conform'
-conform.formatters.taplo_fmt = {
-  command = 'taplo',
-  stdin = true,
-  args = { 'fmt', '-' },
-}
-conform.formatters_by_ft.toml = { 'taplo_fmt' }
+conform.formatters_by_ft.toml = { 'taplo' }
 
 vim.lsp.enable 'taplo'
 
