@@ -9,22 +9,25 @@ vim.pack.add {
 }
 
 require('utils').install_with_mason {
-	'kotlin-language-server',
-	'ktfmt',
+  'kotlin-language-server',
+  'ktfmt',
+  'ktlint',
 }
 
 vim.lsp.config('kotlin_language_server', {
-	cmd = { 'kotlin-language-server' },
-	filetypes = { 'kotlin' },
+  cmd = { 'kotlin-language-server' },
+  filetypes = { 'kotlin' },
 })
 
-local conform = require("conform")
+local conform = require 'conform'
 conform.formatters.ktfmt_fmt = {
-	command = "ktfmt",
-	stdin = true,
-	args = { "--stdin" },
+  command = 'ktfmt',
+  stdin = true,
+  args = { '--stdin' },
 }
-conform.formatters_by_ft.kotlin = { "ktfmt_fmt" }
+conform.formatters_by_ft.kotlin = { 'ktfmt_fmt' }
+
+require('lint').linters_by_ft.kotlin = { 'ktlint' }
 
 vim.lsp.enable 'kotlin_language_server'
 
