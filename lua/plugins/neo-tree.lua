@@ -62,6 +62,19 @@ require('utils').on_file_types('*', function()
       { event = require('neo-tree.events').FILE_RENAMED, handler = on_move },
     },
   }
+
+  -- Upstream bug (neo-tree + nui): follow_internal checks window_exists via
+  -- state.bufnr but then calls state.tree:get_node(), which reads the cursor
+  -- from the nui tree buffer's window. When that buffer has no window (stale
+  -- state after a close/reopen) nui's get_winid() returns nil and
+  -- nvim_win_get_cursor throws "Invalid 'win': Expected Lua number".
+  local renderer = require 'neo-tree.ui.renderer'
+  local window_exists = renderer.window_exists
+  renderer.window_exists = function(state, ...)
+    if not window_exists(state, ...) then return false end
+    local tree = state.tree
+    return not tree or vim.fn.bufwinid(tree.bufnr) ~= -1
+  end
 end)
 
 vim.api.nvim_create_autocmd('TermClose', {
