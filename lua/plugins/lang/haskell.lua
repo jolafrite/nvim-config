@@ -13,7 +13,7 @@ require('utils').install_with_mason {
 }
 
 local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'haskell', 'cabal' })
+pcall(TS.install, { 'haskell' })
 
 local conform = require 'conform'
 conform.formatters_by_ft.haskell = { 'fourmolu' }

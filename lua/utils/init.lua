@@ -7,7 +7,6 @@ M.on_file_types = require('utils.autocmds').on_file_types
 M.on_buf_read = require('utils.autocmds').on_buf_read
 
 M.on_lsp_attach = require('utils.lsp').on_lsp_attach
-M.get_lua_filenames_without_extension = require('utils.lsp').get_lua_filenames_without_extension
 
 M.install_with_mason = require('utils.install').install_with_mason
 M.run_build = require('utils.install').run_build

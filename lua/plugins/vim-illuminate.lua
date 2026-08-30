@@ -20,6 +20,5 @@ require('utils').on_buf_read(function()
       'fugitive',
     },
     under_cursor = true,
-    should_enable = function(bufnr) return true end,
   }
 end)
