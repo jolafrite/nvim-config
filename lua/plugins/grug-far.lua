@@ -1,7 +1,5 @@
 local gh = require('utils').gh
 
--- Search/replace surface. Loaded on first BufReadPost so it is not in the
--- startup path; the keymap still resolves at press time.
 require('utils').on_file_types('*', function()
   vim.pack.add {
     gh 'MagicDuck/grug-far.nvim',

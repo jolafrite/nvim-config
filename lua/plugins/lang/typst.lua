@@ -14,7 +14,11 @@ vim.lsp.config('tinymist', {
 })
 
 local conform = require 'conform'
-conform.formatters_by_ft.typst = { { 'typstyle', lsp_format = 'prefer' } }
+conform.formatters_by_ft.typst = { 'typstyle' }
+-- `lsp_format = 'prefer'` moved here from the removed nested-{} syntax
+-- (conform now errors on nested tables; see :help conform.format).
+conform.default_format_opts =
+  vim.tbl_deep_extend('force', conform.default_format_opts or {}, { typst = { lsp_format = 'prefer' } })
 
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'typst' })

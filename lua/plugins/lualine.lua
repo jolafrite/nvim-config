@@ -1,12 +1,10 @@
 local gh = require('utils').gh
 
 vim.pack.add {
+  gh 'nvim-tree/nvim-web-devicons',
   gh 'nvim-lualine/lualine.nvim',
 }
 
--- Neovim runs LuaJIT (Lua 5.1) where `unpack` is a bare global and
--- `table.unpack` is nil. Bind it to a local so the linter (which
--- checks against Lua 5.4) does not flag the deprecated global.
 local unpack = rawget(_G, 'unpack') or table.unpack
 
 local lualine_require = require 'lualine_require'
@@ -27,9 +25,6 @@ local icons = {
   },
 }
 
--- Project root. utils.root.get handles every vim.g.root_spec entry type
--- (string detector, table of patterns, function), whereas the local
--- implementation below only understood function entries.
 local root_get = require('utils').root.get
 local root_cwd = require('utils').root.cwd
 local function pretty_path(opts)
@@ -93,14 +88,6 @@ local function root_dir(opts)
   }
 end
 
-local function safe_require(name)
-  local ok, mod = pcall(require, name)
-  if not ok then return nil end
-  return mod
-end
-
-local function lazy_status() return safe_require 'lazy.status' end
-
 require('lualine').setup {
   options = {
     theme = 'auto',
@@ -149,18 +136,6 @@ require('lualine').setup {
         color = function() return { fg = require('snacks').util.color 'Debug' } end,
       },
       {
-        function()
-          local ls = lazy_status()
-          if not ls then return '' end
-          return ls.updates()
-        end,
-        cond = function()
-          local ls = lazy_status()
-          return ls ~= nil and ls.has_updates()
-        end,
-        color = function() return { fg = require('snacks').util.color 'Special' } end,
-      },
-      {
         'diff',
         symbols = {
           added = icons.git.added,
@@ -180,12 +155,27 @@ require('lualine').setup {
       },
     },
     lualine_y = {
+      {
+        'lsp_status',
+        icon = '',
+        symbols = {
+          spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+          done = '✓',
+          separator = ' ',
+        },
+        ignore_lsp = {},
+        show_name = true,
+      },
       { 'progress', separator = ' ', padding = { left = 1, right = 0 } },
       { 'location', padding = { left = 0, right = 1 } },
     },
     lualine_z = {
+      {
+        'pack',
+        color = function() return { fg = require('snacks').util.color 'Special' } end,
+      },
       function() return ' ' .. os.date '%R' end,
     },
   },
-  extensions = { 'neo-tree', 'lazy', 'fzf' },
+  extensions = { 'neo-tree', 'fzf' },
 }

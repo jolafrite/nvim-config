@@ -1,3 +1,12 @@
+-- check if need to reload the file when it changed
+local autoreload = vim.api.nvim_create_augroup('autoreload', { clear = true })
+vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
+  group = autoreload,
+  callback = function()
+    if vim.o.buftype ~= 'nofile' then vim.cmd.checktime() end
+  end,
+})
+
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'json', 'jsonc', 'markdown' },
   callback = function() vim.opt.conceallevel = 0 end,

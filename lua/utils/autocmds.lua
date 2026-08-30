@@ -7,8 +7,6 @@ M.on_file_types = function(patterns, fn)
     pattern = list,
     callback = function(args)
       fn(args)
-      -- Run any plugin-provided ftplugin for this filetype so plugins
-      -- that ship runtime files still see their ftplugin load.
       vim.cmd('runtime! ftplugin/' .. vim.bo.filetype .. '.lua')
       vim.cmd('runtime! ftplugin/' .. vim.bo.filetype .. '.vim')
     end,

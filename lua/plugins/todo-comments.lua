@@ -1,7 +1,5 @@
 local gh = require('utils').gh
 
--- Todo/FIXME/XXX comment scanner. Needs a real buffer, so load on first
--- BufReadPost rather than at startup.
 require('utils').on_buf_read(function()
   vim.pack.add {
     gh 'folke/todo-comments.nvim',

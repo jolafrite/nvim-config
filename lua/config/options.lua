@@ -6,9 +6,9 @@ vim.g.have_nerd_font = true
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
-vim.g.lazyvim_cmp = 'nvim-cmp'
-vim.g.lazyvim_picker = 'snacks'
-vim.g.lualine_info_extras = true
+-- line number
+vim.o.number = true
+vim.o.relativenumber = true
 
 vim.g.autoformat = true
 
@@ -47,6 +47,16 @@ vim.opt.smoothscroll = true
 
 vim.opt.conceallevel = 2
 
+-- swapfile
+vim.o.swapfile = false
+
+-- scroll
+vim.o.scrolloff = 8
+vim.o.sidescrolloff = 8
+
+-- row
+vim.o.cursorline = true
+
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -64,15 +74,12 @@ vim.keymap.set = function(mode, lhs, rhs, opts)
   return keymap_set(mode, lhs, rhs, opts)
 end
 
-vim.g.lazyvim_python_lsp = 'basedpyright'
-vim.g.lazyvim_python_ruff = 'ruff'
-
 -- Set up the shell wrapper for pwsh on Windows.
 if vim.fn.has 'win32' == 1 then require('utils').terminal.setup 'pwsh' end
 
 vim.g.deprecation_warnings = true
 vim.env.FZF_DEFAULT_OPTS = ''
-vim.g.ai_cmp = false
-vim.g.lazyvim_blink_main = false
+
+vim.opt.clipboard = 'unnamedplus'
 
 -- vim: ts=2 sts=2 sw=2 et
