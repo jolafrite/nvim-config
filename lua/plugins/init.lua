@@ -1,7 +1,7 @@
 -- Plugin loader.
 --
--- Each plugin file in lua/plugins/*.lua registers a spec via Manager.add().
--- Manager.load_all() does the actual startup/event/filetype split loading.
+-- Each plugin file in lua/plugins/*.lua registers a spec via PackageManager.add().
+-- PackageManager.load_all() does the actual startup/event/filetype split loading.
 --
 -- Language plugin files live in lua/plugins/lang/ and are loaded by
 -- lua/plugins/lang/init.lua (two-phase: specs first, then config-only files
@@ -13,7 +13,7 @@
 
 local plugin_path = vim.fn.stdpath("config") .. "/lua/plugins"
 
--- Load every plugin file (registers its Manager.add() spec).
+-- Load every plugin file (registers its PackageManager.add() spec).
 for _, file in ipairs(vim.fn.glob(plugin_path .. "/*.lua", true, true)) do
   local name = vim.fn.fnamemodify(file, ":t:r")
   if name ~= "init" then
@@ -29,6 +29,6 @@ for _, file in ipairs(vim.fn.glob(plugin_path .. "/*.lua", true, true)) do
   end
 end
 
-return Manager.load_all()
+return PackageManager.load_all()
 
 -- vim: ts=2 sts=2 sw=2 et

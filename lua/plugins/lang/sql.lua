@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add({
+PackageManager.add({
   [1] = gh 'tpope/vim-dadbod',
   dependencies = {
     gh 'kristijanhusak/vim-dadbod-ui',

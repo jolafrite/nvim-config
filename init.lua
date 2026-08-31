@@ -5,7 +5,7 @@ require 'config.keymaps'
 require 'config.autocmds'
 
 -- Plugin loading: every plugin file in lua/plugins/*.lua registers a spec via
--- Manager.add(). Manager.load_all() does the actual startup/event/filetype
+-- PackageManager.add(). PackageManager.load_all() does the actual startup/event/filetype
 -- split loading.
 require 'utils.package_manager'
 
@@ -16,7 +16,7 @@ require('plugins.lang').load_specs()
 require 'plugins'
 
 -- vim.pack update engine and its float UI (:PackFloat). Loaded explicitly
--- rather than through Manager.add() — they own state, not a plugin spec.
+-- rather than through PackageManager.add() — they own state, not a plugin spec.
 
 -- Phase 3: the config-only language files (json, lua, python, ruby, toml,
 -- typescript, typst, yaml, markdown) register vim.lsp.config servers and

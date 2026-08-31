@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add {
+PackageManager.add {
   [1] = gh 'saghen/blink.cmp',
   dependencies = {
     gh 'xzbdmw/colorful-menu.nvim',

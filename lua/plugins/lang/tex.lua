@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add({
+PackageManager.add({
   [1] = gh 'lervag/vimtex',
   filetype = {'tex', 'plaintex', 'bib'},
   config = function()

@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add({
+PackageManager.add({
   [1] = gh 'R-nvim/R.nvim',
   filetype = {'r', 'rmd', 'quarto'},
   config = function()

@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add({
+PackageManager.add({
   [1] = gh 'Julian/lean.nvim',
   dependencies = {
     gh 'nvim-lua/plenary.nvim'

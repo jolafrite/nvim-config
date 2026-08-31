@@ -5,7 +5,7 @@
 -- once the check finishes). When done, shows a package icon and the number of
 -- outdated plugins, and renders nothing when everything is up to date.
 --
--- Data source: Manager.pack (port of the old plugins.pack engine). The engine
+-- Data source: PackageManager.pack (port of the old plugins.pack engine). The engine
 -- announces PackStatusChanged on every state change, which is what drives the
 -- redraw here.
 
@@ -45,7 +45,7 @@ local function ensure_spinner()
     0,
     defaults.spinner_interval,
     vim.schedule_wrap(function()
-      local pack = Manager.pack
+      local pack = PackageManager.pack
       if not (pack and pack.state.checking) then
         timer:stop()
         timer_running = false
@@ -74,7 +74,7 @@ end
 
 function M:update_status()
   local ok, pack = pcall(function()
-    return Manager.pack
+    return PackageManager.pack
   end)
   if not ok or not pack then
     return ""

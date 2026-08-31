@@ -3,22 +3,22 @@ local Spec = require("utils.package_manager.spec")
 local Pack = require("utils.package_manager.pack")
 local Float = require("utils.package_manager.float")
 
-_G.Manager = {}
-Manager.pack = Pack
-Manager.float = Float
+_G.PackageManager = {}
+PackageManager.pack = Pack
+PackageManager.float = Float
 local H = {}
 
 
----@alias Manager.OptsModifierCfg { priority: number, modifier: fun(opts: table|nil): table|nil }
----@alias Manager.Stats { loaded: number, total: number, startuptime: number }
+---@alias PackageManager.OptsModifierCfg { priority: number, modifier: fun(opts: table|nil): table|nil }
+---@alias PackageManager.Stats { loaded: number, total: number, startuptime: number }
 
 H.pack_specs = {} ---@type vim.pack.SpecResolved[]
-H.plugin_specs = {} ---@type table<string, Manager.SpecResolved>
+H.plugin_specs = {} ---@type table<string, PackageManager.SpecResolved>
 H.plugin_loaded = {} ---@type table<string, boolean>
 H.before_load_hooks = {} ---@type table<string, fun()[]>
 H.after_load_hooks = {} ---@type table<string, fun()[]>
-H.opts_modifier_cfgs = {} ---@type table<string, Manager.OptsModifierCfg[]>
-H.stats = nil ---@type Manager.Stats|nil
+H.opts_modifier_cfgs = {} ---@type table<string, PackageManager.OptsModifierCfg[]>
+H.stats = nil ---@type PackageManager.Stats|nil
 H.load_all_called = false ---@type boolean
 H.load_all_init_done = false ---@type boolean
 
@@ -89,26 +89,26 @@ vim.api.nvim_create_autocmd("PackChanged", {
   end,
 })
 
-Manager.url = {
+PackageManager.url = {
   ---@param repo string
   gh = function(repo) return "https://github.com/" .. repo end,
   ---@param repo string
   cb = function(repo) return "https://codeberg.org/" .. repo end,
 }
 
-Manager.event = {
+PackageManager.event = {
   ---@type Utils.safecall.EventCfg
   VeryLazy = { event = "User", pattern = "VeryLazy" },
 }
 
 ---@param name string
-Manager.have = function(name) return H.plugin_specs[name] ~= nil end
+PackageManager.have = function(name) return H.plugin_specs[name] ~= nil end
 
 ---@param name string
-Manager.loaded = function(name) return H.plugin_loaded[name] == true end
+PackageManager.loaded = function(name) return H.plugin_loaded[name] == true end
 
----@param spec Manager.Spec
-Manager.add = function(spec)
+---@param spec PackageManager.Spec
+PackageManager.add = function(spec)
   local resolved = Spec.normalize_spec(spec)
   local name = resolved[1].name
   if H.plugin_specs[name] then
@@ -156,7 +156,7 @@ end
 ---@param name string
 ---@param opts table
 ---@param options? {extend?: string|string[], priority?: number}
-Manager.opts_extend = function(name, opts, options)
+PackageManager.opts_extend = function(name, opts, options)
   options = options or {}
   vim.validate("name", name, "string", false)
   vim.validate("opts", opts, "table", false)
@@ -190,10 +190,10 @@ end
 
 ---@param name string
 ---@param fn fun()
-Manager.before_loaded = function(name, fn)
+PackageManager.before_loaded = function(name, fn)
   vim.validate("name", name, "string", false)
   vim.validate("fn", fn, "function", false)
-  if Manager.loaded(name) then
+  if PackageManager.loaded(name) then
     error("Plugin " .. name .. " is already loaded")
   else
     H.register_load_hook("before", name, fn)
@@ -202,17 +202,17 @@ end
 
 ---@param name string
 ---@param fn fun()
-Manager.on_loaded = function(name, fn)
+PackageManager.on_loaded = function(name, fn)
   vim.validate("name", name, "string", false)
   vim.validate("fn", fn, "function", false)
-  if Manager.loaded(name) then
+  if PackageManager.loaded(name) then
     fn()
   else
     H.register_load_hook("after", name, fn)
   end
 end
 
----@param spec Manager.SpecResolved
+---@param spec PackageManager.SpecResolved
 H.do_load_spec = function(spec)
   local name = spec[1].name
   for _, hook in ipairs(H.before_load_hooks[name] or {}) do
@@ -221,7 +221,7 @@ H.do_load_spec = function(spec)
 
   local specs = {}
   for _, dep in ipairs(spec.dependencies or {}) do
-    if Manager.have(dep.name) then
+    if PackageManager.have(dep.name) then
       H.load_spec_by_name(dep.name)
     else
       table.insert(specs, dep)
@@ -253,7 +253,7 @@ H.do_load_spec = function(spec)
   end
 end
 
----@param spec Manager.SpecResolved
+---@param spec PackageManager.SpecResolved
 H.load_spec = function(spec)
   local name = spec[1].name
   if H.plugin_loaded[name] then
@@ -304,16 +304,16 @@ H.compute_stats = function()
   }
 end
 
----@return Manager.Stats
-Manager.stats = function()
+---@return PackageManager.Stats
+PackageManager.stats = function()
   if not H.stats then
-    error("Manager.stats() can only be called after Manager.load_all()")
+    error("PackageManager.stats() can only be called after PackageManager.load_all()")
   end
   return H.stats
 end
 
 ---@return string[]
-Manager.unmanaged = function()
+PackageManager.unmanaged = function()
   local managed = {}
   for _, spec in ipairs(H.pack_specs) do
     managed[spec.name] = true
@@ -325,18 +325,18 @@ Manager.unmanaged = function()
 end
 
 ---@param name string
-Manager.load = function(name)
+PackageManager.load = function(name)
   vim.validate("name", name, "string", false)
   if not H.load_all_init_done then
     error(
-      "Manager.load() can only be called after Manager.load_all() init phase is done")
+      "PackageManager.load() can only be called after PackageManager.load_all() init phase is done")
   end
   H.load_spec_by_name(name)
 end
 
-Manager.load_all = function()
+PackageManager.load_all = function()
   if H.load_all_called then
-    error("Manager.load_all() should only be called once")
+    error("PackageManager.load_all() should only be called once")
   end
   H.load_all_called = true
 
@@ -358,11 +358,11 @@ Manager.load_all = function()
   H.load_all_init_done = true
 
   -- split into startup, event, filetype plugins
-  ---@type Manager.SpecResolved[]
+  ---@type PackageManager.SpecResolved[]
   local startup_specs = {}
-  ---@type Manager.SpecResolved[]
+  ---@type PackageManager.SpecResolved[]
   local event_specs = {}
-  ---@type Manager.SpecResolved[]
+  ---@type PackageManager.SpecResolved[]
   local filetype_specs = {}
   for _, spec in ipairs(specs) do
     if not spec.lazy then
@@ -400,7 +400,7 @@ Manager.load_all = function()
 end
 
 ---@param confirm? boolean
-Manager.update_all = function(confirm)
+PackageManager.update_all = function(confirm)
   if confirm == nil then
     confirm = true
   end
@@ -461,24 +461,24 @@ Manager.update_all = function(confirm)
   end
 end
 
--- `:ManagerUpdate[!]` — update all plugins and restart.
+-- `:PackageManagerUpdate[!]` — update all plugins and restart.
 -- With `!`: force the update (skip the confirmation UI).
-vim.api.nvim_create_user_command('ManagerUpdate', function(command)
-  Manager.update_all(not command.bang)
+vim.api.nvim_create_user_command('PackageManagerUpdate', function(command)
+  PackageManager.update_all(not command.bang)
 end, {
   bang = true,
   desc = 'Update all vim.pack plugins and restart Neovim',
 })
 
--- `:ManagerUnmanaged` — list vim.pack plugins that are installed but not
--- declared in any Manager.add() spec (e.g. leftovers from another manager).
-vim.api.nvim_create_user_command('ManagerUnmanaged', function()
-  local names = Manager.unmanaged()
+-- `:PackageManagerUnmanaged` — list vim.pack plugins that are installed but not
+-- declared in any PackageManager.add() spec (e.g. leftovers from another manager).
+vim.api.nvim_create_user_command('PackageManagerUnmanaged', function()
+  local names = PackageManager.unmanaged()
   if #names == 0 then
-    vim.notify('Manager: no unmanaged plugins')
+    vim.notify('PackageManager: no unmanaged plugins')
     return
   end
-  vim.notify('Manager: unmanaged plugins:\n' .. table.concat(names, '\n'))
+  vim.notify('PackageManager: unmanaged plugins:\n' .. table.concat(names, '\n'))
 end, {
-  desc = 'List vim.pack plugins not declared in any Manager.add() spec',
+  desc = 'List vim.pack plugins not declared in any PackageManager.add() spec',
 })

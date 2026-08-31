@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add {
+PackageManager.add {
   [1] = gh 'nvim-lualine/lualine.nvim',
   dependencies = {
     gh 'nvim-tree/nvim-web-devicons',

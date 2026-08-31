@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add {
+PackageManager.add {
   [1] = gh 'lukas-reineke/indent-blankline.nvim',
   filetype = '*',
   config = function()

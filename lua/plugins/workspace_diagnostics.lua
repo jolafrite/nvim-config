@@ -2,7 +2,7 @@ local gh = require('utils').gh
 
 -- Workspace-wide diagnostics. Only useful once an LSP is attached, so load
 -- on first LspAttach instead of at startup.
-Manager.add {
+PackageManager.add {
   [1] = gh 'artemave/workspace-diagnostics.nvim',
   event = 'LspAttach',
   config = function() require('workspace-diagnostics').setup {} end,

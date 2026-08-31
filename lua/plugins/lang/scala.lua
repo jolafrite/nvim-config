@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add({
+PackageManager.add({
   [1] = gh 'scalameta/nvim-metals',
   dependencies = {
     gh 'nvim-lua/plenary.nvim'

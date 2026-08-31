@@ -20,7 +20,7 @@ M.mini = require("utils.mini")
 M.treesitter = require("utils.treesitter")
 M.root = require("utils.root")
 
--- Submodules ported from the KurisuNya manager reference. The Manager module
+-- Submodules ported from the KurisuNya manager reference. The PackageManager module
 -- calls them as bare globals (`Utils.safecall.now`, `Utils.misc.list_sort_stable`
 -- etc.), so they are mounted on the module table and re-exported as a global.
 M.safecall = require("utils.safecall")
@@ -28,7 +28,7 @@ M.autocmd = require("utils.autocmd")
 M.misc = require("utils.misc")
 M.os = require("utils.os")
 
--- Expose as a global so the Manager module's bare `Utils.*` lookups resolve.
+-- Expose as a global so the PackageManager module's bare `Utils.*` lookups resolve.
 -- Kept in this module so a single require('utils') call (already done by
 -- config/options.lua etc.) registers it.
 _G.Utils = M

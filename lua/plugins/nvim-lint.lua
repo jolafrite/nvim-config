@@ -4,7 +4,7 @@ local gh = require('utils').gh
 --
 local unpack = rawget(_G, 'unpack') or table.unpack
 
-Manager.add {
+PackageManager.add {
   [1] = gh 'mfussenegger/nvim-lint',
   lazy = false,
   config = function()

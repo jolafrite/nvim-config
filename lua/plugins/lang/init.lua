@@ -1,7 +1,7 @@
 -- Language plugin loader.
 --
 -- Each plugin file in lua/plugins/lang/*.lua registers a spec via
--- Manager.add() with a filetype trigger, so LSP configs (and their
+-- PackageManager.add() with a filetype trigger, so LSP configs (and their
 -- treesitter/conform/lint wiring) only load when a buffer of that
 -- filetype is opened — not at Neovim startup.
 --
@@ -11,8 +11,8 @@
 -- conform/lint/treesitter loaded first, so they run after load_all().
 -- See config_only below.
 --
---   1. load_specs()   — load the Manager.add spec files BEFORE
---      Manager.load_all() runs, so their filetype triggers are registered.
+--   1. load_specs()   — load the PackageManager.add spec files BEFORE
+--      PackageManager.load_all() runs, so their filetype triggers are registered.
 --   2. load_configs() — load the config-only files AFTER load_all().
 --
 -- The top-level init.lua calls require('plugins.lang').load_specs() before
@@ -35,8 +35,8 @@ local config_only = {
 
 local M = {}
 
---- Load the Manager.add spec files (phase 1). Must run before
---- Manager.load_all() so filetype triggers are registered.
+--- Load the PackageManager.add spec files (phase 1). Must run before
+--- PackageManager.load_all() so filetype triggers are registered.
 function M.load_specs()
   for _, file in ipairs(vim.fn.glob(lang_path .. '/*.lua', true, true)) do
     local name = vim.fn.fnamemodify(file, ':t:r')

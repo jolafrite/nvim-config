@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add {
+PackageManager.add {
   [1] = gh 'windwp/nvim-autopairs',
   filetype = '*',
   config = function() require('nvim-autopairs').setup { check_ts = true } end,

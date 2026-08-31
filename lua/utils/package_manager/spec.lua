@@ -1,7 +1,7 @@
 --- NOTE: When lazy=true, and event/filetype is not set, the plugin will be not be loaded automatically,
--- you need to add it to other plugin's dependencies or load it manually with Manager.load function.
+-- you need to add it to other plugin's dependencies or load it manually with PackageManager.load function.
 
----@class Manager.Spec
+---@class PackageManager.Spec
 ---@field [1] string|vim.pack.Spec plugin spec for vim.pack
 ---@field dependencies? (string|vim.pack.Spec)[] dependencies for vim.pack
 ---@field build? string|fun(path: string) build command/function, will be called when the plugin is installed or updated
@@ -13,7 +13,7 @@
 ---@field priority? number only useful for lazy=false plugins, default is 50
 ---@field lazy? boolean whether to load the plugin lazily, default is true
 
----@class Manager.SpecResolved
+---@class PackageManager.SpecResolved
 ---@field [1] vim.pack.SpecResolved
 ---@field dependencies? vim.pack.SpecResolved[]
 ---@field build? string|fun(path: string)
@@ -48,8 +48,8 @@ end
 
 local M = {}
 
----@param spec Manager.Spec
----@return Manager.SpecResolved spec
+---@param spec PackageManager.Spec
+---@return PackageManager.SpecResolved spec
 M.normalize_spec = function(spec)
   vim.validate("spec", spec, "table", false)
   for k, _ in pairs(spec) do

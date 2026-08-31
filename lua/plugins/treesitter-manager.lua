@@ -2,7 +2,7 @@ local gh = require('utils').gh
 
 -- Tree-sitter parser manager (`:TSUpgrade`). Needs a real buffer, so load on
 -- first BufReadPost rather than at startup.
-Manager.add {
+PackageManager.add {
   [1] = gh 'romus204/tree-sitter-manager.nvim',
   event = 'BufReadPost',
   config = function()

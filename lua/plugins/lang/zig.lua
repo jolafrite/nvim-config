@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add({
+PackageManager.add({
   [1] = gh 'lawrence-laz/neotest-zig',
   filetype = {'zig', 'zir'},
   config = function()

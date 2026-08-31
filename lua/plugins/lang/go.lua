@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add({
+PackageManager.add({
   [1] = gh 'ray-x/go.nvim',
   dependencies = {
     gh 'fredrikaverpil/neotest-golang'

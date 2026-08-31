@@ -2,7 +2,7 @@ local gh = require('utils').gh
 
 -- Better yank/paste with ring history. Needs a real buffer, so load on first
 -- BufReadPost rather than at startup.
-Manager.add {
+PackageManager.add {
   [1] = gh 'gbprod/yanky.nvim',
   event = 'BufReadPost',
   config = function()

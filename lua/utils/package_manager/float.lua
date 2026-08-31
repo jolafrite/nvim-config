@@ -1,6 +1,6 @@
 -- vim.pack plugin manager UI (lazy-style float).
 --
--- Data and update checks live in Manager.pack; this module only renders and
+-- Data and update checks live in PackageManager.pack; this module only renders and
 -- takes input. It stays in sync by listening for `PackStatusChanged`.
 --
 -- Commands:

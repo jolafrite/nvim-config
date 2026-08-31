@@ -2,7 +2,7 @@ local gh = require('utils').gh
 
 -- Diagnostics/location-list/quickfix viewer. Lazy-load on first buffer so
 -- it is not part of the startup path; the keymaps below resolve at press time.
-Manager.add {
+PackageManager.add {
   [1] = gh 'folke/trouble.nvim',
   filetype = '*',
   config = function()

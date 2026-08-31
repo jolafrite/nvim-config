@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add {
+PackageManager.add {
   [1] = gh 'folke/todo-comments.nvim',
   event = 'BufReadPost',
   config = function() require('todo-comments').setup {} end,

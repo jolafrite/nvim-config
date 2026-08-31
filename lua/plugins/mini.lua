@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
-Manager.add {
+PackageManager.add {
   [1] = gh 'nvim-mini/mini.nvim',
   dependencies = {
     gh 'nvim-mini/mini.diff',
