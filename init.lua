@@ -9,16 +9,16 @@ require 'config.autocmds'
 -- split loading.
 require 'utils.package_manager'
 
+-- The vim.pack update engine (:PackCheck) and float UI (:PackFloat) are pulled
+-- in by utils.package_manager itself — they own state, not a plugin spec.
+
 -- Phase 1: register the filetype-triggered language plugin specs BEFORE
 -- load_all() runs, so their triggers are wired.
 require('plugins.lang').load_specs()
 
 require 'plugins'
 
--- vim.pack update engine and its float UI (:PackFloat). Loaded explicitly
--- rather than through PackageManager.add() — they own state, not a plugin spec.
-
--- Phase 3: the config-only language files (json, lua, python, ruby, toml,
+-- Phase 2: the config-only language files (json, lua, python, ruby, toml,
 -- typescript, typst, yaml, markdown) register vim.lsp.config servers and
 -- call require('conform')/require('lint') at top level — those dependencies
 -- are loaded by load_all() above, so this runs after.

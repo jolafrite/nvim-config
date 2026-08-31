@@ -1,4 +1,4 @@
--- vim.pack update engine, ported from lua/plugins/pack.lua.
+-- vim.pack update engine.
 --
 -- Owns plugin state and background update checks. Pure data, no UI:
 --   :PackCheck      background check for outdated plugins

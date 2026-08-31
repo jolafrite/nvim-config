@@ -52,7 +52,7 @@ function M.load_specs()
   end
 end
 
---- Load the config-only files (phase 3). Call after load_all().
+--- Load the config-only files (phase 2). Call after load_all().
 function M.load_configs()
   for _, name in ipairs {
     'angular', 'astro', 'biome', 'clangd', 'dart', 'docker',

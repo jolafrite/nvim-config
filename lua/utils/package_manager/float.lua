@@ -22,7 +22,7 @@ local config = {
   },
 }
 
--- Engine state (manager.pack). The engine mutates this table in place.
+-- Engine state (PackageManager.pack). The engine mutates this table in place.
 local engine = pack.state
 
 -- UI-only state.

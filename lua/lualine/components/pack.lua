@@ -5,7 +5,7 @@
 -- once the check finishes). When done, shows a package icon and the number of
 -- outdated plugins, and renders nothing when everything is up to date.
 --
--- Data source: PackageManager.pack (port of the old plugins.pack engine). The engine
+-- Data source: PackageManager.pack. The engine
 -- announces PackStatusChanged on every state change, which is what drives the
 -- redraw here.
 

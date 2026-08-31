@@ -7,9 +7,9 @@
 -- lua/plugins/lang/init.lua (two-phase: specs first, then config-only files
 -- after conform/lint/treesitter are loaded).
 --
--- pack.lua and pack_float.lua are NOT plugin specs — they are the vim.pack
--- update engine and its float UI. They are loaded explicitly in the top-level
--- init chain and skipped here.
+-- The vim.pack update engine and float UI live in lua/utils/package_manager/
+-- and are pulled in by require('utils.package_manager') — they are not plugin
+-- files here and are not loaded by this loop.
 
 local plugin_path = vim.fn.stdpath("config") .. "/lua/plugins"
 

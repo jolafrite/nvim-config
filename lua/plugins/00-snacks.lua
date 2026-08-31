@@ -94,8 +94,6 @@ end, { desc = "Notification History" })
     end, { desc = "Dismiss All Notifications" })
 
 -- Snacks.picker keymaps (taken from the folke/snacks.nvim spec keys).
--- These were commented out awaiting a working plugin loader; restored here
--- next to the snacks setup they belong to.
 -- stylua: ignore
 vim.keymap.set('n', '<leader>,', function() Snacks.picker.buffers() end,
 	{ desc = 'Buffers' })
@@ -138,7 +136,7 @@ vim.keymap.set('n', '<leader>,', function() Snacks.picker.buffers() end,
       Snacks.picker.projects()
     end, { desc = "Projects" })
 
-    -- -- git
+    -- git
     vim.keymap.set("n", "<leader>gd", function()
       Snacks.picker.git_diff()
     end, { desc = "Git Diff (hunks)" })
@@ -164,7 +162,7 @@ vim.keymap.set('n', '<leader>,', function() Snacks.picker.buffers() end,
       Snacks.picker.gh_pr({ state = "all" })
     end, { desc = "GitHub Pull Requests (all)" })
 
-    -- -- Grep
+    -- Grep
     vim.keymap.set("n", "<leader>sb", function()
       Snacks.picker.lines()
     end, { desc = "Buffer Lines" })
@@ -187,7 +185,7 @@ vim.keymap.set('n', '<leader>,', function() Snacks.picker.buffers() end,
       Snacks.picker.pick("grep_word", { root = false })
     end, { desc = "Visual selection or word (cwd)" })
 
-    -- -- search
+    -- search
     vim.keymap.set({ "n", "x" }, '<leader>s"', function()
       Snacks.picker.registers()
     end, { desc = "Registers" })

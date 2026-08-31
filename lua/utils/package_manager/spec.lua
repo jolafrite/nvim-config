@@ -1,5 +1,6 @@
---- NOTE: When lazy=true, and event/filetype is not set, the plugin will be not be loaded automatically,
--- you need to add it to other plugin's dependencies or load it manually with PackageManager.load function.
+-- NOTE: When lazy=true, and event/filetype is not set, the plugin will not be
+-- loaded automatically; you need to add it to other plugin's dependencies or
+-- load it manually with PackageManager.load function.
 
 ---@class PackageManager.Spec
 ---@field [1] string|vim.pack.Spec plugin spec for vim.pack
