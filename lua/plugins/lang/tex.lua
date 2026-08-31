@@ -9,6 +9,8 @@ require('utils').install_with_mason {
 }
 
 -- vimtex is not lazy-loaded: lazy-loading breaks inverse search.
+-- tectonic is installed and latexmk is not, so use the tectonic compiler.
+vim.g.vimtex_compiler_method = 'tectonic'
 vim.g.vimtex_mappings_disable = { ['n'] = { 'K' } } -- disable `K` as it conflicts with LSP hover
 vim.g.vimtex_quickfix_method = vim.fn.executable 'pplatex' == 1 and 'pplatex' or 'latexlog'
 

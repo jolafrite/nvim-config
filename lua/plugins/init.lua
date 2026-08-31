@@ -7,8 +7,9 @@ for _, file in ipairs(plugins) do
     if not package.loaded['plugins.' .. req_name] then
       local fn, err = loadfile(file)
       if not fn then error('loadfile ' .. file .. ': ' .. tostring(err)) end
-      fn()
-      package.loaded['plugins.' .. req_name] = true
+      -- Store a returned module table so require() resolves to it (e.g. plugins.pack_float).
+      local result = fn()
+      package.loaded['plugins.' .. req_name] = result ~= nil and result or true
     end
   end
 end

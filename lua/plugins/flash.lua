@@ -1,7 +1,5 @@
 local gh = require('utils').gh
 
--- Flash jumps (f/t, etc.) depend on treesitter, so load on the same trigger
--- as treesitter.lua: the first FileType rather than at startup.
 require('utils').on_file_types('*', function()
   vim.pack.add {
     gh 'folke/flash.nvim',

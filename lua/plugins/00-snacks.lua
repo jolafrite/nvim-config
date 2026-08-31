@@ -6,6 +6,7 @@ vim.pack.add {
 
 require('snacks').setup {
   bigfile = { enabled = true },
+  dashboard = { enabled = true },
   indent = { enabled = true },
   input = { enabled = true },
   notifier = { enabled = true },
@@ -16,6 +17,9 @@ require('snacks').setup {
   words = { enabled = true },
 
   picker = {
+    -- Route `vim.ui.select` through snacks.picker (required for :checkhealth
+    -- and so LSP code actions etc. use the picker UI).
+    ui_select = true,
 		-- stylua: ignore
 		---@type snacks.picker.Config
 		actions = {
@@ -58,6 +62,10 @@ require('snacks').setup {
     },
   },
 }
+
+-- `input = { enabled = true }` only sets the config; `vim.ui.input` must be
+-- wired explicitly via enable() (see :checkhealth snacks).
+Snacks.input.enable()
 
 Snacks.toggle({
   name = 'Git Signs',

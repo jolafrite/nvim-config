@@ -1,5 +1,8 @@
 -- vim.pack plugin manager UI (lazy-style float).
 --
+-- Data and update checks live in plugins.pack; this module only renders and
+-- takes input. It stays in sync by listening for `PackStatusChanged`.
+--
 -- Commands:
 --   :PackFloat      open UI and fetch/check updates
 --   :PackFloat!     open UI without fetching, using already fetched refs
@@ -8,6 +11,7 @@
 -- Enter toggle details, ]] / [[ jump between plugins, q / <Esc> close.
 
 local api = vim.api
+local pack = require 'plugins.pack'
 
 local M = {}
 
@@ -18,19 +22,18 @@ local config = {
   },
 }
 
+-- Engine state (lua/plugins/pack.lua). The engine mutates this table in place.
+local engine = pack.state
+
+-- UI-only state.
 local state = {
   bufnr = nil,
   winid = nil,
   autocmd = nil,
   update_autocmds = nil,
-  checking = false,
-  check_id = 0,
-  status = '',
-  plugins = {},
-  pending = {},
-  clean = {},
-  not_loaded = {},
   commits = {},
+  commits_requested = {},
+  check_id_seen = 0,
   expanded = {},
   update_status = {},
   line_to_name = {},
@@ -84,68 +87,13 @@ end
 
 local function short_rev(rev) return rev and rev:sub(1, 7) or 'unknown' end
 
-local function is_pending(plugin) return plugin.rev and plugin.rev_to and plugin.rev ~= plugin.rev_to end
-
-local function sort_by_name(items)
-  table.sort(items, function(a, b) return a.spec.name < b.spec.name end)
-end
-
-local function set_plugins(plugins)
-  state.plugins = plugins
-  state.pending = {}
-  state.clean = {}
-  state.not_loaded = {}
-
-  for _, plugin in ipairs(state.plugins) do
-    local pending = is_pending(plugin)
-    if pending then
-      state.pending[#state.pending + 1] = plugin
-    elseif plugin.active then
-      state.clean[#state.clean + 1] = plugin
-    else
-      state.not_loaded[#state.not_loaded + 1] = plugin
-    end
-  end
-
-  sort_by_name(state.plugins)
-  sort_by_name(state.pending)
-  sort_by_name(state.clean)
-  sort_by_name(state.not_loaded)
-end
-
-local function replace_plugin(plugin)
-  local name = plugin.spec.name
-  for i, existing in ipairs(state.plugins) do
-    if existing.spec.name == name then
-      state.plugins[i] = plugin
-      set_plugins(state.plugins)
-      return
-    end
-  end
-
-  state.plugins[#state.plugins + 1] = plugin
-  set_plugins(state.plugins)
-end
-
-local function reset_data()
-  state.plugins = {}
-  state.pending = {}
-  state.clean = {}
-  state.not_loaded = {}
+local function reset_ui_data()
   state.commits = {}
+  state.commits_requested = {}
   state.expanded = {}
   state.update_status = {}
   state.line_to_name = {}
   state.name_to_line = {}
-end
-
-local function load_fast_plugin_list()
-  local ok, plugins_or_err = pcall(vim.pack.get, nil, { info = false })
-  if ok then
-    set_plugins(plugins_or_err)
-    return
-  end
-  state.status = tostring(plugins_or_err)
 end
 
 local render
@@ -286,27 +234,27 @@ local function build_content()
     end
   end
 
-  add((' Updates (%d)'):format(#state.pending), 'PackFloatSection')
-  if #state.pending == 0 then
-    add(state.checking and '   checking...' or '   no pending updates', 'PackFloatMuted')
+  add((' Updates (%d)'):format(#engine.pending), 'PackFloatSection')
+  if #engine.pending == 0 then
+    add(engine.checking and '   checking...' or '   no pending updates', 'PackFloatMuted')
   else
-    for _, plugin in ipairs(state.pending) do
+    for _, plugin in ipairs(engine.pending) do
       add_plugin(plugin, true)
     end
   end
 
   add ''
-  add((' Loaded (%d)'):format(#state.clean), 'PackFloatSection')
-  for _, plugin in ipairs(state.clean) do
+  add((' Loaded (%d)'):format(#engine.clean), 'PackFloatSection')
+  for _, plugin in ipairs(engine.clean) do
     add_plugin(plugin, false)
   end
 
   add ''
-  add((' Inactive (%d)'):format(#state.not_loaded), 'PackFloatSection')
-  if #state.not_loaded == 0 then
+  add((' Inactive (%d)'):format(#engine.not_loaded), 'PackFloatSection')
+  if #engine.not_loaded == 0 then
     add('  no inactive plugins', 'PackFloatMuted')
   else
-    for _, plugin in ipairs(state.not_loaded) do
+    for _, plugin in ipairs(engine.not_loaded) do
       add_plugin(plugin, false)
     end
   end
@@ -323,12 +271,60 @@ render = function()
   set_lines(lines, hls)
 end
 
+local function load_commits(plugin)
+  local name = plugin.spec.name
+  state.commits[name] = nil
+  vim.system({
+    'git',
+    '-C',
+    plugin.path,
+    'log',
+    '--pretty=format:%h %s (%cr)',
+    '--abbrev-commit',
+    '--date=short',
+    '--color=never',
+    '--no-show-signature',
+    plugin.rev .. '..' .. plugin.rev_to,
+  }, { text = true }, function(result)
+    vim.schedule(function()
+      if state.check_id_seen ~= engine.check_id then return end
+      state.commits[name] = result.code == 0 and split_lines(result.stdout) or {}
+      render()
+    end)
+  end)
+end
+
+---Re-align UI caches after engine state changes and fetch commit details
+---for newly pending plugins.
+local function sync_ui()
+  if state.check_id_seen ~= engine.check_id then
+    state.check_id_seen = engine.check_id
+    state.commits = {}
+    state.commits_requested = {}
+    state.update_status = {}
+  end
+end
+
+api.nvim_create_autocmd('User', {
+  pattern = 'PackStatusChanged',
+  callback = function()
+    if not valid_buffer() then return end
+    sync_ui()
+    for _, plugin in ipairs(engine.pending) do
+      local name = plugin.spec.name
+      if not state.commits_requested[name] then
+        state.commits_requested[name] = true
+        load_commits(plugin)
+      end
+    end
+    render()
+  end,
+})
+
 local function set_update_status(name, status)
   if not name or state.update_status[name] == nil then return end
   state.update_status[name] = status
-  if valid_buffer() then vim.schedule(function()
-    if valid_buffer() then render() end
-  end) end
+  if valid_buffer() then vim.schedule(render) end
 end
 
 local function handle_pack_changed(status)
@@ -355,122 +351,6 @@ local function setup_update_autocmds()
   }
 end
 
-local function load_commits(plugin, check_id)
-  local name = plugin.spec.name
-  state.commits[name] = nil
-  vim.system({
-    'git',
-    '-C',
-    plugin.path,
-    'log',
-    '--pretty=format:%h %s (%cr)',
-    '--abbrev-commit',
-    '--date=short',
-    '--color=never',
-    '--no-show-signature',
-    plugin.rev .. '..' .. plugin.rev_to,
-  }, { text = true }, function(result)
-    vim.schedule(function()
-      if state.check_id ~= check_id or not valid_buffer() then return end
-      state.commits[name] = result.code == 0 and split_lines(result.stdout) or {}
-      render()
-    end)
-  end)
-end
-
-local function finish_refresh(check_id, failures)
-  if state.check_id ~= check_id or not valid_buffer() then return end
-
-  state.checking = false
-  state.status = failures > 0 and ('ready, %d fetch failed'):format(failures) or 'ready'
-  render()
-end
-
-local function refresh_local(status)
-  vim.schedule(function()
-    local ok, plugins_or_err = pcall(vim.pack.get, nil, { offline = true })
-    if not ok then
-      state.status = tostring(plugins_or_err)
-      render()
-      return
-    end
-
-    state.commits = {}
-    set_plugins(plugins_or_err)
-    state.status = status or 'ready'
-    render()
-
-    for _, plugin in ipairs(state.pending) do
-      load_commits(plugin, state.check_id)
-    end
-  end)
-end
-
-local function refresh_fetch_async()
-  if state.checking then return end
-
-  state.checking = true
-  state.status = 'fetching remotes'
-  state.check_id = state.check_id + 1
-  local check_id = state.check_id
-  local total = #state.plugins
-  local remaining = total
-  local failures = 0
-  state.commits = {}
-  state.update_status = {}
-  render()
-
-  if total == 0 then
-    finish_refresh(check_id, failures)
-    return
-  end
-
-  for _, plugin in ipairs(state.plugins) do
-    local name = plugin.spec.name
-    vim.system({
-      'git',
-      '-C',
-      plugin.path,
-      'fetch',
-      '--quiet',
-      '--tags',
-      '--force',
-      '--recurse-submodules=yes',
-      'origin',
-    }, {}, function(fetch_result)
-      vim.schedule(function()
-        if state.check_id ~= check_id or not valid_buffer() then return end
-
-        if fetch_result.code ~= 0 then
-          failures = failures + 1
-        else
-          local ok, plugin_data = pcall(vim.pack.get, { name }, { offline = true })
-          if ok and plugin_data[1] then
-            replace_plugin(plugin_data[1])
-            if is_pending(plugin_data[1]) then load_commits(plugin_data[1], check_id) end
-          else
-            failures = failures + 1
-          end
-        end
-
-        remaining = remaining - 1
-        state.status = ('fetching remotes %d/%d'):format(total - remaining, total)
-        render()
-
-        if remaining == 0 then finish_refresh(check_id, failures) end
-      end)
-    end)
-  end
-end
-
-local function refresh(fetch)
-  if fetch then
-    refresh_fetch_async()
-  else
-    refresh_local()
-  end
-end
-
 local function close()
   if state.autocmd then
     pcall(api.nvim_del_autocmd, state.autocmd)
@@ -479,8 +359,7 @@ local function close()
   if valid_window() then api.nvim_win_close(state.winid, true) end
   state.winid = nil
   state.bufnr = nil
-  state.check_id = state.check_id + 1
-  state.checking = false
+  pack.abort()
   clear_update_autocmds()
 end
 
@@ -494,7 +373,6 @@ local function update_plugins(names)
   for _, name in ipairs(names) do
     state.update_status[name] = 'queued'
   end
-  state.status = 'updating ' .. table.concat(names, ', ')
   render()
 
   vim.schedule(function()
@@ -504,7 +382,6 @@ local function update_plugins(names)
       for _, name in ipairs(names) do
         if state.update_status[name] ~= 'updated' then state.update_status[name] = 'failed' end
       end
-      state.status = 'update failed'
       render()
       return
     end
@@ -512,14 +389,14 @@ local function update_plugins(names)
       if state.update_status[name] ~= 'updated' then state.update_status[name] = 'failed' end
     end
     render()
-    refresh(false)
+    pack.refresh_local()
   end)
 end
 
 local function update_current()
   local name = plugin_at_cursor()
   if not name then return end
-  for _, plugin in ipairs(state.pending) do
+  for _, plugin in ipairs(engine.pending) do
     if plugin.spec.name == name then
       update_plugins { name }
       return
@@ -529,7 +406,7 @@ local function update_current()
 end
 
 local function update_all()
-  local names = vim.iter(state.pending):map(function(plugin) return plugin.spec.name end):totable()
+  local names = vim.iter(engine.pending):map(function(plugin) return plugin.spec.name end):totable()
   update_plugins(names)
 end
 
@@ -546,24 +423,21 @@ local function uninstall_current()
   local choice = vim.fn.confirm(prompt, '&Uninstall\n&Cancel', 2)
   if choice ~= 1 then return end
 
-  state.check_id = state.check_id + 1
-  state.checking = false
-  state.status = 'uninstalling ' .. name
+  pack.abort()
+  state.update_status = {}
   render()
 
   vim.schedule(function()
     local ok, err = pcall(vim.pack.del, { name }, { force = true })
     if not ok then
       vim.notify('vim.pack: ' .. tostring(err), vim.log.levels.ERROR)
-      state.status = 'uninstall failed'
-      render()
       return
     end
 
     state.commits[name] = nil
     state.expanded[name] = nil
     vim.notify(('vim.pack: uninstalled %s'):format(name), vim.log.levels.INFO)
-    refresh_local(('removed %s'):format(name))
+    pack.refresh_local(('removed %s'):format(name))
   end)
 end
 
@@ -604,7 +478,7 @@ local function map(lhs, rhs, desc) vim.keymap.set('n', lhs, rhs, { buffer = stat
 local function setup_keymaps()
   map('q', close, 'Close')
   map('<Esc>', close, 'Close')
-  map('r', function() refresh(true) end, 'Refresh updates')
+  map('r', function() pack.check() end, 'Refresh updates')
   map('u', update_current, 'Update plugin')
   map('U', update_all, 'Update all pending')
   map('x', uninstall_current, 'Uninstall plugin')
@@ -651,8 +525,9 @@ function M.open(opts)
   vim.wo[state.winid].linebreak = true
   vim.wo[state.winid].breakindent = true
 
-  reset_data()
-  load_fast_plugin_list()
+  reset_ui_data()
+  if #engine.plugins == 0 then pack.load_plugin_list() end
+  sync_ui()
   setup_keymaps()
   setup_update_autocmds()
   render()
@@ -661,18 +536,11 @@ function M.open(opts)
   state.autocmd = api.nvim_create_autocmd('WinClosed', {
     once = true,
     callback = function(ev)
-      if vim._tointeger(ev.match) == captured_win then
-        state.autocmd = nil
-        state.winid = nil
-        state.bufnr = nil
-        state.check_id = state.check_id + 1
-        state.checking = false
-        clear_update_autocmds()
-      end
+      if vim._tointeger(ev.match) == captured_win then close() end
     end,
   })
 
-  refresh(opts.fetch ~= false)
+  pack.check { fetch = opts.fetch ~= false }
 end
 
 api.nvim_create_user_command('PackFloat', function(command) M.open { fetch = not command.bang } end, {
