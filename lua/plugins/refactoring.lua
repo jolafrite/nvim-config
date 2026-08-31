@@ -1,12 +1,10 @@
-local gh = require("utils").gh
+local gh = require('utils').gh
 
-PackageManager.add({
-  [1] = gh("lewis6991/async.nvim"),
+PackageManager.add {
+  [1] = gh 'lewis6991/async.nvim',
   dependencies = {
-    gh("theprimeagen/refactoring.nvim"),
+    gh 'theprimeagen/refactoring.nvim',
   },
-  event = "LSPAttach",
-  config = function()
-    require("refactoring").setup({})
-  end,
-})
+  event = 'LSPAttach',
+  config = function() require('refactoring').setup {} end,
+}
