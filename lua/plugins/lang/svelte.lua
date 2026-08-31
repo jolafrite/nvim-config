@@ -1,4 +1,6 @@
--- Prefer a project-local node_modules/.bin/svelteserver over the global one.
+-- Svelte `<script>` blocks are injected TypeScript. typescript.lua now only
+-- loads on JS/TS buffers (lazy), so install the TS parsers here too — otherwise
+-- script highlighting silently disappears when only .svelte files open.
 PackageManager.add({
   name = 'lang.svelte',
   filetype = { 'svelte' },
@@ -32,7 +34,8 @@ conform.formatters_by_ft.svelte = { 'prettier' }
 require('lint').linters_by_ft.svelte = { 'oxlint' }
 
 local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'svelte' })
+-- 'css' covers `<style>`; the TS trio covers `<script>` blocks (same set typescript.lua installs).
+pcall(TS.install, { 'svelte', 'css', 'typescript', 'tsx', 'javascript' })
 
 vim.lsp.enable 'svelte'
   end,
