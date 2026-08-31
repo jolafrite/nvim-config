@@ -19,7 +19,10 @@ H.load_all_init_done = false ---@type boolean
 
 ---@param msg string
 ---@param level string
-H.notify = function(msg, level) vim.notify("vim.pack manager: " .. msg, vim.log.levels[level]) end
+H.notify = function(msg, level)
+  vim.notify("vim.pack manager: " .. msg,
+    vim.log.levels[level])
+end
 
 H.clean_loaded_modules = function(path)
   for k, _ in pairs(package.loaded) do
@@ -37,7 +40,8 @@ end
 H.run_build_cmd = function(cmd, cwd)
   local shell = vim.env.SHELL or vim.o.shell
   local shell_args = shell:find("cmd.exe", 1, true) and "/c" or "-c"
-  local result = vim.system({ shell, shell_args, cmd }, { cwd = cwd, text = true }):wait()
+  local result = vim.system({ shell, shell_args, cmd },
+    { cwd = cwd, text = true }):wait()
   if result.code ~= 0 then
     local stderr = result.stderr or ""
     local stdout = result.stdout or ""
@@ -121,7 +125,8 @@ H.register_opts_modifier = function(name, modifier, options)
     H.opts_modifier_cfgs[name] = {}
   end
   local cfg = { modifier = modifier, priority = options.priority or 50 }
-  Utils.misc.list_insert_sorted(H.opts_modifier_cfgs[name], cfg, function(x) return -x.priority end)
+  Utils.misc.list_insert_sorted(H.opts_modifier_cfgs[name], cfg,
+    function(x) return -x.priority end)
 end
 
 ---@param type "before"|"after"
@@ -151,7 +156,8 @@ Manager.opts_extend = function(name, opts, options)
   vim.validate("name", name, "string", false)
   vim.validate("opts", opts, "table", false)
   local extend, priority = options.extend, options.priority
-  extend = type(extend) == "string" and { extend } or extend --[=[@as string[]|nil]=]
+  extend = type(extend) == "string" and { extend } or
+      extend --[=[@as string[]|nil]=]
   for i, key in ipairs(extend or {}) do
     vim.validate("options.extend[" .. i .. "]", key, "string", false)
   end
@@ -277,7 +283,8 @@ H.install_missing = function()
     installed[p.spec.name] = true
   end
 
-  local missing = vim.tbl_filter(function(s) return not installed[s.name] end, H.pack_specs)
+  local missing = vim.tbl_filter(function(s) return not installed[s.name] end,
+    H.pack_specs)
   vim.pack.add(missing, { load = false, confirm = false })
   return #missing > 0
 end
@@ -316,7 +323,8 @@ end
 Manager.load = function(name)
   vim.validate("name", name, "string", false)
   if not H.load_all_init_done then
-    error("Manager.load() can only be called after Manager.load_all() init phase is done")
+    error(
+      "Manager.load() can only be called after Manager.load_all() init phase is done")
   end
   H.load_spec_by_name(name)
 end
@@ -372,7 +380,10 @@ Manager.load_all = function()
   end
 
   -- register VeryLazy event
-  Utils.safecall.later(function() vim.api.nvim_exec_autocmds("User", { pattern = "VeryLazy" }) end)
+  Utils.safecall.later(function()
+    vim.api.nvim_exec_autocmds("User",
+      { pattern = "VeryLazy" })
+  end)
 
   -- load startup plugins
   for _, spec in ipairs(startup_specs) do
@@ -404,7 +415,9 @@ Manager.update_all = function(confirm)
     end
     local success = Utils.safecall.now(function() vim.cmd("restart!") end)
     if not success then
-      H.notify("Failed to restart Neovim after updating plugins, please restart manually", "ERROR")
+      H.notify(
+        "Failed to restart Neovim after updating plugins, please restart manually",
+        "ERROR")
     end
   end
 
@@ -442,3 +455,12 @@ Manager.update_all = function(confirm)
     restart()
   end
 end
+
+-- `:ManagerUpdate[!]` — update all plugins and restart.
+-- With `!`: force the update (skip the confirmation UI).
+vim.api.nvim_create_user_command('ManagerUpdate', function(command)
+  Manager.update_all(not command.bang)
+end, {
+  bang = true,
+  desc = 'Update all vim.pack plugins and restart Neovim',
+})
