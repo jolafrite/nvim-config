@@ -7,7 +7,7 @@ require 'config.autocmds'
 -- Plugin loading: every plugin file in lua/plugins/*.lua registers a spec via
 -- Manager.add(). Manager.load_all() does the actual startup/event/filetype
 -- split loading.
-require 'manager'
+require 'utils.package_manager'
 
 -- Phase 1: register the filetype-triggered language plugin specs BEFORE
 -- load_all() runs, so their triggers are wired.

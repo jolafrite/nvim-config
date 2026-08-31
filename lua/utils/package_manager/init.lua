@@ -1,7 +1,7 @@
-local Time = require("manager.time")
-local Spec = require("manager.spec")
-local Pack = require("manager.pack")
-local Float = require("manager.float")
+local Time = require("utils.package_manager.time")
+local Spec = require("utils.package_manager.spec")
+local Pack = require("utils.package_manager.pack")
+local Float = require("utils.package_manager.float")
 
 _G.Manager = {}
 Manager.pack = Pack
