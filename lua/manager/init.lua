@@ -1,11 +1,13 @@
 local Time = require("manager.time")
 local Spec = require("manager.spec")
 local Pack = require("manager.pack")
+local Float = require("manager.float")
 
 _G.Manager = {}
 Manager.pack = Pack
-
+Manager.float = Float
 local H = {}
+
 
 ---@alias Manager.OptsModifierCfg { priority: number, modifier: fun(opts: table|nil): table|nil }
 ---@alias Manager.Stats { loaded: number, total: number, startuptime: number }

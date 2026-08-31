@@ -13,7 +13,7 @@ local M = {}
 M.state = {
   checking = false,
   check_id = 0,
-  status = '',
+  status = "",
   plugins = {},
   pending = {},
   clean = {},
@@ -27,13 +27,18 @@ local config = {
   fetch_concurrency = 6,
 }
 
-function M.setup(opts) config = vim.tbl_deep_extend('force', config, opts or {}) end
+function M.setup(opts)
+  config = vim.tbl_deep_extend("force", config, opts or {})
+end
 
-local function is_pending(plugin) return plugin.rev and plugin.rev_to and
-  plugin.rev ~= plugin.rev_to end
+local function is_pending(plugin)
+  return plugin.rev and plugin.rev_to and plugin.rev ~= plugin.rev_to
+end
 
 local function sort_by_name(items)
-  table.sort(items, function(a, b) return a.spec.name < b.spec.name end)
+  table.sort(items, function(a, b)
+    return a.spec.name < b.spec.name
+  end)
 end
 
 -- Coalesce bursts into a single event at most every NOTIFY_INTERVAL ms, so a
@@ -43,13 +48,15 @@ local notify_scheduled = false
 local last_notify = 0
 
 local function notify()
-  if notify_scheduled then return end
+  if notify_scheduled then
+    return
+  end
   notify_scheduled = true
   local delay = math.max(0, last_notify + NOTIFY_INTERVAL - vim.uv.now())
   vim.defer_fn(function()
     notify_scheduled = false
     last_notify = vim.uv.now()
-    vim.api.nvim_exec_autocmds('User', { pattern = 'PackStatusChanged' })
+    vim.api.nvim_exec_autocmds("User", { pattern = "PackStatusChanged" })
   end, delay)
 end
 
@@ -115,7 +122,7 @@ function M.refresh_local(status)
     end
 
     M.set_plugins(plugins_or_err)
-    M.state.status = status or 'ready'
+    M.state.status = status or "ready"
     notify()
   end)
 end
@@ -128,19 +135,23 @@ function M.abort()
 end
 
 local function finish_check(check_id, failures)
-  if M.state.check_id ~= check_id then return end
+  if M.state.check_id ~= check_id then
+    return
+  end
 
   M.state.checking = false
-  M.state.status = failures > 0 and ('ready, %d fetch failed'):format(failures) or
-  'ready'
+  M.state.status = failures > 0 and ("ready, %d fetch failed"):format(failures)
+    or "ready"
   notify()
 end
 
 local function check_fetch_async()
-  if M.state.checking then return end
+  if M.state.checking then
+    return
+  end
 
   M.state.checking = true
-  M.state.status = 'fetching remotes'
+  M.state.status = "fetching remotes"
   M.state.check_id = M.state.check_id + 1
   local check_id = M.state.check_id
   local total = #M.state.plugins
@@ -161,30 +172,39 @@ local function check_fetch_async()
   -- Bounded worker pool: instead of spawning one git process per plugin all
   -- at once, keep at most `fetch_concurrency` fetches in flight.
   local function fetch_next()
-    if M.state.check_id ~= check_id then return end
+    if M.state.check_id ~= check_id then
+      return
+    end
     next_index = next_index + 1
     local plugin = queue[next_index]
-    if not plugin then return end
+    if not plugin then
+      return
+    end
 
     vim.system({
-      'git',
-      '-C',
+      "git",
+      "-C",
       plugin.path,
-      'fetch',
-      '--quiet',
-      '--tags',
-      '--force',
-      '--recurse-submodules=yes',
-      'origin',
+      "fetch",
+      "--quiet",
+      "--tags",
+      "--force",
+      "--recurse-submodules=yes",
+      "origin",
     }, {}, function(fetch_result)
       vim.schedule(function()
-        if M.state.check_id ~= check_id then return end
+        if M.state.check_id ~= check_id then
+          return
+        end
 
         if fetch_result.code ~= 0 then
           failures = failures + 1
         else
-          local ok, plugin_data = pcall(vim.pack.get, { plugin.spec.name },
-            { offline = true })
+          local ok, plugin_data = pcall(
+            vim.pack.get,
+            { plugin.spec.name },
+            { offline = true }
+          )
           if ok and plugin_data[1] then
             replace_plugin(plugin_data[1])
           else
@@ -193,8 +213,10 @@ local function check_fetch_async()
         end
 
         remaining = remaining - 1
-        M.state.status = ('fetching remotes %d/%d'):format(total - remaining,
-          total)
+        M.state.status = ("fetching remotes %d/%d"):format(
+          total - remaining,
+          total
+        )
         notify()
 
         if remaining == 0 then
@@ -216,9 +238,13 @@ end
 ---@return boolean started false if a check is already running
 function M.check(opts)
   opts = opts or {}
-  if M.state.checking then return false end
+  if M.state.checking then
+    return false
+  end
 
-  if #M.state.plugins == 0 then M.load_plugin_list() end
+  if #M.state.plugins == 0 then
+    M.load_plugin_list()
+  end
   if opts.fetch == false then
     M.refresh_local(opts.status)
   else
@@ -238,11 +264,16 @@ function M.summary()
   }
 end
 
-vim.api.nvim_create_user_command('PackCheck', function() M.check() end, {
-  desc = 'Check vim.pack plugins for updates in the background',
+vim.api.nvim_create_user_command("PackCheck", function()
+  M.check()
+end, {
+  desc = "Check vim.pack plugins for updates in the background",
 })
 
-if config.auto_check then vim.defer_fn(function() M.check() end,
-    config.auto_check_delay) end
+if config.auto_check then
+  vim.defer_fn(function()
+    M.check()
+  end, config.auto_check_delay)
+end
 
 return M
