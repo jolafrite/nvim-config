@@ -1,9 +1,9 @@
--- haskell-tools manages hls itself; don't vim.lsp.enable it.
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'mrcjkb/haskell-tools.nvim',
-}
+Manager.add({
+  [1] = gh 'mrcjkb/haskell-tools.nvim',
+  filetype = {'haskell'},
+  config = function()
 
 require('utils').install_with_mason {
   'haskell-language-server',
@@ -47,5 +47,9 @@ require('utils').on_file_types({ 'haskell', 'lhaskell' }, function()
     }
   end
 end)
+
+-- vim: ts=2 sts=2 sw=2 et
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

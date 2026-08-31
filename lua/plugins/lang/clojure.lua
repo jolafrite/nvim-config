@@ -1,10 +1,13 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'Olical/conjure',
-  gh 'julienvincent/nvim-paredit',
-  gh 'm00qek/baleia.nvim',
-}
+Manager.add({
+  [1] = gh 'Olical/conjure',
+  dependencies = {
+    gh 'julienvincent/nvim-paredit',
+    gh 'm00qek/baleia.nvim'
+  },
+  filetype = {'clojure'},
+  config = function()
 
 -- Prefer LSP for jump-to-definition and symbol-doc, and use conjure
 -- alternatives with <localleader>K and <localleader>gd.
@@ -27,5 +30,9 @@ if baleia_ok then
 
   vim.api.nvim_create_user_command('BaleiaLogs', vim.g.conjure_baleia.logger.show, { bang = true })
 end
+
+-- vim: ts=2 sts=2 sw=2 et
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

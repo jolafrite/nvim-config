@@ -1,14 +1,12 @@
--- rust_analyzer is intentionally empty: rustaceanvim owns the LSP lifecycle.
-vim.lsp.config('rust_analyzer', {})
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'rust' })
-
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'mrcjkb/rustaceanvim',
-  gh 'Saecki/crates.nvim',
-}
+Manager.add({
+  [1] = gh 'mrcjkb/rustaceanvim',
+  dependencies = {
+    gh 'Saecki/crates.nvim'
+  },
+  filetype = {'rust'},
+  config = function()
 
 require('utils').install_with_mason {
   'rust-analyzer',
@@ -89,5 +87,9 @@ pcall(function()
     },
   }
 end)
+
+-- vim: ts=2 sts=2 sw=2 et
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

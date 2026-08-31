@@ -1,10 +1,12 @@
--- lean.nvim manages leanls itself; no vim.lsp.enable needed.
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'Julian/lean.nvim',
-  gh 'nvim-lua/plenary.nvim',
-}
+Manager.add({
+  [1] = gh 'Julian/lean.nvim',
+  dependencies = {
+    gh 'nvim-lua/plenary.nvim'
+  },
+  filetype = {'lean'},
+  config = function()
 
 local lean_opts = {
   lsp = {
@@ -47,5 +49,9 @@ require('utils').on_file_types({ 'lean' }, function()
   local ok, lean = pcall(require, 'lean')
   if ok then lean.setup(lean_opts) end
 end)
+
+-- vim: ts=2 sts=2 sw=2 et
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

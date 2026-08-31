@@ -5,9 +5,15 @@ require 'config.keymaps'
 require 'config.autocmds'
 require 'config.pack'
 
--- Plugin loading: Manager.add() specs register in the plugin files below;
--- Manager.load_all() does the actual startup/event/filetype split loading.
+-- Plugin loading: every plugin file in lua/plugins/*.lua registers a spec via
+-- Manager.add(). Manager.load_all() does the actual startup/event/filetype
+-- split loading.
 require 'manager'
+
+-- Phase 1: register the filetype-triggered language plugin specs BEFORE
+-- load_all() runs, so their triggers are wired.
+require('plugins.lang').load_specs()
+
 require 'plugins'
 
 -- vim.pack update engine and its float UI (:PackFloat). Loaded explicitly
@@ -15,9 +21,11 @@ require 'plugins'
 require 'plugins.pack'
 require 'plugins.pack_float'
 
--- Lazy filetype plugins (batch 2 of the Manager migration is deferred; the
--- language plugin files still load via this loop until converted).
-require 'plugins.lang'
+-- Phase 3: the config-only language files (json, lua, python, ruby, toml,
+-- typescript, typst, yaml, markdown) register vim.lsp.config servers and
+-- call require('conform')/require('lint') at top level — those dependencies
+-- are loaded by load_all() above, so this runs after.
+require('plugins.lang').load_configs()
 
 pcall(vim.cmd.colorscheme, 'shades-of-purple')
 

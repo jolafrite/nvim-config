@@ -1,8 +1,9 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'AlexandrosAlexiou/kotlin.nvim',
-}
+Manager.add({
+  [1] = gh 'AlexandrosAlexiou/kotlin.nvim',
+  filetype = {'kotlin'},
+  config = function()
 
 require('utils').install_with_mason {
   'kotlin-language-server',
@@ -66,5 +67,9 @@ pcall(function()
     },
   }
 end)
+
+-- vim: ts=2 sts=2 sw=2 et
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

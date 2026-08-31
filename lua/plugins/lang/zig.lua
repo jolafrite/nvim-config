@@ -1,8 +1,9 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'lawrence-laz/neotest-zig',
-}
+Manager.add({
+  [1] = gh 'lawrence-laz/neotest-zig',
+  filetype = {'zig', 'zir'},
+  config = function()
 
 require('utils').install_with_mason {
   'zls',
@@ -26,5 +27,9 @@ pcall(function()
     },
   }
 end)
+
+-- vim: ts=2 sts=2 sw=2 et
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

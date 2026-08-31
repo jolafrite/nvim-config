@@ -1,8 +1,9 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'lervag/vimtex',
-}
+Manager.add({
+  [1] = gh 'lervag/vimtex',
+  filetype = {'tex', 'plaintex', 'bib'},
+  config = function()
 
 require('utils').install_with_mason {
   'texlab',
@@ -25,5 +26,9 @@ vim.lsp.enable 'texlab'
 -- latex highlighting is left to vimtex.
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'bibtex', 'latex' })
+
+-- vim: ts=2 sts=2 sw=2 et
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

@@ -1,10 +1,12 @@
--- nvim-metals manages the Metals LSP lifecycle itself (no vim.lsp.enable).
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'scalameta/nvim-metals',
-  gh 'nvim-lua/plenary.nvim',
-}
+Manager.add({
+  [1] = gh 'scalameta/nvim-metals',
+  dependencies = {
+    gh 'nvim-lua/plenary.nvim'
+  },
+  filetype = {'scala'},
+  config = function()
 
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'scala' })
@@ -34,5 +36,9 @@ if ok then
     callback = function() metals.initialize_or_attach(metals_config) end,
   })
 end
+
+-- vim: ts=2 sts=2 sw=2 et
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et
