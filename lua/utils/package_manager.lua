@@ -9,15 +9,13 @@ function M.load_all()
 
   for _, spec in ipairs(plugins) do
     if spec.event then
-      local events = type(spec.event) == 'string' and { spec.event } or
-      spec.event
+      local events = type(spec.event) == 'string' and { spec.event } or spec.event
       for _, e in ipairs(events) do
         by_event[e] = by_event[e] or {}
         table.insert(by_event[e], spec)
       end
     elseif spec.filetype then
-      local fts = type(spec.filetype) == 'string' and { spec.filetype } or
-      spec.filetype
+      local fts = type(spec.filetype) == 'string' and { spec.filetype } or spec.filetype
       for _, f in ipairs(fts) do
         by_ft[f] = by_ft[f] or {}
         table.insert(by_ft[f], spec)
@@ -31,25 +29,13 @@ function M.load_all()
     if s.loaded then return end
 
     s.loaded = true
-    -- Dependencies must be packadded before the plugin itself: a plugin's
-    -- config can require a dependency module that is only on the runtimepath
-    -- once vim.pack.add has installed it (blink.cmp requires 'blink.lib').
-    -- Dependencies come first: vim.pack.add with load=true packadds each spec
-    -- in order, so a dependency's module must be on the runtimepath before the
-    -- plugin that requires it (blink.cmp/plugin loads and needs 'blink.lib').
     local to_add = {}
     for _, dep in ipairs(s.dependencies or {}) do
       table.insert(to_add, dep)
     end
     table.insert(to_add, s[1])
-    local ok, err = pcall(vim.pack.add, to_add,
-      { load = true, confirm = false })
-    if not ok then
-      vim.notify(
-        'package_manager: failed to load ' ..
-        tostring(s[1]) .. ': ' .. tostring(err),
-        vim.log.levels.WARN)
-    end
+    local ok, err = pcall(vim.pack.add, to_add, { load = true, confirm = false })
+    if not ok then vim.notify('package_manager: failed to load ' .. tostring(s[1]) .. ': ' .. tostring(err), vim.log.levels.WARN) end
     if s.config then pcall(s.config) end
   end
 
