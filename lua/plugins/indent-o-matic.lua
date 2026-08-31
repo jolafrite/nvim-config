@@ -1,11 +1,9 @@
-local gh = require("utils").gh
+local gh = require('utils').gh
 
-PackageManager.add({
-  [1] = gh("Darazaki/indent-o-matic"),
+PackageManager.add {
+  [1] = gh 'Darazaki/indent-o-matic',
   lazy = false,
   config = function()
-    require("utils").on_file_types("*", function()
-      require("indent-o-matic").setup({ skip_multiline = true })
-    end)
+    require('utils').on_file_types('*', function() require('indent-o-matic').setup { skip_multiline = true } end)
   end,
-})
+}

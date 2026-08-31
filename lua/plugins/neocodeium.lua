@@ -4,9 +4,9 @@ PackageManager.add {
   [1] = gh 'monkoose/neocodeium',
   lazy = false,
   config = function()
-    -- Without setup() the options table stays empty and neocodeium's logger
-    -- crashes ("attempt to compare nil with number" in log.lua).
-    require('neocodeium').setup {}
+    local neocodeium = require 'neocodeium'
+    neocodeium.setup()
+    vim.keymap.set('i', '<A-f>', neocodeium.accept)
   end,
 }
 
