@@ -1,5 +1,6 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'bassamsdata/namu.nvim',
+Manager.add {
+  [1] = gh 'bassamsdata/namu.nvim',
+  lazy = false,
 }

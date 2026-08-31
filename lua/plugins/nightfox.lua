@@ -1,5 +1,6 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'EdenEast/nightfox.nvim',
+Manager.add {
+  [1] = gh 'EdenEast/nightfox.nvim',
+  lazy = false,
 }

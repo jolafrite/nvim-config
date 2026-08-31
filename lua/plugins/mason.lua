@@ -1,17 +1,23 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'mason-org/mason.nvim',
-  gh 'mason-org/mason-registry',
-}
-
-require('mason').setup {
-  pip = {
-    use_uv = true,
+Manager.add {
+  [1] = gh 'mason-org/mason.nvim',
+  dependencies = {
+    gh 'mason-org/mason-registry',
   },
+  lazy = false,
+  config = function()
+    require('mason').setup {
+      pip = {
+        use_uv = true,
+      },
+    }
+
+    local mr = require 'mason-registry'
+    mr:on('package:install:success', function()
+      vim.defer_fn(function() vim.cmd [[do FileType]] end, 100)
+    end)
+  end,
 }
 
-local mr = require 'mason-registry'
-mr:on('package:install:success', function()
-  vim.defer_fn(function() vim.cmd [[do FileType]] end, 100)
-end)
+-- vim: ts=2 sts=2 sw=2 et

@@ -1,5 +1,6 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'necrogoru/shades-of-purple.nvim',
+Manager.add {
+  [1] = gh 'necrogoru/shades-of-purple.nvim',
+  lazy = false,
 }

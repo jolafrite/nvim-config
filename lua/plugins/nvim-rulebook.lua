@@ -1,5 +1,6 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'chrisgrieser/nvim-rulebook',
+Manager.add {
+  [1] = gh 'chrisgrieser/nvim-rulebook',
+  lazy = false,
 }

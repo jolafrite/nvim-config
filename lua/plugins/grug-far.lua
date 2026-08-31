@@ -1,14 +1,14 @@
 local gh = require('utils').gh
 
-require('utils').on_file_types('*', function()
-  vim.pack.add {
-    gh 'MagicDuck/grug-far.nvim',
-  }
-
-  require('grug-far').setup {
-    headerMaxWidth = 80,
-  }
-end)
+Manager.add {
+  [1] = gh 'MagicDuck/grug-far.nvim',
+  filetype = '*',
+  config = function()
+    require('grug-far').setup {
+      headerMaxWidth = 80,
+    }
+  end,
+}
 
 vim.keymap.set({ 'n', 'x' }, '<leader>sr', function()
   local grug = require 'grug-far'
@@ -20,3 +20,5 @@ vim.keymap.set({ 'n', 'x' }, '<leader>sr', function()
     },
   }
 end, { desc = 'Search and Replace' })
+
+-- vim: ts=2 sts=2 sw=2 et

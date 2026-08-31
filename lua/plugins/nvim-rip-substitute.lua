@@ -1,5 +1,6 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'chrisgrieser/nvim-rip-substitute',
+Manager.add {
+  [1] = gh 'chrisgrieser/nvim-rip-substitute',
+  lazy = false,
 }

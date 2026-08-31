@@ -1,5 +1,6 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'chrisgrieser/nvim-scissors',
+Manager.add {
+  [1] = gh 'chrisgrieser/nvim-scissors',
+  lazy = false,
 }

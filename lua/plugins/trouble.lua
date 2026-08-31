@@ -2,23 +2,23 @@ local gh = require('utils').gh
 
 -- Diagnostics/location-list/quickfix viewer. Lazy-load on first buffer so
 -- it is not part of the startup path; the keymaps below resolve at press time.
-require('utils').on_file_types('*', function()
-  vim.pack.add {
-    gh 'folke/trouble.nvim',
-  }
-
-  require('trouble').setup {
-    modes = {
-      lsp = {
-        win = { position = 'right' },
+Manager.add {
+  [1] = gh 'folke/trouble.nvim',
+  filetype = '*',
+  config = function()
+    require('trouble').setup {
+      modes = {
+        lsp = {
+          win = { position = 'right' },
+        },
       },
-    },
-  }
-end)
+    }
+  end,
+}
 
 -- stylua: ignore
 vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>',
-	{ desc = 'Diagnostics (Trouble)' })
+  { desc = 'Diagnostics (Trouble)' })
 vim.keymap.set('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Buffer Diagnostics (Trouble)' })
 vim.keymap.set('n', '<leader>cs', '<cmd>Trouble symbols toggle<cr>', { desc = 'Symbols (Trouble)' })
 vim.keymap.set('n', '<leader>cS', '<cmd>Trouble lsp toggle<cr>', { desc = 'LSP references/definitions/... (Trouble)' })
@@ -40,3 +40,5 @@ vim.keymap.set('n', ']q', function()
     if not ok then vim.notify(err, vim.log.levels.ERROR) end
   end
 end, { desc = 'Next Trouble/Quickfix Item' })
+
+-- vim: ts=2 sts=2 sw=2 et

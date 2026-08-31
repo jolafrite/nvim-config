@@ -1,9 +1,9 @@
 local gh = require('utils').gh
 
-require('utils').on_lsp_attach(function()
-  vim.pack.add {
-    gh 'j-hui/fidget.nvim',
-  }
+Manager.add {
+  [1] = gh 'j-hui/fidget.nvim',
+  event = 'LspAttach',
+  config = function() require('fidget').setup {} end,
+}
 
-  require('fidget').setup {}
-end)
+-- vim: ts=2 sts=2 sw=2 et

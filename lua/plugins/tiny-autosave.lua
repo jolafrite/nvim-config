@@ -1,5 +1,6 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'swaits/tiny-autosave.nvim',
+Manager.add {
+  [1] = gh 'swaits/tiny-autosave.nvim',
+  lazy = false,
 }

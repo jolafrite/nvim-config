@@ -1,5 +1,6 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'chrisgrieser/nvim-various-textobjs',
+Manager.add {
+  [1] = gh 'chrisgrieser/nvim-various-textobjs',
+  lazy = false,
 }
