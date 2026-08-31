@@ -3,7 +3,6 @@ _G.Utils = require 'utils'
 require 'config.options'
 require 'config.keymaps'
 require 'config.autocmds'
-require 'config.pack'
 
 -- Plugin loading: every plugin file in lua/plugins/*.lua registers a spec via
 -- Manager.add(). Manager.load_all() does the actual startup/event/filetype

@@ -464,3 +464,16 @@ end, {
   bang = true,
   desc = 'Update all vim.pack plugins and restart Neovim',
 })
+
+-- `:ManagerUnmanaged` — list vim.pack plugins that are installed but not
+-- declared in any Manager.add() spec (e.g. leftovers from another manager).
+vim.api.nvim_create_user_command('ManagerUnmanaged', function()
+  local names = Manager.unmanaged()
+  if #names == 0 then
+    vim.notify('Manager: no unmanaged plugins')
+    return
+  end
+  vim.notify('Manager: unmanaged plugins:\n' .. table.concat(names, '\n'))
+end, {
+  desc = 'List vim.pack plugins not declared in any Manager.add() spec',
+})
