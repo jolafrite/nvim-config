@@ -6,7 +6,7 @@ PackageManager.add({
     gh 'julienvincent/nvim-paredit',
     gh 'm00qek/baleia.nvim'
   },
-  filetype = {'clojure'},
+  filetype = {'clojure', 'edn'},
   config = function()
 
 -- Prefer LSP for jump-to-definition and symbol-doc, and use conjure
