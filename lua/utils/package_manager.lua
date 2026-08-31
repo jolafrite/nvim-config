@@ -31,7 +31,18 @@ function M.load_all()
     if s.loaded then return end
 
     s.loaded = true
-    local ok, err = pcall(vim.pack.add, { s[1] },
+    -- Dependencies must be packadded before the plugin itself: a plugin's
+    -- config can require a dependency module that is only on the runtimepath
+    -- once vim.pack.add has installed it (blink.cmp requires 'blink.lib').
+    -- Dependencies come first: vim.pack.add with load=true packadds each spec
+    -- in order, so a dependency's module must be on the runtimepath before the
+    -- plugin that requires it (blink.cmp/plugin loads and needs 'blink.lib').
+    local to_add = {}
+    for _, dep in ipairs(s.dependencies or {}) do
+      table.insert(to_add, dep)
+    end
+    table.insert(to_add, s[1])
+    local ok, err = pcall(vim.pack.add, to_add,
       { load = true, confirm = false })
     if not ok then
       vim.notify(
