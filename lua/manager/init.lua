@@ -1,7 +1,10 @@
 local Time = require("manager.time")
 local Spec = require("manager.spec")
+local Pack = require("manager.pack")
 
 _G.Manager = {}
+Manager.pack = Pack
+
 local H = {}
 
 ---@alias Manager.OptsModifierCfg { priority: number, modifier: fun(opts: table|nil): table|nil }

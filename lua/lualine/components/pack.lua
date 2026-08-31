@@ -4,6 +4,10 @@
 -- shows an animated spinner (kept alive by a small timer that stops itself
 -- once the check finishes). When done, shows a package icon and the number of
 -- outdated plugins, and renders nothing when everything is up to date.
+--
+-- Data source: Manager.pack (port of the old plugins.pack engine). The engine
+-- announces PackStatusChanged on every state change, which is what drives the
+-- redraw here.
 
 local M = require('lualine.component'):extend()
 
@@ -28,7 +32,7 @@ local function ensure_spinner()
     0,
     defaults.spinner_interval,
     vim.schedule_wrap(function()
-      local pack = package.loaded['plugins.pack']
+      local pack = Manager.pack
       if not (pack and pack.state.checking) then
         timer:stop()
         timer_running = false
@@ -54,14 +58,15 @@ function M:init(options)
 end
 
 function M:update_status()
-  local ok, pack = pcall(require, 'plugins.pack')
-  if not ok then return '' end
+  local ok, pack = pcall(function() return Manager.pack end)
+  if not ok or not pack then return '' end
 
   local s = pack.summary()
 
   if s.checking then
     ensure_spinner()
-    self.options.icon = defaults.spinner_frames[frame + 1] or defaults.spinner_frames[1]
+    self.options.icon = defaults.spinner_frames[frame + 1] or
+    defaults.spinner_frames[1]
     if s.pending > 0 then return ('%d outdated'):format(s.pending) end
     return s.status ~= '' and s.status or defaults.checking_text
   end

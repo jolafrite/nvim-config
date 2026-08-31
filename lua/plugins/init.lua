@@ -16,7 +16,7 @@ local plugin_path = vim.fn.stdpath("config") .. "/lua/plugins"
 -- Load every plugin file (registers its Manager.add() spec).
 for _, file in ipairs(vim.fn.glob(plugin_path .. "/*.lua", true, true)) do
   local name = vim.fn.fnamemodify(file, ":t:r")
-  if name ~= "init" and name ~= "pack" and name ~= "pack_float" then
+  if name ~= "init" then
     local req_name = name:match("^%d+%-?(.*)$") or name
     if not package.loaded["plugins." .. req_name] then
       local fn, err = loadfile(file)

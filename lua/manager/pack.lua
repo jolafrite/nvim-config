@@ -1,4 +1,4 @@
--- vim.pack update engine.
+-- vim.pack update engine, ported from lua/plugins/pack.lua.
 --
 -- Owns plugin state and background update checks. Pure data, no UI:
 --   :PackCheck      background check for outdated plugins
@@ -6,8 +6,7 @@
 --   M.summary()     { checking, status, pending, total } snapshot for statuslines
 --
 -- Every state change is announced with the `PackStatusChanged` User autocmd;
--- consumers (plugins.pack_float, lualine.components.pack) listen for it.
--- The float UI lives in plugins.pack_float.
+-- consumers (lualine.components.pack) listen for it.
 
 local M = {}
 
@@ -30,7 +29,8 @@ local config = {
 
 function M.setup(opts) config = vim.tbl_deep_extend('force', config, opts or {}) end
 
-local function is_pending(plugin) return plugin.rev and plugin.rev_to and plugin.rev ~= plugin.rev_to end
+local function is_pending(plugin) return plugin.rev and plugin.rev_to and
+  plugin.rev ~= plugin.rev_to end
 
 local function sort_by_name(items)
   table.sort(items, function(a, b) return a.spec.name < b.spec.name end)
@@ -120,7 +120,7 @@ function M.refresh_local(status)
   end)
 end
 
----Cancel any running check (e.g. when the float UI closes).
+---Cancel any running check.
 function M.abort()
   M.state.check_id = M.state.check_id + 1
   M.state.checking = false
@@ -131,7 +131,8 @@ local function finish_check(check_id, failures)
   if M.state.check_id ~= check_id then return end
 
   M.state.checking = false
-  M.state.status = failures > 0 and ('ready, %d fetch failed'):format(failures) or 'ready'
+  M.state.status = failures > 0 and ('ready, %d fetch failed'):format(failures) or
+  'ready'
   notify()
 end
 
@@ -182,7 +183,8 @@ local function check_fetch_async()
         if fetch_result.code ~= 0 then
           failures = failures + 1
         else
-          local ok, plugin_data = pcall(vim.pack.get, { plugin.spec.name }, { offline = true })
+          local ok, plugin_data = pcall(vim.pack.get, { plugin.spec.name },
+            { offline = true })
           if ok and plugin_data[1] then
             replace_plugin(plugin_data[1])
           else
@@ -191,7 +193,8 @@ local function check_fetch_async()
         end
 
         remaining = remaining - 1
-        M.state.status = ('fetching remotes %d/%d'):format(total - remaining, total)
+        M.state.status = ('fetching remotes %d/%d'):format(total - remaining,
+          total)
         notify()
 
         if remaining == 0 then
@@ -239,6 +242,7 @@ vim.api.nvim_create_user_command('PackCheck', function() M.check() end, {
   desc = 'Check vim.pack plugins for updates in the background',
 })
 
-if config.auto_check then vim.defer_fn(function() M.check() end, config.auto_check_delay) end
+if config.auto_check then vim.defer_fn(function() M.check() end,
+    config.auto_check_delay) end
 
 return M

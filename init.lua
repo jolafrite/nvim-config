@@ -17,8 +17,6 @@ require 'plugins'
 
 -- vim.pack update engine and its float UI (:PackFloat). Loaded explicitly
 -- rather than through Manager.add() — they own state, not a plugin spec.
-require 'plugins.pack'
-require 'plugins.pack_float'
 
 -- Phase 3: the config-only language files (json, lua, python, ruby, toml,
 -- typescript, typst, yaml, markdown) register vim.lsp.config servers and
