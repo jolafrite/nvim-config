@@ -67,9 +67,6 @@ require('lint').linters_by_ft.typescriptreact = { 'oxlint' }
 vim.lsp.enable 'ts_ls'
 
 require('utils').on_file_types({ 'typescript', 'typescriptreact' }, function(ev)
-  vim.pack.add {
-    gh 'Sebastian-Nielsen/better-type-hover',
-  }
 
   local ok, bth = pcall(require, 'better-type-hover')
   if not ok then return end
