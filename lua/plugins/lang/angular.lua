@@ -1,9 +1,12 @@
--- Depends on the TS/JS config (typescript.lua) for script blocks.
--- Hoisted so `htmlangular` is detectable before the spec's filetype trigger fires.
+-- Angular templates. NOTE: no dependency on typescript.lua — angularls handles
+-- the embedded TS in templates itself, and typescript.lua is lazy anyway.
+-- Hoisted so `htmlangular` is detectable before the spec's filetype trigger
+-- fires (Neovim core does not map these on its own; patterns are Lua patterns,
+-- not globs).
 vim.filetype.add {
   pattern = {
-    ['*.component.html'] = 'htmlangular',
-    ['*.container.html'] = 'htmlangular',
+    ['.*%.component%.html'] = 'htmlangular',
+    ['.*%.container%.html'] = 'htmlangular',
   },
 }
 
@@ -51,6 +54,11 @@ require('snacks').util.lsp.on({ name = 'angularls' }, function(_, client)
 end)
 
 vim.lsp.enable 'angularls'
+
+-- Start highlighting for the buffer that triggered this load; its FileType
+-- event already fired (before the parser was installed), so the treesitter
+-- plugin's own FileType autocmd missed it.
+pcall(vim.treesitter.start, nil, 'angular')
   end,
 })
 
