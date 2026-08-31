@@ -1,5 +1,6 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'yorickpeterse/nvim-jump',
+PackageManager.add {
+  [1] = gh 'yorickpeterse/nvim-jump',
+  lazy = false,
 }

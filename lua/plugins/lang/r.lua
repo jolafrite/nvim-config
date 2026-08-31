@@ -1,19 +1,9 @@
--- R.nvim manages sending code/REPL; r_language_server runs via mason.
 local gh = require('utils').gh
 
-require('utils').install_with_mason {
-  'r-languageserver',
-}
-
-vim.lsp.config('r_language_server', {
-  cmd = { 'R', '--slave', '-e', 'languageserver::run()' },
-  filetypes = { 'r', 'rmd', 'quarto' },
-  root_markers = { 'DESCRIPTION', 'NAMESPACE', '.Rbuildignore', '.git' },
-})
-
-vim.pack.add {
-  gh 'R-nvim/R.nvim',
-}
+PackageManager.add({
+  [1] = gh 'R-nvim/R.nvim',
+  filetype = {'r', 'rmd', 'quarto'},
+  config = function()
 
 local r_opts = {
   R_args = { '--quiet', '--no-save' },
@@ -65,5 +55,9 @@ pcall(function()
     },
   }
 end)
+
+-- vim: ts=2 sts=2 sw=2 et
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

@@ -1,11 +1,9 @@
 local gh = require('utils').gh
-vim.pack.add {
-  gh 'lukas-reineke/indent-blankline.nvim',
-}
 
-require('utils').on_file_types(
-  '*',
-  function()
+PackageManager.add {
+  [1] = gh 'lukas-reineke/indent-blankline.nvim',
+  filetype = '*',
+  config = function()
     require('ibl').setup {
       indent = {
         char = '▎',
@@ -22,5 +20,7 @@ require('utils').on_file_types(
         },
       },
     }
-  end
-)
+  end,
+}
+
+-- vim: ts=2 sts=2 sw=2 et

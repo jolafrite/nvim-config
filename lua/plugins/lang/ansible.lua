@@ -1,8 +1,9 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'mfussenegger/nvim-ansible',
-}
+PackageManager.add({
+  [1] = gh 'mfussenegger/nvim-ansible',
+  filetype = {'yaml.ansible'},
+  config = function()
 
 require('utils').install_with_mason {
   'ansible-language-server',
@@ -23,5 +24,9 @@ vim.keymap.set('n', '<leader>ta', function()
 end, { desc = 'Ansible Run Playbook/Role', silent = true })
 
 vim.lsp.enable 'ansiblels'
+
+-- vim: ts=2 sts=2 sw=2 et
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

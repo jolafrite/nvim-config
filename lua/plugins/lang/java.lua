@@ -1,9 +1,9 @@
--- jdtls is managed by nvim-jdtls (below), not via vim.lsp.enable.
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'mfussenegger/nvim-jdtls',
-}
+PackageManager.add({
+  [1] = gh 'mfussenegger/nvim-jdtls',
+  filetype = {'java'},
+  config = function()
 
 require('utils').install_with_mason {
   'jdtls',
@@ -96,5 +96,9 @@ end
 
 -- nvim-jdtls bypasses `vim.lsp.enable`, so attach on FileType java.
 require('utils').on_file_types('java', attach_jdtls)
+
+-- vim: ts=2 sts=2 sw=2 et
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

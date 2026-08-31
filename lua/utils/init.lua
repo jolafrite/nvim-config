@@ -1,24 +1,18 @@
 local M = {}
 
-M.gh = require('utils.gh').gh
-M.cb = require('utils.gh').cb
+M.gh = function(repo)
+  return "https://github.com/" .. repo
+end
 
-M.on_file_types = require('utils.autocmds').on_file_types
-M.on_buf_read = require('utils.autocmds').on_buf_read
+M.install_with_mason = require("utils.install").install_with_mason
+M.on_buf_read = require("utils.autocmds").on_buf_read
+M.on_file_types = require("utils.autocmds").on_file_types
+M.root = require("utils.root")
+M.run_build = require("utils.install").run_build
+M.terminal = require("utils.terminal")
+M.treesitter = require("utils.treesitter")
 
-M.on_lsp_attach = require('utils.lsp').on_lsp_attach
-
-M.install_with_mason = require('utils.install').install_with_mason
-M.run_build = require('utils.install').run_build
-
-M.get_filename = require('utils.path').get_filename
-
-M.json = require 'utils.json'
-M.terminal = require 'utils.terminal'
-M.inject = require 'utils.inject'
-M.mini = require 'utils.mini'
-M.treesitter = require 'utils.treesitter'
-M.root = require 'utils.root'
+_G.Utils = M
 
 return M
 

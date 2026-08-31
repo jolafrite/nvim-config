@@ -1,5 +1,6 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'comfysage/lynn.nvim',
+PackageManager.add {
+  [1] = gh 'comfysage/lynn.nvim',
+  lazy = false,
 }

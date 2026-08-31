@@ -24,6 +24,10 @@
       "rev": "c91a5406775f9379a1abc16a869935beba13cfc2",
       "src": "https://github.com/Sebastian-Nielsen/better-type-hover"
     },
+    "biome": {
+      "rev": "7ceb0ee925461abd9afe17b12a09abc9c0b43c28",
+      "src": "https://github.com/biomejs/biome"
+    },
     "blink-cmp-git": {
       "rev": "d3f2a9067ab028e779d08e61bf0b054939011316",
       "src": "https://github.com/Kaiser-Yang/blink-cmp-git"
@@ -51,6 +55,10 @@
     "bufferline.nvim": {
       "rev": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3",
       "src": "https://github.com/akinsho/bufferline.nvim"
+    },
+    "clangd": {
+      "rev": "0d73b70db36385313702175b480183eb80ca6a16",
+      "src": "https://github.com/clangd/clangd"
     },
     "cmake-tools.nvim": {
       "rev": "22859d754b5de738cfe9945e0910729f63deefd0",
@@ -92,6 +100,10 @@
       "rev": "5be654f2232c10ddcad19c1607a67b6b4b78fc29",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
+    "gleam": {
+      "rev": "e51b8ca1d8c430eb3d68727c604c6cc94c85428a",
+      "src": "https://github.com/gleam-lang/gleam"
+    },
     "go.nvim": {
       "rev": "0768d79bbebdb1a112a845f9cd6293bfbd544dab",
       "src": "https://github.com/ray-x/go.nvim"
@@ -127,6 +139,10 @@
     "kulala.nvim": {
       "rev": "232a9939919fe9bc88d573bce92de50f2f160c60",
       "src": "https://github.com/mistweaverco/kulala.nvim"
+    },
+    "language-tools": {
+      "rev": "e46126c95682751ed2702355794563550a270edf",
+      "src": "https://github.com/vuejs/language-tools"
     },
     "lazydev.nvim": {
       "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
@@ -236,6 +252,10 @@
       "rev": "10fc361835c856ba4233ef5ea135b919bf3dce97",
       "src": "https://github.com/MunifTanjim/nui.nvim"
     },
+    "nushell": {
+      "rev": "baaba71de9dd58fe8b6a396d3ef106e093ee6149",
+      "src": "https://github.com/nushell/nushell"
+    },
     "nvim-ansible": {
       "rev": "c7f595d568b588942d4d0c37b5cd6cae3764a148",
       "src": "https://github.com/mfussenegger/nvim-ansible"
@@ -336,6 +356,10 @@
       "rev": "2ae6958df7ced50baac5035cec0c15799eedfbf7",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
+    "phpactor": {
+      "rev": "ec564f09bd36de643ce38d7ab442288fe8d44084",
+      "src": "https://github.com/phpactor/phpactor"
+    },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
@@ -356,6 +380,10 @@
       "rev": "87843c9c8f28b54332497302de380a6d94c9e82b",
       "src": "https://github.com/lewis6991/satellite.nvim"
     },
+    "setup-dart": {
+      "rev": "6afc89df92d6eb3834022f73cd65adc8cdfcb92d",
+      "src": "https://github.com/dart-lang/setup-dart"
+    },
     "shades-of-purple.nvim": {
       "rev": "d403d33f14b0233f9ccc5371668cfea7ed125ce4",
       "src": "https://github.com/necrogoru/shades-of-purple.nvim"
@@ -367,6 +395,14 @@
     "symbol-usage.nvim": {
       "rev": "6a449e6b37be61a110606e9a67a7a308774f120f",
       "src": "https://github.com/Wansmer/symbol-usage.nvim"
+    },
+    "tailwindcss-intellisense": {
+      "rev": "5067ff7ec0b4b8bb5c3325a69c1f3410eb5b350a",
+      "src": "https://github.com/tailwindlabs/tailwindcss-intellisense"
+    },
+    "terraform-ls": {
+      "rev": "3ee0463f3c1f4577bf10907f81a4dd4627812ee3",
+      "src": "https://github.com/hashicorp/terraform-ls"
     },
     "tiny-autosave.nvim": {
       "rev": "c06115fa810b4aadbc20c6186ed45213dd04f9c9",

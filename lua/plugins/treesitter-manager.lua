@@ -2,17 +2,17 @@ local gh = require('utils').gh
 
 -- Tree-sitter parser manager (`:TSUpgrade`). Needs a real buffer, so load on
 -- first BufReadPost rather than at startup.
-require('utils').on_buf_read(function()
-  vim.pack.add {
-    gh 'romus204/tree-sitter-manager.nvim',
-  }
-
-  require('tree-sitter-manager').setup {
-    parser_dir = vim.fn.stdpath 'data' .. '/site/parser',
-    query_dir = vim.fn.stdpath 'data' .. '/site/queries',
-    auto_install = true,
-  }
-end)
+PackageManager.add {
+  [1] = gh 'romus204/tree-sitter-manager.nvim',
+  event = 'BufReadPost',
+  config = function()
+    require('tree-sitter-manager').setup {
+      parser_dir = vim.fn.stdpath 'data' .. '/site/parser',
+      query_dir = vim.fn.stdpath 'data' .. '/site/queries',
+      auto_install = true,
+    }
+  end,
+}
 
 vim.api.nvim_create_user_command('TSUpgrade', function()
   local state = require 'tree-sitter-manager.config'
@@ -28,3 +28,5 @@ vim.api.nvim_create_user_command('TSUpgrade', function()
   end
   if #langs > 0 then vim.wait(900000, function() return remaining <= 0 end, 200) end
 end, { nargs = 0, desc = 'Update all installed treesitter parsers' })
+
+-- vim: ts=2 sts=2 sw=2 et

@@ -1,8 +1,9 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'Civitasv/cmake-tools.nvim',
-}
+PackageManager.add({
+  [1] = gh 'Civitasv/cmake-tools.nvim',
+  filetype = {'cmake'},
+  config = function()
 
 require('utils').install_with_mason {
   'neocmakelsp',
@@ -30,5 +31,9 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'cmake' })
 
 vim.lsp.enable 'neocmake'
+
+-- vim: ts=2 sts=2 sw=2 et
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

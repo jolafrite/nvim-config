@@ -1,5 +1,6 @@
-local gh = require('utils').gh
+local gh = require("utils").gh
 
-vim.pack.add {
-  gh 'chrisgrieser/nvim-tinygit',
-}
+PackageManager.add({
+  [1] = gh("chrisgrieser/nvim-tinygit"),
+  lazy = false,
+})

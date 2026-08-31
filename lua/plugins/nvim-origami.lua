@@ -1,5 +1,6 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'chrisgrieser/nvim-origami',
+PackageManager.add {
+  [1] = gh 'chrisgrieser/nvim-origami',
+  lazy = false,
 }

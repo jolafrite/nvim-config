@@ -1,5 +1,6 @@
 local gh = require('utils').gh
 
-vim.pack.add {
-  gh 'chrisgrieser/nvim-lsp-endhints',
+PackageManager.add {
+  [1] = gh 'chrisgrieser/nvim-lsp-endhints',
+  lazy = false,
 }

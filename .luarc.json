@@ -18,7 +18,9 @@
   },
   "diagnostics": {
     "globals": [
-      "vim"
+      "vim",
+      "PackageManager",
+      "Snacks"
     ]
   }
 }
