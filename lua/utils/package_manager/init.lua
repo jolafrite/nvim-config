@@ -56,7 +56,7 @@ H.run_build_cmd = function(cmd, cwd)
 end
 
 vim.api.nvim_create_autocmd("PackChanged", {
-  group = Utils.autocmd.new_group("manager_pack_build"),
+  group = Utils.autocmds.new_group("manager_pack_build"),
   callback = function(ev)
     local name = ev.data.spec.name
     local kind = ev.data.kind
@@ -307,7 +307,8 @@ end
 ---@return PackageManager.Stats
 PackageManager.stats = function()
   if not H.stats then
-    error("PackageManager.stats() can only be called after PackageManager.load_all()")
+    error(
+      "PackageManager.stats() can only be called after PackageManager.load_all()")
   end
   return H.stats
 end
@@ -317,6 +318,11 @@ PackageManager.unmanaged = function()
   local managed = {}
   for _, spec in ipairs(H.pack_specs) do
     managed[spec.name] = true
+    if spec.dependencies then
+      for _, dep in ipairs(spec.dependencies) do
+        managed[dep.name] = true
+      end
+    end
   end
 
   local installed = vim.pack.get(nil, { info = false })
@@ -405,7 +411,7 @@ PackageManager.update_all = function(confirm)
     confirm = true
   end
 
-  local group = Utils.autocmd.new_group("manager_update_all")
+  local group = Utils.autocmds.new_group("manager_update_all")
   local cleanup = function() vim.api.nvim_del_augroup_by_id(group) end
 
   local changed = false

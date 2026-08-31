@@ -3,6 +3,8 @@ lua_versions:
   - luajit
 
 globals:
+  PackageManager:
+    any: true
   Snacks:
     any: true
   vim:

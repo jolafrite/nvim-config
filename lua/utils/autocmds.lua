@@ -1,5 +1,11 @@
 local M = {}
 
+---@param name string
+---@param clear? boolean
+M.new_group = function(name, clear) return vim.api.nvim_create_augroup('myconfig_utils_autocmd_' .. name, { clear = clear }) end
+
+M.default_group = M.new_group('default', true)
+
 -- Register an autocmd that fires once per matching filetype, runs the callback.
 M.on_file_types = function(patterns, fn)
   local list = type(patterns) == 'string' and { patterns } or patterns

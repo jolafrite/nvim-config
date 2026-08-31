@@ -1,10 +1,12 @@
-local gh = require('utils').gh
+local gh = require("utils").gh
 
-require('utils').on_lsp_attach(function()
-  vim.pack.add {
-    gh 'lewis6991/async.nvim',
-    gh 'theprimeagen/refactoring.nvim',
-  }
-
-  require('refactoring').setup {}
-end)
+PackageManager.add({
+  [1] = gh("lewis6991/async.nvim"),
+  dependencies = {
+    gh("theprimeagen/refactoring.nvim"),
+  },
+  event = "LSPAttach",
+  config = function()
+    require("refactoring").setup({})
+  end,
+})
