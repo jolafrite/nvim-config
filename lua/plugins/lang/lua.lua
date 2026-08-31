@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.lua',
+  filetype = { 'lua' },
+  config = function()
+
 require('utils').install_with_mason {
   'lua-language-server',
   'stylua',
@@ -40,5 +45,7 @@ if vim.uv.fs_stat(vim.fn.expand '~/.cargo/bin/selene') then lint.linters.selene.
 lint.linters_by_ft.lua = { 'selene' }
 
 vim.lsp.enable 'lua_ls'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

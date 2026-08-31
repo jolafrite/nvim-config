@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.twig',
+  filetype = { 'twig', 'html.twig' },
+  config = function()
+
 require('utils').install_with_mason {
   'twiggy-language-server',
   'twigcs',
@@ -23,5 +28,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'twig' })
 
 vim.lsp.enable 'twiggy_language_server'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

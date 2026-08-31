@@ -1,5 +1,13 @@
 -- formatting stays owned by prettier; biome-check is defined here for
 -- per-buffer opt-in only (not attached).
+PackageManager.add({
+  name = 'lang.biome',
+  filetype = {
+    'javascript', 'javascriptreact', 'typescript', 'typescriptreact',
+    'json', 'jsonc', 'vue', 'svelte', 'astro',
+  },
+  config = function()
+
 require('utils').install_with_mason {
   'biome',
 }
@@ -27,5 +35,7 @@ conform.formatters['biome-check'] = {
 }
 
 vim.lsp.enable 'biome'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

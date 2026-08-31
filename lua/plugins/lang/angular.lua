@@ -1,4 +1,17 @@
 -- Depends on the TS/JS config (typescript.lua) for script blocks.
+-- Hoisted so `htmlangular` is detectable before the spec's filetype trigger fires.
+vim.filetype.add {
+  pattern = {
+    ['*.component.html'] = 'htmlangular',
+    ['*.container.html'] = 'htmlangular',
+  },
+}
+
+PackageManager.add({
+  name = 'lang.angular',
+  filetype = { 'htmlangular' },
+  config = function()
+
 require('utils').install_with_mason {
   'angular-language-server',
   'prettier',
@@ -38,5 +51,7 @@ require('snacks').util.lsp.on({ name = 'angularls' }, function(_, client)
 end)
 
 vim.lsp.enable 'angularls'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

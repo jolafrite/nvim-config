@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.dart',
+  filetype = { 'dart' },
+  config = function()
+
 require('utils').install_with_mason {
   'dart',
 }
@@ -15,5 +20,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'dart' })
 
 vim.lsp.enable 'dartls'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

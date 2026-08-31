@@ -3,7 +3,8 @@
 -- load it manually with PackageManager.load function.
 
 ---@class PackageManager.Spec
----@field [1] string|vim.pack.Spec plugin spec for vim.pack
+---@field [1] string|vim.pack.Spec plugin spec for vim.pack; nil for config-only specs
+---@field name? string spec name; required for config-only specs (no [1])
 ---@field dependencies? (string|vim.pack.Spec)[] dependencies for vim.pack
 ---@field build? string|fun(path: string) build command/function, will be called when the plugin is installed or updated
 ---@field init? fun() init function, will be called before ANY plugin is loaded
@@ -15,7 +16,8 @@
 ---@field lazy? boolean whether to load the plugin lazily, default is true
 
 ---@class PackageManager.SpecResolved
----@field [1] vim.pack.SpecResolved
+---@field [1] vim.pack.SpecResolved|nil nil for config-only specs
+---@field name? string set only for config-only specs
 ---@field dependencies? vim.pack.SpecResolved[]
 ---@field build? string|fun(path: string)
 ---@field init? fun()
@@ -26,14 +28,15 @@
 ---@field priority number
 ---@field lazy boolean
 
+local is_nonempty_string = function(x) return type(x) == "string" and x ~= "" end
+
 local SPEC_KEYS =
-  { 1, "dependencies", "build", "init", "opts", "config", "event", "filetype", "priority", "lazy" }
+  { 1, "name", "dependencies", "build", "init", "opts", "config", "event", "filetype", "priority", "lazy" }
 local DEFAULT_PRIORITY = 50
 
 ---@param spec string|vim.pack.Spec
 ---@return vim.pack.SpecResolved
 local function normalize_vim_pack_spec(spec)
-  local function is_nonempty_string(x) return type(x) == "string" and x ~= "" end
   local function is_version(x)
     return type(x) == "string" or (type(x) == "table" and pcall(x.has, x, "1"))
   end
@@ -60,8 +63,13 @@ M.normalize_spec = function(spec)
   end
 
   spec = vim.deepcopy(spec)
+  -- name (required for config-only specs that have no [1] plugin spec)
+  vim.validate("spec.name", spec.name, is_nonempty_string, true, "non-empty string")
+  if spec[1] == nil and spec.name == nil then
+    error("spec[1] is required unless spec.name is set (config-only spec)")
+  end
   -- plugin spec
-  spec[1] = normalize_vim_pack_spec(spec[1])
+  spec[1] = spec[1] and normalize_vim_pack_spec(spec[1]) or nil
   -- dependencies
   vim.validate("spec.dependencies", spec.dependencies, vim.islist, true, "list")
   if spec.dependencies then
@@ -103,6 +111,7 @@ M.normalize_spec = function(spec)
 
   return {
     spec[1],
+    name = spec[1] == nil and spec.name or nil,
     dependencies = spec.dependencies,
     build = spec.build,
     init = spec.init,

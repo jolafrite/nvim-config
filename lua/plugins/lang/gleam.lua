@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.gleam',
+  filetype = { 'gleam' },
+  config = function()
+
 require('utils').install_with_mason {
   'gleam',
 }
@@ -15,5 +20,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'gleam' })
 
 vim.lsp.enable 'gleam'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

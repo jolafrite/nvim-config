@@ -1,7 +1,13 @@
 -- mdx files map to markdown.mdx so marksman, conform and nvim-lint all engage.
+-- Hoisted so `markdown.mdx` is detectable before the spec's filetype trigger fires.
 vim.filetype.add {
   extension = { mdx = 'markdown.mdx' },
 }
+
+PackageManager.add({
+  name = 'lang.markdown',
+  filetype = { 'markdown', 'markdown.mdx' },
+  config = function()
 
 require('utils').install_with_mason {
   'marksman',
@@ -34,5 +40,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'markdown', 'markdown_inline' })
 
 vim.lsp.enable 'marksman'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

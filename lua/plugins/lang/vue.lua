@@ -1,4 +1,9 @@
 -- depends on typescript.lua for the script blocks
+PackageManager.add({
+  name = 'lang.vue',
+  filetype = { 'vue' },
+  config = function()
+
 require('utils').install_with_mason {
   'vue-language-server',
 }
@@ -13,5 +18,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'vue', 'css' })
 
 vim.lsp.enable 'vue_ls'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

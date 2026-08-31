@@ -1,4 +1,9 @@
 -- depends on typescript.lua for the frontmatter script
+PackageManager.add({
+  name = 'lang.astro',
+  filetype = { 'astro' },
+  config = function()
+
 require('utils').install_with_mason {
   'astro-language-server',
 }
@@ -16,5 +21,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'astro', 'css' })
 
 vim.lsp.enable 'astro'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

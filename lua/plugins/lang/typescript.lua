@@ -1,11 +1,15 @@
-local gh = require('utils').gh
+-- `typescript-language-server` refuses to start without an explicit `--stdio`.
+-- Inlay-hint settings are mirrored to javascript too (js_ts_settings).
+PackageManager.add({
+  name = 'lang.typescript',
+  filetype = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+  config = function()
 
 require('utils').install_with_mason {
   'oxlint',
   'prettier',
 }
 
--- `typescript-language-server` refuses to start without an explicit `--stdio`.
 -- Inlay-hint settings are mirrored to javascript too (js_ts_settings).
 local js_ts_settings = {
   typescript = {
@@ -78,5 +82,7 @@ require('utils').on_file_types({ 'typescript', 'typescriptreact' }, function(ev)
     desc = 'Better type hover',
   })
 end)
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

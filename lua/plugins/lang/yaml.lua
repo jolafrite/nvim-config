@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.yaml',
+  filetype = { 'yaml' },
+  config = function()
+
 require('utils').install_with_mason {
   'yaml-language-server',
 }
@@ -37,5 +42,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'yaml' })
 
 vim.lsp.enable 'yamlls'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

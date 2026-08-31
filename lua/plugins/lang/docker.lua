@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.docker',
+  filetype = { 'dockerfile', 'yaml.docker-compose' },
+  config = function()
+
 require('utils').install_with_mason {
   'docker-language-server',
   'docker-compose-language-service',
@@ -32,5 +37,7 @@ pcall(TS.install, { 'dockerfile' })
 
 vim.lsp.enable 'dockerls'
 vim.lsp.enable 'docker_compose_language_service'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

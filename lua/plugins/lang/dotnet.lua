@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.dotnet',
+  filetype = { 'cs', 'vb', 'fsharp' },
+  config = function()
+
 require('utils').install_with_mason {
   'omnisharp',
   'fsautocomplete',
@@ -37,5 +42,7 @@ pcall(TS.install, { 'c_sharp', 'fsharp' })
 
 vim.lsp.enable 'omnisharp'
 vim.lsp.enable 'fsautocomplete'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.solidity',
+  filetype = { 'solidity' },
+  config = function()
+
 require('utils').install_with_mason {
   'solc',
 }
@@ -17,5 +22,7 @@ conform.formatters_by_ft.solidity = { 'forge_fmt' }
 
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'solidity' })
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

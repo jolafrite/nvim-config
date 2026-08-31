@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.nix',
+  filetype = { 'nix' },
+  config = function()
+
 require('utils').install_with_mason {
   'nil',
   'statix',
@@ -20,5 +25,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'nix' })
 
 vim.lsp.enable 'nil_ls'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

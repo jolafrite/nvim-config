@@ -110,7 +110,7 @@ PackageManager.loaded = function(name) return H.plugin_loaded[name] == true end
 ---@param spec PackageManager.Spec
 PackageManager.add = function(spec)
   local resolved = Spec.normalize_spec(spec)
-  local name = resolved[1].name
+  local name = resolved[1] and resolved[1].name or resolved.name
   if H.plugin_specs[name] then
     error("Plugin spec with name " .. name .. " already exists")
   end
@@ -118,7 +118,10 @@ PackageManager.add = function(spec)
   for _, dep in ipairs(resolved.dependencies or {}) do
     table.insert(H.pack_specs, dep)
   end
-  table.insert(H.pack_specs, resolved[1])
+  -- config-only specs have no [1]; nothing to hand to vim.pack
+  if resolved[1] then
+    table.insert(H.pack_specs, resolved[1])
+  end
 end
 
 ---@param name string
@@ -214,7 +217,7 @@ end
 
 ---@param spec PackageManager.SpecResolved
 H.do_load_spec = function(spec)
-  local name = spec[1].name
+  local name = spec[1] and spec[1].name or spec.name
   for _, hook in ipairs(H.before_load_hooks[name] or {}) do
     Utils.safecall.now(hook)
   end
@@ -228,8 +231,12 @@ H.do_load_spec = function(spec)
     end
   end
 
-  table.insert(specs, spec[1])
-  vim.pack.add(specs, { load = true, confirm = false })
+  if spec[1] then
+    table.insert(specs, spec[1])
+  end
+  if #specs > 0 then
+    vim.pack.add(specs, { load = true, confirm = false })
+  end
 
   local opts = spec.opts
   if type(opts) == "function" then
@@ -255,7 +262,7 @@ end
 
 ---@param spec PackageManager.SpecResolved
 H.load_spec = function(spec)
-  local name = spec[1].name
+  local name = spec[1] and spec[1].name or spec.name
   if H.plugin_loaded[name] then
     return
   end

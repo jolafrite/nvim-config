@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.json',
+  filetype = { 'json', 'jsonc', 'json5' },
+  config = function()
+
 require('utils').install_with_mason {
   'json-lsp',
   'fixjson',
@@ -37,5 +42,7 @@ vim.lsp.enable 'jsonls'
 
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'json', 'json5' })
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

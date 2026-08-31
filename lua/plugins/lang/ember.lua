@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.ember',
+  filetype = { 'handlebars', 'glimmer' },
+  config = function()
+
 require('utils').install_with_mason {
   'ember-language-server',
 }
@@ -15,5 +20,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'glimmer', 'glimmer_javascript', 'glimmer_typescript', 'css' })
 
 vim.lsp.enable 'ember'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

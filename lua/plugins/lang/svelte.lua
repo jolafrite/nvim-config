@@ -1,4 +1,9 @@
 -- Prefer a project-local node_modules/.bin/svelteserver over the global one.
+PackageManager.add({
+  name = 'lang.svelte',
+  filetype = { 'svelte' },
+  config = function()
+
 require('utils').install_with_mason {
   'svelte-language-server',
   'prettier',
@@ -30,5 +35,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'svelte' })
 
 vim.lsp.enable 'svelte'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

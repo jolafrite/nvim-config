@@ -1,3 +1,12 @@
+PackageManager.add({
+  name = 'lang.tailwind',
+  filetype = {
+    'html', 'css', 'less', 'sass', 'scss', 'stylus',
+    'javascript', 'javascriptreact', 'typescript', 'typescriptreact',
+    'svelte', 'astro', 'templ', 'php', 'blade', 'markdown.mdx',
+  },
+  config = function()
+
 require('utils').install_with_mason {
   'tailwindcss-language-server',
   'prettier',
@@ -51,5 +60,7 @@ require('lint').linters_by_ft.scss = { 'stylelint' }
 require('lint').linters_by_ft.stylus = { 'stylelint' }
 
 vim.lsp.enable 'tailwindcss'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et
