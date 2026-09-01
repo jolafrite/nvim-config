@@ -17,7 +17,7 @@ Generated from `vim.keymap.set(...)` calls in the working tree.
 | `j` / `k` | n,x | `v:count == 0 ? 'gj' : 'j'` (screen-aware down/up) |
 | `<Down>` / `<Up>` | n,x | same, screen-aware |
 | `n` / `N` | n,x,o | next/prev search, centered (`zzzv`) |
-| `gg` / `G` | n | top/bottom, centered |
+| `gg` / `GG` / `G` | n | top / bottom / last line, all centered |
 | `%` | n | match pair, centered |
 | `*` / `#` | n | word search, centered |
 | `<C-u>` / `<C-d>` / `<C-i>` / `<C-o>` | n | scroll half-page, centered |
@@ -45,7 +45,6 @@ Generated from `vim.keymap.set(...)` calls in the working tree.
 | `<` / `>` | x | re-indent, keep visual |
 | `dw` | n | delete word backward to `" register |
 | `<C-a>` | n | select all (`gg<S-v>G`) |
-| `<C-c>` | n | change inner word (`ciw`) |
 | `U` | n | redo (`<C-r>`) |
 | `gco` / `gcO` | n | comment line below/above |
 | `<C-s>` | i,x,n,s | save |

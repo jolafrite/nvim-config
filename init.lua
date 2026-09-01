@@ -17,6 +17,7 @@ require 'utils.package_manager'
 -- so their triggers are wired.
 require('plugins.lang').load_specs()
 require 'plugins'
+require('plugins.lang').load_configs()
 
 
 pcall(vim.cmd.colorscheme, 'shades-of-purple')
