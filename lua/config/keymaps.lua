@@ -15,13 +15,11 @@ vim.keymap.set('n', '<leader>?', searching_brave, {
 vim.keymap.set('n', '+', '<C-a>', opts)
 vim.keymap.set('n', '-', '<C-x>', opts)
 
--- delete a word backwards
-vim.keymap.set('n', 'dw', 'vd"_d')
+-- delete a word backwards (into the black hole register)
+vim.keymap.set('n', 'dw', '"_dw')
 
 -- select all
 vim.keymap.set('n', '<C-a>', 'gg<S-v>G')
-
-vim.keymap.set('n', '<C-c>', 'ciw')
 
 vim.keymap.set('n', '<Up>', '<c-w>k')
 vim.keymap.set('n', '<Down>', '<c-w>j')
@@ -34,10 +32,8 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz', opts)
 vim.keymap.set('n', '<C-d>', '<C-d>zz', opts)
 vim.keymap.set('n', '<C-i>', '<C-i>zz', opts)
 vim.keymap.set('n', '<C-o>', '<C-o>zz', opts)
-vim.keymap.set('n', 'n', 'nzz', opts)
-vim.keymap.set('n', 'N', 'Nzz', opts)
 vim.keymap.set('n', 'gg', 'ggzz', opts)
-vim.keymap.set('n', 'GG', 'GGzz', opts)
+vim.keymap.set('n', 'G', 'Gzz', opts)
 vim.keymap.set('n', '%', '%zz', opts)
 vim.keymap.set('n', '*', '*zz', opts)
 vim.keymap.set('n', '#', '#zz', opts)
@@ -82,10 +78,11 @@ end, { expr = true, desc = 'Escape and Clear hlsearch' })
 vim.keymap.set('n', '<leader>ur', '<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>', { desc = 'Redraw / Clear hlsearch / Diff Update' })
 
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
-vim.keymap.set('n', 'n', "'Nn'[v:searchforward].'zv'", { expr = true, desc = 'Next Search Result' })
+-- (zzzv centers the match while keeping the cursor column)
+vim.keymap.set('n', 'n', "'Nn'[v:searchforward].'zzzv'", { expr = true, desc = 'Next Search Result' })
 vim.keymap.set('x', 'n', "'Nn'[v:searchforward]", { expr = true, desc = 'Next Search Result' })
 vim.keymap.set('o', 'n', "'Nn'[v:searchforward]", { expr = true, desc = 'Next Search Result' })
-vim.keymap.set('n', 'N', "'nN'[v:searchforward].'zv'", { expr = true, desc = 'Prev Search Result' })
+vim.keymap.set('n', 'N', "'nN'[v:searchforward].'zzzv'", { expr = true, desc = 'Prev Search Result' })
 vim.keymap.set('x', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev Search Result' })
 vim.keymap.set('o', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev Search Result' })
 

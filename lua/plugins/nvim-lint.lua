@@ -2,8 +2,6 @@ local gh = require('utils').gh
 
 -- nvim-lint configuration: mirrors the default linting setup.
 --
-local unpack = rawget(_G, 'unpack') or table.unpack
-
 PackageManager.add {
   [1] = gh 'mfussenegger/nvim-lint',
   lazy = false,
@@ -35,7 +33,7 @@ PackageManager.add {
     lint.linters_by_ft = opts.linters_by_ft
 
     -- Warn helper: notify at warn level instead of dropping the feature.
-    local function warn(msg, opts_) vim.notify(msg, vim.log_levels.WARN, vim.tbl_deep_extend('force', { title = 'nvim-lint' }, opts_ or {})) end
+    local function warn(msg, opts_) vim.notify(msg, vim.log.levels.WARN, vim.tbl_deep_extend('force', { title = 'nvim-lint' }, opts_ or {})) end
 
     local function debounce(ms, fn)
       local timer = vim.uv.new_timer()
@@ -43,7 +41,7 @@ PackageManager.add {
         local argv = { ... }
         timer:start(ms, 0, function()
           timer:stop()
-          vim.schedule_wrap(fn)(unpack(argv))
+          vim.schedule_wrap(fn)(table.unpack(argv))
         end)
       end
     end
