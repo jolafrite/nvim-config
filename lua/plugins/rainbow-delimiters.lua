@@ -2,12 +2,12 @@ local gh = require('utils').gh
 
 PackageManager.add {
   [1] = gh 'HiPhish/rainbow-delimiters.nvim',
-  filetype = '*',
+  lazy = false,
   config = function()
     require('rainbow-delimiters.setup').setup {}
 
-    -- The plugin attaches via its own FileType autocmd, which for the buffer
-    -- that triggered this lazy load has already fired. Attach to every loaded,
+    -- The plugin attaches via its own FileType autocmd, which for any buffer
+    -- opened before this config ran has already fired. Attach to every loaded,
     -- normal buffer with a filetype now; pcall guards against filetypes whose
     -- treesitter parser is not installed.
     for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do

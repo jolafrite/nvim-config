@@ -3,7 +3,6 @@ local gh = require('utils').gh
 PackageManager.add {
   [1] = gh 'nvim-mini/mini.nvim',
   dependencies = {
-    gh 'nvim-mini/mini.diff',
     gh 'nvim-mini/mini.operators',
     gh 'nvim-mini/mini.pairs',
     gh 'nvim-mini/mini.surround',
@@ -13,17 +12,6 @@ PackageManager.add {
   },
   lazy = false,
   config = function()
-    require('mini.diff').setup {
-      view = {
-        style = 'sign',
-        signs = {
-          add = '▎',
-          change = '▎',
-          delete = '',
-        },
-      },
-    }
-
     require('mini.surround').setup {
       mappings = {
         add = 'gsa',

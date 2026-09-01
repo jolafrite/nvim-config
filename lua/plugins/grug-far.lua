@@ -2,7 +2,7 @@ local gh = require('utils').gh
 
 PackageManager.add {
   [1] = gh 'MagicDuck/grug-far.nvim',
-  filetype = '*',
+  lazy = false,
   config = function()
     require('grug-far').setup {
       headerMaxWidth = 80,

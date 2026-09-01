@@ -133,11 +133,6 @@ PackageManager.add {
             color = function() return { fg = require('snacks').util.color 'Constant' } end,
           },
           {
-            function() return '  ' .. require('dap').status() end,
-            cond = function() return package.loaded['dap'] and require('dap').status() ~= '' end,
-            color = function() return { fg = require('snacks').util.color 'Debug' } end,
-          },
-          {
             'diff',
             symbols = {
               added = icons.git.added,
