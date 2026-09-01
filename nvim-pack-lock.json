@@ -364,6 +364,10 @@
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "rainbow-delimiters.nvim": {
+      "rev": "012f1480cd9a5fc99fce7678e0a536421a53fc46",
+      "src": "https://github.com/HiPhish/rainbow-delimiters.nvim"
+    },
     "refactoring.nvim": {
       "rev": "64e10d782ae5b9653558482910213b8946651456",
       "src": "https://github.com/theprimeagen/refactoring.nvim"

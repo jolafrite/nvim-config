@@ -2,7 +2,8 @@ local gh = require('utils').gh
 
 require('utils').install_with_mason {
   'oxlint',
-  'prettier',
+  'oxfmt',
+  'prettierd',
 }
 
 -- `typescript-language-server` refuses to start without an explicit `--stdio`.
@@ -46,18 +47,39 @@ vim.lsp.config('ts_ls', {
   },
   settings = js_ts_settings,
 })
+
+-- oxlint LSP covers the JS/TS family plus json/vue/svelte/astro.
+vim.lsp.config('oxlint', {
+  cmd = { 'oxlint', 'lsp' },
+  filetypes = {
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+    'json',
+    'jsonc',
+    'vue',
+    'svelte',
+    'astro',
+  },
+  settings = {
+    fixKind = 'all',
+  },
+})
+
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'typescript', 'tsx', 'javascript' })
 
 local conform = require 'conform'
-conform.formatters.prettier = {
-  command = 'prettier',
-  stdin = true,
-}
-conform.formatters_by_ft.javascript = { 'prettier' }
-conform.formatters_by_ft.javascriptreact = { 'prettier' }
-conform.formatters_by_ft.typescript = { 'prettier' }
-conform.formatters_by_ft.typescriptreact = { 'prettier' }
+-- prettierd is resolved by conform's built-in config (daemon, project-local
+-- prettier via node_modules when present, $FILENAME + range support).
+-- formatting stays owned by prettierd; oxfmt is defined here for
+-- per-buffer opt-in only (not attached).
+conform.formatters.oxfmt = { command = 'oxfmt', stdin = true }
+conform.formatters_by_ft.javascript = { 'prettierd' }
+conform.formatters_by_ft.javascriptreact = { 'prettierd' }
+conform.formatters_by_ft.typescript = { 'prettierd' }
+conform.formatters_by_ft.typescriptreact = { 'prettierd' }
 
 require('lint').linters_by_ft.javascript = { 'oxlint' }
 require('lint').linters_by_ft.javascriptreact = { 'oxlint' }
@@ -65,9 +87,20 @@ require('lint').linters_by_ft.typescript = { 'oxlint' }
 require('lint').linters_by_ft.typescriptreact = { 'oxlint' }
 
 vim.lsp.enable 'ts_ls'
+vim.lsp.enable 'oxlint'
+
+PackageManager.add {
+  [1] = gh 'Sebastian-Nielsen/better-type-hover',
+  event = 'FileType',
+  config = function()
+    local ok, bth = pcall(require, 'better-type-hover')
+    if not ok then return end
+
+    bth.config = bth.config or {}
+  end,
+}
 
 require('utils').on_file_types({ 'typescript', 'typescriptreact' }, function(ev)
-
   local ok, bth = pcall(require, 'better-type-hover')
   if not ok then return end
 

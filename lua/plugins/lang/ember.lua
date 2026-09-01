@@ -9,7 +9,7 @@ vim.lsp.config('ember', {
 })
 
 local conform = require 'conform'
-conform.formatters_by_ft.glimmer = { 'prettier' }
+conform.formatters_by_ft.glimmer = { 'prettierd' }
 
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'glimmer', 'glimmer_javascript', 'glimmer_typescript', 'css' })

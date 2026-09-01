@@ -20,7 +20,8 @@
     "globals": [
       "vim",
       "PackageManager",
-      "Snacks"
+      "Snacks",
+      "snacks"
     ]
   }
 }

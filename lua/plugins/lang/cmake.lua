@@ -30,8 +30,6 @@ PackageManager.add {
     pcall(TS.install, { 'cmake' })
 
     vim.lsp.enable 'neocmake'
-
-    -- vim: ts=2 sts=2 sw=2 et
   end,
 }
 
