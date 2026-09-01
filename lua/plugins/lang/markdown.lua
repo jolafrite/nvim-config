@@ -1,8 +1,3 @@
--- mdx files map to markdown.mdx so marksman, conform and nvim-lint all engage.
-vim.filetype.add {
-  extension = { mdx = 'markdown.mdx' },
-}
-
 require('utils').install_with_mason {
   'marksman',
   'markdownlint-cli2',
@@ -15,8 +10,11 @@ vim.lsp.config('marksman', {
   root_markers = { '.marksman.toml', '.git' },
 })
 
+vim.filetype.add {
+  extension = { mdx = 'markdown.mdx' },
+}
+
 local conform = require 'conform'
--- Only run markdown-toc when the file declares a `<!-- toc -->` marker.
 conform.formatters['markdown-toc'] = {
   condition = function(_, ctx)
     for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
@@ -24,8 +22,8 @@ conform.formatters['markdown-toc'] = {
     end
   end,
 }
-conform.formatters_by_ft.markdown = { 'prettier', 'markdownlint-cli2', 'markdown-toc' }
-conform.formatters_by_ft['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' }
+conform.formatters_by_ft.markdown = { 'prettierd', 'markdownlint-cli2', 'markdown-toc' }
+conform.formatters_by_ft['markdown.mdx'] = { 'prettierd', 'markdownlint-cli2', 'markdown-toc' }
 
 local lint = require 'lint'
 lint.linters_by_ft.markdown = { 'markdownlint-cli2' }

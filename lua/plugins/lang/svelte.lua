@@ -1,7 +1,7 @@
 -- Prefer a project-local node_modules/.bin/svelteserver over the global one.
 require('utils').install_with_mason {
   'svelte-language-server',
-  'prettier',
+  'prettierd',
   'oxlint',
 }
 
@@ -18,11 +18,7 @@ vim.lsp.config('svelte', {
 })
 
 local conform = require 'conform'
-conform.formatters.prettier = {
-  command = 'prettier',
-  stdin = true,
-}
-conform.formatters_by_ft.svelte = { 'prettier' }
+conform.formatters_by_ft.svelte = { 'prettierd' }
 
 require('lint').linters_by_ft.svelte = { 'oxlint' }
 

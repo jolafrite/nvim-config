@@ -1,4 +1,4 @@
--- formatting stays owned by prettier; biome-check is defined here for
+-- formatting stays owned by prettierd; biome-check is defined here for
 -- per-buffer opt-in only (not attached).
 require('utils').install_with_mason {
   'biome',

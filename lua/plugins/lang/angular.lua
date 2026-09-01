@@ -1,7 +1,7 @@
 -- Depends on the TS/JS config (typescript.lua) for script blocks.
 require('utils').install_with_mason {
   'angular-language-server',
-  'prettier',
+  'prettierd',
   'oxlint',
 }
 
@@ -12,11 +12,7 @@ vim.lsp.config('angularls', {
 })
 
 local conform = require 'conform'
-conform.formatters.prettier = {
-  command = 'prettier',
-  stdin = true,
-}
-conform.formatters_by_ft.htmlangular = { 'prettier' }
+conform.formatters_by_ft.htmlangular = { 'prettierd' }
 
 require('lint').linters_by_ft.htmlangular = { 'oxlint' }
 

@@ -10,7 +10,7 @@ vim.lsp.config('astro', {
 })
 
 local conform = require 'conform'
-conform.formatters_by_ft.astro = { 'prettier' }
+conform.formatters_by_ft.astro = { 'prettierd' }
 
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'astro', 'css' })

@@ -1,6 +1,6 @@
 require('utils').install_with_mason {
   'tailwindcss-language-server',
-  'prettier',
+  'prettierd',
   'stylelint',
 }
 
@@ -33,16 +33,12 @@ vim.lsp.config('tailwindcss', {
 })
 
 local conform = require 'conform'
-conform.formatters.prettier = {
-  command = 'prettier',
-  stdin = true,
-}
-conform.formatters_by_ft.html = { 'prettier' }
-conform.formatters_by_ft.css = { 'prettier' }
-conform.formatters_by_ft.less = { 'prettier' }
-conform.formatters_by_ft.sass = { 'prettier' }
-conform.formatters_by_ft.scss = { 'prettier' }
-conform.formatters_by_ft.stylus = { 'prettier' }
+conform.formatters_by_ft.html = { 'prettierd' }
+conform.formatters_by_ft.css = { 'prettierd' }
+conform.formatters_by_ft.less = { 'prettierd' }
+conform.formatters_by_ft.sass = { 'prettierd' }
+conform.formatters_by_ft.scss = { 'prettierd' }
+conform.formatters_by_ft.stylus = { 'prettierd' }
 
 require('lint').linters_by_ft.css = { 'stylelint' }
 require('lint').linters_by_ft.less = { 'stylelint' }

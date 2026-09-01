@@ -11,31 +11,29 @@ PackageManager.add {
       notifier = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },
-      statuscolumn = { enabled = false }, -- set in options.lua
+      statuscolumn = { enabled = false },
       toggle = { map = vim.keymap.set },
       words = { enabled = true },
 
       picker = {
         ui_select = true,
-        -- stylua: ignore
         ---@type snacks.picker.Config
         actions = {
           toggle_cwd = function(p)
             local root = Snacks.git.get_root(p.input.filter.current_buf)
-            local cwd = vim.fs.normalize((vim.uv or vim.loop).cwd() or ".")
+            local cwd = vim.fs.normalize((vim.uv or vim.loop).cwd() or '.')
             local current = p:cwd()
             p:set_cwd(current == root and cwd or root)
             p:find()
           end,
         },
-        -- stylua: ignore
         ---@type snacks.picker.Config
         win = {
           input = {
             keys = {
-              ["<a-c>"] = {
-                "toggle_cwd",
-                mode = { "n", "i" },
+              ['<a-c>'] = {
+                'toggle_cwd',
+                mode = { 'n', 'i' },
               },
             },
           },
@@ -43,16 +41,15 @@ PackageManager.add {
       },
       dashboard = {
         preset = {
-          -- stylua: ignore
           ---@type snacks.dashboard.Item[]
           keys = {
-            { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-            { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-            { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-            { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-            { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
-            { icon = " ", key = "s", desc = "Restore Session", section = "session" },
-            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+            { icon = ' ', key = 'f', desc = 'Find File', action = ":lua Snacks.dashboard.pick('files')" },
+            { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
+            { icon = ' ', key = 'g', desc = 'Find Text', action = ":lua Snacks.dashboard.pick('live_grep')" },
+            { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
+            { icon = ' ', key = 'c', desc = 'Config', action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+            { icon = ' ', key = 's', desc = 'Restore Session', section = 'session' },
+            { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
           },
         },
       },
@@ -76,10 +73,7 @@ PackageManager.add {
     end, { desc = "Notification History" })
     vim.keymap.set('n', '<leader>un', function() Snacks.notifier.hide() end, { desc = 'Dismiss All Notifications' })
 
-    -- Snacks.picker keymaps (taken from the folke/snacks.nvim spec keys).
-    -- stylua: ignore
-    vim.keymap.set('n', '<leader>,', function() Snacks.picker.buffers() end,
-      { desc = 'Buffers' })
+    vim.keymap.set('n', '<leader>,', function() Snacks.picker.buffers() end, { desc = 'Buffers' })
     vim.keymap.set('n', '<leader>/', function() Snacks.picker.pick 'live_grep' end, { desc = 'Grep (Root Dir)' })
     vim.keymap.set('n', '<leader>:', function() Snacks.picker.command_history() end, { desc = 'Command History' })
     vim.keymap.set('n', '<leader><space>', function() Snacks.picker.pick 'files' end, { desc = 'Find Files (Root Dir)' })
@@ -135,11 +129,8 @@ PackageManager.add {
     vim.keymap.set('n', '<leader>su', function() Snacks.picker.undo() end, { desc = 'Undotree' })
     vim.keymap.set('n', '<leader>uC', function() Snacks.picker.colorschemes() end, { desc = 'Colorschemes' })
 
-    -- stylua: ignore end
-
     -- Snacks toggles (the <leader>u* group of editor-option toggles)
-    -- stylua: ignore
-    Snacks.toggle.option('spell', { name = 'Spelling' }):map('<leader>us')
+    Snacks.toggle.option('spell', { name = 'Spelling' }):map '<leader>us'
     Snacks.toggle.option('wrap', { name = 'Wrap' }):map '<leader>uw'
     Snacks.toggle.option('relativenumber', { name = 'Relative Number' }):map '<leader>uL'
     Snacks.toggle.diagnostics():map '<leader>ud'
@@ -168,8 +159,6 @@ PackageManager.add {
     Snacks.toggle.profiler_highlights():map '<leader>dph'
 
     if vim.lsp.inlay_hint then Snacks.toggle.inlay_hints():map '<leader>uh' end
-
-    -- stylua: ignore end
 
     -- lazygit
     if vim.fn.executable 'lazygit' == 1 then
@@ -206,7 +195,7 @@ PackageManager.add {
         vim.keymap.set({ 'n', 'x' }, '<localleader>r', function() Snacks.debug.run() end, { desc = 'Run Lua', buffer = ev.buf })
       end,
     })
-
-    -- vim: ts=2 sts=2 sw=2 et
   end,
 }
+
+-- vim: ts=2 sts=2 sw=2 et
