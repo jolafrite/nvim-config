@@ -1,11 +1,11 @@
--- Set vim.g.lazyvim_python_lsp = "basedpyright" to use it instead of pyright.
+-- Set vim.g.python_lsp = "basedpyright" to use it instead of pyright.
 PackageManager.add({
   name = 'lang.python',
   filetype = { 'python' },
   config = function()
 
-local lsp = vim.g.lazyvim_python_lsp or 'pyright'
-local ruff = vim.g.lazyvim_python_ruff or 'ruff'
+local lsp = vim.g.python_lsp or 'pyright'
+local ruff = vim.g.python_ruff or 'ruff'
 
 require('utils').install_with_mason {
   lsp == 'basedpyright' and 'basedpyright' or 'pyright',

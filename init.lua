@@ -1,4 +1,3 @@
-require 'utils'
 _G.Utils = require 'utils'
 require 'config.options'
 require 'config.keymaps'

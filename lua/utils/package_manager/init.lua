@@ -410,6 +410,7 @@ PackageManager.load_all = function()
 
   -- compute stats
   H.stats = H.compute_stats()
+  return H.stats
 end
 
 ---@param confirm? boolean

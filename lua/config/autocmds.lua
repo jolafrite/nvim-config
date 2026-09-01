@@ -12,11 +12,18 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function() vim.opt.conceallevel = 0 end,
 })
 
-vim.api.nvim_create_autocmd('BufEnter', {
-  callback = function()
-    vim.cmd 'set formatoptions-=cro'
-    vim.cmd 'setlocal formatoptions-=cro'
+-- Strip the 'cro' auto-comment flags per-filetype (ftplugins re-set them, so
+-- this has to run after FileType, not once at startup).
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function(args)
+    vim.bo[args.buf].formatoptions = vim.bo[args.buf].formatoptions:gsub('[cro]', '')
   end,
+})
+
+-- Spell check prose buffers only; code buffers stay spell-free.
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'markdown', 'text', 'gitcommit', 'tex', 'plaintex', 'rst', 'help' },
+  callback = function() vim.opt_local.spell = true end,
 })
 
 -- Show cursor line only in active window

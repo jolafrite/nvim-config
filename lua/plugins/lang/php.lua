@@ -1,10 +1,10 @@
--- vim.g.lazyvim_php_lsp = "intelephense" to switch from phpactor.
+-- vim.g.php_lsp = "intelephense" to switch from phpactor.
 PackageManager.add({
   name = 'lang.php',
   filetype = { 'php' },
   config = function()
 
-local lsp = vim.g.lazyvim_php_lsp or 'phpactor'
+local lsp = vim.g.php_lsp or 'phpactor'
 
 require('utils').install_with_mason {
   lsp,
