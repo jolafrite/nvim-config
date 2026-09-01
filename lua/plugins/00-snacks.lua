@@ -11,7 +11,7 @@ PackageManager.add {
       notifier = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },
-      statuscolumn = { enabled = false }, -- set in options.lua
+      statuscolumn = { enabled = false }, -- keep Neovim's default statuscolumn
       toggle = { map = vim.keymap.set },
       words = { enabled = true },
 

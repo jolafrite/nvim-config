@@ -2,7 +2,7 @@ local gh = require('utils').gh
 
 PackageManager.add {
   [1] = gh 'lukas-reineke/indent-blankline.nvim',
-  filetype = '*',
+  lazy = false,
   config = function()
     require('ibl').setup {
       indent = {

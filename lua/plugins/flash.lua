@@ -2,7 +2,7 @@ local gh = require('utils').gh
 
 PackageManager.add {
   [1] = gh 'folke/flash.nvim',
-  filetype = '*',
+  lazy = false,
   config = function() require('flash').setup {} end,
 }
 

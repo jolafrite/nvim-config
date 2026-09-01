@@ -1,3 +1,11 @@
+-- Global LSP defaults: diagnostics config + `vim.lsp.config['*']` base (keymaps,
+-- capabilities). Config-only PackageManager spec — no plugin package; loaded at
+-- startup (lazy = false) so the defaults exist before any LSP client attaches.
+PackageManager.add({
+  name = 'lsp',
+  lazy = false,
+  config = function()
+
 vim.diagnostic.config {
   virtual_text = true,
   signs = {
@@ -78,5 +86,7 @@ vim.lsp.config['*'] = {
 }
 
 vim.keymap.set('n', '<leader>ue', '<cmd>LspLensToggle<cr>', { desc = 'Toggle Lsp Lens' })
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

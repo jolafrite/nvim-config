@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.toml',
+  filetype = { 'toml' },
+  config = function()
+
 require('utils').install_with_mason {
   'taplo',
 }
@@ -15,5 +20,7 @@ local conform = require 'conform'
 conform.formatters_by_ft.toml = { 'taplo' }
 
 vim.lsp.enable 'taplo'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

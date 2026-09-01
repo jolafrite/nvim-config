@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.typst',
+  filetype = { 'typst' },
+  config = function()
+
 require('utils').install_with_mason {
   'tinymist',
   'typstyle',
@@ -24,5 +29,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'typst' })
 
 vim.lsp.enable 'tinymist'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

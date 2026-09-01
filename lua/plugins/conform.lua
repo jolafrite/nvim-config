@@ -17,7 +17,6 @@ PackageManager.add {
 
     vim.api.nvim_create_autocmd('BufWritePre', {
       desc = 'Format on save (toggleable via <leader>cF)',
-      pattern = '*',
       group = vim.api.nvim_create_augroup('ConformOnSave', { clear = true }),
       callback = function(args)
         if not vim.api.nvim_buf_is_valid(args.buf) or vim.bo[args.buf].buftype ~= '' then return end

@@ -35,37 +35,6 @@ PackageManager.add {
 
     require('nvim-treesitter-textobjects').setup(opts)
 
-    local opts = {
-      move = {
-        enable = true,
-        set_jumps = true,
-        keys = {
-          goto_next_start = {
-            [']f'] = '@function.outer',
-            [']c'] = '@class.outer',
-            [']a'] = '@parameter.inner',
-          },
-          goto_next_end = {
-            [']F'] = '@function.outer',
-            [']C'] = '@class.outer',
-            [']A'] = '@parameter.inner',
-          },
-          goto_previous_start = {
-            ['[f'] = '@function.outer',
-            ['[c'] = '@class.outer',
-            ['[a'] = '@parameter.inner',
-          },
-          goto_previous_end = {
-            ['[F'] = '@function.outer',
-            ['[C'] = '@class.outer',
-            ['[A'] = '@parameter.inner',
-          },
-        },
-      },
-    }
-
-    require('nvim-treesitter-textobjects').setup(opts)
-
     local function attach(buf)
       local ft = vim.bo[buf].filetype
       if not (vim.tbl_get(opts, 'move', 'enable') and pcall(vim.treesitter.query.get, vim.treesitter.language.get_lang(ft), 'textobjects')) then return end
@@ -96,7 +65,7 @@ PackageManager.add {
     end
 
     vim.api.nvim_create_autocmd('FileType', {
-      group = vim.api.nvim_create_augroup('lazyvim_treesitter_textobjects', { clear = true }),
+      group = vim.api.nvim_create_augroup('treesitter_textobjects', { clear = true }),
       callback = function(ev) attach(ev.buf) end,
     })
 

@@ -1,10 +1,11 @@
 local gh = require('utils').gh
 
--- Diagnostics/location-list/quickfix viewer. Lazy-load on first buffer so
--- it is not part of the startup path; the keymaps below resolve at press time.
+-- Diagnostics/location-list/quickfix viewer. Loads at startup (it used to be
+-- filetype='*', which is just startup with extra autocmd overhead); the
+-- keymaps below resolve at press time.
 PackageManager.add {
   [1] = gh 'folke/trouble.nvim',
-  filetype = '*',
+  lazy = false,
   config = function()
     require('trouble').setup {
       modes = {

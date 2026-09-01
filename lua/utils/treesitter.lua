@@ -47,7 +47,7 @@ local function win_find_cl()
   return vim.fn.globpath(path, pattern, true, true)[1]
 end
 
----@return boolean ok, lazyvim.util.treesitter.Health health
+---@return boolean ok, util.treesitter.Health health
 function M.check()
   local is_win = vim.fn.has 'win32' == 1
   ---@param tool string
@@ -61,7 +61,7 @@ function M.check()
     have_cc = true
   end
 
-  ---@class lazyvim.util.treesitter.Health: table<string,boolean>
+  ---@class util.treesitter.Health: table<string,boolean>
   local ret = {
     ['tree-sitter (CLI)'] = have 'tree-sitter',
     ['C compiler'] = have_cc,
@@ -97,7 +97,7 @@ function M.build(cb)
         lines[#lines + 1] = 'Install a C compiler with `winget install --id=BrechtSanders.WinLibs.POSIX.UCRT -e`'
       end
       vim.list_extend(lines, err and { '', err } or {})
-      vim.notify(lines, vim.log.levels.ERROR, { title = 'LazyVim Treesitter' })
+      vim.notify(lines, vim.log.levels.ERROR, { title = 'Treesitter' })
     end
   end)
 end

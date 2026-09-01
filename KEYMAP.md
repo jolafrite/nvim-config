@@ -5,8 +5,8 @@ All keymaps in this config (vim.pack, not lazy.nvim). Leader is `,`.
 Sources:
 
 - `lua/config/keymaps.lua` — core/general (ported from LazyVim + local)
-- `lua/config/lsp.lua` — LSP picker keymaps (on_attach default)
-- `lua/config/plugins/{bufferline,flash,gitsigns,grug-far,noice,snacks,todo-comments,trouble,treesitter-textobjects}.lua`
+- `lua/plugins/lsp.lua` — LSP picker keymaps (on_attach default)
+- `lua/plugins/{flash,gitsigns,grug-far,noice,00-snacks,todo-comments,trouble,treesitter-textobjects}.lua`
 
 Generated from `vim.keymap.set(...)` calls in the working tree.
 
@@ -16,8 +16,8 @@ Generated from `vim.keymap.set(...)` calls in the working tree.
 | --- | --- | --- |
 | `j` / `k` | n,x | `v:count == 0 ? 'gj' : 'j'` (screen-aware down/up) |
 | `<Down>` / `<Up>` | n,x | same, screen-aware |
-| `n` / `N` | n,x,o | next/prev search, with `zv` (fold open) |
-| `gg` / `GG` | n | top/bottom, centered |
+| `n` / `N` | n,x,o | next/prev search, centered (`zzzv`) |
+| `gg` / `G` | n | top/bottom, centered |
 | `%` | n | match pair, centered |
 | `*` / `#` | n | word search, centered |
 | `<C-u>` / `<C-d>` / `<C-i>` / `<C-o>` | n | scroll half-page, centered |

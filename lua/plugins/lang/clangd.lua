@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.clangd',
+  filetype = { 'c', 'cpp', 'cxx', 'h', 'hpp', 'cc', 'c++', 'cuda', 'objc', 'objcpp', 'proto' },
+  config = function()
+
 require('utils').install_with_mason {
   'clangd',
   'clang-format',
@@ -72,5 +77,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'c', 'cpp' })
 
 vim.lsp.enable 'clangd'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

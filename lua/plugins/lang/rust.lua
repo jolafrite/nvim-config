@@ -13,9 +13,9 @@ require('utils').install_with_mason {
   'codelldb',
 }
 
-local diagnostics = vim.g.lazyvim_rust_diagnostics or 'rust-analyzer'
+local diagnostics = vim.g.rust_diagnostics or 'rust-analyzer'
 
--- bacon-ls provides diagnostics-only when vim.g.lazyvim_rust_diagnostics = "bacon-ls".
+-- bacon-ls provides diagnostics-only when vim.g.rust_diagnostics = "bacon-ls".
 if diagnostics == 'bacon-ls' then
   require('utils').install_with_mason {
     'bacon',

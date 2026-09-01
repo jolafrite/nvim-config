@@ -16,6 +16,11 @@ require('utils').install_with_mason {
   'sqlfluff',
 }
 
+-- SQL buffer filetypes the LSP + format/lint wiring applies to.
+-- (sqls starts in "dynamic" mode with no dialect config and requires a
+-- vim-dadbod session to attach anyway.)
+local sql_ft = { 'sql' }
+
 vim.lsp.config('sqls', {
   cmd = { 'sqls' },
   filetypes = sql_ft,

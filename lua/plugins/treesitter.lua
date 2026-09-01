@@ -20,7 +20,7 @@ PackageManager.add {
       return f.enable ~= false and have(ft, query)
     end
     vim.api.nvim_create_autocmd('FileType', {
-      group = vim.api.nvim_create_augroup('lazyvim_treesitter', { clear = true }),
+      group = vim.api.nvim_create_augroup('treesitter', { clear = true }),
       callback = function(ev)
         local ft = ev.match
         if not vim.treesitter.language.get_lang(ft) then return end

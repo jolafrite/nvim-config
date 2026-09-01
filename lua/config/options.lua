@@ -1,7 +1,5 @@
 vim.loader.enable()
 
-vim.g.have_nerd_font = true
-
 -- options
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
@@ -36,9 +34,6 @@ vim.opt.cmdheight = 0
 vim.opt.mousescroll = 'ver:1,hor:4'
 vim.opt.title = true
 
--- Enable spell checking
-vim.opt.spell = true
-
 -- Backspacing and indentation when wrapping
 vim.opt.backspace = { 'start', 'eol', 'indent' }
 vim.opt.breakindent = true
@@ -62,8 +57,10 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 
-vim.cmd [[au BufNewFile,BufRead *.astro setf astro]]
-vim.cmd [[au BufNewFile,BufRead Podfile setf ruby]]
+vim.filetype.add {
+  pattern = { ['*.astro'] = 'astro' },
+  filename = { Podfile = 'ruby' },
+}
 
 -- Make all keymaps silent by default
 local keymap_set = vim.keymap.set

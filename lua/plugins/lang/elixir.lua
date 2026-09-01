@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.elixir',
+  filetype = { 'elixir', 'eelixir', 'heex', 'surface', 'livebook' },
+  config = function()
+
 require('utils').install_with_mason {
   'elixir-ls',
 }
@@ -21,5 +26,7 @@ pcall(TS.install, { 'elixir', 'heex', 'eex' })
 vim.treesitter.language.register('markdown', 'livebook')
 
 vim.lsp.enable 'elixirls'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

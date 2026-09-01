@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.elm',
+  filetype = { 'elm' },
+  config = function()
+
 require('utils').install_with_mason {
   'elm-language-server',
   'elm-format',
@@ -16,5 +21,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'elm' })
 
 vim.lsp.enable 'elmls'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

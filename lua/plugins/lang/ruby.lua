@@ -1,7 +1,12 @@
--- vim.g.lazyvim_ruby_lsp = "solargraph" / vim.g.lazyvim_ruby_formatter =
+-- vim.g.ruby_lsp = "solargraph" / vim.g.ruby_formatter =
 -- "standardrb" switch the LSP/formatter.
-local lsp = vim.g.lazyvim_ruby_lsp or 'ruby_lsp'
-local formatter = vim.g.lazyvim_ruby_formatter or 'rubocop'
+PackageManager.add({
+  name = 'lang.ruby',
+  filetype = { 'ruby', 'eruby' },
+  config = function()
+
+local lsp = vim.g.ruby_lsp or 'ruby_lsp'
+local formatter = vim.g.ruby_formatter or 'rubocop'
 
 require('utils').install_with_mason {
   lsp,
@@ -42,5 +47,7 @@ pcall(TS.install, { 'ruby' })
 local conform = require 'conform'
 conform.formatters_by_ft.ruby = { formatter }
 conform.formatters_by_ft.eruby = { 'erb_format' }
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et

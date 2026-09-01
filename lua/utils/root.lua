@@ -1,14 +1,14 @@
 local M = {}
 
----@class LazyRoot
+---@class UtilsRoot
 ---@field paths string[]
----@field spec LazyRootSpec
+---@field spec UtilsRootSpec
 
----@alias LazyRootFn fun(buf: number): (string|string[])
+---@alias UtilsRootFn fun(buf: number): (string|string[])
 
----@alias LazyRootSpec string|string[]|LazyRootFn
+---@alias UtilsRootSpec string|string[]|UtilsRootFn
 
----@type LazyRootSpec[]
+---@type UtilsRootSpec[]
 M.spec = { 'lsp', { '.git', 'lua' }, 'cwd' }
 
 M.detectors = {}
@@ -70,8 +70,8 @@ function M.realpath(path)
   return norm(path)
 end
 
----@param spec LazyRootSpec
----@return LazyRootFn
+---@param spec UtilsRootSpec
+---@return UtilsRootFn
 function M.resolve(spec)
   if M.detectors[spec] then
     return M.detectors[spec]
@@ -81,13 +81,13 @@ function M.resolve(spec)
   return function(buf) return M.detectors.pattern(buf, spec) end
 end
 
----@param opts? { buf?: number, spec?: LazyRootSpec[], all?: boolean }
+---@param opts? { buf?: number, spec?: UtilsRootSpec[], all?: boolean }
 function M.detect(opts)
   opts = opts or {}
   opts.spec = opts.spec or type(vim.g.root_spec) == 'table' and vim.g.root_spec or M.spec
   opts.buf = (opts.buf == nil or opts.buf == 0) and vim.api.nvim_get_current_buf() or opts.buf
 
-  local ret = {} ---@type LazyRoot[]
+  local ret = {} ---@type UtilsRoot[]
   for _, spec in ipairs(opts.spec) do
     local paths = M.resolve(spec)(opts.buf)
     paths = paths or {}
@@ -121,7 +121,7 @@ function M.info()
   lines[#lines + 1] = '```lua'
   lines[#lines + 1] = 'vim.g.root_spec = ' .. vim.inspect(spec)
   lines[#lines + 1] = '```'
-  vim.notify(lines, vim.log.levels.INFO, { title = 'LazyVim Roots' })
+  vim.notify(lines, vim.log.levels.INFO, { title = 'Roots' })
   return roots[1] and roots[1].paths[1] or vim.uv.cwd()
 end
 
@@ -129,9 +129,13 @@ end
 M.cache = {}
 
 function M.setup()
-  vim.api.nvim_create_user_command('LazyRoot', function() M.info() end, { desc = 'LazyVim roots for the current buffer' })
+  vim.api.nvim_create_user_command('Root', function() M.info() end, { desc = 'Root candidates for the current buffer' })
+
+  -- FIX: doesn't properly clear cache in neo-tree `set_root` (which should happen presumably on `DirChanged`),
+  -- probably because the event is triggered in the neo-tree buffer, therefore add `BufEnter`
+  -- Maybe this is too frequent on `BufEnter` and something else should be done instead???
   vim.api.nvim_create_autocmd({ 'LspAttach', 'BufWritePost', 'DirChanged', 'BufEnter' }, {
-    group = vim.api.nvim_create_augroup('lazyvim_root_cache', { clear = true }),
+    group = vim.api.nvim_create_augroup('root_cache', { clear = true }),
     callback = function(event) M.cache[event.buf] = nil end,
   })
 end

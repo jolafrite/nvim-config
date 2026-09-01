@@ -2,7 +2,7 @@ local gh = require('utils').gh
 
 PackageManager.add({
   [1] = gh 'mrcjkb/haskell-tools.nvim',
-  filetype = {'haskell'},
+  filetype = {'haskell', 'lhaskell'},
   config = function()
 
 require('utils').install_with_mason {

@@ -1,3 +1,8 @@
+PackageManager.add({
+  name = 'lang.terraform',
+  filetype = { 'terraform', 'tf', 'terraform-vars', 'hcl' },
+  config = function()
+
 require('utils').install_with_mason {
   'terraform-ls',
   'tflint',
@@ -35,5 +40,7 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'terraform', 'hcl' })
 
 vim.lsp.enable 'terraformls'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et
