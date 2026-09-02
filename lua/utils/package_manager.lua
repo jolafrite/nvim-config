@@ -8,14 +8,10 @@ local by_ft = {}
 
 local activated = false
 
-local function to_list(v)
-  return type(v) == "string" and { v } or v
-end
+local function to_list(v) return type(v) == 'string' and { v } or v end
 
 local function load_spec(s)
-  if s.loaded then
-    return
-  end
+  if s.loaded then return end
 
   s.loaded = true
   local to_add = {}
@@ -24,18 +20,8 @@ local function load_spec(s)
   end
   table.insert(to_add, s[1])
   local ok, err = pcall(vim.pack.add, to_add, { load = true, confirm = false })
-  if not ok then
-    vim.notify(
-      "package_manager: failed to load "
-        .. tostring(s[1])
-        .. ": "
-        .. tostring(err),
-      vim.log.levels.WARN
-    )
-  end
-  if s.config then
-    pcall(s.config)
-  end
+  if not ok then vim.notify('package_manager: failed to load ' .. tostring(s[1]) .. ': ' .. tostring(err), vim.log.levels.WARN) end
+  if s.config then pcall(s.config) end
 end
 
 local function late_add(spec)
@@ -44,29 +30,39 @@ local function late_add(spec)
     return
   end
 
-  local fts = {}
-  for _, f in ipairs(to_list(spec.filetype or {})) do
-    fts[f] = true
-  end
-  for _, e in ipairs(to_list(spec.event or {})) do
-    if e == "FileType" then
-      fts["*"] = true
-    end
-  end
-
-  if next(fts) then
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      if vim.api.nvim_buf_is_loaded(buf) then
-        local ft = vim.bo[buf].filetype
-        if fts[ft] or (fts["*"] and ft ~= "") then
+  if spec.event then
+    -- Event-triggered: load_all registers these pattern-less, so match that.
+    -- If the event already fired for an open buffer (FileType), load now.
+    local events = to_list(spec.event)
+    if vim.list_contains(events, 'FileType') then
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].filetype ~= '' then
           load_spec(spec)
           return
         end
       end
     end
+    vim.api.nvim_create_autocmd(events, {
+      once = true,
+      callback = function()
+        load_spec(spec)
+        return true
+      end,
+    })
+    return
   end
 
-  vim.api.nvim_create_autocmd(to_list(spec.event or "FileType"), {
+  -- Filetype-triggered: fire only for the declared filetypes (never for any
+  -- FileType event), after checking buffers that are already open.
+  local fts = to_list(spec.filetype)
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) and vim.list_contains(fts, vim.bo[buf].filetype) then
+      load_spec(spec)
+      return
+    end
+  end
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = fts,
     once = true,
     callback = function()
       load_spec(spec)
@@ -118,12 +114,10 @@ function M.load_all()
     })
   end
 
-  vim.api.nvim_create_autocmd({ "BufReadPost", "FileType" }, {
+  vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileType' }, {
     callback = function(args)
       local ft = vim.bo[args.buf].filetype
-      if ft == "" then
-        return
-      end
+      if ft == '' then return end
       for _, s in ipairs(by_ft[ft] or {}) do
         load_spec(s)
       end

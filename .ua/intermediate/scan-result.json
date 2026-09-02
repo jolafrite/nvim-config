@@ -1,20 +1,22 @@
 {
   "name": "nvim-pack",
-  "description": "Neovim configuration managed by nvim-pack, bundling 97 Lua plugin modules and 4 config files (options, keymaps, autocmds, pack) into a modular runtime. Note: this project has over 100 source files; consider scoping analysis to a subdirectory for faster results.",
+  "description": "A Neovim configuration managed by nvim-pack, bundling 118 plugins (blink.cmp, conform, lualine, treesitter, snacks, and more) for an opinionated Lua-driven editing environment. Note: this project has over 100 source files; consider scoping analysis to a subdirectory for faster results.",
   "languages": [
     "json",
     "lua",
     "markdown",
-    "toml"
+    "toml",
+    "yaml"
   ],
   "frameworks": [
-    "Neovim"
+    "Neovim",
+    "nvim-pack"
   ],
   "files": [
     {
       "path": ".luarc.json",
       "language": "json",
-      "sizeLines": 11,
+      "sizeLines": 27,
       "fileCategory": "config"
     },
     {
@@ -32,7 +34,7 @@
     {
       "path": "KEYMAP.md",
       "language": "markdown",
-      "sizeLines": 223,
+      "sizeLines": 300,
       "fileCategory": "docs"
     },
     {
@@ -44,109 +46,73 @@
     {
       "path": "init.lua",
       "language": "lua",
-      "sizeLines": 10,
+      "sizeLines": 12,
       "fileCategory": "code"
     },
     {
       "path": "lua/config/autocmds.lua",
       "language": "lua",
-      "sizeLines": 51,
+      "sizeLines": 68,
       "fileCategory": "code"
     },
     {
       "path": "lua/config/keymaps.lua",
       "language": "lua",
-      "sizeLines": 195,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/config/load_lsp.lua",
-      "language": "lua",
-      "sizeLines": 15,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/config/lsp.lua",
-      "language": "lua",
-      "sizeLines": 215,
+      "sizeLines": 300,
       "fileCategory": "code"
     },
     {
       "path": "lua/config/options.lua",
       "language": "lua",
-      "sizeLines": 84,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/config/pack.lua",
-      "language": "lua",
-      "sizeLines": 27,
+      "sizeLines": 76,
       "fileCategory": "code"
     },
     {
       "path": "lua/health.lua",
       "language": "lua",
-      "sizeLines": 52,
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/lualine/components/pack.lua",
+      "language": "lua",
+      "sizeLines": 119,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/00-snacks.lua",
       "language": "lua",
-      "sizeLines": 288,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/artio.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/async.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/better-type-hover.lua",
-      "language": "lua",
-      "sizeLines": 19,
+      "sizeLines": 197,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/blink.lua",
       "language": "lua",
-      "sizeLines": 77,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/bufferline.lua",
-      "language": "lua",
-      "sizeLines": 107,
+      "sizeLines": 118,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/conform.lua",
       "language": "lua",
-      "sizeLines": 82,
+      "sizeLines": 32,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/core.lua",
       "language": "lua",
-      "sizeLines": 5,
+      "sizeLines": 8,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/cyberdream.lua",
       "language": "lua",
-      "sizeLines": 5,
+      "sizeLines": 6,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/e-ink.lua",
       "language": "lua",
-      "sizeLines": 5,
+      "sizeLines": 6,
       "fileCategory": "code"
     },
     {
@@ -158,37 +124,37 @@
     {
       "path": "lua/plugins/flash.lua",
       "language": "lua",
-      "sizeLines": 35,
+      "sizeLines": 29,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/gitsigns.lua",
       "language": "lua",
-      "sizeLines": 65,
+      "sizeLines": 54,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/grug-far.lua",
       "language": "lua",
-      "sizeLines": 24,
+      "sizeLines": 23,
       "fileCategory": "code"
     },
     {
-      "path": "lua/plugins/guihua.lua",
+      "path": "lua/plugins/indent-blankline.lua",
       "language": "lua",
-      "sizeLines": 5,
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/indent-o-matic.lua",
+      "language": "lua",
+      "sizeLines": 9,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/init.lua",
       "language": "lua",
-      "sizeLines": 15,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/keymaps.lua",
-      "language": "lua",
-      "sizeLines": 5,
+      "sizeLines": 20,
       "fileCategory": "code"
     },
     {
@@ -200,53 +166,137 @@
     {
       "path": "lua/plugins/lang/angular.lua",
       "language": "lua",
-      "sizeLines": 8,
+      "sizeLines": 37,
       "fileCategory": "code"
     },
     {
-      "path": "lua/plugins/lang/clangd.lua",
+      "path": "lua/plugins/lang/ansible.lua",
       "language": "lua",
-      "sizeLines": 33,
+      "sizeLines": 28,
       "fileCategory": "code"
     },
     {
-      "path": "lua/plugins/lang/cmake.lua",
-      "language": "lua",
-      "sizeLines": 4,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/lang/docker.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/lang/git.lua",
-      "language": "lua",
-      "sizeLines": 7,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/lang/go.lua",
-      "language": "lua",
-      "sizeLines": 48,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/lang/init.lua",
+      "path": "lua/plugins/lang/astro.lua",
       "language": "lua",
       "sizeLines": 19,
       "fileCategory": "code"
     },
     {
+      "path": "lua/plugins/lang/biome.lua",
+      "language": "lua",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/clangd.lua",
+      "language": "lua",
+      "sizeLines": 75,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/clojure.lua",
+      "language": "lua",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/cmake.lua",
+      "language": "lua",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/dart.lua",
+      "language": "lua",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/docker.lua",
+      "language": "lua",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/dotnet.lua",
+      "language": "lua",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/elixir.lua",
+      "language": "lua",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/elm.lua",
+      "language": "lua",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/ember.lua",
+      "language": "lua",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/erlang.lua",
+      "language": "lua",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/git.lua",
+      "language": "lua",
+      "sizeLines": 4,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/gleam.lua",
+      "language": "lua",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/go.lua",
+      "language": "lua",
+      "sizeLines": 120,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/haskell.lua",
+      "language": "lua",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/helm.lua",
+      "language": "lua",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/init.lua",
+      "language": "lua",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
       "path": "lua/plugins/lang/java.lua",
       "language": "lua",
-      "sizeLines": 10,
+      "sizeLines": 100,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/lang/json.lua",
+      "language": "lua",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/julia.lua",
       "language": "lua",
       "sizeLines": 21,
       "fileCategory": "code"
@@ -254,379 +304,523 @@
     {
       "path": "lua/plugins/lang/kotlin.lua",
       "language": "lua",
-      "sizeLines": 5,
+      "sizeLines": 74,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/lean.lua",
+      "language": "lua",
+      "sizeLines": 56,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/lang/lua.lua",
       "language": "lua",
-      "sizeLines": 28,
+      "sizeLines": 43,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/lang/markdown.lua",
       "language": "lua",
-      "sizeLines": 13,
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/nix.lua",
+      "language": "lua",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/nushell.lua",
+      "language": "lua",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/ocaml.lua",
+      "language": "lua",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/odin.lua",
+      "language": "lua",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/php.lua",
+      "language": "lua",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/prisma.lua",
+      "language": "lua",
+      "sizeLines": 15,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/lang/python.lua",
       "language": "lua",
-      "sizeLines": 19,
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/r.lua",
+      "language": "lua",
+      "sizeLines": 62,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/rego.lua",
+      "language": "lua",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/ruby.lua",
+      "language": "lua",
+      "sizeLines": 45,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/lang/rust.lua",
       "language": "lua",
-      "sizeLines": 24,
+      "sizeLines": 103,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/scala.lua",
+      "language": "lua",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/solidity.lua",
+      "language": "lua",
+      "sizeLines": 20,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/lang/sql.lua",
       "language": "lua",
-      "sizeLines": 13,
+      "sizeLines": 50,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/lang/svelte.lua",
       "language": "lua",
-      "sizeLines": 3,
+      "sizeLines": 29,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/lang/tailwind.lua",
       "language": "lua",
-      "sizeLines": 13,
+      "sizeLines": 50,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/lang/terraform.lua",
       "language": "lua",
-      "sizeLines": 12,
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/tex.lua",
+      "language": "lua",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/thrift.lua",
+      "language": "lua",
+      "sizeLines": 14,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/lang/toml.lua",
       "language": "lua",
-      "sizeLines": 1,
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/twig.lua",
+      "language": "lua",
+      "sizeLines": 26,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/lang/typescript.lua",
       "language": "lua",
-      "sizeLines": 22,
+      "sizeLines": 115,
       "fileCategory": "code"
     },
     {
-      "path": "lua/plugins/lang/zig.lua",
-      "language": "lua",
-      "sizeLines": 1,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/lsp_lens.lua",
-      "language": "lua",
-      "sizeLines": 22,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/lualine.lua",
-      "language": "lua",
-      "sizeLines": 255,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/lynn.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/mason.lua",
-      "language": "lua",
-      "sizeLines": 39,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/mini.lua",
-      "language": "lua",
-      "sizeLines": 65,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/namu.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/neo-tree.lua",
-      "language": "lua",
-      "sizeLines": 82,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/neocodeium.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nightfox.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nivvie.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/noice.lua",
-      "language": "lua",
-      "sizeLines": 46,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nui.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-chainsaw.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-genghis.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-jump.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-justice.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-lint.lua",
-      "language": "lua",
-      "sizeLines": 107,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-lsp-endhints.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-nio.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-origami.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-rip-substitute.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-rulebook.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-scissors.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-spider.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-surround.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-tinygit.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim-various-textobjs.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/nvim_lightbulb.lua",
-      "language": "lua",
-      "sizeLines": 19,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/pack_float.lua",
-      "language": "lua",
-      "sizeLines": 854,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/plenary.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/refactoring.lua",
-      "language": "lua",
-      "sizeLines": 11,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/render-markdown.lua",
-      "language": "lua",
-      "sizeLines": 24,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/satellite.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/schemastore.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/shades-of-purple.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/symbol_usage.lua",
-      "language": "lua",
-      "sizeLines": 21,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/tiny-autosave.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/todo-comments.lua",
-      "language": "lua",
-      "sizeLines": 37,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/treesitter-manager.lua",
-      "language": "lua",
-      "sizeLines": 38,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/treesitter-textobjects.lua",
-      "language": "lua",
-      "sizeLines": 94,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/treesitter.lua",
-      "language": "lua",
-      "sizeLines": 83,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/treesj.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/trouble.lua",
-      "language": "lua",
-      "sizeLines": 71,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/ultimate-autopair.lua",
-      "language": "lua",
-      "sizeLines": 5,
-      "fileCategory": "code"
-    },
-    {
-      "path": "lua/plugins/vim-illuminate.lua",
+      "path": "lua/plugins/lang/typst.lua",
       "language": "lua",
       "sizeLines": 27,
       "fileCategory": "code"
     },
     {
+      "path": "lua/plugins/lang/vue.lua",
+      "language": "lua",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/xml.lua",
+      "language": "lua",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/yaml.lua",
+      "language": "lua",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lang/zig.lua",
+      "language": "lua",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lsp.lua",
+      "language": "lua",
+      "sizeLines": 81,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lsp_lens.lua",
+      "language": "lua",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/lualine.lua",
+      "language": "lua",
+      "sizeLines": 186,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/mason.lua",
+      "language": "lua",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/mini.lua",
+      "language": "lua",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/namu.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/neo-tree.lua",
+      "language": "lua",
+      "sizeLines": 85,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/neocodeium.lua",
+      "language": "lua",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nightfox.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nivvie.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/noice.lua",
+      "language": "lua",
+      "sizeLines": 51,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-autopairs.lua",
+      "language": "lua",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-chainsaw.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-genghis.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-jump.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-justice.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-lint.lua",
+      "language": "lua",
+      "sizeLines": 82,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-lsp-endhints.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-nio.lua",
+      "language": "lua",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-origami.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-rip-substitute.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-rulebook.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-scissors.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-spider.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-surround.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-tinygit.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim-various-textobjs.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/nvim_lightbulb.lua",
+      "language": "lua",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/plenary.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/refactoring.lua",
+      "language": "lua",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/render-markdown.lua",
+      "language": "lua",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/satellite.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/schemastore.lua",
+      "language": "lua",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/shades-of-purple.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/symbol_usage.lua",
+      "language": "lua",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/tiny-autosave.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/todo-comments.lua",
+      "language": "lua",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/treesitter-manager.lua",
+      "language": "lua",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/treesitter-textobjects.lua",
+      "language": "lua",
+      "sizeLines": 106,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/treesitter.lua",
+      "language": "lua",
+      "sizeLines": 42,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/treesj.lua",
+      "language": "lua",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/trouble.lua",
+      "language": "lua",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/plugins/vim-illuminate.lua",
+      "language": "lua",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
       "path": "lua/plugins/whichkey.lua",
       "language": "lua",
-      "sizeLines": 75,
+      "sizeLines": 68,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/workspace_diagnostics.lua",
       "language": "lua",
-      "sizeLines": 11,
+      "sizeLines": 10,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/yanky.lua",
       "language": "lua",
-      "sizeLines": 131,
+      "sizeLines": 51,
       "fileCategory": "code"
     },
     {
       "path": "lua/plugins/yazi.lua",
       "language": "lua",
-      "sizeLines": 5,
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/utils/autocmds.lua",
+      "language": "lua",
+      "sizeLines": 24,
       "fileCategory": "code"
     },
     {
       "path": "lua/utils/init.lua",
       "language": "lua",
-      "sizeLines": 84,
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/utils/install.lua",
+      "language": "lua",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/utils/package_manager.lua",
+      "language": "lua",
+      "sizeLines": 141,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/utils/root.lua",
+      "language": "lua",
+      "sizeLines": 217,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/utils/terminal.lua",
+      "language": "lua",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "lua/utils/treesitter.lua",
+      "language": "lua",
+      "sizeLines": 137,
       "fileCategory": "code"
     },
     {
       "path": "nvim-pack-lock.json",
       "language": "json",
-      "sizeLines": 332,
+      "sizeLines": 476,
+      "fileCategory": "config"
+    },
+    {
+      "path": "selene.toml",
+      "language": "toml",
+      "sizeLines": 8,
       "fileCategory": "config"
     },
     {
@@ -634,10 +828,16 @@
       "language": "toml",
       "sizeLines": 10,
       "fileCategory": "config"
+    },
+    {
+      "path": "vim.yml",
+      "language": "yaml",
+      "sizeLines": 25,
+      "fileCategory": "config"
     }
   ],
-  "totalFiles": 104,
-  "filteredByIgnore": 9,
+  "totalFiles": 137,
+  "filteredByIgnore": 6,
   "estimatedComplexity": "moderate",
   "importMap": {
     ".luarc.json": [],
@@ -645,247 +845,137 @@
     "CONTRIBUTING.md": [],
     "KEYMAP.md": [],
     "README.md": [],
-    "init.lua": [
-      "config/options.lua",
-      "config/keymaps.lua",
-      "config/autocmds.lua",
-      "config/pack.lua",
-      "plugins/init.lua",
-      "config/load_lsp.lua"
-    ],
+    "init.lua": [],
     "lua/config/autocmds.lua": [],
     "lua/config/keymaps.lua": [],
-    "lua/config/load_lsp.lua": [],
-    "lua/config/lsp.lua": [],
     "lua/config/options.lua": [],
-    "lua/config/pack.lua": [
-      "utils/init.lua"
-    ],
     "lua/health.lua": [],
-    "lua/plugins/00-snacks.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/artio.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/async.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/better-type-hover.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/blink.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/bufferline.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/conform.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/core.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/cyberdream.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/e-ink.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/fidget.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/flash.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/gitsigns.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/grug-far.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/guihua.lua": [
-      "utils/init.lua"
-    ],
+    "lua/lualine/components/pack.lua": [],
+    "lua/plugins/00-snacks.lua": [],
+    "lua/plugins/blink.lua": [],
+    "lua/plugins/conform.lua": [],
+    "lua/plugins/core.lua": [],
+    "lua/plugins/cyberdream.lua": [],
+    "lua/plugins/e-ink.lua": [],
+    "lua/plugins/fidget.lua": [],
+    "lua/plugins/flash.lua": [],
+    "lua/plugins/gitsigns.lua": [],
+    "lua/plugins/grug-far.lua": [],
+    "lua/plugins/indent-blankline.lua": [],
+    "lua/plugins/indent-o-matic.lua": [],
     "lua/plugins/init.lua": [],
-    "lua/plugins/keymaps.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/kulala.lua": [
-      "utils/init.lua"
-    ],
+    "lua/plugins/kulala.lua": [],
     "lua/plugins/lang/angular.lua": [],
+    "lua/plugins/lang/ansible.lua": [],
+    "lua/plugins/lang/astro.lua": [],
+    "lua/plugins/lang/biome.lua": [],
     "lua/plugins/lang/clangd.lua": [],
+    "lua/plugins/lang/clojure.lua": [],
     "lua/plugins/lang/cmake.lua": [],
+    "lua/plugins/lang/dart.lua": [],
     "lua/plugins/lang/docker.lua": [],
+    "lua/plugins/lang/dotnet.lua": [],
+    "lua/plugins/lang/elixir.lua": [],
+    "lua/plugins/lang/elm.lua": [],
+    "lua/plugins/lang/ember.lua": [],
+    "lua/plugins/lang/erlang.lua": [],
     "lua/plugins/lang/git.lua": [],
-    "lua/plugins/lang/go.lua": [
-      "utils/init.lua"
-    ],
+    "lua/plugins/lang/gleam.lua": [],
+    "lua/plugins/lang/go.lua": [],
+    "lua/plugins/lang/haskell.lua": [],
+    "lua/plugins/lang/helm.lua": [],
     "lua/plugins/lang/init.lua": [],
     "lua/plugins/lang/java.lua": [],
     "lua/plugins/lang/json.lua": [],
-    "lua/plugins/lang/kotlin.lua": [
-      "utils/init.lua"
-    ],
+    "lua/plugins/lang/julia.lua": [],
+    "lua/plugins/lang/kotlin.lua": [],
+    "lua/plugins/lang/lean.lua": [],
     "lua/plugins/lang/lua.lua": [],
     "lua/plugins/lang/markdown.lua": [],
+    "lua/plugins/lang/nix.lua": [],
+    "lua/plugins/lang/nushell.lua": [],
+    "lua/plugins/lang/ocaml.lua": [],
+    "lua/plugins/lang/odin.lua": [],
+    "lua/plugins/lang/php.lua": [],
+    "lua/plugins/lang/prisma.lua": [],
     "lua/plugins/lang/python.lua": [],
+    "lua/plugins/lang/r.lua": [],
+    "lua/plugins/lang/rego.lua": [],
+    "lua/plugins/lang/ruby.lua": [],
     "lua/plugins/lang/rust.lua": [],
+    "lua/plugins/lang/scala.lua": [],
+    "lua/plugins/lang/solidity.lua": [],
     "lua/plugins/lang/sql.lua": [],
     "lua/plugins/lang/svelte.lua": [],
     "lua/plugins/lang/tailwind.lua": [],
     "lua/plugins/lang/terraform.lua": [],
+    "lua/plugins/lang/tex.lua": [],
+    "lua/plugins/lang/thrift.lua": [],
     "lua/plugins/lang/toml.lua": [],
+    "lua/plugins/lang/twig.lua": [],
     "lua/plugins/lang/typescript.lua": [],
+    "lua/plugins/lang/typst.lua": [],
+    "lua/plugins/lang/vue.lua": [],
+    "lua/plugins/lang/xml.lua": [],
+    "lua/plugins/lang/yaml.lua": [],
     "lua/plugins/lang/zig.lua": [],
-    "lua/plugins/lsp_lens.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/lualine.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/lynn.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/mason.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/mini.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/namu.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/neo-tree.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/neocodeium.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nightfox.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nivvie.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/noice.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nui.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-chainsaw.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-genghis.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-jump.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-justice.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-lint.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-lsp-endhints.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-nio.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-origami.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-rip-substitute.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-rulebook.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-scissors.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-spider.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-surround.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-tinygit.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim-various-textobjs.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/nvim_lightbulb.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/pack_float.lua": [],
-    "lua/plugins/plenary.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/refactoring.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/render-markdown.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/satellite.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/schemastore.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/shades-of-purple.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/symbol_usage.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/tiny-autosave.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/todo-comments.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/treesitter-manager.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/treesitter-textobjects.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/treesitter.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/treesj.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/trouble.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/ultimate-autopair.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/vim-illuminate.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/whichkey.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/workspace_diagnostics.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/yanky.lua": [
-      "utils/init.lua"
-    ],
-    "lua/plugins/yazi.lua": [
-      "utils/init.lua"
-    ],
+    "lua/plugins/lsp.lua": [],
+    "lua/plugins/lsp_lens.lua": [],
+    "lua/plugins/lualine.lua": [],
+    "lua/plugins/mason.lua": [],
+    "lua/plugins/mini.lua": [],
+    "lua/plugins/namu.lua": [],
+    "lua/plugins/neo-tree.lua": [],
+    "lua/plugins/neocodeium.lua": [],
+    "lua/plugins/nightfox.lua": [],
+    "lua/plugins/nivvie.lua": [],
+    "lua/plugins/noice.lua": [],
+    "lua/plugins/nvim-autopairs.lua": [],
+    "lua/plugins/nvim-chainsaw.lua": [],
+    "lua/plugins/nvim-genghis.lua": [],
+    "lua/plugins/nvim-jump.lua": [],
+    "lua/plugins/nvim-justice.lua": [],
+    "lua/plugins/nvim-lint.lua": [],
+    "lua/plugins/nvim-lsp-endhints.lua": [],
+    "lua/plugins/nvim-nio.lua": [],
+    "lua/plugins/nvim-origami.lua": [],
+    "lua/plugins/nvim-rip-substitute.lua": [],
+    "lua/plugins/nvim-rulebook.lua": [],
+    "lua/plugins/nvim-scissors.lua": [],
+    "lua/plugins/nvim-spider.lua": [],
+    "lua/plugins/nvim-surround.lua": [],
+    "lua/plugins/nvim-tinygit.lua": [],
+    "lua/plugins/nvim-various-textobjs.lua": [],
+    "lua/plugins/nvim_lightbulb.lua": [],
+    "lua/plugins/plenary.lua": [],
+    "lua/plugins/refactoring.lua": [],
+    "lua/plugins/render-markdown.lua": [],
+    "lua/plugins/satellite.lua": [],
+    "lua/plugins/schemastore.lua": [],
+    "lua/plugins/shades-of-purple.lua": [],
+    "lua/plugins/symbol_usage.lua": [],
+    "lua/plugins/tiny-autosave.lua": [],
+    "lua/plugins/todo-comments.lua": [],
+    "lua/plugins/treesitter-manager.lua": [],
+    "lua/plugins/treesitter-textobjects.lua": [],
+    "lua/plugins/treesitter.lua": [],
+    "lua/plugins/treesj.lua": [],
+    "lua/plugins/trouble.lua": [],
+    "lua/plugins/vim-illuminate.lua": [],
+    "lua/plugins/whichkey.lua": [],
+    "lua/plugins/workspace_diagnostics.lua": [],
+    "lua/plugins/yanky.lua": [],
+    "lua/plugins/yazi.lua": [],
+    "lua/utils/autocmds.lua": [],
     "lua/utils/init.lua": [],
+    "lua/utils/install.lua": [],
+    "lua/utils/package_manager.lua": [],
+    "lua/utils/root.lua": [],
+    "lua/utils/terminal.lua": [],
+    "lua/utils/treesitter.lua": [],
     "nvim-pack-lock.json": [],
-    "stylua.toml": []
+    "selene.toml": [],
+    "stylua.toml": [],
+    "vim.yml": []
   }
 }
