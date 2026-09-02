@@ -4,7 +4,8 @@ _G.Utils = require 'utils'
 require 'config.options'
 require 'config.keymaps'
 require 'config.autocmds'
-require 'utils.package_manager'
-require 'plugins'
+
+PluginsLoader.load 'plugins'
+PackageManager.load_all()
 
 pcall(vim.cmd.colorscheme, 'shades-of-purple')
