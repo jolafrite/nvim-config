@@ -17,7 +17,6 @@ PackageManager.add {
 
       picker = {
         ui_select = true,
-        ---@type snacks.picker.Config
         actions = {
           toggle_cwd = function(p)
             local root = Snacks.git.get_root(p.input.filter.current_buf)
@@ -27,7 +26,6 @@ PackageManager.add {
             p:find()
           end,
         },
-        ---@type snacks.picker.Config
         win = {
           input = {
             keys = {
@@ -41,7 +39,6 @@ PackageManager.add {
       },
       dashboard = {
         preset = {
-          ---@type snacks.dashboard.Item[]
           keys = {
             { icon = ' ', key = 'f', desc = 'Find File', action = ":lua Snacks.dashboard.pick('files')" },
             { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
