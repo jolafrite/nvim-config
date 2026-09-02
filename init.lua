@@ -5,9 +5,7 @@ require 'config.options'
 require 'config.keymaps'
 require 'config.autocmds'
 require 'utils.package_manager'
-require('plugins.lang').load_specs()
 require 'plugins'
-require('plugins.lang').load_configs()
 
 pcall(vim.cmd.colorscheme, 'shades-of-purple')
 

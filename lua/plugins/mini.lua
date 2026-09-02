@@ -43,7 +43,6 @@ PackageManager.add {
         width_preview = 30,
       },
       options = {
-        -- Disabled by default because the file tree is provided by neo-tree.
         use_as_default_explorer = false,
       },
     }
@@ -60,9 +59,6 @@ PackageManager.add {
       },
     }
 
-    -- Mock nvim-web-devicons through mini.icons so any plugin that requires it
-    -- before nvim-web-devicons is installed gets the mini icons instead.
-    -- This must run before any plugin requires nvim-web-devicons.
     package.preload['nvim-web-devicons'] = function()
       require('mini.icons').mock_nvim_web_devicons()
       return package.loaded['nvim-web-devicons']
