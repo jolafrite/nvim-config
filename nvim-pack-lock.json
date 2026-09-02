@@ -260,10 +260,6 @@
       "rev": "c7f595d568b588942d4d0c37b5cd6cae3764a148",
       "src": "https://github.com/mfussenegger/nvim-ansible"
     },
-    "nvim-autopairs": {
-      "rev": "430522f95fe4fb7c511ec64f8c1a90cc6a66c05c",
-      "src": "https://github.com/windwp/nvim-autopairs"
-    },
     "nvim-chainsaw": {
       "rev": "78a0e68c59f4e7760f33dacde0ff21b2498c015e",
       "src": "https://github.com/chrisgrieser/nvim-chainsaw"
@@ -332,10 +328,6 @@
       "rev": "38f74f733734566bec3b23a9dcf968a5a5559cd6",
       "src": "https://github.com/chrisgrieser/nvim-spider"
     },
-    "nvim-surround": {
-      "rev": "8b47db616ef658b8fc27e61db2896aa2f40134de",
-      "src": "https://github.com/kylechui/nvim-surround"
-    },
     "nvim-tinygit": {
       "rev": "25c0010222602b7319f24f3601f0016aa5a759b4",
       "src": "https://github.com/chrisgrieser/nvim-tinygit"
@@ -351,10 +343,6 @@
     "nvim-various-textobjs": {
       "rev": "dfbf0e9ccab4bad3c87961e1de3c8dc09d8f337a",
       "src": "https://github.com/chrisgrieser/nvim-various-textobjs"
-    },
-    "nvim-web-devicons": {
-      "rev": "2ae6958df7ced50baac5035cec0c15799eedfbf7",
-      "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "phpactor": {
       "rev": "ec564f09bd36de643ce38d7ab442288fe8d44084",
@@ -431,10 +419,6 @@
     "trouble.nvim": {
       "rev": "bd67efe408d4816e25e8491cc5ad4088e708a69a",
       "src": "https://github.com/folke/trouble.nvim"
-    },
-    "ultimate-autopair.nvim": {
-      "rev": "6b58234de921437836efe27714b2026ed2ee235a",
-      "src": "https://github.com/altermo/ultimate-autopair.nvim"
     },
     "vim-dadbod": {
       "rev": "6d1d41da4873a445c5605f2005ad2c68c99d8770",

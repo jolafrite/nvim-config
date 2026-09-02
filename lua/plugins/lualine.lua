@@ -2,9 +2,6 @@ local gh = require('utils').gh
 
 PackageManager.add {
   [1] = gh 'nvim-lualine/lualine.nvim',
-  dependencies = {
-    gh 'nvim-tree/nvim-web-devicons',
-  },
   lazy = false,
   config = function()
     local unpack = rawget(_G, 'unpack') or table.unpack

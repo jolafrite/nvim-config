@@ -1268,19 +1268,6 @@
    "complexity": "moderate"
   },
   {
-   "id": "resource:nvim-pack-lock.json:nvim-web-devicons",
-   "type": "resource",
-   "name": "nvim-web-devicons",
-   "summary": "Pinned plugin 'nvim-web-devicons' at rev 2ae6958df7ce from https://github.com/nvim-tree/nvim-web-devicons.",
-   "tags": [
-    "plugin",
-    "neovim",
-    "dependency",
-    "pinned"
-   ],
-   "complexity": "moderate"
-  },
-  {
    "id": "resource:nvim-pack-lock.json:phpactor",
    "type": "resource",
    "name": "phpactor",
@@ -5043,14 +5030,6 @@
   },
   {
    "source": "table:nvim-pack-lock.json:plugins",
-   "target": "resource:nvim-pack-lock.json:nvim-web-devicons",
-   "type": "depends_on",
-   "weight": 1.0,
-   "confidence": 1.0,
-   "direction": "forward"
-  },
-  {
-   "source": "table:nvim-pack-lock.json:plugins",
    "target": "resource:nvim-pack-lock.json:phpactor",
    "type": "depends_on",
    "weight": 1.0,
@@ -6009,14 +5988,6 @@
    "source": "file:lua/plugins/nvim-lint.lua",
    "target": "function:lua/plugins/nvim-lint.lua:lint_buf",
    "type": "contains",
-   "weight": 1.0,
-   "confidence": 1.0,
-   "direction": "forward"
-  },
-  {
-   "source": "file:lua/plugins/lualine.lua",
-   "target": "resource:nvim-pack-lock.json:nvim-web-devicons",
-   "type": "depends_on",
    "weight": 1.0,
    "confidence": 1.0,
    "direction": "forward"
