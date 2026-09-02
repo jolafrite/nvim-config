@@ -89,6 +89,7 @@ require('lint').linters_by_ft.typescriptreact = { 'oxlint' }
 vim.lsp.enable 'ts_ls'
 vim.lsp.enable 'oxlint'
 
+-- Loaded on the first FileType event; the TS keymap below is buffer-local.
 PackageManager.add {
   [1] = gh 'Sebastian-Nielsen/better-type-hover',
   event = 'FileType',
