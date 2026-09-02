@@ -5,13 +5,13 @@ M._queries = {} ---@type table<string,boolean>
 
 ---@param update boolean?
 function M.get_installed(update)
-  if update then
+  if update or M._installed == nil then
     M._installed, M._queries = {}, {}
     for _, lang in ipairs(require('nvim-treesitter').get_installed 'parsers') do
       M._installed[lang] = true
     end
   end
-  return M._installed or {}
+  return M._installed
 end
 
 ---@param lang string
