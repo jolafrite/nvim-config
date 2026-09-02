@@ -50,7 +50,9 @@ vim.lsp.config('ts_ls', {
 
 
 vim.lsp.config('oxlint', {
-  cmd = { 'oxlint', 'lsp' },
+  -- `--lsp` is a flag, not a subcommand: `oxlint lsp` would lint a path
+  -- named "lsp" and exit 1.
+  cmd = { 'oxlint', '--lsp' },
   filetypes = {
     'javascript',
     'javascriptreact',

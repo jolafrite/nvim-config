@@ -186,7 +186,7 @@
     },
     "mini.files": {
       "rev": "a249438d15fa6f64085ba83a9d1794d726aaf5ad",
-      "src": "https://github.com/echasnovski/mini.files"
+      "src": "https://github.com/nvim-mini/mini.files"
     },
     "mini.icons": {
       "rev": "98faae31e9be1cc054ae63485e58ceb185efcad0",

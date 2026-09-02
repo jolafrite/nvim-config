@@ -2,5 +2,6 @@ local gh = require('utils').gh
 
 PackageManager.add {
   [1] = gh 'chrisgrieser/nvim-chainsaw',
-  lazy = false,
+  lazy = true,
+  config = function() require('chainsaw').setup() end,
 }

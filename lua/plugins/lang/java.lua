@@ -15,13 +15,9 @@ PackageManager.add {
     local TS = require 'nvim-treesitter'
     pcall(TS.install, { 'java' })
 
-    local conform = require 'conform'
-    conform.formatters.google_java_format = {
-      command = 'google-java-format',
-      stdin = true,
-      args = { '--stdin-path' },
-    }
-    conform.formatters_by_ft.java = { 'google_java_format' }
+    -- conform's built-in google-java-format config is correct (`-` + stdin);
+    -- a custom override with `--stdin-path` makes the binary print usage.
+    require('conform').formatters_by_ft.java = { 'google-java-format' }
 
     require('lint').linters_by_ft.java = { 'checkstyle' }
 
@@ -95,6 +91,11 @@ PackageManager.add {
 
     
     require('utils').on_file_types('java', attach_jdtls)
+
+    -- The autocmd above is registered from within the first java FileType
+    -- event, so it cannot fire for the buffer that triggered it. Attach
+    -- that buffer directly; later buffers go through on_file_types.
+    if vim.bo.filetype == 'java' then attach_jdtls() end
   end,
 }
 
