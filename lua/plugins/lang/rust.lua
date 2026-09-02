@@ -13,6 +13,9 @@ require('utils').install_with_mason {
   'codelldb',
 }
 
+local TS = require 'nvim-treesitter'
+pcall(TS.install, { 'rust' })
+
 local diagnostics = vim.g.lazyvim_rust_diagnostics or 'rust-analyzer'
 
 
