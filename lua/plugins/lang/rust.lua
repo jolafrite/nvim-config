@@ -13,9 +13,12 @@ require('utils').install_with_mason {
   'codelldb',
 }
 
+local TS = require 'nvim-treesitter'
+pcall(TS.install, { 'rust' })
+
 local diagnostics = vim.g.lazyvim_rust_diagnostics or 'rust-analyzer'
 
--- bacon-ls provides diagnostics-only when vim.g.lazyvim_rust_diagnostics = "bacon-ls".
+
 if diagnostics == 'bacon-ls' then
   require('utils').install_with_mason {
     'bacon',
@@ -27,7 +30,7 @@ if diagnostics == 'bacon-ls' then
   vim.lsp.enable 'bacon_ls'
 end
 
--- rustaceanvim has no setup(); config goes through vim.g.rustaceanvim.
+
 vim.g.rustaceanvim = vim.tbl_deep_extend('keep', vim.g.rustaceanvim or {}, {
   server = {
     on_attach = function(_, bufnr)
@@ -57,7 +60,7 @@ vim.g.rustaceanvim = vim.tbl_deep_extend('keep', vim.g.rustaceanvim or {}, {
             'venv',
             '.venv',
           },
-          -- Avoid Roots Scanned hanging: https://github.com/rust-lang/rust-analyzer/issues/12613#issuecomment-2096386344
+          
           watcher = 'client',
         },
       },
@@ -77,7 +80,7 @@ require('conform').formatters.rustfmt = {
 
 require('lint').linters_by_ft.rust = { 'clippy' }
 
--- cargo clippy exits 101 on uncompilable code; don't surface that as an error.
+
 require('lint').linters.clippy = vim.tbl_deep_extend('force', require('lint').linters.clippy, { ignore_exitcode = true })
 
 pcall(function()
@@ -88,8 +91,7 @@ pcall(function()
   }
 end)
 
--- vim: ts=2 sts=2 sw=2 et
+
   end,
 })
 
--- vim: ts=2 sts=2 sw=2 et

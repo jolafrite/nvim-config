@@ -41,4 +41,3 @@ lint.linters_by_ft.lua = { 'selene' }
 
 vim.lsp.enable 'lua_ls'
 
--- vim: ts=2 sts=2 sw=2 et

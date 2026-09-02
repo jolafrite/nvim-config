@@ -1,7 +1,7 @@
 local gh = require('utils').gh
 
--- Diagnostics/location-list/quickfix viewer. Lazy-load on first buffer so
--- it is not part of the startup path; the keymaps below resolve at press time.
+
+
 PackageManager.add {
   [1] = gh 'folke/trouble.nvim',
   filetype = '*',
@@ -16,7 +16,7 @@ PackageManager.add {
   end,
 }
 
--- stylua: ignore
+
 vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>',
   { desc = 'Diagnostics (Trouble)' })
 vim.keymap.set('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Buffer Diagnostics (Trouble)' })
@@ -41,4 +41,3 @@ vim.keymap.set('n', ']q', function()
   end
 end, { desc = 'Next Trouble/Quickfix Item' })
 
--- vim: ts=2 sts=2 sw=2 et

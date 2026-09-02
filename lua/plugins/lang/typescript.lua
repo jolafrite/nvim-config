@@ -6,8 +6,8 @@ require('utils').install_with_mason {
   'prettierd',
 }
 
--- `typescript-language-server` refuses to start without an explicit `--stdio`.
--- Inlay-hint settings are mirrored to javascript too (js_ts_settings).
+
+
 local js_ts_settings = {
   typescript = {
     inlayHints = {
@@ -48,7 +48,7 @@ vim.lsp.config('ts_ls', {
   settings = js_ts_settings,
 })
 
--- oxlint LSP covers the JS/TS family plus json/vue/svelte/astro.
+
 vim.lsp.config('oxlint', {
   cmd = { 'oxlint', 'lsp' },
   filetypes = {
@@ -71,10 +71,10 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'typescript', 'tsx', 'javascript' })
 
 local conform = require 'conform'
--- prettierd is resolved by conform's built-in config (daemon, project-local
--- prettier via node_modules when present, $FILENAME + range support).
--- formatting stays owned by prettierd; oxfmt is defined here for
--- per-buffer opt-in only (not attached).
+
+
+
+
 conform.formatters.oxfmt = { command = 'oxfmt', stdin = true }
 conform.formatters_by_ft.javascript = { 'prettierd' }
 conform.formatters_by_ft.javascriptreact = { 'prettierd' }
@@ -89,7 +89,7 @@ require('lint').linters_by_ft.typescriptreact = { 'oxlint' }
 vim.lsp.enable 'ts_ls'
 vim.lsp.enable 'oxlint'
 
--- Loaded on the first FileType event; the TS keymap below is buffer-local.
+
 PackageManager.add {
   [1] = gh 'Sebastian-Nielsen/better-type-hover',
   event = 'FileType',
@@ -113,4 +113,3 @@ require('utils').on_file_types({ 'typescript', 'typescriptreact' }, function(ev)
   })
 end)
 
--- vim: ts=2 sts=2 sw=2 et

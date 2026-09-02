@@ -23,4 +23,3 @@ conform.formatters_by_ft.odin = { 'odinfmt' }
 
 vim.lsp.enable 'ols'
 
--- vim: ts=2 sts=2 sw=2 et

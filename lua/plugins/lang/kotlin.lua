@@ -45,7 +45,7 @@ pcall(function()
       mainClass = function()
         local root = vim.fs.find('src', { path = vim.uv.cwd(), upward = true, stop = vim.env.HOME })[1] or ''
         local fname = vim.api.nvim_buf_get_name(0)
-        -- src/main/kotlin/websearch/Main.kt -> websearch.MainKt
+        
         return fname:gsub(root, ''):gsub('main/kotlin/', ''):gsub('.kt', 'Kt'):gsub('/', '.'):sub(2, -1)
       end,
       projectRoot = '${workspaceFolder}',
@@ -53,9 +53,9 @@ pcall(function()
       enableJsonLogging = false,
     },
     {
-      -- Use this for unit tests. First run
-      -- ./gradlew --info cleanTest test --debug-jvm
-      -- then attach the debugger to it.
+      
+      
+      
       type = 'kotlin',
       request = 'attach',
       name = 'Attach to debugging session',
@@ -68,8 +68,7 @@ pcall(function()
   }
 end)
 
--- vim: ts=2 sts=2 sw=2 et
+
   end,
 })
 
--- vim: ts=2 sts=2 sw=2 et

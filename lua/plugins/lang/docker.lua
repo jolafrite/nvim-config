@@ -33,4 +33,3 @@ pcall(TS.install, { 'dockerfile' })
 vim.lsp.enable 'dockerls'
 vim.lsp.enable 'docker_compose_language_service'
 
--- vim: ts=2 sts=2 sw=2 et

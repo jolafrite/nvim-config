@@ -33,4 +33,3 @@ pcall(TS.install, { 'markdown', 'markdown_inline' })
 
 vim.lsp.enable 'marksman'
 
--- vim: ts=2 sts=2 sw=2 et

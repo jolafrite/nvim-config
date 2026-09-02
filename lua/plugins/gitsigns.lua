@@ -18,7 +18,7 @@ PackageManager.add {
 
         local function map(mode, l, r, desc) vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, silent = true }) end
 
-		-- stylua: ignore start
+		
 		map("n", "]h", function()
 			if vim.wo.diff then
 				vim.cmd.normal({ "]c", bang = true })
@@ -46,10 +46,9 @@ PackageManager.add {
 		map("n", "<leader>ghd", gs.diffthis, "Diff This")
 		map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
 		map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
-        -- stylua: ignore end
+        
       end,
     }
   end,
 }
 
--- vim: ts=2 sts=2 sw=2 et

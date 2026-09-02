@@ -34,7 +34,7 @@ PackageManager.add {
   end,
 }
 
--- stylua: ignore
+
 vim.keymap.set("n", "<leader>sn", "", { desc = "+noice" })
 vim.keymap.set('c', '<S-Enter>', function() require('noice').redirect(vim.fn.getcmdline()) end, { desc = 'Redirect Cmdline' })
 vim.keymap.set('n', '<leader>snl', function() require('noice').cmd 'last' end, { desc = 'Noice Last Message' })
@@ -49,4 +49,3 @@ vim.keymap.set({ 'i', 'n', 's' }, '<c-b>', function()
   if not require('noice.lsp').scroll(-4) then return '<c-b>' end
 end, { silent = true, expr = true, desc = 'Scroll Backward' })
 
--- vim: ts=2 sts=2 sw=2 et

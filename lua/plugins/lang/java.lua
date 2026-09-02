@@ -25,7 +25,7 @@ PackageManager.add {
 
     require('lint').linters_by_ft.java = { 'checkstyle' }
 
-    -- lombok agent is added when present; -configuration/-data are per-project.
+    
     local function jdtls_cmd(root_dir)
       local cmd = { vim.fn.exepath 'jdtls' or 'jdtls' }
       if vim.env.MASON then
@@ -93,9 +93,8 @@ PackageManager.add {
       }
     end
 
-    -- nvim-jdtls bypasses `vim.lsp.enable`, so attach on FileType java.
+    
     require('utils').on_file_types('java', attach_jdtls)
   end,
 }
 
--- vim: ts=2 sts=2 sw=2 et

@@ -6,7 +6,7 @@ PackageManager.add {
   config = function() require('flash').setup {} end,
 }
 
--- stylua: ignore
+
 vim.keymap.set({ 'n', 'x', 'o' }, 's', function() require('flash').jump() end,
   { desc = 'Flash' })
 vim.keymap.set({ 'n', 'o', 'x' }, 'S', function() require('flash').treesitter() end, { desc = 'Flash Treesitter' })
@@ -27,4 +27,3 @@ vim.keymap.set(
   { desc = 'Treesitter Incremental Selection' }
 )
 
--- vim: ts=2 sts=2 sw=2 et

@@ -16,4 +16,3 @@ pcall(TS.install, { 'dart' })
 
 vim.lsp.enable 'dartls'
 
--- vim: ts=2 sts=2 sw=2 et

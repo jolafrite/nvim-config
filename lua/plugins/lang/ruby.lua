@@ -1,5 +1,5 @@
--- vim.g.lazyvim_ruby_lsp = "solargraph" / vim.g.lazyvim_ruby_formatter =
--- "standardrb" switch the LSP/formatter.
+
+
 local lsp = vim.g.lazyvim_ruby_lsp or 'ruby_lsp'
 local formatter = vim.g.lazyvim_ruby_formatter or 'rubocop'
 
@@ -27,7 +27,7 @@ else
   vim.lsp.enable 'solargraph'
 end
 
--- solargraph already runs rubocop internally; don't duplicate diagnostics.
+
 if formatter == 'rubocop' and lsp ~= 'solargraph' then
   vim.lsp.config('rubocop', {
     cmd = { 'rubocop', '--lsp' },
@@ -43,4 +43,3 @@ local conform = require 'conform'
 conform.formatters_by_ft.ruby = { formatter }
 conform.formatters_by_ft.eruby = { 'erb_format' }
 
--- vim: ts=2 sts=2 sw=2 et

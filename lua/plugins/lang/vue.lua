@@ -1,4 +1,4 @@
--- depends on typescript.lua for the script blocks
+
 require('utils').install_with_mason {
   'vue-language-server',
 }
@@ -14,4 +14,3 @@ pcall(TS.install, { 'vue', 'css' })
 
 vim.lsp.enable 'vue_ls'
 
--- vim: ts=2 sts=2 sw=2 et

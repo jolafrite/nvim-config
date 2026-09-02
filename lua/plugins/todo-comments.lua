@@ -6,7 +6,7 @@ PackageManager.add {
   config = function() require('todo-comments').setup {} end,
 }
 
--- stylua: ignore
+
 vim.keymap.set('n', ']t', function() require('todo-comments').jump_next() end,
   { desc = 'Next Todo Comment' })
 vim.keymap.set('n', '[t', function() require('todo-comments').jump_prev() end, { desc = 'Previous Todo Comment' })
@@ -15,4 +15,3 @@ vim.keymap.set('n', '<leader>xT', '<cmd>Trouble todo toggle filter = {tag = {TOD
 vim.keymap.set('n', '<leader>st', '<cmd>TodoTelescope<cr>', { desc = 'Todo' })
 vim.keymap.set('n', '<leader>sT', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', { desc = 'Todo/Fix/Fixme (Telescope)' })
 
--- vim: ts=2 sts=2 sw=2 et

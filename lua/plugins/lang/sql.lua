@@ -1,5 +1,7 @@
 local gh = require('utils').gh
 
+local sql_ft = { 'sql' }
+
 PackageManager.add({
   [1] = gh 'tpope/vim-dadbod',
   dependencies = {
@@ -23,7 +25,7 @@ vim.lsp.config('sqls', {
   settings = {},
 })
 
--- The dadbod completion source is registered in blink.lua.
+
 local conform = require 'conform'
 conform.formatters.sqlfluff = {
   args = { 'format', '--dialect=ansi', '-' },
@@ -42,8 +44,7 @@ pcall(TS.install, { 'sql' })
 
 vim.lsp.enable 'sqls'
 
--- vim: ts=2 sts=2 sw=2 et
+
   end,
 })
 
--- vim: ts=2 sts=2 sw=2 et

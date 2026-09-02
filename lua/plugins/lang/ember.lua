@@ -16,4 +16,3 @@ pcall(TS.install, { 'glimmer', 'glimmer_javascript', 'glimmer_typescript', 'css'
 
 vim.lsp.enable 'ember'
 
--- vim: ts=2 sts=2 sw=2 et

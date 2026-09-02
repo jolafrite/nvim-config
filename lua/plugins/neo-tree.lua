@@ -1,7 +1,7 @@
 local gh = require('utils').gh
 
--- File tree. Only needed when the user opens it, so load on first FileType
--- rather than at startup.
+
+
 PackageManager.add {
   [1] = gh 'nvim-neo-tree/neo-tree.nvim',
   event = 'FileType',
