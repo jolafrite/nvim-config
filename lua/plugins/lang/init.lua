@@ -1,123 +1,32 @@
--- Language plugin loader.
+-- Language configuration loader.
+--
+-- Every file in this directory is loaded exactly once, after the plugins
+-- themselves (see lua/plugins/init.lua). Two shapes coexist and no file has to
+-- declare which one it is:
+--
+--   * Spec files call PackageManager.add(...) with a filetype/event trigger.
+--     PackageManager handles specs registered after load_all(), so they work
+--     from here too — the trigger is armed on the spot.
+--   * Config files run top-level setup for startup-loaded plugins (conform,
+--     nvim-lint, nvim-treesitter, vim.lsp.config/enable). Those plugins are
+--     guaranteed to be loaded because load_all() has already run.
+--
+-- To disable a language, put a bare `return` at the top of its file.
 
-local lang_path = vim.fn.stdpath 'config' .. '/lua/plugins/lang'
+local lang_path = vim.fn.stdpath("config") .. "/lua/plugins/lang"
 
-local config_only = {
-  angular = true,
-  astro = true,
-  biome = true,
-  clangd = true,
-  dart = true,
-  docker = true,
-  dotnet = true,
-  elixir = true,
-  elm = true,
-  ember = true,
-  erlang = true,
-  go = true,
-  git = true,
-  gleam = true,
-  helm = true,
-  json = true,
-  julia = true,
-  lua = true,
-  markdown = true,
-  nix = true,
-  nushell = true,
-  ocaml = true,
-  odin = true,
-  php = true,
-  prisma = true,
-  python = true,
-  rego = true,
-  ruby = true,
-  solidity = true,
-  svelte = true,
-  tailwind = true,
-  terraform = true,
-  thrift = true,
-  toml = true,
-  twig = true,
-  typescript = true,
-  typst = true,
-  vue = true,
-  xml = true,
-  yaml = true,
-}
-
-local M = {}
-
---- Load the PackageManager.add spec files (phase 1). Must run before
---- PackageManager.load_all() so filetype triggers are registered.
-function M.load_specs()
-  for _, file in ipairs(vim.fn.glob(lang_path .. '/*.lua', true, true)) do
-    local name = vim.fn.fnamemodify(file, ':t:r')
-    if name ~= 'init' and not config_only[name] then
-      local req_name = name:match '^%d+%-?(.*)$' or name
-      if not package.loaded['plugins.lang.' .. req_name] then
-        local fn, err = loadfile(file)
-        if not fn then error('loadfile ' .. file .. ': ' .. tostring(err)) end
-        fn()
-        package.loaded['plugins.lang.' .. req_name] = true
-      end
+for _, file in ipairs(vim.fn.glob(lang_path .. "/*.lua", true, true)) do
+  local name = vim.fn.fnamemodify(file, ":t:r")
+  if name ~= "init" and not package.loaded["plugins.lang." .. name] then
+    local chunk, err = loadfile(file)
+    if not chunk then
+      error("loadfile " .. file .. ": " .. tostring(err))
     end
+    chunk()
+    package.loaded["plugins.lang." .. name] = true
   end
 end
 
---- Load the config-only files (phase 2). Call after load_all().
-function M.load_configs()
-  for _, name in ipairs {
-    'angular',
-    'astro',
-    'biome',
-    'clangd',
-    'dart',
-    'docker',
-    'dotnet',
-    'elixir',
-    'elm',
-    'ember',
-    'erlang',
-    'go',
-    'git',
-    'gleam',
-    'helm',
-    'json',
-    'julia',
-    'lua',
-    'markdown',
-    'nix',
-    'nushell',
-    'ocaml',
-    'odin',
-    'php',
-    'prisma',
-    'python',
-    'rego',
-    'ruby',
-    'solidity',
-    'svelte',
-    'tailwind',
-    'terraform',
-    'toml',
-    'thrift',
-    'twig',
-    'typescript',
-    'typst',
-    'vue',
-    'xml',
-    'yaml',
-  } do
-    local file = lang_path .. '/' .. name .. '.lua'
-    if not package.loaded['plugins.lang.' .. name] then
-      local fn, err = loadfile(file)
-      if not fn then error('loadfile ' .. file .. ': ' .. tostring(err)) end
-      fn()
-      package.loaded['plugins.lang.' .. name] = true
-    end
-  end
-end
-
-return M
+package.loaded["plugins.lang"] = true
 
 -- vim: ts=2 sts=2 sw=2 et

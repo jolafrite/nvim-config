@@ -59,6 +59,53 @@ PackageManager.add {
   end,
 }
 
+-- go.nvim's own setup() skips lsp registration when lsp_cfg is false (its
+-- default), so it never calls vim.lsp.config/enable. Register gopls here
+-- instead, like every other language file, and let go.nvim own the editor
+-- commands and keymaps.
+vim.lsp.config('gopls', {
+  cmd = { 'gopls' },
+  filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+  root_markers = { 'go.work', 'go.mod', '.git' },
+  settings = {
+    gopls = {
+      gofumpt = true,
+      completeUnimported = true,
+      staticcheck = true,
+      usePlaceholders = true,
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      },
+      codelenses = {
+        gc_details = false,
+        generate = true,
+        regenerate_cgo = true,
+        run_govulncheck = true,
+        test = true,
+        tidy = true,
+        upgrade_dependency = true,
+        vendor = true,
+      },
+      analyses = {
+        nilness = true,
+        unusedparams = true,
+        unusedwrite = true,
+        useany = true,
+      },
+      directoryFilters = {
+        '-.git', '-.vscode', '-.idea', '-.vscode-test',
+        '-node_modules', '-target', '-venv', '-.venv',
+      },
+    },
+  },
+})
+
 vim.lsp.enable 'gopls'
 
 -- vim: ts=2 sts=2 sw=2 et
