@@ -11,7 +11,7 @@ PackageManager.add({
 local lean_opts = {
   lsp = {
     init_options = {
-      -- ms to wait after the last edit before elaborating
+      
       editDelay = 0,
       hasWidgets = true,
     },
@@ -50,8 +50,7 @@ require('utils').on_file_types({ 'lean' }, function()
   if ok then lean.setup(lean_opts) end
 end)
 
--- vim: ts=2 sts=2 sw=2 et
+
   end,
 })
 
--- vim: ts=2 sts=2 sw=2 et

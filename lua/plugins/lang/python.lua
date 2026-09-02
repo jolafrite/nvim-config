@@ -42,7 +42,7 @@ vim.lsp.config(ruff, {
 })
 
 require('snacks').util.lsp.on({ name = ruff }, function(_, client)
-  -- Disable hover in favor of the type checker.
+  
   client.server_capabilities.hoverProvider = false
 end)
 
@@ -62,4 +62,3 @@ require('lint').linters_by_ft.python = { ruff, 'mypy', 'flake8' }
 vim.lsp.enable(lsp)
 vim.lsp.enable(ruff)
 
--- vim: ts=2 sts=2 sw=2 et

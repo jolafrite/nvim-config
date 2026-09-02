@@ -105,9 +105,9 @@ PackageManager.add {
       },
     }
 
-    -- blink.cmp V2 ships a native Rust fuzzy matcher that must be compiled
-    -- (cargo build --release). blink.lib short-circuits (~1ms) when the lib is
-    -- already built, so invoking the build here on every startup is safe.
+    
+    
+    
     local ok, blink = pcall(require, 'blink.cmp')
     if ok and type(blink.build) == 'function' then
       local p = blink.build()
@@ -116,4 +116,3 @@ PackageManager.add {
   end,
 }
 
--- vim: ts=2 sts=2 sw=2 et

@@ -2,7 +2,7 @@ require('utils').install_with_mason {
   'helm-ls',
 }
 
--- chart templates get the helm filetype
+
 vim.filetype.add {
   pattern = {
     ['.*/templates/.*%.ya?ml$'] = 'helm',
@@ -21,4 +21,3 @@ pcall(TS.install, { 'helm' })
 
 vim.lsp.enable 'helm_ls'
 
--- vim: ts=2 sts=2 sw=2 et

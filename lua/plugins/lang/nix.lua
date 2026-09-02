@@ -21,4 +21,3 @@ pcall(TS.install, { 'nix' })
 
 vim.lsp.enable 'nil_ls'
 
--- vim: ts=2 sts=2 sw=2 et

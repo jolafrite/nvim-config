@@ -1,7 +1,7 @@
 local gh = require('utils').gh
 
--- Only needed when an LSP attaches with quickfix/refactor actions, so load
--- on the first LSPAttach event instead of at startup.
+
+
 PackageManager.add {
   [1] = gh 'kosayoda/nvim-lightbulb',
   event = 'LSPAttach',

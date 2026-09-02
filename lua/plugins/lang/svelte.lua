@@ -1,4 +1,4 @@
--- Prefer a project-local node_modules/.bin/svelteserver over the global one.
+
 require('utils').install_with_mason {
   'svelte-language-server',
   'prettierd',
@@ -27,4 +27,3 @@ pcall(TS.install, { 'svelte' })
 
 vim.lsp.enable 'svelte'
 
--- vim: ts=2 sts=2 sw=2 et

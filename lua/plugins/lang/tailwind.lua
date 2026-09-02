@@ -19,7 +19,7 @@ vim.lsp.config('tailwindcss', {
     'php',
     'blade',
     'mdx',
-    -- markdown excluded: tailwind in prose is noisy
+    
   },
   settings = {
     tailwindCSS = {
@@ -48,4 +48,3 @@ require('lint').linters_by_ft.stylus = { 'stylelint' }
 
 vim.lsp.enable 'tailwindcss'
 
--- vim: ts=2 sts=2 sw=2 et

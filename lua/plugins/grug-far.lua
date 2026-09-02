@@ -21,4 +21,3 @@ vim.keymap.set({ 'n', 'x' }, '<leader>sr', function()
   }
 end, { desc = 'Search and Replace' })
 
--- vim: ts=2 sts=2 sw=2 et

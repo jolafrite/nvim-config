@@ -1,5 +1,5 @@
--- formatting stays owned by prettierd; biome-check is defined here for
--- per-buffer opt-in only (not attached).
+
+
 require('utils').install_with_mason {
   'biome',
 }
@@ -28,4 +28,3 @@ conform.formatters['biome-check'] = {
 
 vim.lsp.enable 'biome'
 
--- vim: ts=2 sts=2 sw=2 et

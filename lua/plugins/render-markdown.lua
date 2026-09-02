@@ -1,7 +1,7 @@
 local gh = require('utils').gh
 
--- Markdown rendering (headings, code blocks, checkboxes). Only useful on
--- markdown buffers, so load on first FileType match rather than at startup.
+
+
 PackageManager.add {
   [1] = gh 'MeanderingProgrammer/render-markdown.nvim',
   filetype = 'markdown',
@@ -23,4 +23,3 @@ PackageManager.add {
   end,
 }
 
--- vim: ts=2 sts=2 sw=2 et

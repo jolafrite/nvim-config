@@ -1,6 +1,6 @@
 local gh = require('utils').gh
 
--- Only useful once an LSP attaches, so load lazily instead of at startup.
+
 PackageManager.add {
   [1] = gh 'Wansmer/symbol-usage.nvim',
   event = 'LspAttach',
@@ -20,4 +20,3 @@ PackageManager.add {
   end,
 }
 
--- vim: ts=2 sts=2 sw=2 et

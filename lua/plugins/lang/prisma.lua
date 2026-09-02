@@ -13,4 +13,3 @@ pcall(TS.install, { 'prisma' })
 
 vim.lsp.enable 'prismals'
 
--- vim: ts=2 sts=2 sw=2 et

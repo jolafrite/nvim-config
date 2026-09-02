@@ -38,4 +38,3 @@ pcall(TS.install, { 'c_sharp', 'fsharp' })
 vim.lsp.enable 'omnisharp'
 vim.lsp.enable 'fsautocomplete'
 
--- vim: ts=2 sts=2 sw=2 et

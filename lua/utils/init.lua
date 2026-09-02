@@ -1,5 +1,7 @@
 local M = {}
 
+---@param repo string
+---@return string
 M.gh = function(repo)
   return "https://github.com/" .. repo
 end
@@ -12,8 +14,4 @@ M.run_build = require("utils.install").run_build
 M.terminal = require("utils.terminal")
 M.treesitter = require("utils.treesitter")
 
-_G.Utils = M
-
 return M
-
--- vim: ts=2 sts=2 sw=2 et

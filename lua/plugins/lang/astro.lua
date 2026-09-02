@@ -1,4 +1,4 @@
--- depends on typescript.lua for the frontmatter script
+
 require('utils').install_with_mason {
   'astro-language-server',
 }
@@ -17,4 +17,3 @@ pcall(TS.install, { 'astro', 'css' })
 
 vim.lsp.enable 'astro'
 
--- vim: ts=2 sts=2 sw=2 et

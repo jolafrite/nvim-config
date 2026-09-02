@@ -9,8 +9,8 @@ vim.lsp.config('jsonls', {
   filetypes = { 'json', 'jsonc', 'json5' },
   root_markers = { '.git' },
   before_init = function(_, new_config)
-    -- required here (not top-level) because SchemaStore.nvim is loaded
-    -- lazily via the json/yaml filetype trigger in plugins/schemastore.lua
+    
+    
     local schemastore_ok, schemastore = pcall(require, 'schemastore')
     new_config.settings.json.schemas = new_config.settings.json.schemas or {}
     if schemastore_ok then vim.list_extend(new_config.settings.json.schemas, schemastore.json.schemas()) end
@@ -39,4 +39,3 @@ vim.lsp.enable 'jsonls'
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'json', 'json5' })
 
--- vim: ts=2 sts=2 sw=2 et

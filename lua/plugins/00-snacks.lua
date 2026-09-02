@@ -78,7 +78,7 @@ PackageManager.add {
     vim.keymap.set('n', '<leader>:', function() Snacks.picker.command_history() end, { desc = 'Command History' })
     vim.keymap.set('n', '<leader><space>', function() Snacks.picker.pick 'files' end, { desc = 'Find Files (Root Dir)' })
 
-    -- find
+    
     vim.keymap.set('n', '<leader>fb', function() Snacks.picker.buffers() end, { desc = 'Buffers' })
     vim.keymap.set('n', '<leader>fB', function() Snacks.picker.buffers { hidden = true, nofile = true } end, { desc = 'Buffers (all)' })
     vim.keymap.set('n', '<leader>fc', function() Snacks.picker.pick 'config_files' end, { desc = 'Find Config File' })
@@ -89,7 +89,7 @@ PackageManager.add {
     vim.keymap.set('n', '<leader>fR', function() Snacks.picker.recent { filter = { cwd = true } } end, { desc = 'Recent (cwd)' })
     vim.keymap.set('n', '<leader>fp', function() Snacks.picker.projects() end, { desc = 'Projects' })
 
-    -- git
+    
     vim.keymap.set('n', '<leader>gd', function() Snacks.picker.git_diff() end, { desc = 'Git Diff (hunks)' })
     vim.keymap.set('n', '<leader>gD', function() Snacks.picker.git_diff { base = 'origin', group = true } end, { desc = 'Git Diff (origin)' })
     vim.keymap.set('n', '<leader>gs', function() Snacks.picker.git_status() end, { desc = 'Git Status' })
@@ -99,7 +99,7 @@ PackageManager.add {
     vim.keymap.set('n', '<leader>gp', function() Snacks.picker.gh_pr() end, { desc = 'GitHub Pull Requests (open)' })
     vim.keymap.set('n', '<leader>gP', function() Snacks.picker.gh_pr { state = 'all' } end, { desc = 'GitHub Pull Requests (all)' })
 
-    -- Grep
+    
     vim.keymap.set('n', '<leader>sb', function() Snacks.picker.lines() end, { desc = 'Buffer Lines' })
     vim.keymap.set('n', '<leader>sB', function() Snacks.picker.grep_buffers() end, { desc = 'Grep Open Buffers' })
     vim.keymap.set('n', '<leader>sg', function() Snacks.picker.pick 'live_grep' end, { desc = 'Grep (Root Dir)' })
@@ -108,7 +108,7 @@ PackageManager.add {
     vim.keymap.set({ 'n', 'x' }, '<leader>sw', function() Snacks.picker.pick 'grep_word' end, { desc = 'Visual selection or word (Root Dir)' })
     vim.keymap.set({ 'n', 'x' }, '<leader>sW', function() Snacks.picker.pick('grep_word', { root = false }) end, { desc = 'Visual selection or word (cwd)' })
 
-    -- search
+    
     vim.keymap.set({ 'n', 'x' }, '<leader>s"', function() Snacks.picker.registers() end, { desc = 'Registers' })
     vim.keymap.set('n', '<leader>s/', function() Snacks.picker.search_history() end, { desc = 'Search History' })
     vim.keymap.set('n', '<leader>sa', function() Snacks.picker.autocmds() end, { desc = 'Autocmds' })
@@ -129,7 +129,7 @@ PackageManager.add {
     vim.keymap.set('n', '<leader>su', function() Snacks.picker.undo() end, { desc = 'Undotree' })
     vim.keymap.set('n', '<leader>uC', function() Snacks.picker.colorschemes() end, { desc = 'Colorschemes' })
 
-    -- Snacks toggles (the <leader>u* group of editor-option toggles)
+    
     Snacks.toggle.option('spell', { name = 'Spelling' }):map '<leader>us'
     Snacks.toggle.option('wrap', { name = 'Wrap' }):map '<leader>uw'
     Snacks.toggle.option('relativenumber', { name = 'Relative Number' }):map '<leader>uL'
@@ -160,7 +160,7 @@ PackageManager.add {
 
     if vim.lsp.inlay_hint then Snacks.toggle.inlay_hints():map '<leader>uh' end
 
-    -- lazygit
+    
     if vim.fn.executable 'lazygit' == 1 then
       vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit { cwd = Snacks.git.get_root() } end, { desc = 'Lazygit (Root Dir)' })
       vim.keymap.set('n', '<leader>gG', function() Snacks.lazygit() end, { desc = 'Lazygit (cwd)' })
@@ -178,17 +178,17 @@ PackageManager.add {
       }
     end, { desc = 'Git Browse (copy)' })
 
-    -- floating terminal
+    
     vim.keymap.set('n', '<leader>fT', function() Snacks.terminal() end, { desc = 'Terminal (cwd)' })
     vim.keymap.set('n', '<leader>ft', function() Snacks.terminal(nil, { cwd = Snacks.git.get_root() }) end, { desc = 'Terminal (Root Dir)' })
     vim.keymap.set({ 'n', 't' }, '<c-/>', function() Snacks.terminal.focus(nil, { cwd = Snacks.git.get_root() }) end, { desc = 'Terminal (Root Dir)' })
     vim.keymap.set({ 'n', 't' }, '<c-_>', function() Snacks.terminal.focus(nil, { cwd = Snacks.git.get_root() }) end, { desc = 'which_key_ignore' })
 
-    -- Snacks toggles for zoom/zen
+    
     Snacks.toggle.zoom():map('<leader>wm'):map '<leader>uZ'
     Snacks.toggle.zen():map '<leader>uz'
 
-    -- Run Lua snippet on lua files (filetype-scoped keymaps need an autocmd; vim.keymap.set alone has no filetype equivalent)
+    
     vim.api.nvim_create_autocmd('FileType', {
       pattern = 'lua',
       callback = function(ev)
@@ -198,4 +198,3 @@ PackageManager.add {
   end,
 }
 
--- vim: ts=2 sts=2 sw=2 et

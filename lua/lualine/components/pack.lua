@@ -1,13 +1,13 @@
--- vim.pack statusline component for lualine.nvim.
+
 --
--- Usage: add { 'pack' } to a lualine section. While a background check runs,
--- shows an animated spinner (kept alive by a small timer that stops itself
--- once the check finishes). When done, shows a package icon and the number of
--- outdated plugins, and renders nothing when everything is up to date.
+
+
+
+
 --
--- Data source: PackageManager.pack. The engine
--- announces PackStatusChanged on every state change, which is what drives the
--- redraw here.
+
+
+
 
 local M = require("lualine.component"):extend()
 
@@ -33,8 +33,8 @@ local frame = 0
 local timer
 local timer_running = false
 
--- Animation timer: only ticks while a check is in flight, then stops itself,
--- so it costs nothing when idle.
+
+
 local function ensure_spinner()
   if timer_running then
     return
@@ -103,7 +103,7 @@ function M:update_status()
   return ""
 end
 
--- Redraw the statusline when the vim.pack engine reports a state change.
+
 vim.api.nvim_create_autocmd("User", {
   pattern = "PackStatusChanged",
   callback = function()

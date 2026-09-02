@@ -1,7 +1,7 @@
 local gh = require('utils').gh
 
--- Better yank/paste with ring history. Needs a real buffer, so load on first
--- BufReadPost rather than at startup.
+
+
 PackageManager.add {
   [1] = gh 'gbprod/yanky.nvim',
   event = 'BufReadPost',
@@ -20,8 +20,8 @@ PackageManager.add {
 
 local opts = { silent = true, desc = 'Open Yank History' }
 vim.keymap.set({ 'n', 'x' }, '<leader>p', function()
-  -- yanky registers a `yanky` picker source; Snacks.picker.yanky() is the
-  -- entry point when it exists, otherwise fall back to the ring UI.
+  
+  
   if Snacks.picker.sources['yanky'] then
     Snacks.picker.yanky()
   else
@@ -30,7 +30,7 @@ vim.keymap.set({ 'n', 'x' }, '<leader>p', function()
   return true
 end, opts)
 
--- stylua: ignore
+
 vim.keymap.set({ 'n', 'x' }, 'y', '<Plug>(YankyYank)', { desc = 'Yank Text' })
 vim.keymap.set({ 'n', 'x' }, 'p', '<Plug>(YankyPutAfter)', { desc = 'Put Text After Cursor' })
 vim.keymap.set({ 'n', 'x' }, 'P', '<Plug>(YankyPutBefore)', { desc = 'Put Text Before Cursor' })
@@ -49,4 +49,3 @@ vim.keymap.set('n', '<P', '<Plug>(YankyPutIndentBeforeShiftLeft)', { desc = 'Put
 vim.keymap.set('n', '=p', '<Plug>(YankyPutAfterFilter)', { desc = 'Put After Applying a Filter' })
 vim.keymap.set('n', '=P', '<Plug>(YankyPutBeforeFilter)', { desc = 'Put Before Applying a Filter' })
 
--- vim: ts=2 sts=2 sw=2 et

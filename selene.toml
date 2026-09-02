@@ -3,3 +3,6 @@ std = "vim"
 [lints]
 mixed_table = "allow"
 multiple_statements = "allow"
+global_usage = "allow"
+unused_variable = "allow"
+shadowing = "allow"

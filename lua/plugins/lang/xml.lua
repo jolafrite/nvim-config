@@ -17,4 +17,3 @@ conform.formatters_by_ft.xml = { 'xmlformatter' }
 
 vim.lsp.enable 'lemminx'
 
--- vim: ts=2 sts=2 sw=2 et

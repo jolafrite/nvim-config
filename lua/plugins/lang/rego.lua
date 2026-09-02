@@ -21,4 +21,3 @@ pcall(TS.install, { 'rego' })
 vim.lsp.enable 'regols'
 vim.lsp.enable 'regal'
 
--- vim: ts=2 sts=2 sw=2 et

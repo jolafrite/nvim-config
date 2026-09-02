@@ -13,4 +13,3 @@ pcall(TS.install, { 'ocaml', 'ocaml_interface' })
 
 vim.lsp.enable 'ocamllsp'
 
--- vim: ts=2 sts=2 sw=2 et
