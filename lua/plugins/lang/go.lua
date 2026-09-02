@@ -38,6 +38,10 @@ PackageManager.add {
       stdin = true,
       args = { '-local', vim.fn.getcwd() },
     }
+    require('conform').formatters.gocondense = {
+      command = 'gocondense',
+      stdin = true,
+    }
     require('conform').formatters_by_ft.go = { 'goimports', 'gofumpt', 'gocondense' }
 
     require('lint').linters_by_ft.go = { 'golangcilint' }
