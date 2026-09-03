@@ -32,6 +32,6 @@ vim.lsp.config('yamlls', {
   },
 })
 
-PackageManager.add_with_treesitter({ 'yaml' })
+PackageManager.add_with_treesitter { 'yaml' }
 
 vim.lsp.enable 'yamlls'

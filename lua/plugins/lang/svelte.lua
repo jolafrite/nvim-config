@@ -6,6 +6,8 @@ PackageManager.add_with_mason {
 PackageManager.add_formatter('svelte', 'prettierd')
 PackageManager.add_linter('svelte', 'oxlint')
 
+PackageManager.add_snippets 'svelte'
+
 vim.lsp.config('svelte', {
   cmd = function(_, config)
     local cmd = 'svelteserver'
@@ -18,6 +20,6 @@ vim.lsp.config('svelte', {
   filetypes = { 'svelte' },
 })
 
-PackageManager.add_with_treesitter({ 'svelte' })
+PackageManager.add_with_treesitter { 'svelte' }
 
 vim.lsp.enable 'svelte'

@@ -33,6 +33,6 @@ if formatter == 'rubocop' and lsp ~= 'solargraph' then
   vim.lsp.enable 'rubocop'
 end
 
-PackageManager.add_with_treesitter({ 'ruby' })
+PackageManager.add_with_treesitter { 'ruby' }
 
 PackageManager.add_formatter({ 'ruby', 'eruby' }, { formatter, 'erb_format' })

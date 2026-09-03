@@ -3,6 +3,8 @@ PackageManager.add_with_mason {
 }
 PackageManager.add_formatter('astro', 'prettierd')
 
+PackageManager.add_snippets 'astro'
+
 vim.lsp.config('astro', {
   cmd = { 'astro-ls', '--stdio' },
   filetypes = { 'astro' },
@@ -15,6 +17,6 @@ vim.lsp.config('astro', {
   },
 })
 
-PackageManager.add_with_treesitter({ 'astro', 'css' })
+PackageManager.add_with_treesitter { 'astro', 'css' }
 
 vim.lsp.enable 'astro'

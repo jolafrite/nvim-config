@@ -9,6 +9,6 @@ vim.lsp.config('ember', {
   root_markers = { 'ember-cli-build.js', '.git' },
 })
 
-PackageManager.add_with_treesitter({ 'glimmer', 'glimmer_javascript', 'glimmer_typescript', 'css' })
+PackageManager.add_with_treesitter { 'glimmer', 'glimmer_javascript', 'glimmer_typescript', 'css' }
 
 vim.lsp.enable 'ember'

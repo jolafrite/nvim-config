@@ -9,10 +9,11 @@
 ---@class PackageManager
 ---@field add fun(spec: PackageManager.Spec)
 ---@field add_with_mason fun(tools: string|string[])
----@field add_formatter fun(ft: string|string[], formatters: string|string[])
----@field add_linter fun(ft: string|string[], linters: string|string[])
----@field add_debugger fun(ft: string|string[], debuggers: string|string[])
----@field add_snippets fun(ft: string|string[], snippets: string|string[])
+---@field add_formatter fun(ft: string|string[], formatters: string|string[], on_conform?: fun(conform: table))
+---@field add_linter fun(ft: string|string[], linters: string|string[], on_lint?: fun(lint: table))
+---@field add_debugger fun(ft: string|string[], debuggers: string|string[], on_debug?: fun(debug: table))
+---@field add_snippets fun(ft: string|string[], snippets? string|string[], on_snippets?: fun(snippets: table))
+---@field add_tester fun(ft: string|string[], adapters: table, on_test?: fun(test: table))
 ---@field add_with_treesitter fun(tools: string|string[])
 ---@field load fun()
 local M = {}
@@ -37,6 +38,28 @@ local pending_debuggers = {}
 
 ---@type { ft: string[], tools: string[] }[]
 local pending_snippets = {}
+
+---@type { ft: string[], adapters: table }[]
+local pending_testers = {}
+
+---Registered debug adapters per filetype. Mason installs the packages; this
+---mapping is kept so a future nvim-dap integration can consume it.
+---@type table<string, string[]>
+local debugger_fts = {}
+
+---Filetypes that registered snippet dependencies. friendly-snippets is
+---installed once for all of them; blink.cmp's snippets source picks it up
+---from the runtimepath.
+---@type string[]
+local snippet_fts = {}
+local snippets_registered = false
+
+---Accumulated neotest adapters. neotest.setup replaces its whole config, so
+---we keep every registered adapter ourselves and always setup with the full
+---list.
+---@type table[]
+local tester_adapters = {}
+
 local activated = false
 
 ---@param s PackageManager.Spec
@@ -106,15 +129,13 @@ local function setup_linters(filetypes, tools, on_lint)
 end
 
 ---@param filetypes string[]
----@param tools string[]
+---@param tools string[] mason package names of the debug adapters
 local function setup_debuggers(filetypes, tools)
-  local ok, dap = pcall(require, 'dap')
-  if not ok then return false end
   for _, f in ipairs(filetypes) do
-    dap.configurations[f] = dap.configurations[f] or {}
-    vim.list_extend(dap.configurations[f], tools)
+    debugger_fts[f] = debugger_fts[f] or {}
+    vim.list_extend(debugger_fts[f], tools)
   end
-  return true
+  return install_with_mason(tools)
 end
 
 ---@param tools string[]
@@ -122,6 +143,49 @@ local function setup_treesitter(tools)
   local ok, ts = pcall(require, 'nvim-treesitter')
   if not ok then return false end
   pcall(ts.install, tools)
+  return true
+end
+
+---@param pending { ft: string[], adapters: table }[]
+local function setup_testers(pending)
+  local ok, neotest = pcall(require, 'neotest')
+  if not ok then return false end
+  for _, t in ipairs(pending) do
+    -- Accept the LazyVim-style keyed form { ['neotest-golang'] = { opts } }
+    -- as well as a plain list of adapter modules. neotest itself only
+    -- iterates adapters with ipairs, so keyed tables must be resolved here.
+    for name, opts in pairs(t.adapters) do
+      if type(name) == 'string' and type(opts) == 'table' then
+        local ok_mod, mod = pcall(require, name)
+        if not ok_mod then
+          vim.notify(('neotest: adapter %q is not installed'):format(name), vim.log.levels.WARN)
+        else
+          tester_adapters[#tester_adapters + 1] = type(mod) == 'function' and mod(opts) or mod
+        end
+      else
+        tester_adapters[#tester_adapters + 1] = opts
+      end
+    end
+    if t.on_test then t.on_test(neotest) end
+  end
+  -- neotest.setup replaces its config entirely, so always pass every adapter
+  -- registered so far.
+  pcall(neotest.setup, { adapters = tester_adapters })
+  return true
+end
+
+---@param pending { ft: string[], tools: string[] }[]
+local function setup_snippets(pending)
+  if snippets_registered then return true end
+  snippets_registered = true
+  for _, s in ipairs(pending) do
+    vim.list_extend(snippet_fts, s.ft)
+  end
+  -- friendly-snippets is data-only; blink.cmp's snippets source
+  -- (snippets.preset = 'default') loads it from the runtimepath.
+  M.add {
+    [1] = 'https://github.com/rafamadriz/friendly-snippets',
+  }
   return true
 end
 
@@ -193,9 +257,9 @@ local function drain_pendings()
     if setup_debuggers(pending_debuggers[i].ft, pending_debuggers[i].tools) then table.remove(pending_debuggers, i) end
   end
 
-  for i = #pending_snippets, 1, -1 do
-    table.remove(pending_snippets, i)
-  end
+  if #pending_testers > 0 and setup_testers(pending_testers) then pending_testers = {} end
+
+  if #pending_snippets > 0 and setup_snippets(pending_snippets) then pending_snippets = {} end
 end
 
 local function load_dependencies()
@@ -272,11 +336,25 @@ M.add_debugger = function(ft, debuggers)
 end
 
 ---@param ft string|string[]
----@param snippets string|string[]
+---@param snippets? string|string[] reserved for per-language snippet collections
 M.add_snippets = function(ft, snippets)
   pending_snippets[#pending_snippets + 1] = {
     ft = type(ft) == 'string' and { ft } or ft,
-    tools = type(snippets) == 'string' and { snippets } or snippets,
+    tools = type(snippets) == 'string' and { snippets } or snippets or {},
+  }
+  if activated then load_dependencies() end
+end
+
+---@param ft string|string[]
+---@param adapters table neotest adapters, either the LazyVim-style keyed form
+---({ ['neotest-golang'] = { opts } }) or a plain list of adapter modules
+---@param on_test? fun(neotest: table) optional callback receiving the
+---neotest module, for custom setup (keymaps, consumers, ...)
+M.add_tester = function(ft, adapters, on_test)
+  pending_testers[#pending_testers + 1] = {
+    ft = type(ft) == 'string' and { ft } or ft,
+    adapters = adapters,
+    on_test = on_test,
   }
   if activated then load_dependencies() end
 end

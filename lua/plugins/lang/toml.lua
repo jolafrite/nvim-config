@@ -9,6 +9,6 @@ vim.lsp.config('taplo', {
   root_markers = { '.taplo.toml', 'taplo.toml', '.git' },
 })
 
-PackageManager.add_with_treesitter({ 'toml' })
+PackageManager.add_with_treesitter { 'toml' }
 
 vim.lsp.enable 'taplo'

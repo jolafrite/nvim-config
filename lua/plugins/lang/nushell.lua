@@ -7,6 +7,6 @@ vim.lsp.config('nushell', {
   filetypes = { 'nu' },
 })
 
-PackageManager.add_with_treesitter({ 'nu' })
+PackageManager.add_with_treesitter { 'nu' }
 
 vim.lsp.enable 'nushell'

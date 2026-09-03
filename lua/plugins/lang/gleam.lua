@@ -9,6 +9,6 @@ vim.lsp.config('gleam', {
   root_markers = { 'gleam.toml', 'gleam.json', '.git' },
 })
 
-PackageManager.add_with_treesitter({ 'gleam' })
+PackageManager.add_with_treesitter { 'gleam' }
 
 vim.lsp.enable 'gleam'

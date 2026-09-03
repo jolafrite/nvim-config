@@ -10,6 +10,6 @@ vim.lsp.config('elmls', {
   root_markers = { 'elm.json', 'elm-package.json', '.git' },
 })
 
-PackageManager.add_with_treesitter({ 'elm' })
+PackageManager.add_with_treesitter { 'elm' }
 
 vim.lsp.enable 'elmls'

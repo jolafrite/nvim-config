@@ -18,12 +18,11 @@
   },
   "diagnostics": {
     "globals": [
-      "vim",
-      "PluginsLoader",
       "PackageManager",
+      "PluginsLoader",
+      "snacks",
       "Snacks",
-      "snacks"
-  
+      "vim"
     ]
   }
 }

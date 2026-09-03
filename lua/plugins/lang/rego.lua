@@ -15,7 +15,7 @@ vim.lsp.config('regal', {
   filetypes = rego_filetypes,
 })
 
-PackageManager.add_with_treesitter({ 'rego' })
+PackageManager.add_with_treesitter { 'rego' }
 
 vim.lsp.enable 'regols'
 vim.lsp.enable 'regal'

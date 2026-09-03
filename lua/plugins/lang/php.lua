@@ -4,9 +4,14 @@ PackageManager.add_with_mason {
   lsp,
   'php-cs-fixer',
   'phpcs',
+  'php-debug-adapter',
 }
 PackageManager.add_formatter('php', 'php_cs_fixer')
 PackageManager.add_linter('php', 'phpcs')
+
+PackageManager.add_debugger('php', 'php-debug-adapter')
+
+PackageManager.add_snippets 'php'
 
 if lsp == 'phpactor' then
   vim.lsp.config('phpactor', {
@@ -24,4 +29,4 @@ else
   vim.lsp.enable 'intelephense'
 end
 
-PackageManager.add_with_treesitter({ 'php' })
+PackageManager.add_with_treesitter { 'php' }

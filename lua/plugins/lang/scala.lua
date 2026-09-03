@@ -7,7 +7,7 @@ PackageManager.add {
   },
   filetype = { 'scala' },
   config = function()
-    PackageManager.add_with_treesitter({ 'scala' })
+    PackageManager.add_with_treesitter { 'scala' }
 
     local ok, metals = pcall(require, 'metals')
     if ok then

@@ -8,6 +8,6 @@ vim.lsp.config('ocamllsp', {
   root_markers = { 'dune-project', 'dune-workspace', '*.opam', 'package.json', '.git' },
 })
 
-PackageManager.add_with_treesitter({ 'ocaml', 'ocaml_interface' })
+PackageManager.add_with_treesitter { 'ocaml', 'ocaml_interface' }
 
 vim.lsp.enable 'ocamllsp'

@@ -2,6 +2,9 @@ local gh = require('utils').gh
 
 PackageManager.add {
   [1] = gh 'R-nvim/R.nvim',
+  dependencies = {
+    gh 'shunsambongi/neotest-testthat',
+  },
   filetype = { 'r', 'rmd', 'quarto' },
   config = function()
     local r_opts = {
@@ -44,14 +47,8 @@ PackageManager.add {
       vim.lsp.enable 'r_language_server'
     end)
 
-    PackageManager.add_with_treesitter({ 'r', 'rnoweb' })
+    PackageManager.add_with_treesitter { 'r', 'rnoweb' }
 
-    pcall(function()
-      require('neotest').setup {
-        adapters = {
-          ['neotest-testthat'] = {},
-        },
-      }
-    end)
+    PackageManager.add_tester({ 'r' }, { ['neotest-testthat'] = {} })
   end,
 }

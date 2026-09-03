@@ -1,7 +1,7 @@
 local lsp = vim.g.lazyvim_python_lsp or 'pyright'
 local ruff = 'ruff'
 
-PackageManager.add_with_mason { lsp, ruff }
+PackageManager.add_with_mason { lsp, ruff, 'debugpy' }
 
 vim.lsp.config(lsp, {
   cmd = lsp == 'basedpyright' and { 'basedpyright-langserver', '--stdio' } or { 'pyright-langserver', '--stdio' },
@@ -60,6 +60,10 @@ PackageManager.add_formatter(
 )
 
 PackageManager.add_linter('python', { ruff, 'mypy', 'flake8' })
+
+PackageManager.add_debugger('python', 'debugpy')
+
+PackageManager.add_snippets 'python'
 
 vim.lsp.enable(lsp)
 vim.lsp.enable(ruff)

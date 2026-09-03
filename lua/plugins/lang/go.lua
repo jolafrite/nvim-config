@@ -14,8 +14,9 @@ PackageManager.add {
       'golangci-lint',
       'gomodifytags',
       'impl',
+      'delve',
     }
-    PackageManager.add_with_treesitter({ 'go', 'gomod', 'gowork', 'gosum' })
+    PackageManager.add_with_treesitter { 'go', 'gomod', 'gowork', 'gosum' }
 
     local go = require 'go'
 
@@ -46,13 +47,11 @@ PackageManager.add {
 
     PackageManager.add_linter('go', 'golangcilint')
 
-    pcall(function()
-      require('neotest').setup {
-        adapters = {
-          ['neotest-golang'] = {},
-        },
-      }
-    end)
+    PackageManager.add_debugger('go', 'delve')
+
+    PackageManager.add_snippets 'go'
+
+    PackageManager.add_tester('go', { ['neotest-golang'] = {} })
 
     vim.keymap.set({ 'n', 'x' }, '<localleader>gj', function() vim.cmd('GoIfErr ' .. vim.fn.expand '%:p') end, { desc = 'Add if err' })
     vim.keymap.set({ 'n', 'x' }, '<localleader>gt', function() require('go').test.run_test_near() end, { desc = 'Run test' })
