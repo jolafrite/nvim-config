@@ -18,7 +18,6 @@ conform.formatters_by_ft.typst = { 'typstyle' }
 
 conform.default_format_opts = vim.tbl_deep_extend('force', conform.default_format_opts or {}, { typst = { lsp_format = 'prefer' } })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'typst' })
+PackageManager.add_with_treesitter({ 'typst' })
 
 vim.lsp.enable 'tinymist'

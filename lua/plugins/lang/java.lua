@@ -12,14 +12,13 @@ PackageManager.add {
       'java-test',
     }
 
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'java' })
+    PackageManager.add_with_treesitter({ 'java' })
 
     -- conform's built-in google-java-format config is correct (`-` + stdin);
     -- a custom override with `--stdin-path` makes the binary print usage.
-    require('conform').formatters_by_ft.java = { 'google-java-format' }
+    PackageManager.add_formatter('java', 'google-java-format')
 
-    require('lint').linters_by_ft.java = { 'checkstyle' }
+    PackageManager.add_linter('java', 'checkstyle')
 
     local function jdtls_cmd(root_dir)
       local cmd = { vim.fn.exepath 'jdtls' or 'jdtls' }

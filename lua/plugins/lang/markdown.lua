@@ -26,9 +26,8 @@ conform.formatters_by_ft.markdown = { 'prettierd', 'markdownlint-cli2', 'markdow
 conform.formatters_by_ft['markdown.mdx'] = { 'prettierd', 'markdownlint-cli2', 'markdown-toc' }
 
 local lint = require 'lint'
-lint.linters_by_ft.markdown = { 'markdownlint-cli2' }
+PackageManager.add_linter('markdown', 'markdownlint-cli2')
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'markdown', 'markdown_inline' })
+PackageManager.add_with_treesitter({ 'markdown', 'markdown_inline' })
 
 vim.lsp.enable 'marksman'

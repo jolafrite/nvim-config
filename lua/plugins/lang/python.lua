@@ -43,8 +43,7 @@ vim.lsp.config(ruff, {
 
 require('snacks').util.lsp.on({ name = ruff }, function(_, client) client.server_capabilities.hoverProvider = false end)
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'python', 'ninja', 'rst' })
+PackageManager.add_with_treesitter({ 'python', 'ninja', 'rst' })
 
 local conform = require 'conform'
 conform.formatters.ruff = {
@@ -54,7 +53,7 @@ conform.formatters.ruff = {
 }
 conform.formatters_by_ft.python = { 'ruff' }
 
-require('lint').linters_by_ft.python = { ruff, 'mypy', 'flake8' }
+PackageManager.add_linter('python', { ruff, 'mypy', 'flake8' })
 
 vim.lsp.enable(lsp)
 vim.lsp.enable(ruff)

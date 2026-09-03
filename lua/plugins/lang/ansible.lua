@@ -15,8 +15,7 @@ PackageManager.add {
       root_markers = { 'ansible.cfg', '.ansible-lint', '.git' },
     })
 
-    local lint = require 'lint'
-    lint.linters_by_ft['yaml.ansible'] = { 'ansible_lint' }
+    PackageManager.add_linter('yaml.ansible', 'ansible_lint')
 
     vim.keymap.set('n', '<leader>ta', function()
       pcall(function() require('ansible').run() end)

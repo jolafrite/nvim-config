@@ -15,8 +15,7 @@ PackageManager.add {
       'gomodifytags',
       'impl',
     }
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'go', 'gomod', 'gowork', 'gosum' })
+    PackageManager.add_with_treesitter({ 'go', 'gomod', 'gowork', 'gosum' })
 
     local go = require 'go'
 
@@ -44,7 +43,7 @@ PackageManager.add {
     }
     require('conform').formatters_by_ft.go = { 'goimports', 'gofumpt', 'gocondense' }
 
-    require('lint').linters_by_ft.go = { 'golangcilint' }
+    PackageManager.add_linter('go', 'golangcilint')
 
     pcall(function()
       require('neotest').setup {

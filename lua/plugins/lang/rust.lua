@@ -12,8 +12,7 @@ PackageManager.add {
       'codelldb',
     }
 
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'rust' })
+    PackageManager.add_with_treesitter({ 'rust' })
 
     local diagnostics = vim.g.lazyvim_rust_diagnostics or 'rust-analyzer'
 
@@ -77,7 +76,7 @@ PackageManager.add {
       args = { '--emit=stdout' },
     }
 
-    require('lint').linters_by_ft.rust = { 'clippy' }
+    PackageManager.add_linter('rust', 'clippy')
 
     require('lint').linters.clippy = vim.tbl_deep_extend('force', require('lint').linters.clippy, { ignore_exitcode = true })
 

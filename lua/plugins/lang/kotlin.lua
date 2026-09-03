@@ -18,8 +18,7 @@ PackageManager.add {
       filetypes = { 'kotlin' },
     })
 
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'kotlin' })
+    PackageManager.add_with_treesitter({ 'kotlin' })
 
     vim.lsp.enable 'kotlin_language_server'
 

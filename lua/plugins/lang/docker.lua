@@ -25,10 +25,9 @@ conform.formatters.dockerfmt_fmt = {
 }
 conform.formatters_by_ft.dockerfile = { 'dockerfmt_fmt' }
 
-require('lint').linters_by_ft.dockerfile = { 'hadolint' }
+PackageManager.add_linter('dockerfile', 'hadolint')
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'dockerfile' })
+PackageManager.add_with_treesitter({ 'dockerfile' })
 
 vim.lsp.enable 'dockerls'
 vim.lsp.enable 'docker_compose_language_service'

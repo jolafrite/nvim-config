@@ -27,11 +27,8 @@ conform.formatters.packer_fmt = {
 }
 
 local lint = require 'lint'
-lint.linters_by_ft.terraform = { 'tflint', 'terraform_validate' }
-lint.linters_by_ft.tf = { 'tflint', 'terraform_validate' }
-lint.linters_by_ft['terraform-vars'] = { 'tflint', 'terraform_validate' }
+PackageManager.add_linter({ 'terraform', 'tf', 'terraform-vars' }, { 'tflint', 'terraform_validate' })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'terraform', 'hcl' })
+PackageManager.add_with_treesitter({ 'terraform', 'hcl' })
 
 vim.lsp.enable 'terraformls'

@@ -17,9 +17,8 @@ conform.formatters['twig-cs-fixer'] = {
 conform.formatters_by_ft.twig = { 'twig-cs-fixer' }
 
 local lint = require 'lint'
-lint.linters_by_ft.twig = { 'twigcs' }
+PackageManager.add_linter('twig', 'twigcs')
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'twig' })
+PackageManager.add_with_treesitter({ 'twig' })
 
 vim.lsp.enable 'twiggy_language_server'

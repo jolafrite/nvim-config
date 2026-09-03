@@ -23,11 +23,9 @@ PackageManager.add {
     }
     conform.formatters_by_ft.cmake = { 'cmake_format' }
 
-    local lint = require 'lint'
-    lint.linters_by_ft.cmake = { 'cmakelint' }
+    PackageManager.add_linter('cmake', 'cmakelint')
 
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'cmake' })
+    PackageManager.add_with_treesitter({ 'cmake' })
 
     vim.lsp.enable 'neocmake'
   end,

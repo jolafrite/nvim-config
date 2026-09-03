@@ -9,14 +9,13 @@ vim.lsp.config('elixirls', {
 })
 
 local lint = require 'lint'
-lint.linters_by_ft.elixir = { 'credo' }
+PackageManager.add_linter('elixir', 'credo')
 
 lint.linters.credo = vim.tbl_deep_extend('force', lint.linters.credo or {}, {
   condition = function(ctx) return vim.fs.find({ '.credo.exs' }, { path = ctx.filename, upward = true })[1] ~= nil end,
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'elixir', 'heex', 'eex' })
+PackageManager.add_with_treesitter({ 'elixir', 'heex', 'eex' })
 
 vim.treesitter.language.register('markdown', 'livebook')
 
