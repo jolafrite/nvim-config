@@ -12,13 +12,17 @@ PackageManager.add {
       'java-test',
     }
 
-    PackageManager.add_with_treesitter({ 'java' })
+    PackageManager.add_with_treesitter { 'java' }
 
     -- conform's built-in google-java-format config is correct (`-` + stdin);
     -- a custom override with `--stdin-path` makes the binary print usage.
     PackageManager.add_formatter('java', 'google-java-format')
 
     PackageManager.add_linter('java', 'checkstyle')
+
+    PackageManager.add_debugger('java', 'java-debug-adapter')
+
+    PackageManager.add_snippets 'java'
 
     local function jdtls_cmd(root_dir)
       local cmd = { vim.fn.exepath 'jdtls' or 'jdtls' }

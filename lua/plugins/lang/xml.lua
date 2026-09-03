@@ -10,6 +10,6 @@ vim.lsp.config('lemminx', {
   root_markers = { '.git' },
 })
 
-PackageManager.add_with_treesitter({ 'xml' })
+PackageManager.add_with_treesitter { 'xml' }
 
 vim.lsp.enable 'lemminx'

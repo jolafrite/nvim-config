@@ -15,4 +15,4 @@ if julia then
   vim.lsp.enable 'julials'
 end
 
-PackageManager.add_with_treesitter({ 'julia' })
+PackageManager.add_with_treesitter { 'julia' }

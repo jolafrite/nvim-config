@@ -3,9 +3,12 @@ PackageManager.add_with_mason {
   'fsautocomplete',
   'csharpier',
   'fantomas',
+  'netcoredbg',
 }
 PackageManager.add_formatter('cs', 'csharpier')
 PackageManager.add_formatter('fsharp', 'fantomas')
+
+PackageManager.add_debugger({ 'cs', 'fsharp' }, 'netcoredbg')
 
 vim.lsp.config('omnisharp', {
   cmd = { 'omnisharp', '--languageserver' },

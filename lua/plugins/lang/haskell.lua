@@ -14,7 +14,11 @@ PackageManager.add {
     PackageManager.add_formatter('cabal', 'cabal_fmt')
     PackageManager.add_linter('haskell', 'hlint')
 
-    PackageManager.add_with_treesitter({ 'haskell' })
+    PackageManager.add_debugger('haskell', 'haskell-debug-adapter')
+
+    PackageManager.add_snippets 'haskell'
+
+    PackageManager.add_with_treesitter { 'haskell' }
 
     require('utils').on_file_types({ 'haskell', 'lhaskell' }, function()
       local ok, ht = pcall(require, 'haskell-tools')

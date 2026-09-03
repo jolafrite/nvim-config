@@ -7,6 +7,6 @@ vim.lsp.config('thriftls', {
   filetypes = { 'thrift', 'thrift2' },
 })
 
-PackageManager.add_with_treesitter({ 'thrift' })
+PackageManager.add_with_treesitter { 'thrift' }
 
 vim.lsp.enable 'thriftls'

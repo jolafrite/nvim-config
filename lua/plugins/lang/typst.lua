@@ -15,10 +15,12 @@ vim.lsp.config('tinymist', {
 
 PackageManager.add_formatter('typst', 'typstyle')
 
-PackageManager.add_formatter('typst', 'typstyle', function(conform)
-  conform.default_format_opts = vim.tbl_deep_extend('force', conform.default_format_opts or {}, { typst = { lsp_format = 'prefer' } })
-end)
+PackageManager.add_formatter(
+  'typst',
+  'typstyle',
+  function(conform) conform.default_format_opts = vim.tbl_deep_extend('force', conform.default_format_opts or {}, { typst = { lsp_format = 'prefer' } }) end
+)
 
-PackageManager.add_with_treesitter({ 'typst' })
+PackageManager.add_with_treesitter { 'typst' }
 
 vim.lsp.enable 'tinymist'

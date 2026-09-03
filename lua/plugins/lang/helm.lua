@@ -15,6 +15,6 @@ vim.lsp.config('helm_ls', {
   root_markers = { 'Chart.yaml', '.git' },
 })
 
-PackageManager.add_with_treesitter({ 'helm' })
+PackageManager.add_with_treesitter { 'helm' }
 
 vim.lsp.enable 'helm_ls'

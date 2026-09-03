@@ -8,6 +8,6 @@ vim.lsp.config('prismals', {
   root_markers = { 'schema.prisma', '.git' },
 })
 
-PackageManager.add_with_treesitter({ 'prisma' })
+PackageManager.add_with_treesitter { 'prisma' }
 
 vim.lsp.enable 'prismals'

@@ -13,6 +13,10 @@ PackageManager.add {
     PackageManager.add_formatter('kotlin', 'ktlint')
     PackageManager.add_linter('kotlin', 'ktlint')
 
+    PackageManager.add_debugger('kotlin', 'kotlin-debug-adapter')
+
+    PackageManager.add_snippets 'kotlin'
+
     vim.lsp.config('kotlin_language_server', {
       cmd = { 'kotlin-language-server' },
       filetypes = { 'kotlin' },

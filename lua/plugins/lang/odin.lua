@@ -16,6 +16,6 @@ vim.lsp.config('ols', {
   },
 })
 
-PackageManager.add_with_treesitter({ 'odin' })
+PackageManager.add_with_treesitter { 'odin' }
 
 vim.lsp.enable 'ols'

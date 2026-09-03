@@ -2,6 +2,7 @@ PackageManager.add_with_mason {
   'clangd',
   'clang-format',
   'cpplint',
+  'codelldb',
 }
 
 vim.lsp.config('clangd', {
@@ -49,15 +50,23 @@ vim.lsp.config('clangd', {
   },
 })
 
-PackageManager.add_formatter({ 'c', 'cpp', 'cxx', 'h', 'hpp', 'cc' }, 'clang_format', function(conform)
-  conform.formatters.clang_format = {
-    command = 'clang-format',
-    stdin = true,
-  }
-end)
+PackageManager.add_formatter(
+  { 'c', 'cpp', 'cxx', 'h', 'hpp', 'cc' },
+  'clang_format',
+  function(conform)
+    conform.formatters.clang_format = {
+      command = 'clang-format',
+      stdin = true,
+    }
+  end
+)
 
 PackageManager.add_linter({ 'c', 'cpp', 'cxx', 'h', 'hpp', 'cc' }, 'cpplint')
 
-PackageManager.add_with_treesitter({ 'c', 'cpp' })
+PackageManager.add_debugger({ 'c', 'cpp' }, 'codelldb')
+
+PackageManager.add_snippets { 'c', 'cpp' }
+
+PackageManager.add_with_treesitter { 'c', 'cpp' }
 
 vim.lsp.enable 'clangd'

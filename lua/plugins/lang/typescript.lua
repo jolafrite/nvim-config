@@ -4,6 +4,7 @@ PackageManager.add_with_mason {
   'oxlint',
   'oxfmt',
   'prettierd',
+  'js-debug-adapter',
 }
 PackageManager.add_with_treesitter { 'typescript', 'tsx', 'javascript' }
 
@@ -65,6 +66,10 @@ vim.lsp.config('oxlint', {
 
 PackageManager.add_formatter({ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }, 'prettierd')
 PackageManager.add_linter({ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }, 'oxlint')
+
+PackageManager.add_debugger({ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }, 'js-debug-adapter')
+
+PackageManager.add_snippets { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }
 
 vim.lsp.enable 'ts_ls'
 vim.lsp.enable 'oxlint'

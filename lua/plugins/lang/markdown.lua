@@ -26,6 +26,6 @@ end)
 
 PackageManager.add_linter('markdown', 'markdownlint-cli2')
 
-PackageManager.add_with_treesitter({ 'markdown', 'markdown_inline' })
+PackageManager.add_with_treesitter { 'markdown', 'markdown_inline' }
 
 vim.lsp.enable 'marksman'

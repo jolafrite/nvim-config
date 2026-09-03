@@ -20,6 +20,6 @@ PackageManager.add {
 
     vim.lsp.enable 'texlab'
 
-    PackageManager.add_with_treesitter({ 'bibtex', 'latex' })
+    PackageManager.add_with_treesitter { 'bibtex', 'latex' }
   end,
 }
