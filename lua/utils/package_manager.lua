@@ -42,15 +42,9 @@ local pending_snippets = {}
 ---@type { ft: string[], adapters: table }[]
 local pending_testers = {}
 
----Filetype -> debug adapter mason packages. setup_debuggers writes the
----corresponding dap.adapters entries; the mapping also lets lang files
----drive dap.configurations per filetype (see kotlin.lua).
 ---@type table<string, string[]>
 local debugger_fts = {}
 
----Filetypes that requested snippets. friendly-snippets itself is a
----plugin spec (lua/plugins/snippets.lua); this list is for future
----per-ft snippet collections.
 ---@type string[]
 local snippet_fts = {}
 local snippets_registered = false
@@ -138,8 +132,6 @@ local function setup_debuggers(filetypes, tools)
     debugger_fts[f] = debugger_fts[f] or {}
     vim.list_extend(debugger_fts[f], tools)
   end
-  -- Adapters are installed via add_with_mason; here we only register the
-  -- nvim-dap mapping. Per-language launch configs live in the lang files.
   for _, f in ipairs(filetypes) do
     dap.configurations[f] = dap.configurations[f] or {}
   end
@@ -186,9 +178,6 @@ end
 local function setup_snippets(pending)
   if snippets_registered then return true end
   snippets_registered = true
-  -- friendly-snippets is registered as its own plugin spec
-  -- (lua/plugins/snippets.lua); here we only record which filetypes
-  -- requested snippets so lang files can extend per-ft collections later.
   for _, s in ipairs(pending) do
     vim.list_extend(snippet_fts, s.ft)
   end

@@ -4,15 +4,11 @@ PackageManager.add {
   [1] = gh 'nvim-treesitter/nvim-treesitter',
   lazy = false,
   config = function()
-    local TS = require 'nvim-treesitter'
-
     local opts = {
       indent = { enable = true },
       highlight = { enable = true },
       folds = { enable = true },
     }
-
-    TS.setup(opts)
     local have = require('utils').treesitter.have
 
     local function enabled(feat, query, ft)
@@ -26,14 +22,22 @@ PackageManager.add {
         local ft = ev.match
         if not vim.treesitter.language.get_lang(ft) then return end
 
-        if enabled('highlight', 'highlights', ft) then pcall(vim.treesitter.start, ev.buf) end
+        if enabled('highlight', 'highlights', ft) then
+          pcall(
+            vim.treesitter.start, ev.buf)
+        end
 
-        if enabled('indent', 'indents', ft) then pcall(function() vim.bo[ev.buf].indentexpr = "v:lua.require('nvim-treesitter').indentexpr()" end) end
+        if enabled('indent', 'indents', ft) then
+          pcall(function()
+            vim.bo[ev.buf].indentexpr =
+            "v:lua.require('nvim-treesitter').indentexpr()"
+          end)
+        end
 
         if enabled('folds', 'folds', ft) then
           pcall(function()
             vim.wo[ev.buf].foldmethod = 'expr'
-            vim.wo[ev.buf].foldexpr = "v:lua.require('nvim-treesitter').foldexpr()"
+            vim.wo[ev.buf].foldexpr = "v:lua.vim.treesitter.foldexpr()"
           end)
         end
       end,
