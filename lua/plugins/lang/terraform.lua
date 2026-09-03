@@ -24,7 +24,6 @@ conform.formatters.packer_fmt = {
   args = { 'fmt', '-' },
 }
 
-local lint = require 'lint'
 PackageManager.add_linter({ 'terraform', 'tf', 'terraform-vars' }, { 'tflint', 'terraform_validate' })
 
 PackageManager.add_with_treesitter({ 'terraform', 'hcl' })

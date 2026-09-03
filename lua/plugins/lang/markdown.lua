@@ -24,7 +24,6 @@ conform.formatters['markdown-toc'] = {
 }
 PackageManager.add_formatter({ 'markdown', 'markdown.mdx' }, { 'prettierd', 'markdownlint-cli2', 'markdown-toc' })
 
-local lint = require 'lint'
 PackageManager.add_linter('markdown', 'markdownlint-cli2')
 
 PackageManager.add_with_treesitter({ 'markdown', 'markdown_inline' })

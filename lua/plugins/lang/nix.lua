@@ -13,7 +13,6 @@ local conform = require 'conform'
 conform.formatters.nixfmt = { command = 'nixfmt', stdin = true }
 PackageManager.add_formatter('nix', 'nixfmt')
 
-local lint = require 'lint'
 PackageManager.add_linter('nix', 'statix')
 
 PackageManager.add_with_treesitter({ 'nix' })

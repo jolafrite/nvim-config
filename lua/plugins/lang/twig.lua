@@ -16,7 +16,6 @@ conform.formatters['twig-cs-fixer'] = {
 }
 PackageManager.add_formatter('twig', 'twig-cs-fixer')
 
-local lint = require 'lint'
 PackageManager.add_linter('twig', 'twigcs')
 
 PackageManager.add_with_treesitter({ 'twig' })
