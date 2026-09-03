@@ -104,7 +104,12 @@ local function setup_formatters(filetypes, tools, on_conform)
   local ok, conform = pcall(require, 'conform')
   if not ok then return false end
   for _, f in ipairs(filetypes) do
-    conform.formatters_by_ft[f] = tools
+    local existing = conform.formatters_by_ft[f]
+    if existing then
+      conform.formatters_by_ft[f] = vim.list_extend({}, existing, type(tools) == 'table' and tools or { tools })
+    else
+      conform.formatters_by_ft[f] = tools
+    end
   end
   if on_conform then on_conform(conform) end
   return true
@@ -117,7 +122,12 @@ local function setup_linters(filetypes, tools, on_lint)
   local ok, lint = pcall(require, 'lint')
   if not ok then return false end
   for _, f in ipairs(filetypes) do
-    lint.linters_by_ft[f] = tools
+    local existing = lint.linters_by_ft[f]
+    if existing then
+      lint.linters_by_ft[f] = vim.list_extend({}, existing, type(tools) == 'table' and tools or { tools })
+    else
+      lint.linters_by_ft[f] = tools
+    end
   end
   if on_lint then on_lint(lint) end
   return true
