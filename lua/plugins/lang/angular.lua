@@ -13,7 +13,7 @@ vim.lsp.config('angularls', {
 PackageManager.add_formatter('htmlangular', 'prettierd')
 PackageManager.add_linter('htmlangular', 'oxlint')
 
-PackageManager.add_with_treesitter({ 'angular', 'scss' })
+PackageManager.add_with_treesitter { 'angular', 'scss' }
 
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
   pattern = { '*.component.html', '*.container.html' },
@@ -23,7 +23,11 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
   end,
 })
 
-require('snacks').util.lsp.on({ name = 'angularls' },
-  function(_, client) client.server_capabilities.renameProvider = false end)
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == 'angularls' then client.server_capabilities.renameProvider = false end
+  end,
+})
 
 vim.lsp.enable 'angularls'

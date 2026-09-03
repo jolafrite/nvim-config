@@ -1,10 +1,7 @@
-local lsp = 'pyright'
+local lsp = vim.g.lazyvim_python_lsp or 'pyright'
 local ruff = 'ruff'
 
-PackageManager.add_with_mason {
-  lsp == 'basedpyright' and 'basedpyright' or 'pyright',
-  ruff,
-}
+PackageManager.add_with_mason { lsp, ruff }
 
 vim.lsp.config(lsp, {
   cmd = lsp == 'basedpyright' and { 'basedpyright-langserver', '--stdio' } or { 'pyright-langserver', '--stdio' },
@@ -41,17 +38,26 @@ vim.lsp.config(ruff, {
   },
 })
 
-require('snacks').util.lsp.on({ name = ruff }, function(_, client) client.server_capabilities.hoverProvider = false end)
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == ruff then client.server_capabilities.hoverProvider = false end
+  end,
+})
 
-PackageManager.add_with_treesitter({ 'python', 'ninja', 'rst' })
+PackageManager.add_with_treesitter { 'python', 'ninja', 'rst' }
 
-PackageManager.add_formatter('python', 'ruff', function(conform)
-  conform.formatters.ruff = {
-    command = 'ruff',
-    stdin = true,
-    args = { 'format', '-' },
-  }
-end)
+PackageManager.add_formatter(
+  'python',
+  'ruff',
+  function(conform)
+    conform.formatters.ruff = {
+      command = 'ruff',
+      stdin = true,
+      args = { 'format', '-' },
+    }
+  end
+)
 
 PackageManager.add_linter('python', { ruff, 'mypy', 'flake8' })
 
