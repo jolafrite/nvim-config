@@ -21,7 +21,7 @@ PackageManager.add {
       command = 'cmake-format',
       stdin = true,
     }
-    conform.formatters_by_ft.cmake = { 'cmake_format' }
+    PackageManager.add_formatter('cmake', 'cmake_format')
 
     PackageManager.add_linter('cmake', 'cmakelint')
 

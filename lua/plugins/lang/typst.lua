@@ -14,7 +14,7 @@ vim.lsp.config('tinymist', {
 })
 
 local conform = require 'conform'
-conform.formatters_by_ft.typst = { 'typstyle' }
+PackageManager.add_formatter('typst', 'typstyle')
 
 conform.default_format_opts = vim.tbl_deep_extend('force', conform.default_format_opts or {}, { typst = { lsp_format = 'prefer' } })
 

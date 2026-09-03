@@ -23,7 +23,8 @@ conform.formatters.dockerfmt_fmt = {
   stdin = true,
   args = { '-' },
 }
-conform.formatters_by_ft.dockerfile = { 'dockerfmt_fmt' }
+
+PackageManager.add_formatter('dockerfile', 'dockerfmt_fmt')
 
 PackageManager.add_linter('dockerfile', 'hadolint')
 

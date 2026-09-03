@@ -10,10 +10,8 @@ vim.lsp.config('terraformls', {
 })
 
 local conform = require 'conform'
-conform.formatters_by_ft.terraform = { 'terraform_fmt' }
-conform.formatters_by_ft.tf = { 'terraform_fmt' }
-conform.formatters_by_ft['terraform-vars'] = { 'terraform_fmt' }
-conform.formatters_by_ft.hcl = { 'packer_fmt' }
+PackageManager.add_formatter({ 'terraform', 'tf', 'terraform-vars' }, 'terraform_fmt')
+PackageManager.add_formatter('hcl', 'packer_fmt')
 
 conform.formatters.terraform_fmt = {
   command = 'terraform',

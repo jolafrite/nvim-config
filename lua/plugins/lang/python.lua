@@ -51,7 +51,7 @@ conform.formatters.ruff = {
   stdin = true,
   args = { 'format', '-' },
 }
-conform.formatters_by_ft.python = { 'ruff' }
+PackageManager.add_formatter('python', 'ruff')
 
 PackageManager.add_linter('python', { ruff, 'mypy', 'flake8' })
 

@@ -11,7 +11,7 @@ vim.lsp.config('nil_ls', {
 
 local conform = require 'conform'
 conform.formatters.nixfmt = { command = 'nixfmt', stdin = true }
-conform.formatters_by_ft.nix = { 'nixfmt' }
+PackageManager.add_formatter('nix', 'nixfmt')
 
 local lint = require 'lint'
 PackageManager.add_linter('nix', 'statix')

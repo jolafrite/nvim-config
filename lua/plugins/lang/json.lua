@@ -26,8 +26,7 @@ conform.formatters.fixjson = {
   command = 'fixjson',
   stdin = true,
 }
-conform.formatters_by_ft.json = { 'prettierd', 'fixjson' }
-conform.formatters_by_ft.jsonc = { 'prettierd', 'fixjson' }
+PackageManager.add_formatter({ 'json', 'jsonc' }, { 'prettierd', 'fixjson' })
 
 PackageManager.add_linter({ 'json', 'jsonc' }, 'jsonlint')
 

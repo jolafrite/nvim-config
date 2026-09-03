@@ -22,8 +22,7 @@ conform.formatters['markdown-toc'] = {
     end
   end,
 }
-conform.formatters_by_ft.markdown = { 'prettierd', 'markdownlint-cli2', 'markdown-toc' }
-conform.formatters_by_ft['markdown.mdx'] = { 'prettierd', 'markdownlint-cli2', 'markdown-toc' }
+PackageManager.add_formatter({ 'markdown', 'markdown.mdx' }, { 'prettierd', 'markdownlint-cli2', 'markdown-toc' })
 
 local lint = require 'lint'
 PackageManager.add_linter('markdown', 'markdownlint-cli2')

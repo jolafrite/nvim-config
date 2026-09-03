@@ -14,7 +14,7 @@ conform.formatters['twig-cs-fixer'] = {
   command = 'twig-cs-fixer',
   args = { 'fix', '--config=.twig-cs-fixer.php' },
 }
-conform.formatters_by_ft.twig = { 'twig-cs-fixer' }
+PackageManager.add_formatter('twig', 'twig-cs-fixer')
 
 local lint = require 'lint'
 PackageManager.add_linter('twig', 'twigcs')
