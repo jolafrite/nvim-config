@@ -16,12 +16,12 @@ PackageManager.add {
       root_markers = { '.neocmake.toml', '.git', 'build', 'cmake' },
     })
 
-    local conform = require 'conform'
-    conform.formatters.cmake_format = {
-      command = 'cmake-format',
-      stdin = true,
-    }
-    PackageManager.add_formatter('cmake', 'cmake_format')
+    PackageManager.add_formatter('cmake', 'cmake_format', function(conform)
+      conform.formatters.cmake_format = {
+        command = 'cmake-format',
+        stdin = true,
+      }
+    end)
 
     PackageManager.add_linter('cmake', 'cmakelint')
 

@@ -28,20 +28,21 @@ PackageManager.add {
       keymaps = false,
     }
 
-    require('conform').formatters.gofumpt = {
-      command = 'gofumpt',
-      stdin = true,
-    }
-    require('conform').formatters.goimports = {
-      command = 'goimports',
-      stdin = true,
-      args = { '-local', vim.fn.getcwd() },
-    }
-    require('conform').formatters.gocondense = {
-      command = 'gocondense',
-      stdin = true,
-    }
-    PackageManager.add_formatter('go', { 'goimports', 'gofumpt', 'gocondense' })
+    PackageManager.add_formatter('go', { 'goimports', 'gofumpt', 'gocondense' }, function(conform)
+      conform.formatters.gofumpt = {
+        command = 'gofumpt',
+        stdin = true,
+      }
+      conform.formatters.goimports = {
+        command = 'goimports',
+        stdin = true,
+        args = { '-local', vim.fn.getcwd() },
+      }
+      conform.formatters.gocondense = {
+        command = 'gocondense',
+        stdin = true,
+      }
+    end)
 
     PackageManager.add_linter('go', 'golangcilint')
 

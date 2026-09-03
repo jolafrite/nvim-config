@@ -25,12 +25,11 @@ PackageManager.add {
       settings = {},
     })
 
-    local conform = require 'conform'
-    conform.formatters.sqlfluff = {
-      args = { 'format', '--dialect=ansi', '-' },
-    }
-
-    PackageManager.add_formatter(sql_ft, 'sqlfluff')
+        PackageManager.add_formatter(sql_ft, 'sqlfluff', function(conform)
+          conform.formatters.sqlfluff = {
+            args = { 'format', '--dialect=ansi', '-' },
+          }
+        end)
 
     PackageManager.add_linter(sql_ft, 'sqlfluff')
 

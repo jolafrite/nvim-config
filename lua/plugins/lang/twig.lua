@@ -9,12 +9,12 @@ vim.lsp.config('twiggy_language_server', {
   filetypes = { 'twig', 'html.twig' },
 })
 
-local conform = require 'conform'
-conform.formatters['twig-cs-fixer'] = {
-  command = 'twig-cs-fixer',
-  args = { 'fix', '--config=.twig-cs-fixer.php' },
-}
-PackageManager.add_formatter('twig', 'twig-cs-fixer')
+PackageManager.add_formatter('twig', 'twig-cs-fixer', function(conform)
+  conform.formatters['twig-cs-fixer'] = {
+    command = 'twig-cs-fixer',
+    args = { 'fix', '--config=.twig-cs-fixer.php' },
+  }
+end)
 
 PackageManager.add_linter('twig', 'twigcs')
 

@@ -9,9 +9,9 @@ vim.lsp.config('nil_ls', {
   root_markers = { 'flake.nix', 'shell.nix', '.git' },
 })
 
-local conform = require 'conform'
-conform.formatters.nixfmt = { command = 'nixfmt', stdin = true }
-PackageManager.add_formatter('nix', 'nixfmt')
+PackageManager.add_formatter('nix', 'nixfmt', function(conform)
+  conform.formatters.nixfmt = { command = 'nixfmt', stdin = true }
+end)
 
 PackageManager.add_linter('nix', 'statix')
 

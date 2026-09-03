@@ -33,9 +33,10 @@ vim.lsp.config('lua_ls', {
 })
 
 PackageManager.add_formatter('lua', 'stylua')
-PackageManager.add_linter('lua', 'selene')
-
-if vim.uv.fs_stat(vim.fn.expand '~/.cargo/bin/selene') then lint.linters.selene.cmd =
-  vim.fn.expand '~/.cargo/bin/selene' end
+PackageManager.add_linter('lua', 'selene', function(lint)
+  if vim.uv.fs_stat(vim.fn.expand '~/.cargo/bin/selene') then
+    lint.linters.selene.cmd = vim.fn.expand '~/.cargo/bin/selene'
+  end
+end)
 
 vim.lsp.enable 'lua_ls'

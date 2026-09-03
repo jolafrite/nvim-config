@@ -49,12 +49,12 @@ vim.lsp.config('clangd', {
   },
 })
 
-local conform = require 'conform'
-conform.formatters.clang_format = {
-  command = 'clang-format',
-  stdin = true,
-}
-PackageManager.add_formatter({ 'c', 'cpp', 'cxx', 'h', 'hpp', 'cc' }, 'clang_format')
+PackageManager.add_formatter({ 'c', 'cpp', 'cxx', 'h', 'hpp', 'cc' }, 'clang_format', function(conform)
+  conform.formatters.clang_format = {
+    command = 'clang-format',
+    stdin = true,
+  }
+end)
 
 PackageManager.add_linter({ 'c', 'cpp', 'cxx', 'h', 'hpp', 'cc' }, 'cpplint')
 

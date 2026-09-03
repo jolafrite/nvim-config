@@ -9,20 +9,20 @@ vim.lsp.config('terraformls', {
   root_markers = { '.terraform', '.git' },
 })
 
-local conform = require 'conform'
-PackageManager.add_formatter({ 'terraform', 'tf', 'terraform-vars' }, 'terraform_fmt')
-PackageManager.add_formatter('hcl', 'packer_fmt')
-
-conform.formatters.terraform_fmt = {
-  command = 'terraform',
-  stdin = true,
-  args = { 'fmt', '-' },
-}
-conform.formatters.packer_fmt = {
-  command = 'packer',
-  stdin = true,
-  args = { 'fmt', '-' },
-}
+PackageManager.add_formatter({ 'terraform', 'tf', 'terraform-vars' }, 'terraform_fmt', function(conform)
+  conform.formatters.terraform_fmt = {
+    command = 'terraform',
+    stdin = true,
+    args = { 'fmt', '-' },
+  }
+end)
+PackageManager.add_formatter('hcl', 'packer_fmt', function(conform)
+  conform.formatters.packer_fmt = {
+    command = 'packer',
+    stdin = true,
+    args = { 'fmt', '-' },
+  }
+end)
 
 PackageManager.add_linter({ 'terraform', 'tf', 'terraform-vars' }, { 'tflint', 'terraform_validate' })
 

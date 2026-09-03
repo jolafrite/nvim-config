@@ -45,13 +45,13 @@ require('snacks').util.lsp.on({ name = ruff }, function(_, client) client.server
 
 PackageManager.add_with_treesitter({ 'python', 'ninja', 'rst' })
 
-local conform = require 'conform'
-conform.formatters.ruff = {
-  command = 'ruff',
-  stdin = true,
-  args = { 'format', '-' },
-}
-PackageManager.add_formatter('python', 'ruff')
+PackageManager.add_formatter('python', 'ruff', function(conform)
+  conform.formatters.ruff = {
+    command = 'ruff',
+    stdin = true,
+    args = { 'format', '-' },
+  }
+end)
 
 PackageManager.add_linter('python', { ruff, 'mypy', 'flake8' })
 

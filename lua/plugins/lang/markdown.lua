@@ -14,15 +14,15 @@ vim.filetype.add {
   extension = { mdx = 'markdown.mdx' },
 }
 
-local conform = require 'conform'
-conform.formatters['markdown-toc'] = {
-  condition = function(_, ctx)
-    for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
-      if line:find '<!%-%- toc %-%->' then return true end
-    end
-  end,
-}
-PackageManager.add_formatter({ 'markdown', 'markdown.mdx' }, { 'prettierd', 'markdownlint-cli2', 'markdown-toc' })
+PackageManager.add_formatter({ 'markdown', 'markdown.mdx' }, { 'prettierd', 'markdownlint-cli2', 'markdown-toc' }, function(conform)
+  conform.formatters['markdown-toc'] = {
+    condition = function(_, ctx)
+      for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
+        if line:find '<!%-%- toc %-%->' then return true end
+      end
+    end,
+  }
+end)
 
 PackageManager.add_linter('markdown', 'markdownlint-cli2')
 

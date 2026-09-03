@@ -73,13 +73,13 @@ PackageManager.add {
     if vim.bo.filetype == 'rust' then pcall(function() require(
         'rustaceanvim.lsp').start(vim.api.nvim_get_current_buf()) end) end
 
-    PackageManager.add_formatter('rust', 'rustfmt')
-
-    require('conform').formatters.rustfmt = {
-      command = 'rustfmt',
-      stdin = true,
-      args = { '--emit=stdout' },
-    }
+    PackageManager.add_formatter('rust', 'rustfmt', function(conform)
+      conform.formatters.rustfmt = {
+        command = 'rustfmt',
+        stdin = true,
+        args = { '--emit=stdout' },
+      }
+    end)
 
     PackageManager.add_linter('rust', 'clippy')
 
