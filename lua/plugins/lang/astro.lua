@@ -15,7 +15,6 @@ vim.lsp.config('astro', {
   },
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'astro', 'css' })
+PackageManager.add_with_treesitter({ 'astro', 'css' })
 
 vim.lsp.enable 'astro'

@@ -15,5 +15,4 @@ if julia then
   vim.lsp.enable 'julials'
 end
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'julia' })
+PackageManager.add_with_treesitter({ 'julia' })

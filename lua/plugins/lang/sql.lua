@@ -10,7 +10,8 @@ PackageManager.add {
   },
   filetype = { 'sql' },
   config = function()
-    vim.keymap.set('n', '<leader>D', '<cmd>DBUIToggle<CR>', { desc = 'Toggle DBUI' })
+    vim.keymap.set('n', '<leader>D', '<cmd>DBUIToggle<CR>',
+      { desc = 'Toggle DBUI' })
 
     PackageManager.add_with_mason {
       'sqls',
@@ -37,8 +38,7 @@ PackageManager.add {
       lint.linters_by_ft[ft] = { 'sqlfluff' }
     end
 
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'sql' })
+    PackageManager.add_with_treesitter({ 'sql' })
 
     vim.lsp.enable 'sqls'
   end,

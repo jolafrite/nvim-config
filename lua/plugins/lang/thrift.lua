@@ -7,7 +7,6 @@ vim.lsp.config('thriftls', {
   filetypes = { 'thrift', 'thrift2' },
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'thrift' })
+PackageManager.add_with_treesitter({ 'thrift' })
 
 vim.lsp.enable 'thriftls'

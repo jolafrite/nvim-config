@@ -14,8 +14,7 @@ PackageManager.add {
     PackageManager.add_formatter('cabal', 'cabal_fmt')
     PackageManager.add_linter('haskell', 'hlint')
 
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'haskell' })
+    PackageManager.add_with_treesitter({ 'haskell' })
 
     require('utils').on_file_types({ 'haskell', 'lhaskell' }, function()
       local ok, ht = pcall(require, 'haskell-tools')

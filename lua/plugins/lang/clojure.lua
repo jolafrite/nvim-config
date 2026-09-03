@@ -11,8 +11,7 @@ PackageManager.add {
     vim.g['conjure#mapping#doc_word'] = 'K'
     vim.g['conjure#mapping#def_word'] = 'gd'
 
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'clojure' })
+    PackageManager.add_with_treesitter({ 'clojure' })
 
     require('utils').on_file_types({ 'clojure', 'edn' }, function()
       pcall(function() require('conjure.main').main() end)

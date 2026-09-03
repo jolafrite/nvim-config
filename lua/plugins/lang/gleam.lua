@@ -9,7 +9,6 @@ vim.lsp.config('gleam', {
   root_markers = { 'gleam.toml', 'gleam.json', '.git' },
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'gleam' })
+PackageManager.add_with_treesitter({ 'gleam' })
 
 vim.lsp.enable 'gleam'

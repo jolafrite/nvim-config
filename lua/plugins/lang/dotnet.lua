@@ -29,8 +29,7 @@ vim.lsp.config('fsautocomplete', {
   root_markers = { '*.fsproj', 'paket.dependencies', 'paket.lock' },
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'c_sharp', 'fsharp' })
+PackageManager.add_with_treesitter({ 'c_sharp', 'fsharp' })
 
 vim.lsp.enable 'omnisharp'
 vim.lsp.enable 'fsautocomplete'

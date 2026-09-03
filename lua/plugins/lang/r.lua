@@ -44,8 +44,7 @@ PackageManager.add {
       vim.lsp.enable 'r_language_server'
     end)
 
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'r', 'rnoweb' })
+    PackageManager.add_with_treesitter({ 'r', 'rnoweb' })
 
     pcall(function()
       require('neotest').setup {

@@ -8,7 +8,6 @@ vim.lsp.config('vue_ls', {
   root_markers = { 'vue.config.js', '.git' },
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'vue', 'css' })
+PackageManager.add_with_treesitter({ 'vue', 'css' })
 
 vim.lsp.enable 'vue_ls'

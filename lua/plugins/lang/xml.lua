@@ -10,7 +10,6 @@ vim.lsp.config('lemminx', {
   root_markers = { '.git' },
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'xml' })
+PackageManager.add_with_treesitter({ 'xml' })
 
 vim.lsp.enable 'lemminx'
