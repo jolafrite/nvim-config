@@ -244,6 +244,10 @@
       "rev": "de63f3b9a182d374d2e71cf44385326682ec90e7",
       "src": "https://github.com/lawrence-laz/neotest-zig"
     },
+    "neotest-testthat": {
+      "rev": "63be77b75a2ad33df39e3c4e4de10e163a21cfef",
+      "src": "https://github.com/shunsambongi/neotest-testthat"
+    },
     "nightfox.nvim": {
       "rev": "4dacd3f0185a2227bdf3b6c0975a8f0bf87cac9a",
       "src": "https://github.com/EdenEast/nightfox.nvim"
@@ -267,6 +271,10 @@
     "nvim-ansible": {
       "rev": "c7f595d568b588942d4d0c37b5cd6cae3764a148",
       "src": "https://github.com/mfussenegger/nvim-ansible"
+    },
+    "nvim-dap": {
+      "rev": "c9a0738e45f1bd41d792a126941348dce661cf9b",
+      "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-autopairs": {
       "rev": "430522f95fe4fb7c511ec64f8c1a90cc6a66c05c",
@@ -363,6 +371,10 @@
     "nvim-web-devicons": {
       "rev": "2ae6958df7ced50baac5035cec0c15799eedfbf7",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
+    },
+    "nvim_context_vt": {
+      "rev": "74c5ec8786426c5458e1a9f6b8b2fd6977ba01ab",
+      "src": "https://github.com/haringsrob/nvim_context_vt"
     },
     "phpactor": {
       "rev": "ec564f09bd36de643ce38d7ab442288fe8d44084",

@@ -11,8 +11,8 @@
 ---@field add_with_mason fun(tools: string|string[])
 ---@field add_formatter fun(ft: string|string[], formatters: string|string[], on_conform?: fun(conform: table))
 ---@field add_linter fun(ft: string|string[], linters: string|string[], on_lint?: fun(lint: table))
----@field add_debugger fun(ft: string|string[], debuggers: string|string[], on_debug?: fun(debug: table))
----@field add_snippets fun(ft: string|string[], snippets? string|string[], on_snippets?: fun(snippets: table))
+---@field add_debugger fun(ft: string|string[], debuggers: string|string[])
+---@field add_snippets fun(ft: string|string[], snippets? string|string[])
 ---@field add_tester fun(ft: string|string[], adapters: table, on_test?: fun(test: table))
 ---@field add_with_treesitter fun(tools: string|string[])
 ---@field load fun()
@@ -42,14 +42,15 @@ local pending_snippets = {}
 ---@type { ft: string[], adapters: table }[]
 local pending_testers = {}
 
----Registered debug adapters per filetype. Mason installs the packages; this
----mapping is kept so a future nvim-dap integration can consume it.
+---Filetype -> debug adapter mason packages. setup_debuggers writes the
+---corresponding dap.adapters entries; the mapping also lets lang files
+---drive dap.configurations per filetype (see kotlin.lua).
 ---@type table<string, string[]>
 local debugger_fts = {}
 
----Filetypes that registered snippet dependencies. friendly-snippets is
----installed once for all of them; blink.cmp's snippets source picks it up
----from the runtimepath.
+---Filetypes that requested snippets. friendly-snippets itself is a
+---plugin spec (lua/plugins/snippets.lua); this list is for future
+---per-ft snippet collections.
 ---@type string[]
 local snippet_fts = {}
 local snippets_registered = false
@@ -131,11 +132,18 @@ end
 ---@param filetypes string[]
 ---@param tools string[] mason package names of the debug adapters
 local function setup_debuggers(filetypes, tools)
+  local ok, dap = pcall(require, 'dap')
+  if not ok then return false end
   for _, f in ipairs(filetypes) do
     debugger_fts[f] = debugger_fts[f] or {}
     vim.list_extend(debugger_fts[f], tools)
   end
-  return install_with_mason(tools)
+  -- Adapters are installed via add_with_mason; here we only register the
+  -- nvim-dap mapping. Per-language launch configs live in the lang files.
+  for _, f in ipairs(filetypes) do
+    dap.configurations[f] = dap.configurations[f] or {}
+  end
+  return true
 end
 
 ---@param tools string[]
@@ -178,14 +186,12 @@ end
 local function setup_snippets(pending)
   if snippets_registered then return true end
   snippets_registered = true
+  -- friendly-snippets is registered as its own plugin spec
+  -- (lua/plugins/snippets.lua); here we only record which filetypes
+  -- requested snippets so lang files can extend per-ft collections later.
   for _, s in ipairs(pending) do
     vim.list_extend(snippet_fts, s.ft)
   end
-  -- friendly-snippets is data-only; blink.cmp's snippets source
-  -- (snippets.preset = 'default') loads it from the runtimepath.
-  M.add {
-    [1] = 'https://github.com/rafamadriz/friendly-snippets',
-  }
   return true
 end
 
@@ -326,7 +332,7 @@ M.add_linter = function(ft, linters, on_lint)
 end
 
 ---@param ft string|string[]
----@param debuggers string|string[]
+---@param debuggers string|string[] mason package names of the debug adapters
 M.add_debugger = function(ft, debuggers)
   pending_debuggers[#pending_debuggers + 1] = {
     ft = type(ft) == 'string' and { ft } or ft,
@@ -336,7 +342,7 @@ M.add_debugger = function(ft, debuggers)
 end
 
 ---@param ft string|string[]
----@param snippets? string|string[] reserved for per-language snippet collections
+---@param snippets? string|string[]
 M.add_snippets = function(ft, snippets)
   pending_snippets[#pending_snippets + 1] = {
     ft = type(ft) == 'string' and { ft } or ft,
