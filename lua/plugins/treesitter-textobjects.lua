@@ -87,7 +87,7 @@ PackageManager.add {
           })
         end
       end
-      local select_keys = vim.tbl_get(opts, 'select', 'keys') or {}
+      local select_keys = vim.tbl_get(opts, 'select', 'keymaps') or {}
       for key, query in pairs(select_keys) do
         local queries = type(query) == 'table' and query or { query }
         local parts = {}
