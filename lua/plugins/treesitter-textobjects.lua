@@ -2,7 +2,7 @@ local gh = require('utils').gh
 
 PackageManager.add {
   [1] = gh 'nvim-treesitter/nvim-treesitter-textobjects',
-  lazy = false,
+  lazy = true,
   config = function()
     local opts = {
       move = {
