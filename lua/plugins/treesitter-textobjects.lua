@@ -70,13 +70,10 @@ PackageManager.add {
           end
           local desc = table.concat(parts, ' or ')
           desc = (key:sub(1, 1) == '[' and 'Prev ' or 'Next ') .. desc
-          desc = desc ..
-          (key:sub(2, 2) == key:sub(2, 2):upper() and ' End' or ' Start')
+          desc = desc .. (key:sub(2, 2) == key:sub(2, 2):upper() and ' End' or ' Start')
           vim.keymap.set({ 'n', 'x', 'o' }, key, function()
-            if vim.wo.diff and key:find '[cC]' then return vim.cmd('normal! ' ..
-              key) end
-            require('nvim-treesitter-textobjects.move')[method](query,
-              'textobjects')
+            if vim.wo.diff and key:find '[cC]' then return vim.cmd('normal! ' .. key) end
+            require('nvim-treesitter-textobjects.move')[method](query, 'textobjects')
           end, {
             buffer = buf,
             desc = desc,
@@ -96,8 +93,7 @@ PackageManager.add {
         end
         local desc = table.concat(parts, ' or ') .. ' Select'
         vim.keymap.set({ 'n', 'x', 'o' }, key, function()
-          require('nvim-treesitter-textobjects.select').select_textobject(query,
-            'textobjects')
+          require('nvim-treesitter-textobjects.select').select_textobject(query, 'textobjects')
         end, {
           buffer = buf,
           desc = desc,
@@ -107,8 +103,7 @@ PackageManager.add {
     end
 
     vim.api.nvim_create_autocmd('FileType', {
-      group = vim.api.nvim_create_augroup('lazyvim_treesitter_textobjects',
-        { clear = true }),
+      group = vim.api.nvim_create_augroup('lazyvim_treesitter_textobjects', { clear = true }),
       callback = function(ev) attach(ev.buf) end,
     })
 
