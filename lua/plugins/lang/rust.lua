@@ -67,11 +67,6 @@ PackageManager.add {
 
     require('crates').setup()
 
-    -- rustaceanvim starts its LSP from ftplugin/rust.lua, which is sourced during
-    -- filetype detection — before this plugin is on the runtimepath for the first
-    -- rust buffer of a session. Start it explicitly for the triggering buffer;
-    -- later buffers are covered by its auto_attach.
-    -- Guarded by ft so it can never start rust-analyzer for a non-rust buffer.
     if vim.bo.filetype == 'rust' then pcall(function() require('rustaceanvim.lsp').start(vim.api.nvim_get_current_buf()) end) end
 
     require('conform').formatters_by_ft.rust = { 'rustfmt' }
