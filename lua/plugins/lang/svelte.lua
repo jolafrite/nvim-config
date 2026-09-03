@@ -18,7 +18,6 @@ vim.lsp.config('svelte', {
   filetypes = { 'svelte' },
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'svelte' })
+PackageManager.add_with_treesitter({ 'svelte' })
 
 vim.lsp.enable 'svelte'

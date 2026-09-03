@@ -9,29 +9,23 @@ vim.lsp.config('terraformls', {
   root_markers = { '.terraform', '.git' },
 })
 
-local conform = require 'conform'
-conform.formatters_by_ft.terraform = { 'terraform_fmt' }
-conform.formatters_by_ft.tf = { 'terraform_fmt' }
-conform.formatters_by_ft['terraform-vars'] = { 'terraform_fmt' }
-conform.formatters_by_ft.hcl = { 'packer_fmt' }
+PackageManager.add_formatter({ 'terraform', 'tf', 'terraform-vars' }, 'terraform_fmt', function(conform)
+  conform.formatters.terraform_fmt = {
+    command = 'terraform',
+    stdin = true,
+    args = { 'fmt', '-' },
+  }
+end)
+PackageManager.add_formatter('hcl', 'packer_fmt', function(conform)
+  conform.formatters.packer_fmt = {
+    command = 'packer',
+    stdin = true,
+    args = { 'fmt', '-' },
+  }
+end)
 
-conform.formatters.terraform_fmt = {
-  command = 'terraform',
-  stdin = true,
-  args = { 'fmt', '-' },
-}
-conform.formatters.packer_fmt = {
-  command = 'packer',
-  stdin = true,
-  args = { 'fmt', '-' },
-}
+PackageManager.add_linter({ 'terraform', 'tf', 'terraform-vars' }, { 'tflint', 'terraform_validate' })
 
-local lint = require 'lint'
-lint.linters_by_ft.terraform = { 'tflint', 'terraform_validate' }
-lint.linters_by_ft.tf = { 'tflint', 'terraform_validate' }
-lint.linters_by_ft['terraform-vars'] = { 'tflint', 'terraform_validate' }
-
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'terraform', 'hcl' })
+PackageManager.add_with_treesitter({ 'terraform', 'hcl' })
 
 vim.lsp.enable 'terraformls'

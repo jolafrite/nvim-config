@@ -32,7 +32,6 @@ vim.lsp.config('yamlls', {
   },
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'yaml' })
+PackageManager.add_with_treesitter({ 'yaml' })
 
 vim.lsp.enable 'yamlls'

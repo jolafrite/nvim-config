@@ -1,2 +1,1 @@
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'git_config', 'gitcommit', 'gitattributes', 'gitignore', 'git_rebase' })
+PackageManager.add_with_treesitter({ 'git_config', 'gitcommit', 'gitattributes', 'gitignore', 'git_rebase' })

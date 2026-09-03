@@ -9,17 +9,15 @@ vim.lsp.config('twiggy_language_server', {
   filetypes = { 'twig', 'html.twig' },
 })
 
-local conform = require 'conform'
-conform.formatters['twig-cs-fixer'] = {
-  command = 'twig-cs-fixer',
-  args = { 'fix', '--config=.twig-cs-fixer.php' },
-}
-conform.formatters_by_ft.twig = { 'twig-cs-fixer' }
+PackageManager.add_formatter('twig', 'twig-cs-fixer', function(conform)
+  conform.formatters['twig-cs-fixer'] = {
+    command = 'twig-cs-fixer',
+    args = { 'fix', '--config=.twig-cs-fixer.php' },
+  }
+end)
 
-local lint = require 'lint'
-lint.linters_by_ft.twig = { 'twigcs' }
+PackageManager.add_linter('twig', 'twigcs')
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'twig' })
+PackageManager.add_with_treesitter({ 'twig' })
 
 vim.lsp.enable 'twiggy_language_server'

@@ -13,12 +13,12 @@ vim.lsp.config('tinymist', {
   },
 })
 
-local conform = require 'conform'
-conform.formatters_by_ft.typst = { 'typstyle' }
+PackageManager.add_formatter('typst', 'typstyle')
 
-conform.default_format_opts = vim.tbl_deep_extend('force', conform.default_format_opts or {}, { typst = { lsp_format = 'prefer' } })
+PackageManager.add_formatter('typst', 'typstyle', function(conform)
+  conform.default_format_opts = vim.tbl_deep_extend('force', conform.default_format_opts or {}, { typst = { lsp_format = 'prefer' } })
+end)
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'typst' })
+PackageManager.add_with_treesitter({ 'typst' })
 
 vim.lsp.enable 'tinymist'

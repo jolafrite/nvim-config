@@ -7,8 +7,7 @@ PackageManager.add {
   },
   filetype = { 'scala' },
   config = function()
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'scala' })
+    PackageManager.add_with_treesitter({ 'scala' })
 
     local ok, metals = pcall(require, 'metals')
     if ok then

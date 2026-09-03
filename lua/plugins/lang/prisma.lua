@@ -8,7 +8,6 @@ vim.lsp.config('prismals', {
   root_markers = { 'schema.prisma', '.git' },
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'prisma' })
+PackageManager.add_with_treesitter({ 'prisma' })
 
 vim.lsp.enable 'prismals'

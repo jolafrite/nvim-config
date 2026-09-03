@@ -17,18 +17,17 @@ vim.lsp.config('docker_compose_language_service', {
   root_markers = { 'docker-compose.yaml', 'docker-compose.yml', 'compose.yaml', 'compose.yml' },
 })
 
-local conform = require 'conform'
-conform.formatters.dockerfmt_fmt = {
-  command = 'dockerfmt',
-  stdin = true,
-  args = { '-' },
-}
-conform.formatters_by_ft.dockerfile = { 'dockerfmt_fmt' }
+PackageManager.add_formatter('dockerfile', 'dockerfmt_fmt', function(conform)
+  conform.formatters.dockerfmt_fmt = {
+    command = 'dockerfmt',
+    stdin = true,
+    args = { '-' },
+  }
+end)
 
-require('lint').linters_by_ft.dockerfile = { 'hadolint' }
+PackageManager.add_linter('dockerfile', 'hadolint')
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'dockerfile' })
+PackageManager.add_with_treesitter({ 'dockerfile' })
 
 vim.lsp.enable 'dockerls'
 vim.lsp.enable 'docker_compose_language_service'

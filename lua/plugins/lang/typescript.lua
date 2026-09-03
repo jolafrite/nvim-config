@@ -5,7 +5,7 @@ PackageManager.add_with_mason {
   'oxfmt',
   'prettierd',
 }
-PackageManager.add_with_treesitter({ 'typescript', 'tsx', 'javascript' })
+PackageManager.add_with_treesitter { 'typescript', 'tsx', 'javascript' }
 
 vim.lsp.config('ts_ls', {
   cmd = { 'typescript-language-server', '--stdio' },

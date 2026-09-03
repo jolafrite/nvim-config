@@ -12,8 +12,7 @@ PackageManager.add {
       'codelldb',
     }
 
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'rust' })
+    PackageManager.add_with_treesitter({ 'rust' })
 
     local diagnostics = vim.g.lazyvim_rust_diagnostics or 'rust-analyzer'
 
@@ -31,8 +30,12 @@ PackageManager.add {
     vim.g.rustaceanvim = vim.tbl_deep_extend('keep', vim.g.rustaceanvim or {}, {
       server = {
         on_attach = function(_, bufnr)
-          vim.keymap.set('n', '<leader>cR', function() vim.cmd.RustLsp 'codeAction' end, { desc = 'Code Action', buffer = bufnr })
-          vim.keymap.set('n', '<leader>dr', function() vim.cmd.RustLsp 'debuggables' end, { desc = 'Rust Debuggables', buffer = bufnr })
+          vim.keymap.set('n', '<leader>cR',
+            function() vim.cmd.RustLsp 'codeAction' end,
+            { desc = 'Code Action', buffer = bufnr })
+          vim.keymap.set('n', '<leader>dr',
+            function() vim.cmd.RustLsp 'debuggables' end,
+            { desc = 'Rust Debuggables', buffer = bufnr })
         end,
         default_settings = {
           ['rust-analyzer'] = {
@@ -67,19 +70,21 @@ PackageManager.add {
 
     require('crates').setup()
 
-    if vim.bo.filetype == 'rust' then pcall(function() require('rustaceanvim.lsp').start(vim.api.nvim_get_current_buf()) end) end
+    if vim.bo.filetype == 'rust' then pcall(function() require(
+        'rustaceanvim.lsp').start(vim.api.nvim_get_current_buf()) end) end
 
-    require('conform').formatters_by_ft.rust = { 'rustfmt' }
+    PackageManager.add_formatter('rust', 'rustfmt', function(conform)
+      conform.formatters.rustfmt = {
+        command = 'rustfmt',
+        stdin = true,
+        args = { '--emit=stdout' },
+      }
+    end)
 
-    require('conform').formatters.rustfmt = {
-      command = 'rustfmt',
-      stdin = true,
-      args = { '--emit=stdout' },
-    }
+    PackageManager.add_linter('rust', 'clippy')
 
-    require('lint').linters_by_ft.rust = { 'clippy' }
-
-    require('lint').linters.clippy = vim.tbl_deep_extend('force', require('lint').linters.clippy, { ignore_exitcode = true })
+    require('lint').linters.clippy = vim.tbl_deep_extend('force',
+      require('lint').linters.clippy, { ignore_exitcode = true })
 
     pcall(function()
       require('neotest').setup {

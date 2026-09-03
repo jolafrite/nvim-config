@@ -16,7 +16,6 @@ vim.lsp.config('ols', {
   },
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'odin' })
+PackageManager.add_with_treesitter({ 'odin' })
 
 vim.lsp.enable 'ols'

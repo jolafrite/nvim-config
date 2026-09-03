@@ -24,5 +24,4 @@ else
   vim.lsp.enable 'intelephense'
 end
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'php' })
+PackageManager.add_with_treesitter({ 'php' })

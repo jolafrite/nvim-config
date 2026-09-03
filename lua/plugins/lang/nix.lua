@@ -9,14 +9,12 @@ vim.lsp.config('nil_ls', {
   root_markers = { 'flake.nix', 'shell.nix', '.git' },
 })
 
-local conform = require 'conform'
-conform.formatters.nixfmt = { command = 'nixfmt', stdin = true }
-conform.formatters_by_ft.nix = { 'nixfmt' }
+PackageManager.add_formatter('nix', 'nixfmt', function(conform)
+  conform.formatters.nixfmt = { command = 'nixfmt', stdin = true }
+end)
 
-local lint = require 'lint'
-lint.linters_by_ft.nix = { 'statix' }
+PackageManager.add_linter('nix', 'statix')
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'nix' })
+PackageManager.add_with_treesitter({ 'nix' })
 
 vim.lsp.enable 'nil_ls'

@@ -20,7 +20,6 @@ PackageManager.add {
 
     vim.lsp.enable 'texlab'
 
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'bibtex', 'latex' })
+    PackageManager.add_with_treesitter({ 'bibtex', 'latex' })
   end,
 }

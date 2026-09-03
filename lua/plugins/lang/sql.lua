@@ -10,7 +10,8 @@ PackageManager.add {
   },
   filetype = { 'sql' },
   config = function()
-    vim.keymap.set('n', '<leader>D', '<cmd>DBUIToggle<CR>', { desc = 'Toggle DBUI' })
+    vim.keymap.set('n', '<leader>D', '<cmd>DBUIToggle<CR>',
+      { desc = 'Toggle DBUI' })
 
     PackageManager.add_with_mason {
       'sqls',
@@ -24,21 +25,15 @@ PackageManager.add {
       settings = {},
     })
 
-    local conform = require 'conform'
-    conform.formatters.sqlfluff = {
-      args = { 'format', '--dialect=ansi', '-' },
-    }
-    for _, ft in ipairs(sql_ft) do
-      conform.formatters_by_ft[ft] = { 'sqlfluff' }
-    end
+        PackageManager.add_formatter(sql_ft, 'sqlfluff', function(conform)
+          conform.formatters.sqlfluff = {
+            args = { 'format', '--dialect=ansi', '-' },
+          }
+        end)
 
-    local lint = require 'lint'
-    for _, ft in ipairs(sql_ft) do
-      lint.linters_by_ft[ft] = { 'sqlfluff' }
-    end
+    PackageManager.add_linter(sql_ft, 'sqlfluff')
 
-    local TS = require 'nvim-treesitter'
-    pcall(TS.install, { 'sql' })
+    PackageManager.add_with_treesitter({ 'sql' })
 
     vim.lsp.enable 'sqls'
   end,

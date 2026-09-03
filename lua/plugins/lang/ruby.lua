@@ -33,9 +33,6 @@ if formatter == 'rubocop' and lsp ~= 'solargraph' then
   vim.lsp.enable 'rubocop'
 end
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'ruby' })
+PackageManager.add_with_treesitter({ 'ruby' })
 
-local conform = require 'conform'
-conform.formatters_by_ft.ruby = { formatter }
-conform.formatters_by_ft.eruby = { 'erb_format' }
+PackageManager.add_formatter({ 'ruby', 'eruby' }, { formatter, 'erb_format' })

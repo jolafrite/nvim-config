@@ -8,7 +8,6 @@ vim.lsp.config('erlangls', {
   root_markers = { 'rebar.config', 'erlang.mk', '.git' },
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'erlang' })
+PackageManager.add_with_treesitter({ 'erlang' })
 
 vim.lsp.enable 'erlangls'

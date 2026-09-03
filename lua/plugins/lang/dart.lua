@@ -9,7 +9,6 @@ vim.lsp.config('dartls', {
   root_markers = { 'pubspec.yaml', '.git' },
 })
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'dart' })
+PackageManager.add_with_treesitter({ 'dart' })
 
 vim.lsp.enable 'dartls'

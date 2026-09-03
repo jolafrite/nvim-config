@@ -49,26 +49,15 @@ vim.lsp.config('clangd', {
   },
 })
 
-local conform = require 'conform'
-conform.formatters.clang_format = {
-  command = 'clang-format',
-  stdin = true,
-}
-conform.formatters_by_ft.c = { 'clang_format' }
-conform.formatters_by_ft.cpp = { 'clang_format' }
-conform.formatters_by_ft.cxx = { 'clang_format' }
-conform.formatters_by_ft.h = { 'clang_format' }
-conform.formatters_by_ft.hpp = { 'clang_format' }
-conform.formatters_by_ft.cc = { 'clang_format' }
+PackageManager.add_formatter({ 'c', 'cpp', 'cxx', 'h', 'hpp', 'cc' }, 'clang_format', function(conform)
+  conform.formatters.clang_format = {
+    command = 'clang-format',
+    stdin = true,
+  }
+end)
 
-require('lint').linters_by_ft.c = { 'cpplint' }
-require('lint').linters_by_ft.cpp = { 'cpplint' }
-require('lint').linters_by_ft.cxx = { 'cpplint' }
-require('lint').linters_by_ft.h = { 'cpplint' }
-require('lint').linters_by_ft.hpp = { 'cpplint' }
-require('lint').linters_by_ft.cc = { 'cpplint' }
+PackageManager.add_linter({ 'c', 'cpp', 'cxx', 'h', 'hpp', 'cc' }, 'cpplint')
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'c', 'cpp' })
+PackageManager.add_with_treesitter({ 'c', 'cpp' })
 
 vim.lsp.enable 'clangd'

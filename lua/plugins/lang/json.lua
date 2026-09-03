@@ -21,18 +21,15 @@ vim.lsp.config('jsonls', {
   },
 })
 
-local conform = require 'conform'
-conform.formatters.fixjson = {
-  command = 'fixjson',
-  stdin = true,
-}
-conform.formatters_by_ft.json = { 'prettierd', 'fixjson' }
-conform.formatters_by_ft.jsonc = { 'prettierd', 'fixjson' }
+PackageManager.add_formatter({ 'json', 'jsonc' }, { 'prettierd', 'fixjson' }, function(conform)
+  conform.formatters.fixjson = {
+    command = 'fixjson',
+    stdin = true,
+  }
+end)
 
-require('lint').linters_by_ft.json = { 'jsonlint' }
-require('lint').linters_by_ft.jsonc = { 'jsonlint' }
+PackageManager.add_linter({ 'json', 'jsonc' }, 'jsonlint')
 
 vim.lsp.enable 'jsonls'
 
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'json', 'json5' })
+PackageManager.add_with_treesitter({ 'json', 'json5' })

@@ -4,7 +4,7 @@ PackageManager.add_with_mason {
   'selene',
 }
 
-pcall(function() require('nvim-treesitter').install { 'lua', 'luadoc', 'luap' } end)
+PackageManager.add_with_treesitter({ 'lua', 'luadoc', 'luap' })
 
 vim.lsp.config('lua_ls', {
   cmd = { 'lua-language-server' },
@@ -33,8 +33,10 @@ vim.lsp.config('lua_ls', {
 })
 
 PackageManager.add_formatter('lua', 'stylua')
-PackageManager.add_linter('lua', 'selene')
-
-if vim.uv.fs_stat(vim.fn.expand '~/.cargo/bin/selene') then lint.linters.selene.cmd = vim.fn.expand '~/.cargo/bin/selene' end
+PackageManager.add_linter('lua', 'selene', function(lint)
+  if vim.uv.fs_stat(vim.fn.expand '~/.cargo/bin/selene') then
+    lint.linters.selene.cmd = vim.fn.expand '~/.cargo/bin/selene'
+  end
+end)
 
 vim.lsp.enable 'lua_ls'
