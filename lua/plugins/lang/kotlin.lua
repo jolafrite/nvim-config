@@ -18,7 +18,7 @@ PackageManager.add {
       filetypes = { 'kotlin' },
     })
 
-    PackageManager.add_with_treesitter({ 'kotlin' })
+    PackageManager.add_with_treesitter { 'kotlin' }
 
     vim.lsp.enable 'kotlin_language_server'
 
@@ -52,7 +52,7 @@ PackageManager.add {
           name = 'Attach to debugging session',
           port = 5005,
           args = {},
-          projectRoot = vim.fn.getcwd,
+          projectRoot = function() return vim.fn.getcwd() end,
           hostName = 'localhost',
           timeout = 2000,
         },

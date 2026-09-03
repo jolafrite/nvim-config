@@ -4,7 +4,8 @@ PackageManager.add_with_mason {
   'csharpier',
   'fantomas',
 }
-PackageManager.add_formatter({ 'cs', 'fsharp' }, { 'csharpier', 'fantomas' })
+PackageManager.add_formatter('cs', 'csharpier')
+PackageManager.add_formatter('fsharp', 'fantomas')
 
 vim.lsp.config('omnisharp', {
   cmd = { 'omnisharp', '--languageserver' },
@@ -18,9 +19,13 @@ vim.lsp.config('omnisharp', {
     'paket.dependencies',
     'paket.lock',
   },
-  enable_roslyn_analyzers = true,
-  organize_imports_on_format = true,
-  enable_import_completion = true,
+  settings = {
+    FormattingOptions = { OrganizeImports = true },
+    RoslynExtensionsOptions = {
+      EnableAnalyzersSupport = true,
+      EnableImportCompletion = true,
+    },
+  },
 })
 
 vim.lsp.config('fsautocomplete', {
@@ -29,7 +34,7 @@ vim.lsp.config('fsautocomplete', {
   root_markers = { '*.fsproj', 'paket.dependencies', 'paket.lock' },
 })
 
-PackageManager.add_with_treesitter({ 'c_sharp', 'fsharp' })
+PackageManager.add_with_treesitter { 'c_sharp', 'fsharp' }
 
 vim.lsp.enable 'omnisharp'
 vim.lsp.enable 'fsautocomplete'

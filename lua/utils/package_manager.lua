@@ -52,22 +52,28 @@ local function load_spec(s)
   to_add[#to_add + 1] = s[1]
 
   local ok, err = pcall(vim.pack.add, to_add, { load = true, confirm = false })
-  if not ok then vim.notify(
-    'package_manager: failed to load ' .. tostring(s[1]) .. ': ' .. tostring(err),
-      vim.log.levels.WARN) end
-  if s.config then pcall(s.config) end
+  if not ok then vim.notify('package_manager: failed to load ' .. tostring(s[1]) .. ': ' .. tostring(err), vim.log.levels.WARN) end
+  if s.config then
+    local ok_cfg, cfg_err = pcall(s.config)
+    if not ok_cfg then vim.notify('package_manager: config failed for ' .. tostring(s[1]) .. ': ' .. tostring(cfg_err), vim.log.levels.WARN) end
+  end
 end
 
 ---@param tools string[]
 local function install_with_mason(tools)
   local ok, mr = pcall(require, 'mason-registry')
   if not ok then return false end
+  local seen = {}
   for _, tool in ipairs(tools) do
-    local ok_p, p = pcall(mr.get_package, tool)
-    if not ok_p then
-      vim.notify(('mason: unknown package %q'):format(tool), vim.log.levels.WARN)
-    elseif not p:is_installed() then
-      p:install()
+    if not seen[tool] then
+      seen[tool] = true
+      local ok_p, p = pcall(mr.get_package, tool)
+      if not ok_p then
+        vim.notify(('mason: unknown package %q'):format(tool), vim.log.levels.WARN)
+      elseif not p:is_installed() then
+        local ok_i, err = pcall(p.install, p)
+        if not ok_i then vim.notify(('mason: failed to install %q: %s'):format(tool, tostring(err)), vim.log.levels.WARN) end
+      end
     end
   end
   return true
@@ -134,12 +140,10 @@ local function schedule_spec(spec)
           break
         end
       end
-      if not loaded_now then
-        vim.api.nvim_create_autocmd(events, {
-          once = true,
-          callback = function() load_spec(spec) end,
-        })
-      end
+      if not loaded_now then vim.api.nvim_create_autocmd(events, {
+        once = true,
+        callback = function() load_spec(spec) end,
+      }) end
     else
       vim.api.nvim_create_autocmd(events, {
         once = true,
@@ -147,8 +151,7 @@ local function schedule_spec(spec)
       })
     end
   elseif spec.filetype then
-    local fts = type(spec.filetype) == 'string' and { spec.filetype } or
-    spec.filetype
+    local fts = type(spec.filetype) == 'string' and { spec.filetype } or spec.filetype
     local loaded_now = false
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
       if vim.api.nvim_buf_is_loaded(buf) and vim.list_contains(fts, vim.bo[buf].filetype) then
@@ -179,24 +182,20 @@ end
 
 local function drain_pendings()
   for i = #pending_formatters, 1, -1 do
-    if setup_formatters(pending_formatters[i].ft, pending_formatters[i].tools, pending_formatters[i].on_conform) then
-      table.remove(pending_formatters, i) end
+    if setup_formatters(pending_formatters[i].ft, pending_formatters[i].tools, pending_formatters[i].on_conform) then table.remove(pending_formatters, i) end
   end
 
   for i = #pending_linters, 1, -1 do
-    if setup_linters(pending_linters[i].ft, pending_linters[i].tools, pending_linters[i].on_lint) then
-      table.remove(pending_linters, i) end
+    if setup_linters(pending_linters[i].ft, pending_linters[i].tools, pending_linters[i].on_lint) then table.remove(pending_linters, i) end
   end
 
   for i = #pending_debuggers, 1, -1 do
-    if setup_debuggers(pending_debuggers[i].ft, pending_debuggers[i].tools) then
-      table.remove(pending_debuggers, i) end
+    if setup_debuggers(pending_debuggers[i].ft, pending_debuggers[i].tools) then table.remove(pending_debuggers, i) end
   end
 
   for i = #pending_snippets, 1, -1 do
     table.remove(pending_snippets, i)
   end
-
 end
 
 local function load_dependencies()
@@ -281,7 +280,6 @@ M.add_snippets = function(ft, snippets)
   }
   if activated then load_dependencies() end
 end
-
 
 M.load = function()
   load_dependencies()
