@@ -13,6 +13,7 @@
 ---@field add_linter fun(ft: string|string[], linters: string|string[])
 ---@field add_debugger fun(ft: string|string[], debuggers: string|string[])
 ---@field add_snippets fun(ft: string|string[], snippets: string|string[])
+---@field add_with_treesitter fun(tools: string|string[])
 ---@field load fun()
 local M = {}
 
@@ -33,6 +34,8 @@ local pending_debuggers = {}
 
 ---@type { ft: string[], tools: string[] }[]
 local pending_snippets = {}
+---@type string[]
+local pending_treesitter = {}
 
 local activated = false
 
@@ -56,9 +59,9 @@ local function load_spec(s)
   if not ok then
     vim.notify(
       "package_manager: failed to load "
-        .. tostring(s[1])
-        .. ": "
-        .. tostring(err),
+      .. tostring(s[1])
+      .. ": "
+      .. tostring(err),
       vim.log.levels.WARN
     )
   end
@@ -127,31 +130,32 @@ local function setup_debuggers(filetypes, tools)
   return true
 end
 
--- ─── core: drain everything ─────────────────────────────────────────────────
+---@param tools string[]
+local function setup_treesitter(tools)
+  local ok, ts = pcall(require, "nvim-treesitter")
+  if not ok then
+    return false
+  end
+  pcall(ts.install, tools)
+  return true
+end
 
-local function load_dependencies()
-  for _, spec in ipairs(registry) do
-    if spec.event then
-      local events = type(spec.event) == "string" and { spec.event }
-        or spec.event
-      if vim.list_contains(events, "FileType") then
-        local loaded_now = false
-        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-          if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].filetype ~= "" then
-            load_spec(spec)
-            loaded_now = true
-            break
-          end
+-- ─── scheduling + drain ──────────────────────────────────────────────────────
+
+---@param spec PackageManager.Spec
+local function schedule_spec(spec)
+  if spec.event then
+    local events = type(spec.event) == "string" and { spec.event } or spec.event
+    if vim.list_contains(events, "FileType") then
+      local loaded_now = false
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].filetype ~= "" then
+          load_spec(spec)
+          loaded_now = true
+          break
         end
-        if not loaded_now then
-          vim.api.nvim_create_autocmd(events, {
-            once = true,
-            callback = function()
-              load_spec(spec)
-            end,
-          })
-        end
-      else
+      end
+      if not loaded_now then
         vim.api.nvim_create_autocmd(events, {
           once = true,
           callback = function()
@@ -159,51 +163,52 @@ local function load_dependencies()
           end,
         })
       end
-    elseif spec.filetype then
-      local fts = type(spec.filetype) == "string" and { spec.filetype }
+    else
+      vim.api.nvim_create_autocmd(events, {
+        once = true,
+        callback = function()
+          load_spec(spec)
+        end,
+      })
+    end
+  elseif spec.filetype then
+    local fts = type(spec.filetype) == "string" and { spec.filetype }
         or spec.filetype
-      local loaded_now = false
-      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-        if
+    local loaded_now = false
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      if
           vim.api.nvim_buf_is_loaded(buf)
           and vim.list_contains(fts, vim.bo[buf].filetype)
-        then
+      then
+        load_spec(spec)
+        loaded_now = true
+        break
+      end
+    end
+    if not loaded_now then
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = fts,
+        once = true,
+        callback = function()
           load_spec(spec)
-          loaded_now = true
-          break
-        end
-      end
-      if not loaded_now then
-        vim.api.nvim_create_autocmd("FileType", {
-          pattern = fts,
-          once = true,
-          callback = function()
-            load_spec(spec)
-            -- Reproduce require('utils').on_file_types behaviour: source the
-            -- filetype's ftplugin after the spec's config has run, so ftplugin
-            -- overrides (e.g. buffer-local keymaps) take effect.
-            vim.cmd("runtime! ftplugin/" .. vim.bo.filetype .. ".lua")
-            vim.cmd("runtime! ftplugin/" .. vim.bo.filetype .. ".vim")
-            return true
-          end,
-        })
-      end
-    else
-      load_spec(spec)
+          -- Reproduce require('utils').on_file_types behaviour: source the
+          -- filetype's ftplugin after the spec's config has run, so ftplugin
+          -- overrides (e.g. buffer-local keymaps) take effect.
+          vim.cmd("runtime! ftplugin/" .. vim.bo.filetype .. ".lua")
+          vim.cmd("runtime! ftplugin/" .. vim.bo.filetype .. ".vim")
+          return true
+        end,
+      })
     end
+  else
+    load_spec(spec)
   end
-  registry = {}
+end
 
-  if #mason_tools > 0 then
-    if not install_with_mason(mason_tools) then
-      return
-    end
-    mason_tools = {}
-  end
-
+local function drain_pendings()
   for i = #pending_formatters, 1, -1 do
     if
-      setup_formatters(pending_formatters[i].ft, pending_formatters[i].tools)
+        setup_formatters(pending_formatters[i].ft, pending_formatters[i].tools)
     then
       table.remove(pending_formatters, i)
     end
@@ -224,6 +229,21 @@ local function load_dependencies()
   for i = #pending_snippets, 1, -1 do
     table.remove(pending_snippets, i)
   end
+end
+
+local function load_dependencies()
+  for _, spec in ipairs(registry) do
+    schedule_spec(spec)
+  end
+  registry = {}
+
+  install_with_mason(mason_tools)
+  mason_tools = {}
+
+  setup_treesitter(pending_treesitter)
+  pending_treesitter = {}
+
+  drain_pendings()
 end
 
 -- ─── public API ─────────────────────────────────────────────────────────────
@@ -248,11 +268,10 @@ end
 ---@param tools string|string[]
 M.add_with_treesitter = function(tools)
   local list = type(tools) == "string" and { tools } or tools
-  local ok, ts = pcall(require, "nvim-treesitter")
-  if not ok then
-    return
+  vim.list_extend(pending_treesitter, list)
+  if activated then
+    load_dependencies()
   end
-  pcall(ts.install, list)
 end
 
 ---@param ft string|string[]
