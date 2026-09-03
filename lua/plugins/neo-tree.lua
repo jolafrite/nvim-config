@@ -1,7 +1,5 @@
 local gh = require('utils').gh
 
-
-
 PackageManager.add {
   [1] = gh 'nvim-neo-tree/neo-tree.nvim',
   event = 'FileType',

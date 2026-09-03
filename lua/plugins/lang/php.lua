@@ -1,11 +1,12 @@
-
 local lsp = vim.g.lazyvim_php_lsp or 'phpactor'
 
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   lsp,
   'php-cs-fixer',
   'phpcs',
 }
+PackageManager.add_formatter('php', 'php_cs_fixer')
+PackageManager.add_linter('php', 'phpcs')
 
 if lsp == 'phpactor' then
   vim.lsp.config('phpactor', {
@@ -23,12 +24,5 @@ else
   vim.lsp.enable 'intelephense'
 end
 
-local conform = require 'conform'
-conform.formatters_by_ft.php = { 'php_cs_fixer' }
-
-local lint = require 'lint'
-lint.linters_by_ft.php = { 'phpcs' }
-
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'php' })
-

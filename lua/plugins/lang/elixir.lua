@@ -1,4 +1,4 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'elixir-ls',
 }
 
@@ -21,4 +21,3 @@ pcall(TS.install, { 'elixir', 'heex', 'eex' })
 vim.treesitter.language.register('markdown', 'livebook')
 
 vim.lsp.enable 'elixirls'
-

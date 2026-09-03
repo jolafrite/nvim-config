@@ -7,7 +7,7 @@ PackageManager.add {
   },
   filetype = { 'rust' },
   config = function()
-    require('utils').install_with_mason {
+    PackageManager.add_with_mason {
       'rust-analyzer',
       'codelldb',
     }
@@ -18,7 +18,7 @@ PackageManager.add {
     local diagnostics = vim.g.lazyvim_rust_diagnostics or 'rust-analyzer'
 
     if diagnostics == 'bacon-ls' then
-      require('utils').install_with_mason {
+      PackageManager.add_with_mason {
         'bacon',
       }
       vim.lsp.config('bacon_ls', {

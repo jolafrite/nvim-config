@@ -1,9 +1,10 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'omnisharp',
   'fsautocomplete',
   'csharpier',
   'fantomas',
 }
+PackageManager.add_formatter({ 'cs', 'fsharp' }, { 'csharpier', 'fantomas' })
 
 vim.lsp.config('omnisharp', {
   cmd = { 'omnisharp', '--languageserver' },
@@ -28,13 +29,8 @@ vim.lsp.config('fsautocomplete', {
   root_markers = { '*.fsproj', 'paket.dependencies', 'paket.lock' },
 })
 
-local conform = require 'conform'
-conform.formatters_by_ft.cs = { 'csharpier' }
-conform.formatters_by_ft.fsharp = { 'fantomas' }
-
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'c_sharp', 'fsharp' })
 
 vim.lsp.enable 'omnisharp'
 vim.lsp.enable 'fsautocomplete'
-

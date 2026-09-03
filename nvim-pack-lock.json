@@ -8,6 +8,10 @@
       "rev": "f9031ec5f5b30d99ac43013685236bf65ff801a7",
       "src": "https://github.com/b0o/SchemaStore.nvim"
     },
+    "actions-preview.nvim": {
+      "rev": "0ac9c2aa3cfc8c885321c0862b50b6b1c3392405",
+      "src": "https://github.com/aznhe21/actions-preview.nvim"
+    },
     "artio.nvim": {
       "rev": "8fb9b8a96c37822ea57d399deb4c27053b13ff20",
       "src": "https://github.com/comfysage/artio.nvim"

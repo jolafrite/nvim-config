@@ -1,7 +1,7 @@
 local lsp = 'pyright'
 local ruff = 'ruff'
 
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   lsp == 'basedpyright' and 'basedpyright' or 'pyright',
   ruff,
 }
@@ -42,7 +42,6 @@ vim.lsp.config(ruff, {
 })
 
 require('snacks').util.lsp.on({ name = ruff }, function(_, client)
-  
   client.server_capabilities.hoverProvider = false
 end)
 
@@ -61,4 +60,3 @@ require('lint').linters_by_ft.python = { ruff, 'mypy', 'flake8' }
 
 vim.lsp.enable(lsp)
 vim.lsp.enable(ruff)
-

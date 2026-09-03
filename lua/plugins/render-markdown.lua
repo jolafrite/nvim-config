@@ -1,7 +1,5 @@
 local gh = require('utils').gh
 
-
-
 PackageManager.add {
   [1] = gh 'MeanderingProgrammer/render-markdown.nvim',
   filetype = 'markdown',
@@ -22,4 +20,3 @@ PackageManager.add {
     }
   end,
 }
-

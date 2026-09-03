@@ -1,6 +1,7 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'dart',
 }
+PackageManager.add_formatter('dart', 'dart_format')
 
 vim.lsp.config('dartls', {
   cmd = { 'dart', 'language-server', '--protocol=lsp' },
@@ -8,11 +9,7 @@ vim.lsp.config('dartls', {
   root_markers = { 'pubspec.yaml', '.git' },
 })
 
-local conform = require 'conform'
-conform.formatters_by_ft.dart = { 'dart_format' }
-
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'dart' })
 
 vim.lsp.enable 'dartls'
-

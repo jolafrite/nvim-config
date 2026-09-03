@@ -1,7 +1,5 @@
 local gh = require('utils').gh
 
-
-
 PackageManager.add {
   [1] = gh 'gbprod/yanky.nvim',
   event = 'BufReadPost',
@@ -20,8 +18,6 @@ PackageManager.add {
 
 local opts = { silent = true, desc = 'Open Yank History' }
 vim.keymap.set({ 'n', 'x' }, '<leader>p', function()
-  
-  
   if Snacks.picker.sources['yanky'] then
     Snacks.picker.yanky()
   else
@@ -29,7 +25,6 @@ vim.keymap.set({ 'n', 'x' }, '<leader>p', function()
   end
   return true
 end, opts)
-
 
 vim.keymap.set({ 'n', 'x' }, 'y', '<Plug>(YankyYank)', { desc = 'Yank Text' })
 vim.keymap.set({ 'n', 'x' }, 'p', '<Plug>(YankyPutAfter)', { desc = 'Put Text After Cursor' })
@@ -48,4 +43,3 @@ vim.keymap.set('n', '>P', '<Plug>(YankyPutIndentBeforeShiftRight)', { desc = 'Pu
 vim.keymap.set('n', '<P', '<Plug>(YankyPutIndentBeforeShiftLeft)', { desc = 'Put Before and Indent Left' })
 vim.keymap.set('n', '=p', '<Plug>(YankyPutAfterFilter)', { desc = 'Put After Applying a Filter' })
 vim.keymap.set('n', '=P', '<Plug>(YankyPutBeforeFilter)', { desc = 'Put Before Applying a Filter' })
-

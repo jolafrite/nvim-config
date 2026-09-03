@@ -1,6 +1,4 @@
-
-
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'biome',
 }
 
@@ -27,4 +25,3 @@ conform.formatters['biome-check'] = {
 }
 
 vim.lsp.enable 'biome'
-

@@ -1,7 +1,8 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'xmlformatter',
   'lemminx',
 }
+PackageManager.add_formatter('xml', 'xmlformatter')
 
 vim.lsp.config('lemminx', {
   cmd = { 'lemminx' },
@@ -12,8 +13,4 @@ vim.lsp.config('lemminx', {
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'xml' })
 
-local conform = require 'conform'
-conform.formatters_by_ft.xml = { 'xmlformatter' }
-
 vim.lsp.enable 'lemminx'
-

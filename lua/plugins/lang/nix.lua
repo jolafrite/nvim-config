@@ -1,4 +1,4 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'nil',
   'statix',
 }
@@ -20,4 +20,3 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'nix' })
 
 vim.lsp.enable 'nil_ls'
-

@@ -1,5 +1,4 @@
-
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'vue-language-server',
 }
 
@@ -13,4 +12,3 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'vue', 'css' })
 
 vim.lsp.enable 'vue_ls'
-

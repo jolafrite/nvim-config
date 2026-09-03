@@ -1,7 +1,5 @@
 local gh = require('utils').gh
 
-
-
 PackageManager.add {
   [1] = gh 'kosayoda/nvim-lightbulb',
   event = 'LSPAttach',

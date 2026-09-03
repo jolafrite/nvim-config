@@ -1,6 +1,5 @@
 local gh = require('utils').gh
 
-
 PackageManager.add {
   [1] = gh 'Wansmer/symbol-usage.nvim',
   event = 'LspAttach',
@@ -19,4 +18,3 @@ PackageManager.add {
     }
   end,
 }
-

@@ -34,8 +34,7 @@ PackageManager.add {
   end,
 }
 
-
-vim.keymap.set("n", "<leader>sn", "", { desc = "+noice" })
+vim.keymap.set('n', '<leader>sn', '', { desc = '+noice' })
 vim.keymap.set('c', '<S-Enter>', function() require('noice').redirect(vim.fn.getcmdline()) end, { desc = 'Redirect Cmdline' })
 vim.keymap.set('n', '<leader>snl', function() require('noice').cmd 'last' end, { desc = 'Noice Last Message' })
 vim.keymap.set('n', '<leader>snh', function() require('noice').cmd 'history' end, { desc = 'Noice History' })
@@ -48,4 +47,3 @@ end, { silent = true, expr = true, desc = 'Scroll Forward' })
 vim.keymap.set({ 'i', 'n', 's' }, '<c-b>', function()
   if not require('noice.lsp').scroll(-4) then return '<c-b>' end
 end, { silent = true, expr = true, desc = 'Scroll Backward' })
-

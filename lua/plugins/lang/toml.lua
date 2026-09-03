@@ -1,6 +1,7 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'taplo',
 }
+PackageManager.add_formatter('toml', 'taplo')
 
 vim.lsp.config('taplo', {
   cmd = { 'taplo', 'lsp', 'stdio' },
@@ -11,8 +12,4 @@ vim.lsp.config('taplo', {
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'toml' })
 
-local conform = require 'conform'
-conform.formatters_by_ft.toml = { 'taplo' }
-
 vim.lsp.enable 'taplo'
-

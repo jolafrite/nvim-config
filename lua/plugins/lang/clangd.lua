@@ -1,4 +1,4 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'clangd',
   'clang-format',
   'cpplint',
@@ -72,4 +72,3 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'c', 'cpp' })
 
 vim.lsp.enable 'clangd'
-

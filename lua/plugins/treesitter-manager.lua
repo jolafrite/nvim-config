@@ -1,7 +1,5 @@
 local gh = require('utils').gh
 
-
-
 PackageManager.add {
   [1] = gh 'romus204/tree-sitter-manager.nvim',
   event = 'BufReadPost',
@@ -28,4 +26,3 @@ vim.api.nvim_create_user_command('TSUpgrade', function()
   end
   if #langs > 0 then vim.wait(900000, function() return remaining <= 0 end, 200) end
 end, { nargs = 0, desc = 'Update all installed treesitter parsers' })
-

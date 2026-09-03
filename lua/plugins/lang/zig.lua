@@ -1,34 +1,27 @@
 local gh = require('utils').gh
 
-PackageManager.add({
-  [1] = gh 'lawrence-laz/neotest-zig',
-  filetype = {'zig', 'zir'},
-  config = function()
+PackageManager.add_with_mason { 'zls' }
 
-require('utils').install_with_mason {
-  'zls',
-}
+-- vim.lsp.config('zls', {
+--   cmd = { 'zls' },
+--   filetypes = { 'zig', 'zir' },
+--   root_markers = { 'zls.json', 'build.zig', '.git' },
+-- })
+-- vim.lsp.enable 'zls'
 
-vim.lsp.config('zls', {
-  cmd = { 'zls' },
-  filetypes = { 'zig', 'zir' },
-  root_markers = { 'zls.json', 'build.zig', '.git' },
-})
+-- local TS = require 'nvim-treesitter'
+-- pcall(TS.install, { 'zig' })
 
-vim.lsp.enable 'zls'
-
-local TS = require 'nvim-treesitter'
-pcall(TS.install, { 'zig' })
-
-pcall(function()
-  require('neotest').setup {
-    adapters = {
-      ['neotest-zig'] = {},
-    },
-  }
-end)
-
-
-  end,
-})
-
+-- PackageManager.add({
+--   [1] = gh 'lawrence-laz/neotest-zig',
+--   filetype = {'zig', 'zir'},
+--   config = function()
+--     pcall(function()
+--       require('neotest').setup {
+--         adapters = {
+--           ['neotest-zig'] = {},
+--         },
+--       }
+--     end)
+--   end,
+-- })

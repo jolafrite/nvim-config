@@ -4,7 +4,7 @@ PackageManager.add {
   [1] = gh 'Civitasv/cmake-tools.nvim',
   filetype = { 'cmake' },
   config = function()
-    require('utils').install_with_mason {
+    PackageManager.add_with_mason {
       'neocmakelsp',
       'cmakelang',
       'cmakelint',
@@ -32,4 +32,3 @@ PackageManager.add {
     vim.lsp.enable 'neocmake'
   end,
 }
-

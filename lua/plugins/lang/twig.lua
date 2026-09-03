@@ -1,4 +1,4 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'twiggy-language-server',
   'twigcs',
   'twig-cs-fixer',
@@ -23,4 +23,3 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'twig' })
 
 vim.lsp.enable 'twiggy_language_server'
-

@@ -1,7 +1,5 @@
 local gh = require('utils').gh
 
-
-
 PackageManager.add {
   [1] = gh 'VidocqH/lsp-lens.nvim',
   event = 'LSPAttach',

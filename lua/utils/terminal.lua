@@ -3,13 +3,13 @@ local M = {}
 M.setup = function(shell)
   vim.o.shell = shell or vim.o.shell
 
-  if shell == "pwsh" or shell == "powershell" then
-    if vim.fn.executable("pwsh") == 1 then
-      vim.o.shell = "pwsh"
-    elseif vim.fn.executable("powershell") == 1 then
-      vim.o.shell = "powershell"
+  if shell == 'pwsh' or shell == 'powershell' then
+    if vim.fn.executable 'pwsh' == 1 then
+      vim.o.shell = 'pwsh'
+    elseif vim.fn.executable 'powershell' == 1 then
+      vim.o.shell = 'powershell'
     else
-      vim.notify("No powershell executable found", vim.log.levels.ERROR)
+      vim.notify('No powershell executable found', vim.log.levels.ERROR)
       return
     end
 
@@ -18,8 +18,8 @@ M.setup = function(shell)
 
     vim.o.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
     vim.o.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
-    vim.o.shellquote = ""
-    vim.o.shellxquote = ""
+    vim.o.shellquote = ''
+    vim.o.shellxquote = ''
   end
 end
 

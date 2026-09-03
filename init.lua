@@ -6,6 +6,6 @@ require 'config.keymaps'
 require 'config.autocmds'
 
 PluginsLoader.load 'plugins'
-PackageManager.load_all()
+PackageManager.load()
 
 pcall(vim.cmd.colorscheme, 'shades-of-purple')
