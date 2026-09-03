@@ -41,7 +41,7 @@ PackageManager.add {
       command = 'gocondense',
       stdin = true,
     }
-    require('conform').formatters_by_ft.go = { 'goimports', 'gofumpt', 'gocondense' }
+    PackageManager.add_formatter('go', { 'goimports', 'gofumpt', 'gocondense' })
 
     PackageManager.add_linter('go', 'golangcilint')
 

@@ -29,14 +29,10 @@ PackageManager.add {
     conform.formatters.sqlfluff = {
       args = { 'format', '--dialect=ansi', '-' },
     }
-    for _, ft in ipairs(sql_ft) do
-      conform.formatters_by_ft[ft] = { 'sqlfluff' }
-    end
 
-    local lint = require 'lint'
-    for _, ft in ipairs(sql_ft) do
-      lint.linters_by_ft[ft] = { 'sqlfluff' }
-    end
+    PackageManager.add_formatter(sql_ft, 'sqlfluff')
+
+    PackageManager.add_linter(sql_ft, 'sqlfluff')
 
     PackageManager.add_with_treesitter({ 'sql' })
 
