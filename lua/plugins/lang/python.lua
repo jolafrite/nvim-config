@@ -41,9 +41,7 @@ vim.lsp.config(ruff, {
   },
 })
 
-require('snacks').util.lsp.on({ name = ruff }, function(_, client)
-  client.server_capabilities.hoverProvider = false
-end)
+require('snacks').util.lsp.on({ name = ruff }, function(_, client) client.server_capabilities.hoverProvider = false end)
 
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'python', 'ninja', 'rst' })
