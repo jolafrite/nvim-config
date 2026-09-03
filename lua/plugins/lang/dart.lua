@@ -1,8 +1,8 @@
 PackageManager.add_with_mason {
-  'dart',
+  'dart-debug-adapter',
+  'dcm',
 }
 PackageManager.add_formatter('dart', 'dart_format')
-
 PackageManager.add_snippets 'dart'
 
 vim.lsp.config('dartls', {
