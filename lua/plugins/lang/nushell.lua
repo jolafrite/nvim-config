@@ -1,4 +1,4 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'nushell',
 }
 
@@ -11,4 +11,3 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'nu' })
 
 vim.lsp.enable 'nushell'
-

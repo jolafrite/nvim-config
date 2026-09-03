@@ -1,9 +1,10 @@
-
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'svelte-language-server',
   'prettierd',
   'oxlint',
 }
+PackageManager.add_formatter('svelte', 'prettierd')
+PackageManager.add_linter('svelte', 'oxlint')
 
 vim.lsp.config('svelte', {
   cmd = function(_, config)
@@ -17,13 +18,7 @@ vim.lsp.config('svelte', {
   filetypes = { 'svelte' },
 })
 
-local conform = require 'conform'
-conform.formatters_by_ft.svelte = { 'prettierd' }
-
-require('lint').linters_by_ft.svelte = { 'oxlint' }
-
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'svelte' })
 
 vim.lsp.enable 'svelte'
-

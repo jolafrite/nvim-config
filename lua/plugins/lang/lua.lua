@@ -1,4 +1,4 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'lua-language-server',
   'stylua',
   'selene',
@@ -32,12 +32,9 @@ vim.lsp.config('lua_ls', {
   },
 })
 
-local conform = require 'conform'
-conform.formatters_by_ft.lua = { 'stylua' }
+PackageManager.add_formatter('lua', 'stylua')
+PackageManager.add_linter('lua', 'selene')
 
-local lint = require 'lint'
 if vim.uv.fs_stat(vim.fn.expand '~/.cargo/bin/selene') then lint.linters.selene.cmd = vim.fn.expand '~/.cargo/bin/selene' end
-lint.linters_by_ft.lua = { 'selene' }
 
 vim.lsp.enable 'lua_ls'
-

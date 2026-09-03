@@ -1,6 +1,6 @@
 local rego_filetypes = { 'rego' }
 
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'regols',
   'regal',
 }
@@ -20,4 +20,3 @@ pcall(TS.install, { 'rego' })
 
 vim.lsp.enable 'regols'
 vim.lsp.enable 'regal'
-

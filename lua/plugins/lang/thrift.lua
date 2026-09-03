@@ -1,4 +1,4 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'thriftls',
 }
 
@@ -11,4 +11,3 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'thrift' })
 
 vim.lsp.enable 'thriftls'
-

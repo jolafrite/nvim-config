@@ -29,4 +29,3 @@ PackageManager.add {
     vim.keymap.set('n', '<leader>cF', toggle, { desc = 'Toggle format on save' })
   end,
 }
-

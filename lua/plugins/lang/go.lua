@@ -7,7 +7,7 @@ PackageManager.add {
   },
   filetype = { 'go', 'gomod', 'gowork', 'gotmpl' },
   config = function()
-    require('utils').install_with_mason {
+    PackageManager.add_with_mason {
       'gopls',
       'goimports',
       'gofumpt',
@@ -63,10 +63,6 @@ PackageManager.add {
   end,
 }
 
-
-
-
-
 vim.lsp.config('gopls', {
   cmd = { 'gopls' },
   filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
@@ -117,4 +113,3 @@ vim.lsp.config('gopls', {
 })
 
 vim.lsp.enable 'gopls'
-

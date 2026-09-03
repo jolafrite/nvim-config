@@ -1,4 +1,4 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'docker-language-server',
   'docker-compose-language-service',
   'dockerfmt',
@@ -32,4 +32,3 @@ pcall(TS.install, { 'dockerfile' })
 
 vim.lsp.enable 'dockerls'
 vim.lsp.enable 'docker_compose_language_service'
-

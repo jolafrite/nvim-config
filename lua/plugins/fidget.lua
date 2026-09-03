@@ -5,4 +5,3 @@ PackageManager.add {
   event = 'LspAttach',
   config = function() require('fidget').setup {} end,
 }
-

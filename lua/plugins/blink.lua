@@ -105,9 +105,6 @@ PackageManager.add {
       },
     }
 
-    
-    
-    
     local ok, blink = pcall(require, 'blink.cmp')
     if ok and type(blink.build) == 'function' then
       local p = blink.build()
@@ -115,4 +112,3 @@ PackageManager.add {
     end
   end,
 }
-

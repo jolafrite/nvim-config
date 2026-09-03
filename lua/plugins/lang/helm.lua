@@ -1,7 +1,6 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'helm-ls',
 }
-
 
 vim.filetype.add {
   pattern = {
@@ -20,4 +19,3 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'helm' })
 
 vim.lsp.enable 'helm_ls'
-

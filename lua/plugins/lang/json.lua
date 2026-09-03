@@ -1,4 +1,4 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'json-lsp',
   'fixjson',
   'jsonlint',
@@ -9,8 +9,6 @@ vim.lsp.config('jsonls', {
   filetypes = { 'json', 'jsonc', 'json5' },
   root_markers = { '.git' },
   before_init = function(_, new_config)
-    
-    
     local schemastore_ok, schemastore = pcall(require, 'schemastore')
     new_config.settings.json.schemas = new_config.settings.json.schemas or {}
     if schemastore_ok then vim.list_extend(new_config.settings.json.schemas, schemastore.json.schemas()) end
@@ -38,4 +36,3 @@ vim.lsp.enable 'jsonls'
 
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'json', 'json5' })
-

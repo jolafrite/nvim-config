@@ -1,9 +1,7 @@
-
-
 local lsp = vim.g.lazyvim_ruby_lsp or 'ruby_lsp'
 local formatter = vim.g.lazyvim_ruby_formatter or 'rubocop'
 
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   lsp,
   'rubocop',
   'standardrb',
@@ -27,7 +25,6 @@ else
   vim.lsp.enable 'solargraph'
 end
 
-
 if formatter == 'rubocop' and lsp ~= 'solargraph' then
   vim.lsp.config('rubocop', {
     cmd = { 'rubocop', '--lsp' },
@@ -42,4 +39,3 @@ pcall(TS.install, { 'ruby' })
 local conform = require 'conform'
 conform.formatters_by_ft.ruby = { formatter }
 conform.formatters_by_ft.eruby = { 'erb_format' }
-

@@ -1,8 +1,10 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'tailwindcss-language-server',
   'prettierd',
   'stylelint',
 }
+PackageManager.add_formatter({ 'html', 'css', 'less', 'sass', 'scss', 'stylus' }, 'prettierd')
+PackageManager.add_linter({ 'css', 'less', 'sass', 'scss', 'stylus' }, 'stylelint')
 
 vim.lsp.config('tailwindcss', {
   cmd = { 'tailwindcss-language-server', '--stdio' },
@@ -19,7 +21,6 @@ vim.lsp.config('tailwindcss', {
     'php',
     'blade',
     'mdx',
-    
   },
   settings = {
     tailwindCSS = {
@@ -32,19 +33,4 @@ vim.lsp.config('tailwindcss', {
   },
 })
 
-local conform = require 'conform'
-conform.formatters_by_ft.html = { 'prettierd' }
-conform.formatters_by_ft.css = { 'prettierd' }
-conform.formatters_by_ft.less = { 'prettierd' }
-conform.formatters_by_ft.sass = { 'prettierd' }
-conform.formatters_by_ft.scss = { 'prettierd' }
-conform.formatters_by_ft.stylus = { 'prettierd' }
-
-require('lint').linters_by_ft.css = { 'stylelint' }
-require('lint').linters_by_ft.less = { 'stylelint' }
-require('lint').linters_by_ft.sass = { 'stylelint' }
-require('lint').linters_by_ft.scss = { 'stylelint' }
-require('lint').linters_by_ft.stylus = { 'stylelint' }
-
 vim.lsp.enable 'tailwindcss'
-

@@ -2,41 +2,41 @@ vim.loader.enable()
 
 vim.g.have_nerd_font = true
 
-vim.g.mapleader = ","
-vim.g.maplocalleader = ","
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
 
 vim.o.number = true
 vim.o.relativenumber = true
 
 vim.g.autoformat = true
 
-vim.opt.fileencoding = "utf-8"
+vim.opt.fileencoding = 'utf-8'
 
 vim.g.root_spec = {
-  "lsp",
+  'lsp',
   {
-    ".git",
-    "lua",
-    ".obsidian",
-    "package.json",
-    "Makefile",
-    "go.mod",
-    "Cargo.toml",
-    "pyproject.toml",
-    "src",
+    '.git',
+    'lua',
+    '.obsidian',
+    'package.json',
+    'Makefile',
+    'go.mod',
+    'Cargo.toml',
+    'pyproject.toml',
+    'src',
   },
-  "cwd",
+  'cwd',
 }
 
 vim.opt.backup = true
-vim.opt.backupdir = { vim.fn.stdpath("state") .. "/backup" }
+vim.opt.backupdir = { vim.fn.stdpath 'state' .. '/backup' }
 vim.opt.cmdheight = 0
-vim.opt.mousescroll = "ver:1,hor:4"
+vim.opt.mousescroll = 'ver:1,hor:4'
 vim.opt.title = true
 
 vim.opt.spell = true
 
-vim.opt.backspace = { "start", "eol", "indent" }
+vim.opt.backspace = { 'start', 'eol', 'indent' }
 vim.opt.breakindent = true
 
 vim.opt.smoothscroll = true
@@ -55,8 +55,8 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 
-vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
-vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
+vim.cmd [[au BufNewFile,BufRead *.astro setf astro]]
+vim.cmd [[au BufNewFile,BufRead Podfile setf ruby]]
 
 local keymap_set = vim.keymap.set
 ---@diagnostic disable-next-line: duplicate-set-field
@@ -66,11 +66,9 @@ vim.keymap.set = function(mode, lhs, rhs, opts)
   return keymap_set(mode, lhs, rhs, opts)
 end
 
-if vim.fn.has("win32") == 1 then
-  require("utils").terminal.setup("pwsh")
-end
+if vim.fn.has 'win32' == 1 then require('utils').terminal.setup 'pwsh' end
 
 vim.g.deprecation_warnings = true
-vim.env.FZF_DEFAULT_OPTS = ""
+vim.env.FZF_DEFAULT_OPTS = ''
 
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = 'unnamedplus'

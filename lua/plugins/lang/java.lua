@@ -4,7 +4,7 @@ PackageManager.add {
   [1] = gh 'mfussenegger/nvim-jdtls',
   filetype = { 'java' },
   config = function()
-    require('utils').install_with_mason {
+    PackageManager.add_with_mason {
       'jdtls',
       'google-java-format',
       'checkstyle',
@@ -21,7 +21,6 @@ PackageManager.add {
 
     require('lint').linters_by_ft.java = { 'checkstyle' }
 
-    
     local function jdtls_cmd(root_dir)
       local cmd = { vim.fn.exepath 'jdtls' or 'jdtls' }
       if vim.env.MASON then
@@ -89,7 +88,6 @@ PackageManager.add {
       }
     end
 
-    
     require('utils').on_file_types('java', attach_jdtls)
 
     -- The autocmd above is registered from within the first java FileType
@@ -98,4 +96,3 @@ PackageManager.add {
     if vim.bo.filetype == 'java' then attach_jdtls() end
   end,
 }
-

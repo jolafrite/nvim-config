@@ -4,7 +4,7 @@ PackageManager.add {
   [1] = gh 'mfussenegger/nvim-ansible',
   filetype = { 'yaml.ansible' },
   config = function()
-    require('utils').install_with_mason {
+    PackageManager.add_with_mason {
       'ansible-language-server',
       'ansible-lint',
     }
@@ -25,4 +25,3 @@ PackageManager.add {
     vim.lsp.enable 'ansiblels'
   end,
 }
-

@@ -9,4 +9,3 @@ PackageManager.add {
     vim.keymap.set('i', '<A-f>', neocodeium.accept)
   end,
 }
-

@@ -1,4 +1,4 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'ocaml-lsp',
 }
 
@@ -12,4 +12,3 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'ocaml', 'ocaml_interface' })
 
 vim.lsp.enable 'ocamllsp'
-

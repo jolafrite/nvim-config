@@ -1,7 +1,5 @@
 local gh = require('utils').gh
 
-
-
 PackageManager.add {
   [1] = gh 'folke/trouble.nvim',
   filetype = '*',
@@ -16,9 +14,7 @@ PackageManager.add {
   end,
 }
 
-
-vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>',
-  { desc = 'Diagnostics (Trouble)' })
+vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
 vim.keymap.set('n', '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Buffer Diagnostics (Trouble)' })
 vim.keymap.set('n', '<leader>cs', '<cmd>Trouble symbols toggle<cr>', { desc = 'Symbols (Trouble)' })
 vim.keymap.set('n', '<leader>cS', '<cmd>Trouble lsp toggle<cr>', { desc = 'LSP references/definitions/... (Trouble)' })
@@ -40,4 +36,3 @@ vim.keymap.set('n', ']q', function()
     if not ok then vim.notify(err, vim.log.levels.ERROR) end
   end
 end, { desc = 'Next Trouble/Quickfix Item' })
-

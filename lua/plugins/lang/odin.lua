@@ -1,7 +1,8 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'ols',
   'odinfmt',
 }
+PackageManager.add_formatter('odin', 'odinfmt')
 
 vim.lsp.config('ols', {
   cmd = { 'ols' },
@@ -18,8 +19,4 @@ vim.lsp.config('ols', {
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'odin' })
 
-local conform = require 'conform'
-conform.formatters_by_ft.odin = { 'odinfmt' }
-
 vim.lsp.enable 'ols'
-

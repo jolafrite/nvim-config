@@ -1,4 +1,3 @@
-
 local julia = vim.fn.executable 'julia' == 1
 
 if julia then
@@ -18,4 +17,3 @@ end
 
 local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'julia' })
-

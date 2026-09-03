@@ -1,44 +1,33 @@
+--
 
 --
 
-
-
-
---
-
-
-
-
-local M = require("lualine.component"):extend()
+local M = require('lualine.component'):extend()
 
 local defaults = {
-  icon = "󰏗",
+  icon = '󰏗',
   spinner_frames = {
-    "⠋",
-    "⠙",
-    "⠹",
-    "⠸",
-    "⠼",
-    "⠴",
-    "⠦",
-    "⠧",
-    "⠇",
-    "⠏",
+    '⠋',
+    '⠙',
+    '⠹',
+    '⠸',
+    '⠼',
+    '⠴',
+    '⠦',
+    '⠧',
+    '⠇',
+    '⠏',
   },
   spinner_interval = 120,
-  checking_text = "checking",
+  checking_text = 'checking',
 }
 
 local frame = 0
 local timer
 local timer_running = false
 
-
-
 local function ensure_spinner()
-  if timer_running then
-    return
-  end
+  if timer_running then return end
   timer_running = true
   timer = vim.uv.new_timer()
   timer:start(
@@ -52,10 +41,8 @@ local function ensure_spinner()
         return
       end
       frame = (frame % #defaults.spinner_frames) + 1
-      local ok, lualine = pcall(require, "lualine")
-      if ok then
-        lualine.refresh({ place = { "statusline" } })
-      end
+      local ok, lualine = pcall(require, 'lualine')
+      if ok then lualine.refresh { place = { 'statusline' } } end
     end)
   )
 end
@@ -68,28 +55,21 @@ local function stop_spinner()
 end
 
 function M:init(options)
-  options = vim.tbl_deep_extend("force", defaults, options or {})
+  options = vim.tbl_deep_extend('force', defaults, options or {})
   M.super.init(self, options)
 end
 
 function M:update_status()
-  local ok, pack = pcall(function()
-    return PackageManager.pack
-  end)
-  if not ok or not pack then
-    return ""
-  end
+  local ok, pack = pcall(function() return PackageManager.pack end)
+  if not ok or not pack then return '' end
 
   local s = pack.summary()
 
   if s.checking then
     ensure_spinner()
-    self.options.icon = defaults.spinner_frames[frame + 1]
-      or defaults.spinner_frames[1]
-    if s.pending > 0 then
-      return ("%d outdated"):format(s.pending)
-    end
-    return s.status ~= "" and s.status or defaults.checking_text
+    self.options.icon = defaults.spinner_frames[frame + 1] or defaults.spinner_frames[1]
+    if s.pending > 0 then return ('%d outdated'):format(s.pending) end
+    return s.status ~= '' and s.status or defaults.checking_text
   end
 
   stop_spinner()
@@ -97,21 +77,18 @@ function M:update_status()
 
   if s.pending > 0 then
     self.options.icon = defaults.icon
-    return ("%d"):format(s.pending)
+    return ('%d'):format(s.pending)
   end
 
-  return ""
+  return ''
 end
 
-
-vim.api.nvim_create_autocmd("User", {
-  pattern = "PackStatusChanged",
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'PackStatusChanged',
   callback = function()
     vim.schedule(function()
-      local ok, lualine = pcall(require, "lualine")
-      if ok then
-        lualine.refresh({ place = { "statusline" } })
-      end
+      local ok, lualine = pcall(require, 'lualine')
+      if ok then lualine.refresh { place = { 'statusline' } } end
     end)
   end,
 })

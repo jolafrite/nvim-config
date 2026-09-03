@@ -20,4 +20,3 @@ vim.keymap.set({ 'n', 'x' }, '<leader>sr', function()
     },
   }
 end, { desc = 'Search and Replace' })
-

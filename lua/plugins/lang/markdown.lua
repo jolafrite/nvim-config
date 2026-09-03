@@ -1,4 +1,4 @@
-require('utils').install_with_mason {
+PackageManager.add_with_mason {
   'marksman',
   'markdownlint-cli2',
   'markdown-toc',
@@ -32,4 +32,3 @@ local TS = require 'nvim-treesitter'
 pcall(TS.install, { 'markdown', 'markdown_inline' })
 
 vim.lsp.enable 'marksman'
-
