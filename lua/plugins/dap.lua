@@ -3,6 +3,7 @@ local gh = require('utils').gh
 PackageManager.add {
   [1] = gh 'mfussenegger/nvim-dap',
   dependencies = {
+    gh 'nvim-neotest/nvim-nio',
     gh 'rcarriga/nvim-dap-ui',
     gh 'theHamsta/nvim-dap-virtual-text',
     gh 'mfussenegger/nvim-dap-python',
