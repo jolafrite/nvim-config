@@ -24,6 +24,16 @@ PackageManager.add {
       },
     }
 
+    require('mini.pairs').setup {}
+
+    require('mini.operators').setup {
+      map = {
+        evaluate = 'g@',
+      },
+    }
+
+    require('mini.visits').setup {}
+
     require('mini.surround').setup {
       mappings = {
         add = 'gsa',

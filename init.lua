@@ -8,4 +8,4 @@ require 'config.autocmds'
 PluginsLoader.load 'plugins'
 PackageManager.load()
 
-pcall(vim.cmd.colorscheme, 'shades-of-purple')
+vim.cmd.colorscheme 'shades-of-purple'

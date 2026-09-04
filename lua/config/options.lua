@@ -1,17 +1,33 @@
 vim.loader.enable()
 
-vim.g.have_nerd_font = true
-
-vim.g.mapleader = ','
-vim.g.maplocalleader = ','
-
-vim.o.number = true
-vim.o.relativenumber = true
+vim.opt.backspace = { 'start', 'eol', 'indent' }
+vim.opt.backup = false
+vim.opt.breakindent = true
+vim.opt.clipboard = 'unnamedplus'
+vim.opt.cmdheight = 0
+vim.opt.conceallevel = 2
+vim.opt.fileencoding = 'utf-8'
+vim.opt.foldcolumn = '1'
+vim.opt.foldenable = true
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldmethod = 'expr'
+vim.opt.foldtext = '' -- Use treesitter for fold text
+vim.opt.mousescroll = 'ver:1,hor:4'
+vim.opt.smoothscroll = true
+vim.opt.spell = true
+vim.opt.title = true
 
 vim.g.autoformat = true
-
-vim.opt.fileencoding = 'utf-8'
-
+vim.g.deprecation_warnings = true
+vim.g.have_nerd_font = true
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
 vim.g.root_spec = {
   'lsp',
   {
@@ -28,32 +44,12 @@ vim.g.root_spec = {
   'cwd',
 }
 
-vim.opt.backup = true
-vim.opt.backupdir = { vim.fn.stdpath 'state' .. '/backup' }
-vim.opt.cmdheight = 0
-vim.opt.mousescroll = 'ver:1,hor:4'
-vim.opt.title = true
-
-vim.opt.spell = true
-
-vim.opt.backspace = { 'start', 'eol', 'indent' }
-vim.opt.breakindent = true
-
-vim.opt.smoothscroll = true
-
-vim.opt.conceallevel = 2
-
-vim.o.swapfile = false
-
+vim.o.cursorline = true
+vim.o.number = true
+vim.o.relativenumber = true
 vim.o.scrolloff = 8
 vim.o.sidescrolloff = 8
-
-vim.o.cursorline = true
-
-vim.g.loaded_python3_provider = 0
-vim.g.loaded_perl_provider = 0
-vim.g.loaded_ruby_provider = 0
-vim.g.loaded_node_provider = 0
+vim.o.swapfile = false
 
 vim.cmd [[au BufNewFile,BufRead *.astro setf astro]]
 vim.cmd [[au BufNewFile,BufRead Podfile setf ruby]]
@@ -68,7 +64,4 @@ end
 
 if vim.fn.has 'win32' == 1 then require('utils').terminal.setup 'pwsh' end
 
-vim.g.deprecation_warnings = true
 vim.env.FZF_DEFAULT_OPTS = ''
-
-vim.opt.clipboard = 'unnamedplus'

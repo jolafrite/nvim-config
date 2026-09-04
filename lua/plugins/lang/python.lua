@@ -1,4 +1,4 @@
-local lsp = vim.g.lazyvim_python_lsp or 'pyright'
+local lsp = vim.g.python_lsp or 'pyright'
 local ruff = 'ruff'
 
 PackageManager.add_with_mason { lsp, ruff, 'debugpy' }
