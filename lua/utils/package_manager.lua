@@ -81,17 +81,39 @@ end
 local function install_with_mason(tools)
   local ok, mr = pcall(require, 'mason-registry')
   if not ok then return false end
-  local seen = {}
-  for _, tool in ipairs(tools) do
-    if not seen[tool] then
-      seen[tool] = true
-      local ok_p, p = pcall(mr.get_package, tool)
-      if not ok_p then
-        vim.notify(('mason: unknown package %q'):format(tool), vim.log.levels.WARN)
-      elseif not p:is_installed() then
-        local ok_i, err = pcall(p.install, p)
-        if not ok_i then vim.notify(('mason: failed to install %q: %s'):format(tool, tostring(err)), vim.log.levels.WARN) end
+
+  ---@type fun(cb: fun())
+  local function do_install(cb)
+    local seen = {}
+    for _, tool in ipairs(tools) do
+      if not seen[tool] then
+        seen[tool] = true
+        local ok_p, p = pcall(mr.get_package, tool)
+        if not ok_p then
+          vim.notify(('mason: unknown package %q'):format(tool), vim.log.levels.WARN)
+        elseif not p:is_installed() then
+          local ok_i, err = pcall(p.install, p)
+          if not ok_i then vim.notify(('mason: failed to install %q: %s'):format(tool, tostring(err)), vim.log.levels.WARN) end
+        end
       end
+    end
+    cb()
+  end
+
+  -- Refresh the registry first to avoid races with Mason's async setup.
+  if mr.is_installed then
+    if mr:is_installed() then
+      do_install(function() end)
+    else
+      mr.refresh(function() do_install(function() end) end)
+    end
+  else
+    -- Fallback for older Mason versions without is_installed.
+    local ok_p, _ = pcall(mr.get_package, 'lua')
+    if ok_p then
+      do_install(function() end)
+    else
+      mr.refresh(function() do_install(function() end) end)
     end
   end
   return true

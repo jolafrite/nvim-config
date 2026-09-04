@@ -1,5 +1,5 @@
-local lsp = vim.g.lazyvim_ruby_lsp or 'ruby_lsp'
-local formatter = vim.g.lazyvim_ruby_formatter or 'rubocop'
+local lsp = vim.g.ruby_lsp or 'ruby_lsp'
+local formatter = vim.g.ruby_formatter or 'rubocop'
 
 PackageManager.add_with_mason {
   lsp,

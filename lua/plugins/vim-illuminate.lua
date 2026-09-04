@@ -1,7 +1,7 @@
 local gh = require('utils').gh
 
 PackageManager.add {
-  [1] = gh 'RRethy/vim-illuminate.git',
+  [1] = gh 'RRethy/vim-illuminate',
   event = 'BufReadPost',
   config = function()
     require('illuminate').configure {
