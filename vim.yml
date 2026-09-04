@@ -3,6 +3,8 @@ lua_versions:
   - luajit
 
 globals:
+  PluginsLoader:
+    any: true
   PackageManager:
     any: true
   Snacks:

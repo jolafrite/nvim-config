@@ -30,7 +30,7 @@ vim.lsp.config['*'] = {
 
   on_attach = function(client, bufnr)
     local function map(modes, lhs, rhs, desc, method, opts)
-      if method and not client.supports_method(method) then return end
+      if method and not client:supports_method(method) then return end
       opts = vim.tbl_extend('force', { desc = desc, buffer = bufnr, silent = true }, opts or {})
       vim.keymap.set(modes, lhs, rhs, opts)
     end
