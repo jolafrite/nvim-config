@@ -105,11 +105,10 @@ local function setup_formatters(filetypes, tools, on_conform)
   if not ok then return false end
   for _, f in ipairs(filetypes) do
     local existing = conform.formatters_by_ft[f]
-    if existing then
-      conform.formatters_by_ft[f] = vim.list_extend({}, existing, type(tools) == 'table' and tools or { tools })
-    else
-      conform.formatters_by_ft[f] = tools
-    end
+    local merged = {}
+    vim.list_extend(merged, type(existing) == 'table' and existing or { existing })
+    vim.list_extend(merged, tools)
+    conform.formatters_by_ft[f] = merged
   end
   if on_conform then on_conform(conform) end
   return true
@@ -123,11 +122,10 @@ local function setup_linters(filetypes, tools, on_lint)
   if not ok then return false end
   for _, f in ipairs(filetypes) do
     local existing = lint.linters_by_ft[f]
-    if existing then
-      lint.linters_by_ft[f] = vim.list_extend({}, existing, type(tools) == 'table' and tools or { tools })
-    else
-      lint.linters_by_ft[f] = tools
-    end
+    local merged = {}
+    vim.list_extend(merged, type(existing) == 'table' and existing or { existing })
+    vim.list_extend(merged, tools)
+    lint.linters_by_ft[f] = merged
   end
   if on_lint then on_lint(lint) end
   return true
