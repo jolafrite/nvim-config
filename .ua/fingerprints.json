@@ -1,16 +1,26 @@
 {
   "version": "1.0.0",
-  "gitCommitHash": "95c0f2b5a611d3218019ebb216c63f35bd9f337c",
-  "generatedAt": "2026-09-02T06:47:28.981Z",
+  "gitCommitHash": "9865bb6fa019ff212a118a3946bac7434c89b910",
+  "generatedAt": "2026-09-05T09:22:11.189Z",
   "files": {
-    ".luarc.json": {
-      "filePath": ".luarc.json",
-      "contentHash": "d88c8c8079ac2b942cd413e2835c1fc13298b00989b5cb2404996f14a98d58d9",
+    ".local/nvim/shada/main.shada": {
+      "filePath": ".local/nvim/shada/main.shada",
+      "contentHash": "fc85bb3712b5b41ad3145d2b0ffac31598e7fdd615d003135eaca1a829fdef5c",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 28,
+      "totalLines": 4,
+      "hasStructuralAnalysis": false
+    },
+    ".luarc.json": {
+      "filePath": ".luarc.json",
+      "contentHash": "bf95077a049a121e11bd1d15ffa38bf2f148ba1517a9b60cc3bfe2c3785ab8db",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 29,
       "hasStructuralAnalysis": true
     },
     ".neoconf.json": {
@@ -43,6 +53,16 @@
       "totalLines": 301,
       "hasStructuralAnalysis": true
     },
+    "LSP_CONFIG.md": {
+      "filePath": "LSP_CONFIG.md",
+      "contentHash": "7f21b6a577b4db198e4456f5462bb6300978ea8c9b3a6f745f5632e4450f28ca",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 425,
+      "hasStructuralAnalysis": true
+    },
     "README.md": {
       "filePath": "README.md",
       "contentHash": "4c96515355f6838ff7b21caf91104d0ba728fb79830f85b5686908c1fd758f2d",
@@ -55,92 +75,102 @@
     },
     "init.lua": {
       "filePath": "init.lua",
-      "contentHash": "8600b11945a82785259f20eb3d50ca0f09eaf8e088a08ac015a1e536efda48c8",
+      "contentHash": "25f8961eb936daf64b31f890bfc3860854ae25c5a95608cd2a2535b049c1f5ea",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 11,
+      "totalLines": 12,
       "hasStructuralAnalysis": false
     },
     "lua/config/autocmds.lua": {
       "filePath": "lua/config/autocmds.lua",
-      "contentHash": "c513fb38ed0134f321583f00f1c134b7baec9943e9fb3544e0d3065d3425c00c",
+      "contentHash": "2ca3c2be7baac1c585006902eec8b839bb939482d3b2c3de6d9178c8636717fa",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 69,
+      "totalLines": 56,
       "hasStructuralAnalysis": false
     },
     "lua/config/keymaps.lua": {
       "filePath": "lua/config/keymaps.lua",
-      "contentHash": "a16049bbc717ccdd74275709c591179785f10bf885ab075bfbb29f3b63f21fea",
+      "contentHash": "2d316638d5b442dc0732f55c439453488add462e2f76671cb398845cc8e0d8d8",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 301,
+      "totalLines": 134,
       "hasStructuralAnalysis": false
     },
     "lua/config/options.lua": {
       "filePath": "lua/config/options.lua",
-      "contentHash": "2ae524edc3e4774822218543671c3cffd858a3a7fb09583eecd117bf15a95057",
+      "contentHash": "1ef602fe8a39d8865a47047725c4cb95be5c5ad7a093fc36cf852a861c9aaab7",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 77,
+      "totalLines": 68,
       "hasStructuralAnalysis": false
     },
     "lua/health.lua": {
       "filePath": "lua/health.lua",
-      "contentHash": "6e3b211258baf1e7e48fb9a1e7d45f1bdd7bbd9f7850a0c17645b2c3e8696c89",
+      "contentHash": "b42461436edf94c28f806f1f5c29d92249f73d05f35406b9ce6b567f96babbd4",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 55,
+      "totalLines": 45,
       "hasStructuralAnalysis": false
     },
     "lua/lualine/components/pack.lua": {
       "filePath": "lua/lualine/components/pack.lua",
-      "contentHash": "7c9edb22fb204e77899d7060e8a20560f6ef73dc8e8f209b574f4c7f11c59963",
+      "contentHash": "9ab9cb16f9d6ad86fe25fa89e3e29404c3d3c159390aee088387232a523f9add",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 120,
+      "totalLines": 97,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/00-snacks.lua": {
       "filePath": "lua/plugins/00-snacks.lua",
-      "contentHash": "20f3fbf98df1106f144b9a10693d9597e80b57cd111f1bacc887acdfa981e4da",
+      "contentHash": "322d3d8fb3984eca305e7fac071e1dd4dabda248e2534b258709157ca76a0e1c",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 198,
+      "totalLines": 188,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/actions_preview.lua": {
+      "filePath": "lua/plugins/actions_preview.lua",
+      "contentHash": "4163d7206de388138e6ab8ed493321db0c05629a9c8ee9991318c007fa435313",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 17,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/blink.lua": {
       "filePath": "lua/plugins/blink.lua",
-      "contentHash": "0c4ef27b5ffbdaaf6a31fac9e32a0f66b103a75b599c742cf55315b49447adf8",
+      "contentHash": "c76e9f755daa01a45885ac9d2f00e20fc99846b15a6330e6dfff2dec54c53720",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 119,
+      "totalLines": 115,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/conform.lua": {
       "filePath": "lua/plugins/conform.lua",
-      "contentHash": "c855a35a79d4d6250659fee383d77246e9d52b50e1dc490d70f48956b3457173",
+      "contentHash": "7c7a5227fa427072bf0728b23e1c06c6ef46984daddb16cee0622532b2ccaaac",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 33,
+      "totalLines": 44,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/core.lua": {
@@ -163,6 +193,16 @@
       "totalLines": 7,
       "hasStructuralAnalysis": false
     },
+    "lua/plugins/dap.lua": {
+      "filePath": "lua/plugins/dap.lua",
+      "contentHash": "027448e4feac9ac224684ea49d7275b5cefa5589d5c006e8cd211e98f59f7299",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 68,
+      "hasStructuralAnalysis": false
+    },
     "lua/plugins/e-ink.lua": {
       "filePath": "lua/plugins/e-ink.lua",
       "contentHash": "a8d40746747e1b555cd8b215620bf7ab5acce11c79a818c63f4b1545384977e5",
@@ -175,52 +215,52 @@
     },
     "lua/plugins/fidget.lua": {
       "filePath": "lua/plugins/fidget.lua",
-      "contentHash": "414c034a39b3ef4d973f66bc9a5596ef78d1741b946ab91c9db4798bd9c42b20",
+      "contentHash": "4824ea505c541a7bd7384cfb24f11baf36d83e59ccbe26847d828fc710825a72",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 9,
+      "totalLines": 8,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/flash.lua": {
       "filePath": "lua/plugins/flash.lua",
-      "contentHash": "81e68a7c6f21d4af66ef56cc19f980674614eed6bdeb86c40748b4465b658781",
+      "contentHash": "82dc32e3ab63465df88ff8f72ebca6186a952121922c153768833696d6a06a62",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 30,
+      "totalLines": 27,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/gitsigns.lua": {
       "filePath": "lua/plugins/gitsigns.lua",
-      "contentHash": "c3d6a76c4ed6c1c26048f840618e40046fffc59ac8334a01e088313bfdf0a3f9",
+      "contentHash": "bad19d1419158aaa5658573a15ce6f21ab76fbabbfb0d0d2fe373d099f2ffc96",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 55,
+      "totalLines": 52,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/grug-far.lua": {
       "filePath": "lua/plugins/grug-far.lua",
-      "contentHash": "7f1cd49100040d5184d467bc150ed72fc8031906d1b8a1de31ca1a005a0aecdd",
+      "contentHash": "1f1dd864ac44d3af06137b771a1349090d17ce2dec9db1045898928007bd7cfe",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 24,
+      "totalLines": 23,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/indent-blankline.lua": {
       "filePath": "lua/plugins/indent-blankline.lua",
-      "contentHash": "3d4bbb336efda700d85be47eabdccd0b11290baebeb1bb80f01ebb18b867f454",
+      "contentHash": "043a77f61d087110ab6580c32cfc1afd7ff4a8423dfb172d331ef8b1b4116496",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 26,
+      "totalLines": 25,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/indent-o-matic.lua": {
@@ -231,16 +271,6 @@
       "imports": [],
       "exports": [],
       "totalLines": 10,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/init.lua": {
-      "filePath": "lua/plugins/init.lua",
-      "contentHash": "db0012d33b13fe3c5f6ac6cbf0a306c1dd00e00e84d8ba13b2e35952fdb1f684",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 21,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/kulala.lua": {
@@ -255,37 +285,47 @@
     },
     "lua/plugins/lang/angular.lua": {
       "filePath": "lua/plugins/lang/angular.lua",
-      "contentHash": "10d6158d54080e770210dab9e268cba45839e2748dd39f1186a4dc0aee56c69b",
+      "contentHash": "2c22faf23bc62e0683b371f9dbf474caeeccfcdda76e977bea9e64d6898d6297",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 38,
+      "totalLines": 34,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/ansible.lua": {
       "filePath": "lua/plugins/lang/ansible.lua",
-      "contentHash": "9140ad073d1f6e378ddc3e9cbc0987d4e95019e22d8493adcf0f6acf642e957b",
+      "contentHash": "a047c77f98c99d49e8c15da3a9de7d3cab77fb968c1f4507d3766b44e5aa529b",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 29,
+      "totalLines": 27,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/astro.lua": {
       "filePath": "lua/plugins/lang/astro.lua",
-      "contentHash": "855b0a496e1dd29064762abe117477ed526cc27683faa45924416a979cbe843e",
+      "contentHash": "4a3061631d058d2467c7bb44a06cb14d83f8658b2dc5e8b4b0433e45cf6054d4",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 20,
+      "totalLines": 23,
       "hasStructuralAnalysis": false
     },
-    "lua/plugins/lang/biome.lua": {
-      "filePath": "lua/plugins/lang/biome.lua",
-      "contentHash": "13faf0029caa3a308af4815cda001fbb63d6bcbe03c60983d5de57c3b9f5fffa",
+    "lua/plugins/lang/clangd.lua": {
+      "filePath": "lua/plugins/lang/clangd.lua",
+      "contentHash": "5f8293b3f82426bc6b616065b633566b01f90f6644a25836ab8b8909c0f363fb",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 73,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/clojure.lua": {
+      "filePath": "lua/plugins/lang/clojure.lua",
+      "contentHash": "cc0f674f2709029499ee48c433073f1e7379a80e29fcdb56cf09d7be8465631c",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -293,219 +333,39 @@
       "totalLines": 31,
       "hasStructuralAnalysis": false
     },
-    "lua/plugins/lang/clangd.lua": {
-      "filePath": "lua/plugins/lang/clangd.lua",
-      "contentHash": "b05c47c08a19902d8e59a1bcfa47f9ebc22ffc6b987ad63dd41fae60b5521fc7",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 76,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/clojure.lua": {
-      "filePath": "lua/plugins/lang/clojure.lua",
-      "contentHash": "895b58d9a865e62588c28c1b06c3cfcd31a6c08c1e1a60223b08b0b344a38fc6",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 33,
-      "hasStructuralAnalysis": false
-    },
     "lua/plugins/lang/cmake.lua": {
       "filePath": "lua/plugins/lang/cmake.lua",
-      "contentHash": "515014ee48836b4e164a531f5c7e3805f4fe4a0216283c8f6aa1f4ab60903ca4",
+      "contentHash": "7b6408e04c10fc5480871950e481425edf280a879ffabcb3a675e673e6e91353",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 36,
+      "totalLines": 37,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/dart.lua": {
       "filePath": "lua/plugins/lang/dart.lua",
-      "contentHash": "998dc9b787f59601e6d55511192db5da72a487718ddbc4386036c7f343f3f035",
+      "contentHash": "c34223d5b2284e78426669320fe932dd61269165705c682de33d724be4a86707",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 19,
+      "totalLines": 38,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/docker.lua": {
       "filePath": "lua/plugins/lang/docker.lua",
-      "contentHash": "fd6d97a5a2fbedafcca391e321f037a84606090810be71142979bd55d0223ab7",
+      "contentHash": "4c4a75d2d78b77ee6899ca28c44392c01e18a3d37c3e72c2596d4f6b8f3408ed",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 36,
+      "totalLines": 38,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/dotnet.lua": {
       "filePath": "lua/plugins/lang/dotnet.lua",
-      "contentHash": "93fc3700a5fd26a4c3b0b2d52e25b701e33cf27e069d4889686c7cd7250fe997",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 41,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/elixir.lua": {
-      "filePath": "lua/plugins/lang/elixir.lua",
-      "contentHash": "8476d33a39c8c6e8d77ae904fbc75803ff95a901753b281642e390941ebcc591",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 25,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/elm.lua": {
-      "filePath": "lua/plugins/lang/elm.lua",
-      "contentHash": "71739d88940030e908ca16e3365d9f73627b2bb1a74f5922eda7f22baa6cb464",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 20,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/ember.lua": {
-      "filePath": "lua/plugins/lang/ember.lua",
-      "contentHash": "dced0b2931e6a17fd465bfa2a778525ef3dc8859452c469d2e4b4f05ec251132",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 19,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/erlang.lua": {
-      "filePath": "lua/plugins/lang/erlang.lua",
-      "contentHash": "8ab1457963f7b8c96c21a24126909463358b0dbe7ac8831a43592f7d011c7012",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 16,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/git.lua": {
-      "filePath": "lua/plugins/lang/git.lua",
-      "contentHash": "d50ba773637a924507a5dffad5485b0fb0cbcfcc577a15406cf1e6916d872d42",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 5,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/gleam.lua": {
-      "filePath": "lua/plugins/lang/gleam.lua",
-      "contentHash": "a0d3dce3060f4cba2b14bbb2b6941a3eee1f9936d825dd33abbd6db5dc57b252",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 19,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/go.lua": {
-      "filePath": "lua/plugins/lang/go.lua",
-      "contentHash": "58d60038d12fa6d64bf2e7ce6cb5b1c17c94d283da41e11bfd57676efc49c5b2",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 121,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/haskell.lua": {
-      "filePath": "lua/plugins/lang/haskell.lua",
-      "contentHash": "b383ce755b4342cc1ad06527012e88a0305c08c3cfe96e49222722e492fbe947",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 55,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/helm.lua": {
-      "filePath": "lua/plugins/lang/helm.lua",
-      "contentHash": "3d764fcd3469abcc36ec5aa9f35e4289510a17b9c1d866b96f784b00e1fee673",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 24,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/init.lua": {
-      "filePath": "lua/plugins/lang/init.lua",
-      "contentHash": "c08dff7c54b918b4d0d1bb8c124f0fc7e8fa3199a80e1dddfc3e85ab5fa3ba53",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 16,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/java.lua": {
-      "filePath": "lua/plugins/lang/java.lua",
-      "contentHash": "2e252fb80115129da99e325f10b511e4a976f35906ccff21b74cb9bb594f462b",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 101,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/json.lua": {
-      "filePath": "lua/plugins/lang/json.lua",
-      "contentHash": "ce59f5f986aa89203a3f888df6b6ef81f910ef7ce63fd064aef6d00615160cc5",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 42,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/julia.lua": {
-      "filePath": "lua/plugins/lang/julia.lua",
-      "contentHash": "3703254944ca16be3a6fd729f2e1b68715ccf9e83dce97d01b7ca779e26500ae",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 22,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/kotlin.lua": {
-      "filePath": "lua/plugins/lang/kotlin.lua",
-      "contentHash": "2929180635254160e3f23b97d1a965c4beb8dc89df4f489e86ed90cf89642598",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 75,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/lean.lua": {
-      "filePath": "lua/plugins/lang/lean.lua",
-      "contentHash": "104a65512fa969068c086771e9e0426742ae3f325358b5fd72781813e4bd6520",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 57,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/lua.lua": {
-      "filePath": "lua/plugins/lang/lua.lua",
-      "contentHash": "ac035156eb3b0c9a6b418a04f9482c46f4f1f9bfbf21fcee15a84447250e7196",
+      "contentHash": "8e05bd7be041c617b131b40a54ea5bb7080ead76f37d977d13644bd9e51d17be",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -513,29 +373,29 @@
       "totalLines": 44,
       "hasStructuralAnalysis": false
     },
-    "lua/plugins/lang/markdown.lua": {
-      "filePath": "lua/plugins/lang/markdown.lua",
-      "contentHash": "294de1cbb48bcc256cb2fa40fb1cf40701b2005f541720a5a94900a2e07b4ecd",
+    "lua/plugins/lang/elixir.lua": {
+      "filePath": "lua/plugins/lang/elixir.lua",
+      "contentHash": "a18d80867b4b0d38e66c0340b69c7c9da0d6cbdcac6e22b3347a7103bc2f7e02",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 36,
+      "totalLines": 28,
       "hasStructuralAnalysis": false
     },
-    "lua/plugins/lang/nix.lua": {
-      "filePath": "lua/plugins/lang/nix.lua",
-      "contentHash": "409167acb1031a2909634c51ff9f7d505f20dad3405b8ec29c27d8c6ab19ff0c",
+    "lua/plugins/lang/elm.lua": {
+      "filePath": "lua/plugins/lang/elm.lua",
+      "contentHash": "2dda61695fb975525c2a964da6cf1a2c902c40d95c2fd248cc194196d6a051a8",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 24,
+      "totalLines": 16,
       "hasStructuralAnalysis": false
     },
-    "lua/plugins/lang/nushell.lua": {
-      "filePath": "lua/plugins/lang/nushell.lua",
-      "contentHash": "e38c4b6239b68cf5657e7f256d046fd884bd12be7fc386b1f70a752b309e65e4",
+    "lua/plugins/lang/ember.lua": {
+      "filePath": "lua/plugins/lang/ember.lua",
+      "contentHash": "d8af613711cecd400efda3f24c9b9095038ecd8d42be9e01f84e042dd3a5b52b",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -543,109 +403,269 @@
       "totalLines": 15,
       "hasStructuralAnalysis": false
     },
-    "lua/plugins/lang/ocaml.lua": {
-      "filePath": "lua/plugins/lang/ocaml.lua",
-      "contentHash": "be207272e23294afc10f8d9a377500d9ac2781c9315e614ac680baaec35c83cf",
+    "lua/plugins/lang/erlang.lua": {
+      "filePath": "lua/plugins/lang/erlang.lua",
+      "contentHash": "c308f578dfc241e1b188a58d93656a27117832522bf73702262c5ce3c4c0b613",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 16,
+      "totalLines": 14,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/git.lua": {
+      "filePath": "lua/plugins/lang/git.lua",
+      "contentHash": "21a6024018ee282034e9507fa49245395c958a7ec4205755ea71ae426152d6f5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/gleam.lua": {
+      "filePath": "lua/plugins/lang/gleam.lua",
+      "contentHash": "2c0e00a40a1085c4452b1fd1951585a833fac14d1925b3c9cd10db4838b9f954",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/go.lua": {
+      "filePath": "lua/plugins/lang/go.lua",
+      "contentHash": "f87afe7b7afaa84c5c9fb6c469dc3ffa268cfecac69d5331b1906836bba69d17",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 115,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/haskell.lua": {
+      "filePath": "lua/plugins/lang/haskell.lua",
+      "contentHash": "6428174129b74e1781befb24ed67a2dbca6fbebe660b93ba171738b2c489fc5f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 50,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/helm.lua": {
+      "filePath": "lua/plugins/lang/helm.lua",
+      "contentHash": "91b2b9c9b1ca6a12101951104d99af4703455ce593e6cb320ac3b4e1dba6f50f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/html.lua": {
+      "filePath": "lua/plugins/lang/html.lua",
+      "contentHash": "d73ae7c9c58cf5ae496495dc8131d9fe81abdda668ecac3d42a59e992d4d2a27",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/java.lua": {
+      "filePath": "lua/plugins/lang/java.lua",
+      "contentHash": "a70327d9585429873ce3019dfabd214fa7acb55b30bda6963226617da44db7aa",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 102,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/json.lua": {
+      "filePath": "lua/plugins/lang/json.lua",
+      "contentHash": "0b571d7d45b7e2b3c7478bf5bdc052c3f5c74d931747b13691e32a23f529cb09",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 40,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/julia.lua": {
+      "filePath": "lua/plugins/lang/julia.lua",
+      "contentHash": "9cafb5d88b3f0258f840214b85199129629016d1e79294f43908fbdd5c2354f5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 19,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/kotlin.lua": {
+      "filePath": "lua/plugins/lang/kotlin.lua",
+      "contentHash": "22b635b22ad6d1b8ce25af834b35263b2b627c504222f0f2b0d64f2f369ca83f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 67,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/lean.lua": {
+      "filePath": "lua/plugins/lang/lean.lua",
+      "contentHash": "62185710266c4cde6ca233f2ee1ced4dcea4571784ee48c64ffc83caf3387d82",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 53,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/lua.lua": {
+      "filePath": "lua/plugins/lang/lua.lua",
+      "contentHash": "feed05176227d23b199f2f512cc13516035a37d03fab718dd6dc7e4c74b6f8f1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 43,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/markdown.lua": {
+      "filePath": "lua/plugins/lang/markdown.lua",
+      "contentHash": "c69238799fc7bb469fd2b23f5618ce9f24a89c7b16ec66b89d7ba0a6752822f0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 32,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/nix.lua": {
+      "filePath": "lua/plugins/lang/nix.lua",
+      "contentHash": "74b37c1b8d7071e7e334dc1852b39eca08a5fbc23564da2760332771a39e4768",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 19,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/nushell.lua": {
+      "filePath": "lua/plugins/lang/nushell.lua",
+      "contentHash": "87ca1294f296306287cc06e0eb30ec3cb51ac4cfdce9934d80ec1cc7bd3e1a0f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/ocaml.lua": {
+      "filePath": "lua/plugins/lang/ocaml.lua",
+      "contentHash": "fd063f2c08e3e263aca8ceb250a988ce245e7c85a8919329ff1b98ce5badd586",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 14,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/odin.lua": {
       "filePath": "lua/plugins/lang/odin.lua",
-      "contentHash": "5f76bbda44cd28d56e63d03a0f60323f2d6f1d7a06debfa9cdf6ca3656b6d43d",
+      "contentHash": "dd94a7c0b3b4746a2fb345330415db329cc2b865b2f043f6d3647823ff4606db",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 26,
+      "totalLines": 22,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/php.lua": {
       "filePath": "lua/plugins/lang/php.lua",
-      "contentHash": "7f646b41413d3f462c05ee3759f7cb96496df934f0fd6b69157c4590fb5728f9",
+      "contentHash": "4737ca7688a40afb2b1a121007063571bc0dbfab1476aa4a4df0d765be54fa98",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 35,
+      "totalLines": 33,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/prisma.lua": {
       "filePath": "lua/plugins/lang/prisma.lua",
-      "contentHash": "3efe4b4b74471cd18152b6afc158ddd9b292588fccf5c3191b55569e71533599",
+      "contentHash": "5cc17d854717bc3b0d88a17ca37175c01f5200657162046b87e58dc7b45b3f34",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 16,
+      "totalLines": 14,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/python.lua": {
       "filePath": "lua/plugins/lang/python.lua",
-      "contentHash": "cdb3e5c6b46164b3555a48e76df963675d287cf0ec94a0f9f86836b42955de1f",
+      "contentHash": "dfc41663d5bd5a3944a46282486bbe57d3133c33e261a841bdfd9e2341263653",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 65,
+      "totalLines": 70,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/r.lua": {
       "filePath": "lua/plugins/lang/r.lua",
-      "contentHash": "507ce97c4fe5392e4ad783dda8d6af1401ca7686c912b9318c1e706332bd4ed9",
+      "contentHash": "0ba7ea7b2adff242bf701efa662e9f7341447c953c291362ddb6c4e1d5d160d9",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 63,
+      "totalLines": 55,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/rego.lua": {
       "filePath": "lua/plugins/lang/rego.lua",
-      "contentHash": "0238267acdc5045a7bd1dbe4d756e6c4b6254c984de2221c6ecd1e1183e5d3dc",
+      "contentHash": "70f83fae53b0e5c14d662dd1183a3c26d01cc95b9ba1ed4b85c3902c38f19e8b",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 24,
+      "totalLines": 22,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/ruby.lua": {
       "filePath": "lua/plugins/lang/ruby.lua",
-      "contentHash": "88cd95a3dd682ba22ade162a0e071fb383d4b3cb1b50fa2126c26101846ef367",
+      "contentHash": "59c3418434ce1fb1b7e450a0cdd50275e73bd9e0c8af99dd306fc9c4127eb6c3",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 46,
+      "totalLines": 39,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/rust.lua": {
       "filePath": "lua/plugins/lang/rust.lua",
-      "contentHash": "4ec84e6d0ff193b17b1acbacfbb9523c59a6a324df8f432757cc8bbbdf3cfae7",
+      "contentHash": "a835167e568669f45fbc20a646ca04f71a780a5d625cd0cc01b9d83b069edff9",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 104,
+      "totalLines": 93,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/scala.lua": {
       "filePath": "lua/plugins/lang/scala.lua",
-      "contentHash": "58d49e041258b70b471933ad4bd22a2de63ce1ac33e3f77363304d60e17b5941",
+      "contentHash": "5e4b6abc32371b6638628b64a53cfebfb9890e43f03b9b1fdac1b3269ab606f1",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 44,
+      "totalLines": 39,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/solidity.lua": {
       "filePath": "lua/plugins/lang/solidity.lua",
-      "contentHash": "4bea7c77fead5413e1aadba6ef49a8b3690b2c81c9edd7e224751012385f83ed",
+      "contentHash": "e3b76db6d76edaaf3f26e5806c6a8ee0e747b69e4ecd300e85a4f3d97642c48e",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -655,37 +675,27 @@
     },
     "lua/plugins/lang/sql.lua": {
       "filePath": "lua/plugins/lang/sql.lua",
-      "contentHash": "04cf05df033b1f05b4ec2b2da54ed8cffe8044e30e58ddc4d6729ac15f9d5ba3",
+      "contentHash": "838d091f3109480f87479bd0cca8c0b1f4998ce823d2d546e02bae31607d8371",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 51,
+      "totalLines": 46,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/svelte.lua": {
       "filePath": "lua/plugins/lang/svelte.lua",
-      "contentHash": "e5000275e6c7f80c58df51fa36431edd9a56fae1b4755a99cf629eb20a876328",
+      "contentHash": "844cd5d5d0d9666ee9e62afbd5ee8659ffb5e72f74d43600a41d795460fcf72d",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 30,
+      "totalLines": 26,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/tailwind.lua": {
       "filePath": "lua/plugins/lang/tailwind.lua",
-      "contentHash": "a44aefae0f6224c426e36bb9490a1ef509065da64c31ff7ea82d5c2554fe5319",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 51,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/terraform.lua": {
-      "filePath": "lua/plugins/lang/terraform.lua",
-      "contentHash": "7de18063ac4c994572fe4d91ce30bcbccdefaf2f8ab5f5eceb8f809c3f5b122a",
+      "contentHash": "50691d0cc33d8cec23d746e0c167acdc825862420bea376f955bdcf6f390845b",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -693,19 +703,39 @@
       "totalLines": 39,
       "hasStructuralAnalysis": false
     },
-    "lua/plugins/lang/tex.lua": {
-      "filePath": "lua/plugins/lang/tex.lua",
-      "contentHash": "9464f5c77d79def1d2646aa55e72399214faee64544f51125a773da76d34acad",
+    "lua/plugins/lang/terraform.lua": {
+      "filePath": "lua/plugins/lang/terraform.lua",
+      "contentHash": "319cf5780c475b25d94748140b215e5ba802d67ef0259991c41dd2860ea6e2d6",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 34,
+      "totalLines": 40,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/tex.lua": {
+      "filePath": "lua/plugins/lang/tex.lua",
+      "contentHash": "e9c71e9f1cb9b29279b73b51826a23623073e83a7831199fe29cc77b0fd57940",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 26,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/lang/thrift.lua": {
       "filePath": "lua/plugins/lang/thrift.lua",
-      "contentHash": "75c1f4511a2ee70efd65780bbcd83068db2291052e2ac6c4daa83c3d479fb552",
+      "contentHash": "10cd77249926298dfe9d5cfb6a00fc93485758b3c32f5d6ae02fe29ddf096ce2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/toml.lua": {
+      "filePath": "lua/plugins/lang/toml.lua",
+      "contentHash": "10077def1aacd0b39a006ba6c03dd42342785a459a83e3cf3c1488133f5bdc8b",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -713,39 +743,9 @@
       "totalLines": 15,
       "hasStructuralAnalysis": false
     },
-    "lua/plugins/lang/toml.lua": {
-      "filePath": "lua/plugins/lang/toml.lua",
-      "contentHash": "b5ec8dd9fcdc857420c42c41be9fb9b9096353ccfbfccd9c9a283670322218ef",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 19,
-      "hasStructuralAnalysis": false
-    },
     "lua/plugins/lang/twig.lua": {
       "filePath": "lua/plugins/lang/twig.lua",
-      "contentHash": "8df416aa5093bd57e33731441a6f5c6ac0f43eabb4d62cded08f48e346b8d417",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 27,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/typescript.lua": {
-      "filePath": "lua/plugins/lang/typescript.lua",
-      "contentHash": "5d0b3bbbca500e988f1ddf9d7d476da6a5c4e0a5d85cb16bf5fced2171ae743b",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 116,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/typst.lua": {
-      "filePath": "lua/plugins/lang/typst.lua",
-      "contentHash": "02d26c335b276381d800b562f7a0bd8872ff993037ebb98045f1b366cd1295ad",
+      "contentHash": "ed4ce946820431ba180aba0801b39b81f1f68776b1da8b675ab6c8debae552fc",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -753,9 +753,79 @@
       "totalLines": 28,
       "hasStructuralAnalysis": false
     },
+    "lua/plugins/lang/typescript.lua": {
+      "filePath": "lua/plugins/lang/typescript.lua",
+      "contentHash": "2e39fb2807f0bb69915a487d5c689481bb0728a28e0204698519e16b15fbdbee",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 92,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/typst.lua": {
+      "filePath": "lua/plugins/lang/typst.lua",
+      "contentHash": "a545d0dac39eb0fe87b031dce69639c1761966044ba5eaf94f9bb7ed6a04b692",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 27,
+      "hasStructuralAnalysis": false
+    },
     "lua/plugins/lang/vue.lua": {
       "filePath": "lua/plugins/lang/vue.lua",
-      "contentHash": "7e500d8b8f931fc47effd08fa4669f77722efb942eb09de9baefe85fc2514dce",
+      "contentHash": "2ca04fcca818df854cab27200fe4a5f8dc19c4aa0c84b63c20b8fd5c9578c3d0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 16,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/xml.lua": {
+      "filePath": "lua/plugins/lang/xml.lua",
+      "contentHash": "26190b8107b568759f884e8079d36419239c86f9a0b4660825ccdef0a0f44be2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 16,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/yaml.lua": {
+      "filePath": "lua/plugins/lang/yaml.lua",
+      "contentHash": "90c73a552276f5ba243b2d38b38e40c2d7304fab68655c3476487751a0546a2b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 38,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lang/zig.lua": {
+      "filePath": "lua/plugins/lang/zig.lua",
+      "contentHash": "d50f67bebf935484d5f3c14e10bcf70d365cf235c1a36b57bd7b757287fa59b5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 28,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lsp.lua": {
+      "filePath": "lua/plugins/lsp.lua",
+      "contentHash": "cc79f148912bfffd0d3e37f038f6dda518a1701e2dff24ac50f8b06abe2370f7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 71,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/lsp_lens.lua": {
+      "filePath": "lua/plugins/lsp_lens.lua",
+      "contentHash": "9db9da0bb82ba73c913a728b6cb7f51bc1a7d6fe6b807dc7565a4698945499f2",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -763,84 +833,34 @@
       "totalLines": 17,
       "hasStructuralAnalysis": false
     },
-    "lua/plugins/lang/xml.lua": {
-      "filePath": "lua/plugins/lang/xml.lua",
-      "contentHash": "bb162579b68764904e6ce98b24add93523b128c0136f22d7974b68b72b761dec",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 20,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/yaml.lua": {
-      "filePath": "lua/plugins/lang/yaml.lua",
-      "contentHash": "65ad7772127e93a0c6aa457a9fc406a55a077393e03b6de5746ec0de140a9309",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 42,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lang/zig.lua": {
-      "filePath": "lua/plugins/lang/zig.lua",
-      "contentHash": "bd30ee8382a4eb01cd0023c028773466460410b83efc80d5b55e832f517bf2b6",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 35,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lsp.lua": {
-      "filePath": "lua/plugins/lsp.lua",
-      "contentHash": "55e76f0cc9565c58b1fcd8cc20b45d51cabd24bf425416680fdabd4cdd32e5b1",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 82,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/lsp_lens.lua": {
-      "filePath": "lua/plugins/lsp_lens.lua",
-      "contentHash": "12e60f94f0963938a1157eedb69f119b852d95015d5646bc3e6fb89890409cca",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 19,
-      "hasStructuralAnalysis": false
-    },
     "lua/plugins/lualine.lua": {
       "filePath": "lua/plugins/lualine.lua",
-      "contentHash": "94cc0fc3412a2484c1c41134f4dea290fd8fcde40c1d549f9686cf890c119ee8",
+      "contentHash": "fa6fd496474539ecee66e286c26b74207f75bc48884ba7825b1f951ce05146bc",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 187,
+      "totalLines": 183,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/mason.lua": {
       "filePath": "lua/plugins/mason.lua",
-      "contentHash": "792169fd416267f92ef2895550b43a01a097f9cdbcbbeb8b4ab73fae4a189b3d",
+      "contentHash": "a597ba90f3244892bcc91b7ef7a7ae5dd1b78fb67cd006aab5ce798b15de791b",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 23,
+      "totalLines": 22,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/mini.lua": {
       "filePath": "lua/plugins/mini.lua",
-      "contentHash": "5521a0ed868a74cc49f2009becf0b8882138584916aaa65d864501df61788d72",
+      "contentHash": "3eceaea847010ebf36ea614aaa1a8da48f9f27a09f30b1abed86db43a5d72f15",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 69,
+      "totalLines": 78,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/namu.lua": {
@@ -855,22 +875,22 @@
     },
     "lua/plugins/neo-tree.lua": {
       "filePath": "lua/plugins/neo-tree.lua",
-      "contentHash": "dcd993e1c9c7dcee8bc2e6e739f8b210b81758fa71dddafc1327602e15c7ac80",
+      "contentHash": "200e8c51703a6fab45df5b9218fefc428226bd222d65585bbb82a0f451f041fc",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 86,
+      "totalLines": 84,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/neocodeium.lua": {
       "filePath": "lua/plugins/neocodeium.lua",
-      "contentHash": "36d66808b43e83e3c65f180c931553c571eb855e89ffb06de4d1ec773ceb3be0",
+      "contentHash": "16226691dcd80592ba1aedf4acbafeb579d19f86804effe899863b07a7bd85c5",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 13,
+      "totalLines": 12,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/nightfox.lua": {
@@ -895,22 +915,12 @@
     },
     "lua/plugins/noice.lua": {
       "filePath": "lua/plugins/noice.lua",
-      "contentHash": "d935bc7b64d0417b90a768e5da74c1db67e781de180315c703203d6dfdab30b1",
+      "contentHash": "e0f79f19ab217e4aee187b08f8425ab0680221969c551bfacacd52f6babb03f3",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 52,
-      "hasStructuralAnalysis": false
-    },
-    "lua/plugins/nvim-autopairs.lua": {
-      "filePath": "lua/plugins/nvim-autopairs.lua",
-      "contentHash": "5e38d85465e7c5a9572a172787a6a2da10e262e9424e39b279cef29d2024356a",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 9,
+      "totalLines": 50,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/nvim-chainsaw.lua": {
@@ -921,6 +931,16 @@
       "imports": [],
       "exports": [],
       "totalLines": 8,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/nvim-context-vt.lua": {
+      "filePath": "lua/plugins/nvim-context-vt.lua",
+      "contentHash": "cb9d9fd34360402e9c5e56e97a704b3ec7525506b7e32515945989abea2133c6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 14,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/nvim-genghis.lua": {
@@ -955,12 +975,12 @@
     },
     "lua/plugins/nvim-lint.lua": {
       "filePath": "lua/plugins/nvim-lint.lua",
-      "contentHash": "973cbadfac1287c10cad9e061bc1e908ff14a6196a3c5180ef7788d16fcd44ee",
+      "contentHash": "44ff70f5209c2c8dbed07ed72b8dd60008cfa52ddeaae95de062dad80af8f705",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 83,
+      "totalLines": 91,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/nvim-lsp-endhints.lua": {
@@ -975,12 +995,12 @@
     },
     "lua/plugins/nvim-nio.lua": {
       "filePath": "lua/plugins/nvim-nio.lua",
-      "contentHash": "5931f50f6abf8987bc6182a2de1b518a62ffaa1cc454266ab66683ec0998b9ba",
+      "contentHash": "7a874af4a30e9effef2c837e4a3ce7af5bf98a73e91d5aeb587dbb82a7becf09",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 11,
+      "totalLines": 10,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/nvim-origami.lua": {
@@ -1033,16 +1053,6 @@
       "totalLines": 7,
       "hasStructuralAnalysis": false
     },
-    "lua/plugins/nvim-surround.lua": {
-      "filePath": "lua/plugins/nvim-surround.lua",
-      "contentHash": "5180cbd8edc23390b6a6d4daac06a5131f0c204f6428caae970f4d59c430fe1f",
-      "functions": [],
-      "classes": [],
-      "imports": [],
-      "exports": [],
-      "totalLines": 7,
-      "hasStructuralAnalysis": false
-    },
     "lua/plugins/nvim-tinygit.lua": {
       "filePath": "lua/plugins/nvim-tinygit.lua",
       "contentHash": "712151376df20e10085b95d86b23b2faaf591b5e2b84d8adc3d3bb6f6616f35d",
@@ -1055,22 +1065,22 @@
     },
     "lua/plugins/nvim-various-textobjs.lua": {
       "filePath": "lua/plugins/nvim-various-textobjs.lua",
-      "contentHash": "d5c19cf3f795f6485567136663e7a28ab6ab13b18d144afdd7bfb693ff28336c",
+      "contentHash": "f34b9e9cb90ee3560f22a3ff3a78ffd4599990699ad197334d662f7157db28e9",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 7,
+      "totalLines": 14,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/nvim_lightbulb.lua": {
       "filePath": "lua/plugins/nvim_lightbulb.lua",
-      "contentHash": "45777ef90e30b17590abb840892fe43fe2b6e5db328eaca4ca1059c330c04810",
+      "contentHash": "96d1d95257d4e89dfe9be0d92a7aa6cf1359756eb33522b5958f427502b15473",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 19,
+      "totalLines": 17,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/plenary.lua": {
@@ -1095,12 +1105,12 @@
     },
     "lua/plugins/render-markdown.lua": {
       "filePath": "lua/plugins/render-markdown.lua",
-      "contentHash": "9344d67d414f91344abb640b5644f58bccfdf9ec5376e4ef9e8b3db18a044222",
+      "contentHash": "4a7a8c6494e6e05d823f7d143455faf347e6f83370cb0781205afd5eb434281c",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 26,
+      "totalLines": 23,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/satellite.lua": {
@@ -1115,12 +1125,12 @@
     },
     "lua/plugins/schemastore.lua": {
       "filePath": "lua/plugins/schemastore.lua",
-      "contentHash": "c1b119845d82bd75014b2211b4c0c91c8cb07af2eb259f3d4b409cb49b4b55e5",
+      "contentHash": "5d144c5bde83ea32062c224f6ea24dd037d62cb17ba831f7e6c0ea53cc1aff97",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 14,
+      "totalLines": 7,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/shades-of-purple.lua": {
@@ -1133,14 +1143,24 @@
       "totalLines": 7,
       "hasStructuralAnalysis": false
     },
-    "lua/plugins/symbol_usage.lua": {
-      "filePath": "lua/plugins/symbol_usage.lua",
-      "contentHash": "ddc837d6585c8a01b72ab75f676b6581cc1ddad7d8a166aec8790b5567074526",
+    "lua/plugins/snippets.lua": {
+      "filePath": "lua/plugins/snippets.lua",
+      "contentHash": "cb426cb330252ec91330d10599d551fdaa2aba0caab13b5faae2760e8f43659b",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 23,
+      "totalLines": 7,
+      "hasStructuralAnalysis": false
+    },
+    "lua/plugins/symbol_usage.lua": {
+      "filePath": "lua/plugins/symbol_usage.lua",
+      "contentHash": "f2f8ee372b208b742426502b4e8565cacc618c1fe354939b097fb2aa1314ecb3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 21,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/tiny-autosave.lua": {
@@ -1155,42 +1175,42 @@
     },
     "lua/plugins/todo-comments.lua": {
       "filePath": "lua/plugins/todo-comments.lua",
-      "contentHash": "d077666b99ac72f33ce7e5233fdff9160b7b084b21aa6a8243719cb9d7269f88",
+      "contentHash": "dce5fd21703ab4ad24b29f9b222fe6fd38a54694a893a1fdef272ec837f5f6ba",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 18,
+      "totalLines": 15,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/treesitter-manager.lua": {
       "filePath": "lua/plugins/treesitter-manager.lua",
-      "contentHash": "80e4241078c26c99affc7ab6bab4b8940c3ed400680f37561667a021b5d3f7e1",
+      "contentHash": "e30318133ad56164dfd8bd0bc29fbbf1fea379b2b1037b623456b2627f982e21",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 32,
+      "totalLines": 29,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/treesitter-textobjects.lua": {
       "filePath": "lua/plugins/treesitter-textobjects.lua",
-      "contentHash": "f5031d93295ceea98c6cdaa363fbe383a9ab58eb675c19524c61f584b14fb776",
+      "contentHash": "c951ad57222601a9163bb7964767e1c26832d0b89271d17eda27d178c5ce63e4",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 107,
+      "totalLines": 110,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/treesitter.lua": {
       "filePath": "lua/plugins/treesitter.lua",
-      "contentHash": "c3ac3eaa36a08f5bc7d8627fb17fea7df54293ef73bb21ce6b2626730907b859",
+      "contentHash": "9c748cec86595903a16b9c0b6f4b763e27c280451e4c315232eeee991af13e19",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 43,
+      "totalLines": 39,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/treesj.lua": {
@@ -1205,52 +1225,52 @@
     },
     "lua/plugins/trouble.lua": {
       "filePath": "lua/plugins/trouble.lua",
-      "contentHash": "c7e332901a6aeb88e5ede37606c4ab190597cd714691e11e7b1039bff168271f",
+      "contentHash": "cf5bd9d284f8fc2649819916caa46dcdf5d1deddf4ec1918b7d06502cc1c1dfe",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 44,
+      "totalLines": 39,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/vim-illuminate.lua": {
       "filePath": "lua/plugins/vim-illuminate.lua",
-      "contentHash": "a2d63d01fb682686501adb7c2583339eb618da28668b732eaba4372391844b7c",
+      "contentHash": "e233fd907f743e29686e03548ca6159d1760c4b14c32f166ae7476c2a0a04a14",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 25,
+      "totalLines": 23,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/whichkey.lua": {
       "filePath": "lua/plugins/whichkey.lua",
-      "contentHash": "0ce4738b00a7ea98fe43f2ace85862ad0f54a23c8fe7301a02c0b3debc44712a",
+      "contentHash": "545dfc02577545df5825cbe339346ec6eddfb34dc6eea9c147dccb9976f549f0",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 69,
+      "totalLines": 68,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/workspace_diagnostics.lua": {
       "filePath": "lua/plugins/workspace_diagnostics.lua",
-      "contentHash": "a09885f86cb5bcaf63134166d6ff6a7e8f03fa48b68733408b128f0a641daf8e",
+      "contentHash": "8895d7661e5c99aa93cfc37ccf506e03c466701eabb126d1dc689b416c2a0967",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 11,
+      "totalLines": 8,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/yanky.lua": {
       "filePath": "lua/plugins/yanky.lua",
-      "contentHash": "a072acf633cc546631ecdd6d8814b8eb8ef5fb604a94561eb2645c062a0f8e76",
+      "contentHash": "8df6b88394706f10d9d18b6c58a8a05bf95e989b2602289aa93984be007df8a3",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 52,
+      "totalLines": 46,
       "hasStructuralAnalysis": false
     },
     "lua/plugins/yazi.lua": {
@@ -1265,17 +1285,17 @@
     },
     "lua/utils/autocmds.lua": {
       "filePath": "lua/utils/autocmds.lua",
-      "contentHash": "7ac7c743935428570d129fb807747c914d11cc9f8590f5ab84c0edb44514e5ba",
+      "contentHash": "52a69268f756d60096d209c2f287eeb6209d9cf1a2f3d5248e302a44dd999397",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 25,
+      "totalLines": 23,
       "hasStructuralAnalysis": false
     },
     "lua/utils/init.lua": {
       "filePath": "lua/utils/init.lua",
-      "contentHash": "c02212b9d6800b51d350fb5cc5620630bf5c6a4b8fa7003eb35e85e27fcffa78",
+      "contentHash": "0eae83ec79e8b163929edb0c4c3409884fae43b2581be0b557d4357187335720",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -1285,37 +1305,47 @@
     },
     "lua/utils/install.lua": {
       "filePath": "lua/utils/install.lua",
-      "contentHash": "109b7be00c7c12b06f4e0d29eae1cb2821c6d5e5748a3d9b3aec32d5c969d7e4",
+      "contentHash": "f9d926724c804a9fa41d245d3a31d8191709f7bfbb8c34a8229f40997a3b930c",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 31,
+      "totalLines": 25,
       "hasStructuralAnalysis": false
     },
     "lua/utils/package_manager.lua": {
       "filePath": "lua/utils/package_manager.lua",
-      "contentHash": "aa44186eba3bd1f8470093b50a69444b4968d9ad93176c4bba017f37e091d68b",
+      "contentHash": "81cd8e2300c1f20d6af879a9f33f365d7687f3b08d4578690622e2b54109024c",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 142,
+      "totalLines": 388,
+      "hasStructuralAnalysis": false
+    },
+    "lua/utils/plugins_loader.lua": {
+      "filePath": "lua/utils/plugins_loader.lua",
+      "contentHash": "11f5bfee06296b4971d8fa1193874d140eefcb4864d9b64ec2aa330c48d4ca65",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
       "hasStructuralAnalysis": false
     },
     "lua/utils/root.lua": {
       "filePath": "lua/utils/root.lua",
-      "contentHash": "cd5ff9fde3f32cf57d96482de2bdf6b17fb659bd762cdee9c3f47865b4e039eb",
+      "contentHash": "3f90ae5350c7a3fab57789eabf242da3f1dc77c79feb3f7c7ee88233306a61d7",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 218,
+      "totalLines": 165,
       "hasStructuralAnalysis": false
     },
     "lua/utils/terminal.lua": {
       "filePath": "lua/utils/terminal.lua",
-      "contentHash": "8bc3e464385253e287b27eb3b213e932383c7714ed908a4891cac7075f622597",
+      "contentHash": "41e90cbe9c47e26bcaaecee1db90a10d8719a5c45f134ac94a372147a37c330b",
       "functions": [],
       "classes": [],
       "imports": [],
@@ -1335,12 +1365,12 @@
     },
     "nvim-pack-lock.json": {
       "filePath": "nvim-pack-lock.json",
-      "contentHash": "bc41744288ab71f2393f30b3c630eb6c8043f49aa5ebc8ac3285d18cdcb75587",
+      "contentHash": "f4c5e7a661beba9b4106e6cc27b8c2fddbcf7ee56dcb6bffb688a0cd25464ffb",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 477,
+      "totalLines": 509,
       "hasStructuralAnalysis": true
     },
     "selene.toml": {
@@ -1365,12 +1395,12 @@
     },
     "vim.yml": {
       "filePath": "vim.yml",
-      "contentHash": "1db04a07ae171f8bb4b2f69eed0896767dce325da96519b4f0324b4587f31087",
+      "contentHash": "c4673d75d547f1cd62ea2794ea1fb3329322812031d06ae4f6808276b33bf7e4",
       "functions": [],
       "classes": [],
       "imports": [],
       "exports": [],
-      "totalLines": 26,
+      "totalLines": 28,
       "hasStructuralAnalysis": true
     }
   }

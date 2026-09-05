@@ -240,13 +240,13 @@
       "rev": "65b2be63c3de00e6f15c05388ebdc8d603dbd727",
       "src": "https://github.com/fredrikaverpil/neotest-golang"
     },
-    "neotest-zig": {
-      "rev": "de63f3b9a182d374d2e71cf44385326682ec90e7",
-      "src": "https://github.com/lawrence-laz/neotest-zig"
-    },
     "neotest-testthat": {
       "rev": "63be77b75a2ad33df39e3c4e4de10e163a21cfef",
       "src": "https://github.com/shunsambongi/neotest-testthat"
+    },
+    "neotest-zig": {
+      "rev": "de63f3b9a182d374d2e71cf44385326682ec90e7",
+      "src": "https://github.com/lawrence-laz/neotest-zig"
     },
     "nightfox.nvim": {
       "rev": "4dacd3f0185a2227bdf3b6c0975a8f0bf87cac9a",
@@ -272,10 +272,6 @@
       "rev": "c7f595d568b588942d4d0c37b5cd6cae3764a148",
       "src": "https://github.com/mfussenegger/nvim-ansible"
     },
-    "nvim-dap": {
-      "rev": "c9a0738e45f1bd41d792a126941348dce661cf9b",
-      "src": "https://github.com/mfussenegger/nvim-dap"
-    },
     "nvim-autopairs": {
       "rev": "430522f95fe4fb7c511ec64f8c1a90cc6a66c05c",
       "src": "https://github.com/windwp/nvim-autopairs"
@@ -283,6 +279,22 @@
     "nvim-chainsaw": {
       "rev": "78a0e68c59f4e7760f33dacde0ff21b2498c015e",
       "src": "https://github.com/chrisgrieser/nvim-chainsaw"
+    },
+    "nvim-dap": {
+      "rev": "c9a0738e45f1bd41d792a126941348dce661cf9b",
+      "src": "https://github.com/mfussenegger/nvim-dap"
+    },
+    "nvim-dap-python": {
+      "rev": "1808458eba2b18f178f990e01376941a42c7f93b",
+      "src": "https://github.com/mfussenegger/nvim-dap-python"
+    },
+    "nvim-dap-ui": {
+      "rev": "cc9dd33aade7f20bae414d0cba163bc60d4d4b43",
+      "src": "https://github.com/rcarriga/nvim-dap-ui"
+    },
+    "nvim-dap-virtual-text": {
+      "rev": "fbdb48c2ed45f4a8293d0d483f7730d24467ccb6",
+      "src": "https://github.com/theHamsta/nvim-dap-virtual-text"
     },
     "nvim-genghis": {
       "rev": "401522898169644a5e9e3a20d06382cd56318a3b",

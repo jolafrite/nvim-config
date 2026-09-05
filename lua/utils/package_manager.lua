@@ -101,20 +101,14 @@ local function install_with_mason(tools)
   end
 
   -- Refresh the registry first to avoid races with Mason's async setup.
-  if mr.is_installed then
-    if mr:is_installed() then
-      do_install(function() end)
-    else
-      mr.refresh(function() do_install(function() end) end)
-    end
+  -- `is_installed` checks whether a single package is on disk, so it cannot be
+  -- used to probe registry readiness; calling it as `mr:is_installed()` passes
+  -- the registry table itself as the package name and crashes table.concat.
+  local ok_p, _ = pcall(mr.get_package, 'lua')
+  if ok_p then
+    do_install(function() end)
   else
-    -- Fallback for older Mason versions without is_installed.
-    local ok_p, _ = pcall(mr.get_package, 'lua')
-    if ok_p then
-      do_install(function() end)
-    else
-      mr.refresh(function() do_install(function() end) end)
-    end
+    mr.refresh(function() do_install(function() end) end)
   end
   return true
 end
