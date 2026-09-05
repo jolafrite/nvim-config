@@ -19,6 +19,12 @@ vim.opt.smoothscroll = true
 vim.opt.spell = true
 vim.opt.title = true
 
+-- Neovim 0.13 additions
+vim.opt.scrolloffpad = 2          -- allow vertically centering cursor at EOF
+vim.opt.messagesopt = { pager = '<CR>', timeout = 3000 }  -- ui2 message pager + timeout
+vim.opt.winpinned = false         -- allow windows to close normally
+vim.opt.shortmess:append('u')     -- silence undo/redo messages
+
 vim.g.autoformat = true
 vim.g.deprecation_warnings = true
 vim.g.have_nerd_font = true

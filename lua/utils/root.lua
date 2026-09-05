@@ -161,4 +161,20 @@ end
 ---@param _opts? { hl_last?: string }
 function M.pretty_path(_opts) return '' end
 
+-- Neovim 0.13: vim.fs.slug() generates filesystem-safe names from arbitrary strings
+function M.slug(name, opts)
+  opts = opts or {}
+  local ok, slug_fn = pcall(vim.fs.slug, name)
+  if ok and slug_fn then return slug_fn end
+  -- Fallback: simple slugify
+  return name:gsub('[^%w%-_]', '-'):lower()
+end
+
+-- Neovim 0.13: vim.fs.mkdir() now creates parent directories with opts.parents=true
+function M.mkdir_p(path)
+  local ok, err = pcall(vim.fs.mkdir, path, { parents = true })
+  if not ok then vim.notify(('mkdir failed: %s: %s'):format(path, tostring(err)), vim.log.levels.WARN) end
+  return ok
+end
+
 return M

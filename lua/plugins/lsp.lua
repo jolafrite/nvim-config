@@ -15,7 +15,19 @@ vim.diagnostic.config {
     border = 'rounded',
     source = true,
   },
+  -- Neovim 0.13: virtual_lines.overflow controls how virtual lines
+  -- wider than the window are displayed
+  virtual_lines = {
+    overflow = 'wrap',
+  },
 }
+
+-- Neovim 0.13: vim.diagnostic.status() now uses the signs field from config.
+-- Expose a statusline helper that leverages this.
+_G.diag_status = function()
+  local ok, status = pcall(vim.diagnostic.status, nil, { bufnr = 0 })
+  return ok and status or ''
+end
 
 vim.lsp.config['*'] = {
   capabilities = (function()
