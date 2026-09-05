@@ -5,7 +5,7 @@ local check_version = function()
     return
   end
 
-  if vim.version.ge(vim.version(), '0.12') then
+  if vim.version.ge(vim.version(), '0.13') then
     vim.health.ok(string.format("Neovim version is: '%s'", verstr))
   else
     vim.health.error(string.format("Neovim out of date: '%s'. Upgrade to latest stable or nightly", verstr))
@@ -20,6 +20,14 @@ local check_external_reqs = function()
     else
       vim.health.warn(string.format("Could not find executable: '%s'", exe))
     end
+  end
+
+  -- Neovim 0.13: vim.ui.img health checks moved to :checkhealth vim.health
+  local ok, _ = pcall(vim.ui.img, nil)
+  if ok then
+    vim.health.ok('vim.ui.img available')
+  else
+    vim.health.info('vim.ui.img not available (terminal may not support images)')
   end
 
   return true

@@ -39,5 +39,17 @@ PackageManager.add {
     })
     vim.keymap.set({ 'n', 'x' }, '<leader>cf', function() conform.format { force = true } end, { desc = 'Format' })
     vim.keymap.set('n', '<leader>cF', toggle, { desc = 'Toggle format on save' })
+
+    -- Neovim 0.13: vim.lsp.formatexpr() now falls back to
+    -- textDocument/formatting for whole-buffer formatting.
+    -- Enable formatexpr so `gq` uses LSP formatting when conform has no formatter.
+    vim.api.nvim_create_autocmd('FileType', {
+      group = vim.api.nvim_create_augroup('ConformFormatexpr', { clear = true }),
+      callback = function(ev)
+        local ft = ev.match
+        if conform.formatters_by_ft[ft] then return end -- conform handles this ft
+        vim.bo[ev.buf].formatexpr = "v:lua.require('vim.lsp').formatexpr()"
+      end,
+    })
   end,
 }

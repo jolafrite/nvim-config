@@ -35,6 +35,19 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, {
   end,
 })
 
+-- Neovim 0.13: vim.hl.hl_op() highlights text regions for TextYankPost/TextPutPost
+-- Replaces the deprecated vim.hl.on_yank()
+vim.api.nvim_create_autocmd('TextYankPost', {
+  group = vim.api.nvim_create_augroup('yank_highlight', { clear = true }),
+  callback = function()
+    local ok, hl_op = pcall(require, 'vim.hl')
+    if ok and type(hl_op.hl_op) == 'function' then
+      pcall(hl_op.hl_op, 0, vim.fn.getregion(vim.v.reg, 0, 0), true)
+    end
+  end,
+  desc = 'Highlight yanked text on yank (0.13 vim.hl.hl_op)',
+})
+
 local numbertoggle = vim.api.nvim_create_augroup('numbertoggle', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
   pattern = '*',

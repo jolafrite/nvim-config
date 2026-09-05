@@ -39,7 +39,14 @@ vim.keymap.set('n', '%', '%zz', opts)
 vim.keymap.set('n', '*', '*zz', opts)
 vim.keymap.set('n', '#', '#zz', opts)
 
+-- Neovim 0.13: Q is multi-cursor toggle; U keeps redo
 vim.keymap.set('n', 'U', '<C-r>', opts)
+
+-- Multi-cursor (0.13+): Q toggles, gQ clears, q= follows
+vim.keymap.set('n', 'Q', vim.nvim_mcursor, { desc = 'Multi-cursor toggle' })
+vim.keymap.set('n', '<leader>mq', vim.nvim_mcursor, { desc = 'Toggle multi-cursor' })
+vim.keymap.set('n', 'gQ', function() vim.cmd('silent! exec "normal! gQ"') end, { desc = 'Clear cursors' })
+vim.keymap.set('n', 'q=', function() vim.cmd('silent! exec "normal! q="') end, { desc = 'Follow mode' })
 
 vim.keymap.set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
 vim.keymap.set({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
