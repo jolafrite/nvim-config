@@ -35,7 +35,6 @@ PackageManager.add {
       end,
     })
 
-    -- 0.13: vim.treesitter.select() is a built-in incremental selection
-    vim.keymap.set({ 'x', 'o' }, ']N', vim.treesitter.select, { desc = 'Treesitter incremental selection' })
+        vim.keymap.set({ 'x', 'o' }, ']N', vim.treesitter.select, { desc = 'Treesitter incremental selection' })
   end,
 }
