@@ -35,21 +35,7 @@ PackageManager.add {
       end,
     })
 
-    -- Incremental selection to sibling treesitter nodes
-    -- vim.treesitter.select() is a built-in (v_]N / v_[N expand to siblings)
-    vim.keymap.set({ 'x', 'o' }, ']N', function()
-      local ok = pcall(vim.treesitter.select)
-      if ok then vim.treesitter.select() end
-    end, { desc = 'Expand to sibling TS node' })
-    vim.keymap.set({ 'x', 'o' }, '[N', function()
-      local ok = pcall(vim.treesitter.select, { increment = false })
-      if ok then vim.treesitter.select({ increment = false }) end
-    end, { desc = 'Shrink to parent TS node' })
-
-    -- vim.treesitter.select() starts/adjusts visual selection at cursor
-    vim.keymap.set({ 'x', 'o' }, '<leader>ts', function()
-      local ok = pcall(vim.treesitter.select)
-      if ok then vim.treesitter.select() end
-    end, { desc = 'Treesitter incremental selection' })
+    -- 0.13: vim.treesitter.select() is a built-in incremental selection
+    vim.keymap.set({ 'x', 'o' }, ']N', vim.treesitter.select, { desc = 'Treesitter incremental selection' })
   end,
 }

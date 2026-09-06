@@ -18,12 +18,6 @@
 ---@field load fun()
 local M = {}
 
--- vim.async provides structured concurrency for the
--- async install pipeline (mason refresh + install, treesitter install).
-local async = vim.async or function(fn) return fn() end
-
--- Shared logging interface (vim.log on 0.13+, vim.notify fallback)
-local log = require 'utils.log'
 
 ---@type PackageManager.Spec[]
 local registry = {}
@@ -77,10 +71,10 @@ local function load_spec(s)
   to_add[#to_add + 1] = s[1]
 
   local ok, err = pcall(vim.pack.add, to_add, { load = true, confirm = false })
-  if not ok then log.warn('package_manager: failed to load ' .. tostring(s[1]) .. ': ' .. tostring(err)) end
+  if not ok then vim.notify('package_manager: failed to load ' .. tostring(s[1]) .. ': ' .. tostring(err)) end
   if s.config then
     local ok_cfg, cfg_err = pcall(s.config)
-    if not ok_cfg then log.warn('package_manager: config failed for ' .. tostring(s[1]) .. ': ' .. tostring(cfg_err)) end
+    if not ok_cfg then vim.notify('package_manager: config failed for ' .. tostring(s[1]) .. ': ' .. tostring(cfg_err)) end
   end
 end
 
@@ -97,10 +91,10 @@ local function install_with_mason(tools)
         seen[tool] = true
         local ok_p, p = pcall(mr.get_package, tool)
         if not ok_p then
-          log.warn(('mason: unknown package %q'):format(tool))
+          vim.notify(('mason: unknown package %q'):format(tool))
         elseif not p:is_installed() then
           local ok_i, err = pcall(p.install, p)
-          if not ok_i then log.warn(('mason: failed to install %q: %s'):format(tool, tostring(err))) end
+          if not ok_i then vim.notify(('mason: failed to install %q: %s'):format(tool, tostring(err))) end
         end
       end
     end
@@ -116,9 +110,7 @@ local function install_with_mason(tools)
   if ok_p then
     do_install(function() end)
   else
-    async(function()
-      mr.refresh(function() do_install(function() end) end)
-    end)
+    mr.refresh(function() do_install(function() end) end)
   end
   return true
 end
@@ -192,7 +184,7 @@ local function setup_testers(pending)
       if type(name) == 'string' and type(opts) == 'table' then
         local ok_mod, mod = pcall(require, name)
         if not ok_mod then
-          log.warn(('neotest: adapter %q is not installed'):format(name))
+          vim.notify(('neotest: adapter %q is not installed'):format(name))
         else
           tester_adapters[#tester_adapters + 1] = type(mod) == 'function' and mod(opts) or mod
         end
@@ -297,23 +289,13 @@ local function load_dependencies()
   end
   registry = {}
 
-  -- Only the mason registry refresh is truly blocking I/O.
-  -- Run it async; keep drain_pendings() synchronous so formatters/linters/
-  -- debuggers are ready before plugin configs execute.
-  if #mason_tools > 0 then
-    async(function()
-      install_with_mason(mason_tools)
-      mason_tools = {}
-      -- After mason install completes, drain any pending setup that
-      -- depended on mason tools being available.
-      drain_pendings()
-    end)
-  else
-    drain_pendings()
-  end
+  install_with_mason(mason_tools)
+  mason_tools = {}
 
   setup_treesitter(pending_treesitter)
   pending_treesitter = {}
+
+  drain_pendings()
 end
 
 -- ─── public API ─────────────────────────────────────────────────────────────

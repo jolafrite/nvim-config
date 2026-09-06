@@ -1,4 +1,3 @@
-local log = require 'utils.log'
 local M = {}
 
 M.setup = function(shell)
@@ -10,7 +9,7 @@ M.setup = function(shell)
     elseif vim.fn.executable 'powershell' == 1 then
       vim.o.shell = 'powershell'
     else
-      log.error('No powershell executable found')
+      vim.notify('No powershell executable found')
       return
     end
 

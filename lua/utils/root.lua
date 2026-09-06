@@ -1,4 +1,3 @@
-local log = require 'utils.log'
 local M = {}
 
 ---@class LazyRoot
@@ -122,7 +121,7 @@ function M.info()
   lines[#lines + 1] = '```lua'
   lines[#lines + 1] = 'vim.g.root_spec = ' .. vim.inspect(spec)
   lines[#lines + 1] = '```'
-  log.info(lines, { title = 'LazyVim Roots' })
+  vim.notify(lines, { title = 'LazyVim Roots' })
   return roots[1] and roots[1].paths[1] or vim.uv.cwd()
 end
 
@@ -174,7 +173,7 @@ end
 -- vim.fs.mkdir() now creates parent directories with opts.parents=true
 function M.mkdir_p(path)
   local ok, err = pcall(vim.fs.mkdir, path, { parents = true })
-  if not ok then log.warn(('mkdir failed: %s: %s'):format(path, tostring(err))) end
+  if not ok then vim.notify(('mkdir failed: %s: %s'):format(path, tostring(err))) end
   return ok
 end
 

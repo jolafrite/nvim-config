@@ -1,5 +1,4 @@
 local opts = { noremap = false, silent = true }
-local log = require 'utils.log'
 
 local open_url = function(url)
   local command = vim.fn.has 'mac' == 1 and 'open' or 'xdg-open'
@@ -43,11 +42,8 @@ vim.keymap.set('n', '#', '#zz', opts)
 -- Q is multi-cursor toggle; U keeps redo
 vim.keymap.set('n', 'U', '<C-r>', opts)
 
--- Multi-cursor (0.13+): Q toggles, gQ clears, q= follows
+-- 0.13: Q is multi-cursor toggle; U keeps redo
 vim.keymap.set('n', 'Q', vim.nvim_mcursor, { desc = 'Multi-cursor toggle' })
-vim.keymap.set('n', '<leader>mq', vim.nvim_mcursor, { desc = 'Toggle multi-cursor' })
-vim.keymap.set('n', 'gQ', function() vim.cmd('silent! normal! gQ') end, { desc = 'Clear cursors' })
-vim.keymap.set('n', 'q=', function() vim.cmd('silent! normal! q=') end, { desc = 'Follow mode' })
 
 vim.keymap.set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
 vim.keymap.set({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
@@ -104,12 +100,12 @@ vim.keymap.set('n', '<leader>fn', '<cmd>enew<cr>', { desc = 'New File' })
 
 vim.keymap.set('n', '<leader>xl', function()
   local success, err = pcall(vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen)
-  if not success and err then log.error(err) end
+  if not success and err then vim.notify(err) end
 end, { desc = 'Location List' })
 
 vim.keymap.set('n', '<leader>xq', function()
   local success, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
-  if not success and err then log.error(err) end
+  if not success and err then vim.notify(err) end
 end, { desc = 'Quickfix List' })
 
 vim.keymap.set('n', '[q', vim.cmd.cprev, { desc = 'Previous Quickfix' })

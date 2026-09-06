@@ -22,13 +22,6 @@ vim.diagnostic.config {
   },
 }
 
--- vim.diagnostic.status() now uses the signs field from config.
--- Expose a statusline helper that leverages this.
-_G.diag_status = function()
-  local ok, status = pcall(vim.diagnostic.status, 0)
-  return ok and status or ''
-end
-
 vim.lsp.config['*'] = {
   capabilities = (function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
