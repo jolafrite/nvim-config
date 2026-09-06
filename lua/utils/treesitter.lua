@@ -97,7 +97,7 @@ function M.build(cb)
         lines[#lines + 1] = 'Install a C compiler with `winget install --id=BrechtSanders.WinLibs.POSIX.UCRT -e`'
       end
       vim.list_extend(lines, err and { '', err } or {})
-      vim.notify(lines, { title = 'LazyVim Treesitter' })
+      vim.notify(lines, vim.log.levels.ERROR, { title = 'LazyVim Treesitter' })
     end
   end)
 end
@@ -116,12 +116,12 @@ function M.ensure_treesitter_cli(cb)
   mr.refresh(function()
     local p = mr.get_package 'tree-sitter-cli'
     if not p:is_installed() then
-      vim.notify('Installing `tree-sitter-cli` with `mason.nvim`...')
+      vim.notify('Installing `tree-sitter-cli` with `mason.nvim`...', vim.log.levels.INFO)
       p:install(
         nil,
         vim.schedule_wrap(function(success)
           if success then
-            vim.notify('Installed `tree-sitter-cli` with `mason.nvim`.')
+            vim.notify('Installed `tree-sitter-cli` with `mason.nvim`.', vim.log.levels.INFO)
             cb(true)
           else
             cb(false, 'Failed to install `tree-sitter-cli` with `mason.nvim`.')

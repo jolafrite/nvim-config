@@ -14,7 +14,7 @@ local function load_file(file)
   if not chunk then error('loadfile ' .. file .. ': ' .. tostring(err)) end
   local ok, run_err = pcall(chunk)
   if not ok then
-    vim.schedule(function() vim.notify(('plugins_loader: %s:\n%s'):format(file, run_err)) end)
+    vim.schedule(function() vim.notify(('plugins_loader: %s:\n%s'):format(file, run_err), vim.log.levels.ERROR) end)
     return
   end
   package.loaded[mod] = true

@@ -9,7 +9,7 @@ M.setup = function(shell)
     elseif vim.fn.executable 'powershell' == 1 then
       vim.o.shell = 'powershell'
     else
-      vim.notify('No powershell executable found')
+      vim.notify('No powershell executable found', vim.log.levels.ERROR)
       return
     end
 

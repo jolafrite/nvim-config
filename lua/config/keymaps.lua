@@ -39,10 +39,9 @@ vim.keymap.set('n', '%', '%zz', opts)
 vim.keymap.set('n', '*', '*zz', opts)
 vim.keymap.set('n', '#', '#zz', opts)
 
--- Q is multi-cursor toggle; U keeps redo
 vim.keymap.set('n', 'U', '<C-r>', opts)
 
--- 0.13: Q is multi-cursor toggle; U keeps redo
+-- 0.13: Q is multi-cursor toggle
 vim.keymap.set('n', 'Q', vim.nvim_mcursor, { desc = 'Multi-cursor toggle' })
 
 vim.keymap.set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
@@ -100,12 +99,12 @@ vim.keymap.set('n', '<leader>fn', '<cmd>enew<cr>', { desc = 'New File' })
 
 vim.keymap.set('n', '<leader>xl', function()
   local success, err = pcall(vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen)
-  if not success and err then vim.notify(err) end
+  if not success and err then vim.notify(err, vim.log.levels.ERROR) end
 end, { desc = 'Location List' })
 
 vim.keymap.set('n', '<leader>xq', function()
   local success, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
-  if not success and err then vim.notify(err) end
+  if not success and err then vim.notify(err, vim.log.levels.ERROR) end
 end, { desc = 'Quickfix List' })
 
 vim.keymap.set('n', '[q', vim.cmd.cprev, { desc = 'Previous Quickfix' })
