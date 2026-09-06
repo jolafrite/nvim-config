@@ -35,6 +35,6 @@ PackageManager.add {
       end,
     })
 
-        vim.keymap.set({ 'x', 'o' }, ']N', vim.treesitter.select, { desc = 'Treesitter incremental selection' })
+    vim.keymap.set({ 'x', 'o' }, ']N', vim.treesitter.select, { desc = 'Treesitter incremental selection' })
   end,
 }
