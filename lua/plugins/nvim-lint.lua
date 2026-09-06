@@ -1,4 +1,5 @@
 local gh = require('utils').gh
+local log = require 'utils.log'
 
 --
 local unpack = rawget(_G, 'unpack') or table.unpack
@@ -32,7 +33,7 @@ PackageManager.add {
     end
     lint.linters_by_ft = opts.linters_by_ft
 
-    local function warn(msg, opts_) vim.notify(msg, vim.log_levels.WARN, vim.tbl_deep_extend('force', { title = 'nvim-lint' }, opts_ or {})) end
+    local function warn(msg, opts_) log.warn(msg, { title = 'nvim-lint', ...opts_ or {} }) end
 
     -- One timer per buffer: a single shared timer gets reset on every event,
     -- so jumping between buffers faster than the debounce window would drop the

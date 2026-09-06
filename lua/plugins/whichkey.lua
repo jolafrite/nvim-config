@@ -1,4 +1,5 @@
 local gh = require('utils').gh
+local log = require 'utils.log'
 
 PackageManager.add {
   [1] = gh 'folke/which-key.nvim',
@@ -47,7 +48,7 @@ PackageManager.add {
     wk.setup(opts)
 
     if not vim.tbl_isempty(opts.defaults) then
-      vim.notify 'which-key: opts.defaults is deprecated. Please use opts.spec instead.'
+      log.warn('which-key: opts.defaults is deprecated. Please use opts.spec instead.')
       wk.register(opts.defaults)
     end
 

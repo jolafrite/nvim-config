@@ -1,4 +1,5 @@
 local gh = require('utils').gh
+local log = require 'utils.log'
 
 PackageManager.add {
   [1] = gh 'folke/trouble.nvim',
@@ -25,7 +26,7 @@ vim.keymap.set('n', '[q', function()
     require('trouble').prev { skip_groups = true, jump = true }
   else
     local ok, err = pcall(vim.cmd.cprev)
-    if not ok then vim.notify(err, vim.log.levels.ERROR) end
+    if not ok then log.error(err) end
   end
 end, { desc = 'Previous Trouble/Quickfix Item' })
 vim.keymap.set('n', ']q', function()
@@ -33,6 +34,6 @@ vim.keymap.set('n', ']q', function()
     require('trouble').next { skip_groups = true, jump = true }
   else
     local ok, err = pcall(vim.cmd.cnext)
-    if not ok then vim.notify(err, vim.log.levels.ERROR) end
+    if not ok then log.error(err) end
   end
 end, { desc = 'Next Trouble/Quickfix Item' })

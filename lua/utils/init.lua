@@ -20,6 +20,7 @@ end
 -- Neovim 0.13: vim.keycode() returns structured info as return value 2
 M.keycode = function(keys) local ok, result = pcall(vim.keycode, keys) return ok and result or keys end
 
+M.log = require 'utils.log'
 M.install_with_mason = require('utils.install').install_with_mason
 M.on_buf_read = require('utils.autocmds').on_buf_read
 M.on_file_types = require('utils.autocmds').on_file_types

@@ -1,4 +1,5 @@
 local opts = { noremap = false, silent = true }
+local log = require 'utils.log'
 
 local open_url = function(url)
   local command = vim.fn.has 'mac' == 1 and 'open' or 'xdg-open'
@@ -103,12 +104,12 @@ vim.keymap.set('n', '<leader>fn', '<cmd>enew<cr>', { desc = 'New File' })
 
 vim.keymap.set('n', '<leader>xl', function()
   local success, err = pcall(vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen)
-  if not success and err then vim.notify(err, vim.log.levels.ERROR) end
+  if not success and err then log.error(err) end
 end, { desc = 'Location List' })
 
 vim.keymap.set('n', '<leader>xq', function()
   local success, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
-  if not success and err then vim.notify(err, vim.log.levels.ERROR) end
+  if not success and err then log.error(err) end
 end, { desc = 'Quickfix List' })
 
 vim.keymap.set('n', '[q', vim.cmd.cprev, { desc = 'Previous Quickfix' })

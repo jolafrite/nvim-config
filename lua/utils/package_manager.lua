@@ -22,14 +22,8 @@ local M = {}
 -- async install pipeline (mason refresh + install, treesitter install).
 local async = vim.async or function(fn) return fn() end
 
--- Neovim 0.13: vim.log provides a structured logging interface.
--- Use it for consistent log levels and output.
-local _log_levels = (vim.log and vim.log.levels) or { warn = 2, info = 1, error = 0 }
-  local log = vim.log or {
-    warn = function(msg) vim.notify(msg, _log_levels.warn) end,
-    info = function(msg) vim.notify(msg, _log_levels.info) end,
-    error = function(msg) vim.notify(msg, _log_levels.error) end,
-  }
+-- Shared logging interface (vim.log on 0.13+, vim.notify fallback)
+local log = require 'utils.log'
 
 ---@type PackageManager.Spec[]
 local registry = {}
