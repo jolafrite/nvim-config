@@ -18,7 +18,6 @@
 ---@field load fun()
 local M = {}
 
-
 ---@type PackageManager.Spec[]
 local registry = {}
 
