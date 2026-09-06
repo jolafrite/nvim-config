@@ -25,7 +25,7 @@ vim.diagnostic.config {
 -- Neovim 0.13: vim.diagnostic.status() now uses the signs field from config.
 -- Expose a statusline helper that leverages this.
 _G.diag_status = function()
-  local ok, status = pcall(vim.diagnostic.status, nil, { bufnr = 0 })
+  local ok, status = pcall(vim.diagnostic.status, 0)
   return ok and status or ''
 end
 

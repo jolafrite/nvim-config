@@ -24,11 +24,12 @@ local async = vim.async or function(fn) return fn() end
 
 -- Neovim 0.13: vim.log provides a structured logging interface.
 -- Use it for consistent log levels and output.
-local log = vim.log or {
-  warn = function(msg) vim.notify(msg, vim.log.levels.WARN) end,
-  info = function(msg) vim.notify(msg, vim.log.levels.INFO) end,
-  error = function(msg) vim.notify(msg, vim.log.levels.ERROR) end,
-}
+local _log_levels = (vim.log and vim.log.levels) or { warn = 2, info = 1, error = 0 }
+  local log = vim.log or {
+    warn = function(msg) vim.notify(msg, _log_levels.warn) end,
+    info = function(msg) vim.notify(msg, _log_levels.info) end,
+    error = function(msg) vim.notify(msg, _log_levels.error) end,
+  }
 
 ---@type PackageManager.Spec[]
 local registry = {}
@@ -302,17 +303,23 @@ local function load_dependencies()
   end
   registry = {}
 
-  -- Neovim 0.13: run mason install + treesitter setup in an async context
-  -- so they don't block the startup sequence.
-  async(function()
-    install_with_mason(mason_tools)
-    mason_tools = {}
-
-    setup_treesitter(pending_treesitter)
-    pending_treesitter = {}
-
+  -- Neovim 0.13: only the mason registry refresh is truly blocking I/O.
+  -- Run it async; keep drain_pendings() synchronous so formatters/linters/
+  -- debuggers are ready before plugin configs execute.
+  if #mason_tools > 0 then
+    async(function()
+      install_with_mason(mason_tools)
+      mason_tools = {}
+      -- After mason install completes, drain any pending setup that
+      -- depended on mason tools being available.
+      drain_pendings()
+    end)
+  else
     drain_pendings()
-  end)
+  end
+
+  setup_treesitter(pending_treesitter)
+  pending_treesitter = {}
 end
 
 -- ─── public API ─────────────────────────────────────────────────────────────

@@ -42,7 +42,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     local ok, hl_op = pcall(require, 'vim.hl')
     if ok and type(hl_op.hl_op) == 'function' then
-      pcall(hl_op.hl_op, 0, vim.fn.getregion(vim.v.reg, 0, 0), true)
+      -- getregion expects (register_char, mode); '"' = default reg, 'v' = visual mode
+      pcall(hl_op.hl_op, 0, vim.fn.getregion('"', 'v'), true)
     end
   end,
   desc = 'Highlight yanked text on yank (0.13 vim.hl.hl_op)',

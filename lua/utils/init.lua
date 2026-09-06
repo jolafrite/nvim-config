@@ -8,10 +8,14 @@ M.gh = function(repo) return 'https://github.com/' .. repo end
 M.isnil = function(v) local ok, isnil = pcall(vim.isnil, v) return ok and isnil or v == nil end
 
 -- Neovim 0.13: vim.nonnil() returns first non-nil argument
-M.nonnil = function(...) local ok, result = pcall(vim.nonnil, ...) return ok and result or ... end
+M.nonnil = function(...) local ok, result = pcall(vim.nonnil, ...) return ok and result or select(1, ...) end
 
 -- Neovim 0.13: vim.npcall() calls fn in protected mode, returns nil on error
-M.npcall = function(fn, ...) local ok, result = pcall(fn, ...) return ok and result or nil end
+M.npcall = function(fn, ...)
+  if vim.npcall then return vim.npcall(fn, ...) end
+  local ok, result = pcall(fn, ...)
+  return ok and result or nil
+end
 
 -- Neovim 0.13: vim.keycode() returns structured info as return value 2
 M.keycode = function(keys) local ok, result = pcall(vim.keycode, keys) return ok and result or keys end
