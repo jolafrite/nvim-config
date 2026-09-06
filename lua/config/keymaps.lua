@@ -40,7 +40,7 @@ vim.keymap.set('n', '%', '%zz', opts)
 vim.keymap.set('n', '*', '*zz', opts)
 vim.keymap.set('n', '#', '#zz', opts)
 
--- Neovim 0.13: Q is multi-cursor toggle; U keeps redo
+-- Q is multi-cursor toggle; U keeps redo
 vim.keymap.set('n', 'U', '<C-r>', opts)
 
 -- Multi-cursor (0.13+): Q toggles, gQ clears, q= follows

@@ -22,7 +22,7 @@ local check_external_reqs = function()
     end
   end
 
-  -- Neovim 0.13: vim.ui.img health checks moved to :checkhealth vim.health
+  -- vim.ui.img health check (moved to :checkhealth vim.health in 0.13)
   local ok, _ = pcall(vim.ui.img, nil)
   if ok then
     vim.health.ok('vim.ui.img available')

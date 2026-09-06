@@ -18,7 +18,7 @@
 ---@field load fun()
 local M = {}
 
--- Neovim 0.13: vim.async provides structured concurrency for the
+-- vim.async provides structured concurrency for the
 -- async install pipeline (mason refresh + install, treesitter install).
 local async = vim.async or function(fn) return fn() end
 
@@ -111,7 +111,7 @@ local function install_with_mason(tools)
   -- `is_installed` checks whether a single package is on disk, so it cannot be
   -- used to probe registry readiness; calling it as `mr:is_installed()` passes
   -- the registry table itself as the package name and crashes table.concat.
-  -- Neovim 0.13: use vim.async for structured concurrency around the refresh.
+  -- Use vim.async for structured concurrency around the refresh.
   local ok_p, _ = pcall(mr.get_package, 'lua')
   if ok_p then
     do_install(function() end)
@@ -297,7 +297,7 @@ local function load_dependencies()
   end
   registry = {}
 
-  -- Neovim 0.13: only the mason registry refresh is truly blocking I/O.
+  -- Only the mason registry refresh is truly blocking I/O.
   -- Run it async; keep drain_pendings() synchronous so formatters/linters/
   -- debuggers are ready before plugin configs execute.
   if #mason_tools > 0 then

@@ -1,4 +1,4 @@
---- Neovim 0.13: structured logging interface.
+--- Structured logging interface.
 -- Wraps vim.log when available (0.13+), falls back to vim.notify with
 -- numeric levels on older Neovim. Provides a single consistent API
 -- across the entire config so log levels never drift.

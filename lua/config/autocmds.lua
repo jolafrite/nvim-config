@@ -35,7 +35,7 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, {
   end,
 })
 
--- Neovim 0.13: vim.hl.hl_op() highlights text regions for TextYankPost/TextPutPost
+-- vim.hl.hl_op() highlights text regions for TextYankPost/TextPutPost
 -- Replaces the deprecated vim.hl.on_yank()
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('yank_highlight', { clear = true }),

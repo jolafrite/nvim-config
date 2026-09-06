@@ -35,7 +35,7 @@ PackageManager.add {
       end,
     })
 
-    -- Neovim 0.13: incremental selection to sibling treesitter nodes
+    -- Incremental selection to sibling treesitter nodes
     -- vim.treesitter.select() is a built-in (v_]N / v_[N expand to siblings)
     vim.keymap.set({ 'x', 'o' }, ']N', function()
       local ok = pcall(vim.treesitter.select)
@@ -46,7 +46,7 @@ PackageManager.add {
       if ok then vim.treesitter.select({ increment = false }) end
     end, { desc = 'Shrink to parent TS node' })
 
-    -- Neovim 0.13: vim.treesitter.select() starts/adjusts visual selection at cursor
+    -- vim.treesitter.select() starts/adjusts visual selection at cursor
     vim.keymap.set({ 'x', 'o' }, '<leader>ts', function()
       local ok = pcall(vim.treesitter.select)
       if ok then vim.treesitter.select() end
