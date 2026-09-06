@@ -19,6 +19,11 @@ vim.opt.smoothscroll = true
 vim.opt.spell = true
 vim.opt.title = true
 
+vim.opt.scrolloffpad = 2
+vim.opt.messagesopt = { pager = '<CR>', timeout = 3000 }
+vim.opt.winpinned = false
+vim.opt.shortmess:append('u')
+
 vim.g.autoformat = true
 vim.g.deprecation_warnings = true
 vim.g.have_nerd_font = true

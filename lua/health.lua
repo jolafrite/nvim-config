@@ -22,6 +22,13 @@ local check_external_reqs = function()
     end
   end
 
+  local ok, _ = pcall(vim.ui.img, nil)
+  if ok then
+    vim.health.ok('vim.ui.img available')
+  else
+    vim.health.info('vim.ui.img not available (terminal may not support images)')
+  end
+
   return true
 end
 

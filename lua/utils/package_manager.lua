@@ -53,6 +53,8 @@ local tester_adapters = {}
 -- vim.log is nil on pre-0.13; guard vim.log.levels references to avoid crash
 local _levels = (vim.log and vim.log.levels) or { warn = 2, info = 1, error = 0 }
 
+local async = vim.async or function(fn) return fn() end
+
 local activated = false
 
 ---@param s PackageManager.Spec
@@ -106,7 +108,9 @@ local function install_with_mason(tools)
   if ok_p then
     do_install(function() end)
   else
-    mr.refresh(function() do_install(function() end) end)
+    async(function()
+      mr.refresh(function() do_install(function() end) end)
+    end)
   end
   return true
 end
