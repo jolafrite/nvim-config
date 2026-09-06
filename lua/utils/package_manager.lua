@@ -42,11 +42,6 @@ local pending_snippets = {}
 ---@type { ft: string[], adapters: table }[]
 local pending_testers = {}
 
----@type table<string, string[]>
-local debugger_fts = {}
-
----@type string[]
-local snippet_fts = {}
 local snippets_registered = false
 
 ---Accumulated neotest adapters. neotest.setup replaces its whole config, so
@@ -54,6 +49,9 @@ local snippets_registered = false
 ---list.
 ---@type table[]
 local tester_adapters = {}
+
+-- vim.log is nil on pre-0.13; guard vim.log.levels references to avoid crash
+local _levels = (vim.log and vim.log.levels) or { warn = 2, info = 1, error = 0 }
 
 local activated = false
 
@@ -70,10 +68,10 @@ local function load_spec(s)
   to_add[#to_add + 1] = s[1]
 
   local ok, err = pcall(vim.pack.add, to_add, { load = true, confirm = false })
-  if not ok then vim.notify('package_manager: failed to load ' .. tostring(s[1]) .. ': ' .. tostring(err), vim.log.levels.WARN) end
+  if not ok then vim.notify('package_manager: failed to load ' .. tostring(s[1]) .. ': ' .. tostring(err), _levels.warn) end
   if s.config then
     local ok_cfg, cfg_err = pcall(s.config)
-    if not ok_cfg then vim.notify('package_manager: config failed for ' .. tostring(s[1]) .. ': ' .. tostring(cfg_err), vim.log.levels.WARN) end
+    if not ok_cfg then vim.notify('package_manager: config failed for ' .. tostring(s[1]) .. ': ' .. tostring(cfg_err), _levels.warn) end
   end
 end
 
@@ -90,10 +88,10 @@ local function install_with_mason(tools)
         seen[tool] = true
         local ok_p, p = pcall(mr.get_package, tool)
         if not ok_p then
-          vim.notify(('mason: unknown package %q'):format(tool), vim.log.levels.WARN)
+          vim.notify(('mason: unknown package %q'):format(tool), _levels.warn)
         elseif not p:is_installed() then
           local ok_i, err = pcall(p.install, p)
-          if not ok_i then vim.notify(('mason: failed to install %q: %s'):format(tool, tostring(err)), vim.log.levels.WARN) end
+          if not ok_i then vim.notify(('mason: failed to install %q: %s'):format(tool, tostring(err)), _levels.warn) end
         end
       end
     end
@@ -153,10 +151,6 @@ local function setup_debuggers(filetypes, tools)
   local ok, dap = pcall(require, 'dap')
   if not ok then return false end
   for _, f in ipairs(filetypes) do
-    debugger_fts[f] = debugger_fts[f] or {}
-    vim.list_extend(debugger_fts[f], tools)
-  end
-  for _, f in ipairs(filetypes) do
     dap.configurations[f] = dap.configurations[f] or {}
   end
   return true
@@ -182,7 +176,7 @@ local function setup_testers(pending)
       if type(name) == 'string' and type(opts) == 'table' then
         local ok_mod, mod = pcall(require, name)
         if not ok_mod then
-          vim.notify(('neotest: adapter %q is not installed'):format(name), vim.log.levels.WARN)
+          vim.notify(('neotest: adapter %q is not installed'):format(name), _levels.warn)
         else
           tester_adapters[#tester_adapters + 1] = type(mod) == 'function' and mod(opts) or mod
         end
@@ -202,9 +196,6 @@ end
 local function setup_snippets(pending)
   if snippets_registered then return true end
   snippets_registered = true
-  for _, s in ipairs(pending) do
-    vim.list_extend(snippet_fts, s.ft)
-  end
   return true
 end
 
