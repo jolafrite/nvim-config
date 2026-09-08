@@ -41,7 +41,7 @@ vim.keymap.set('n', '#', '#zz', opts)
 
 vim.keymap.set('n', 'U', '<C-r>', opts)
 
-vim.keymap.set('n', 'Q', '<Nop>', { desc = 'Multi-cursor toggle (unavailable)' })
+vim.keymap.set('n', 'Q', vim.api.nvim_mcursor, { desc = 'Multi-cursor toggle' })
 
 vim.keymap.set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
 vim.keymap.set({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
