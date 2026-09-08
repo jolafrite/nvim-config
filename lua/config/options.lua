@@ -20,7 +20,7 @@ vim.opt.spell = true
 vim.opt.title = true
 
 vim.opt.scrolloffpad = 2
-vim.opt.messagesopt = { pager = '<CR>', timeout = 3000 }
+vim.opt.messagesopt = 'hit-enter,history:500,progress:c'
 vim.opt.winpinned = false
 vim.opt.shortmess:append('u')
 

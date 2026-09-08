@@ -53,7 +53,7 @@ local tester_adapters = {}
 -- vim.log is nil on pre-0.13; guard vim.log.levels references to avoid crash
 local _levels = (vim.log and vim.log.levels) or { warn = 2, info = 1, error = 0 }
 
-local async = vim.async or function(fn) return fn() end
+local async = vim.async and vim.async.run or function(fn) return fn() end
 
 local activated = false
 
