@@ -19,7 +19,6 @@ vim.opt.smoothscroll = true
 vim.opt.spell = true
 vim.opt.title = true
 
-vim.opt.scrolloffpad = 2
 vim.opt.messagesopt = 'hit-enter,history:500,progress:c'
 vim.opt.winpinned = false
 vim.opt.shortmess:append('u')
