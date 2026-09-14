@@ -10,9 +10,7 @@ PackageManager.add {
   },
   lazy = false,
   config = function()
-    local dap = require 'dap'
-    local dapui = require 'dapui'
-    local dapvt = require('nvim-dap-virtual-text')
+    local dap, dapui, dapvt = require 'dap', require 'dapui', require('nvim-dap-virtual-text')
 
     dapvt.setup {
       display_callback = function(variable_value)
@@ -44,12 +42,18 @@ PackageManager.add {
       },
     }
 
-    -- Auto open/close DAP UI
-    dap.listeners.before_event_terminate['dapui_close'] = function()
+    dap.listeners.before.attach.dapui_config = function()
+      dapui.open()
+    end
+    dap.listeners.before.launch.dapui_config = function()
+      dapui.open()
+    end
+
+    dap.listeners.before.event_terminated.dapui_config = function()
       dapui.close()
     end
-    dap.listeners.after_event_terminate['dapui_open'] = function()
-      dapui.open()
+    dap.listeners.before.event_exited.dapui_config = function()
+      dapui.close()
     end
 
     -- Basic DAP keymaps
