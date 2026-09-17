@@ -4,6 +4,8 @@ PackageManager.add_with_mason {
   'jsonlint',
 }
 
+PackageManager.add_with_treesitter { 'json', 'json5' }
+
 vim.lsp.config('jsonls', {
   cmd = { 'vscode-json-language-server', '--stdio' },
   filetypes = { 'json', 'jsonc', 'json5' },
@@ -21,19 +23,9 @@ vim.lsp.config('jsonls', {
   },
 })
 
-PackageManager.add_formatter(
-  { 'json', 'jsonc' },
-  { 'prettierd', 'fixjson' },
-  function(conform)
-    conform.formatters.fixjson = {
-      command = 'fixjson',
-      stdin = true,
-    }
-  end
-)
+-- fixjson uses conform's built-in definition (stdin, no args), so no override.
+PackageManager.add_formatter({ 'json', 'jsonc' }, { 'prettierd', 'fixjson' })
 
 PackageManager.add_linter({ 'json', 'jsonc' }, 'jsonlint')
 
 vim.lsp.enable 'jsonls'
-
-PackageManager.add_with_treesitter { 'json', 'json5' }

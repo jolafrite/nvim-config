@@ -18,6 +18,7 @@ vim.lsp.config('tailwindcss', {
     'typescript',
     'typescriptreact',
     'svelte',
+    'vue',
     'astro',
     'templ',
     'php',

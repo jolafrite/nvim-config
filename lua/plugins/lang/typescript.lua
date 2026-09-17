@@ -1,6 +1,10 @@
 local gh = require('utils').gh
 
+-- Filetypes served by ts_ls / oxlint / prettierd / js-debug-adapter.
+local js_fts = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }
+
 PackageManager.add_with_mason {
+  'typescript-language-server',
   'oxlint',
   'oxfmt',
   'prettierd',
@@ -64,12 +68,31 @@ vim.lsp.config('oxlint', {
   },
 })
 
-PackageManager.add_formatter({ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }, 'prettierd')
-PackageManager.add_linter({ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }, 'oxlint')
+PackageManager.add_formatter(js_fts, 'prettierd')
+PackageManager.add_linter(js_fts, 'oxlint')
 
-PackageManager.add_debugger({ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }, 'js-debug-adapter')
+-- js-debug-adapter is a node "server" adapter; mason ships the dapDebugServer.js
+-- entry point, so resolve it through mason instead of assuming a global install.
+PackageManager.add_debugger(js_fts, 'js-debug-adapter', function(dap)
+  local server = require('utils').mason_path('js-debug-adapter', 'js-debug', 'src', 'dapDebugServer.js')
+  if not server or vim.fn.filereadable(server) == 0 or vim.fn.executable 'node' == 0 then return end
 
-PackageManager.add_snippets { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }
+  dap.adapters['pwa-node'] = {
+    type = 'server',
+    host = 'localhost',
+    port = '${port}',
+    executable = { command = 'node', args = { server, '${port}' } },
+  }
+
+  for _, ft in ipairs(js_fts) do
+    dap.configurations[ft] = {
+      { type = 'pwa-node', request = 'launch', name = 'Launch file', program = '${file}', cwd = '${workspaceFolder}' },
+      { type = 'pwa-node', request = 'attach', name = 'Attach to process', processId = require('dap.utils').pick_process, cwd = '${workspaceFolder}' },
+    }
+  end
+end)
+
+PackageManager.add_snippets(js_fts)
 
 vim.lsp.enable 'ts_ls'
 vim.lsp.enable 'oxlint'
@@ -83,9 +106,10 @@ PackageManager.add {
 
     bth.config = bth.config or {}
 
-    vim.keymap.set('n', '<C-P>', bth.better_type_hover, {
-      buffer = 0,
-      desc = 'Better type hover',
-    })
+    -- This spec is only loaded once (for the first .ts/.tsx buffer), so map the
+    -- hover per filetype instead of only on the buffer that triggered the load.
+    require('utils').on_file_types({ 'typescript', 'typescriptreact' }, function()
+      vim.keymap.set('n', '<C-P>', bth.better_type_hover, { buffer = true, desc = 'Better type hover' })
+    end)
   end,
 }

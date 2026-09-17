@@ -1,5 +1,17 @@
 local gh = require('utils').gh
 
+PackageManager.add_with_mason 'r-languageserver'
+
+-- R.nvim enables r_language_server below. nvim-lspconfig is not on the
+-- runtimepath (nothing adds it), so there are no server defaults to fall back
+-- on: define the config here. mason's `r-languageserver` shim runs the
+-- languageserver R package over stdio.
+vim.lsp.config('r_language_server', {
+  cmd = { 'r-languageserver' },
+  filetypes = { 'r', 'rmd', 'quarto' },
+  root_markers = { 'DESCRIPTION', 'NAMESPACE', '.Rbuildignore', '.git' },
+})
+
 PackageManager.add {
   [1] = gh 'R-nvim/R.nvim',
   dependencies = {

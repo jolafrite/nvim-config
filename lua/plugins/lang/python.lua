@@ -1,7 +1,7 @@
 local lsp = vim.g.python_lsp or 'pyright'
 local ruff = 'ruff'
 
-PackageManager.add_with_mason { lsp, ruff, 'debugpy' }
+PackageManager.add_with_mason { lsp, ruff, 'mypy', 'debugpy' }
 
 vim.lsp.config(lsp, {
   cmd = lsp == 'basedpyright' and { 'basedpyright-langserver', '--stdio' } or { 'pyright-langserver', '--stdio' },
@@ -39,6 +39,7 @@ vim.lsp.config(ruff, {
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('python_lsp', { clear = true }),
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client and client.name == ruff then client.server_capabilities.hoverProvider = false end
@@ -59,9 +60,29 @@ PackageManager.add_formatter(
   end
 )
 
-PackageManager.add_linter('python', { ruff, 'mypy', 'flake8' })
+-- ruff implements the flake8 rule set, so flake8 is not registered (and not
+-- installed); both linters below are installed by mason above.
+PackageManager.add_linter('python', { ruff, 'mypy' })
 
-PackageManager.add_debugger('python', 'debugpy')
+-- debugpy is installed by mason above. Prefer nvim-dap-python with mason's
+-- debugpy venv (gives the test runners too); fall back to the `debugpy-adapter`
+-- shim that mason puts on PATH.
+PackageManager.add_debugger('python', 'debugpy', function(dap)
+  local is_win = vim.fn.has 'win32' == 1
+  local venv = require('utils').mason_path('debugpy', 'venv', is_win and 'Scripts' or 'bin', is_win and 'python.exe' or 'python')
+
+  local ok, dap_python = pcall(require, 'dap-python')
+  if ok and venv and vim.fn.executable(venv) == 1 then
+    dap_python.setup(venv)
+    return
+  end
+
+  dap.adapters.python = { type = 'executable', command = 'debugpy-adapter' }
+  dap.configurations.python = {
+    { type = 'python', request = 'launch', name = 'Launch file', program = '${file}' },
+    { type = 'python', request = 'attach', name = 'Attach', connect = { host = 'localhost', port = 5678 } },
+  }
+end)
 
 PackageManager.add_snippets 'python'
 

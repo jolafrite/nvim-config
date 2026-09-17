@@ -1,5 +1,6 @@
+-- mason package is `erlang-ls`; its binary is `erlang_ls`.
 PackageManager.add_with_mason {
-  'erlang_ls',
+  'erlang-ls',
 }
 
 vim.lsp.config('erlangls', {

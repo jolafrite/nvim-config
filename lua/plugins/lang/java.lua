@@ -26,10 +26,11 @@ PackageManager.add {
 
     local function jdtls_cmd(root_dir)
       local cmd = { vim.fn.exepath 'jdtls' or 'jdtls' }
-      if vim.env.MASON then
-        local lombok = vim.env.MASON .. '/share/jdtls/lombok.jar'
-        if vim.fn.filereadable(lombok) == 1 then vim.list_extend(cmd, { '--jvm-arg=-javaagent:' .. lombok }) end
-      end
+
+      -- mason's jdtls package bundles lombok; resolve it through mason rather
+      -- than vim.env.MASON, which is only set by mason-lspconfig.
+      local lombok = require('utils').mason_path('jdtls', 'lombok.jar')
+      if lombok and vim.fn.filereadable(lombok) == 1 then vim.list_extend(cmd, { '--jvm-arg=-javaagent:' .. lombok }) end
       local project_name = vim.fs.basename(root_dir)
       local workspaces = vim.fn.stdpath 'cache' .. '/jdtls/' .. project_name
       vim.list_extend(cmd, { '-configuration', workspaces .. '/config', '-data', workspaces .. '/data' })

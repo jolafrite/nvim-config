@@ -11,7 +11,7 @@
 ---@field add_with_mason fun(tools: string|string[])
 ---@field add_formatter fun(ft: string|string[], formatters: string|string[], on_conform?: fun(conform: table))
 ---@field add_linter fun(ft: string|string[], linters: string|string[], on_lint?: fun(lint: table))
----@field add_debugger fun(ft: string|string[], debuggers: string|string[])
+---@field add_debugger fun(ft: string|string[], debuggers: string|string[], on_dap?: fun(dap: table))
 ---@field add_snippets fun(ft: string|string[], snippets? string|string[])
 ---@field add_tester fun(ft: string|string[], adapters: table, on_test?: fun(test: table))
 ---@field add_with_treesitter fun(tools: string|string[])
@@ -33,7 +33,7 @@ local pending_formatters = {}
 ---@type { ft: string[], tools: string[] }[]
 local pending_linters = {}
 
----@type { ft: string[], tools: string[] }[]
+---@type { ft: string[], tools: string[], on_dap?: fun(dap: table) }[]
 local pending_debuggers = {}
 
 ---@type { ft: string[], tools: string[] }[]
@@ -128,7 +128,10 @@ local function setup_formatters(filetypes, tools, on_conform)
     vim.list_extend(merged, tools)
     conform.formatters_by_ft[f] = merged
   end
-  if on_conform then on_conform(conform) end
+  if on_conform then
+    local ok_cb, cb_err = pcall(on_conform, conform)
+    if not ok_cb then vim.notify('package_manager: conform setup failed for ' .. table.concat(filetypes, ', ') .. ': ' .. tostring(cb_err), _levels.warn) end
+  end
   return true
 end
 
@@ -145,17 +148,26 @@ local function setup_linters(filetypes, tools, on_lint)
     vim.list_extend(merged, tools)
     lint.linters_by_ft[f] = merged
   end
-  if on_lint then on_lint(lint) end
+  if on_lint then
+    local ok_cb, cb_err = pcall(on_lint, lint)
+    if not ok_cb then vim.notify('package_manager: lint setup failed for ' .. table.concat(filetypes, ', ') .. ': ' .. tostring(cb_err), _levels.warn) end
+  end
   return true
 end
 
 ---@param filetypes string[]
 ---@param tools string[] mason package names of the debug adapters
-local function setup_debuggers(filetypes, tools)
+---@param on_dap? fun(dap: table) optional callback receiving the nvim-dap
+---module, for adapter / configuration definitions
+local function setup_debuggers(filetypes, tools, on_dap)
   local ok, dap = pcall(require, 'dap')
   if not ok then return false end
   for _, f in ipairs(filetypes) do
     dap.configurations[f] = dap.configurations[f] or {}
+  end
+  if on_dap then
+    local ok_dap, dap_err = pcall(on_dap, dap)
+    if not ok_dap then vim.notify('package_manager: dap setup failed for ' .. table.concat(filetypes, ', ') .. ': ' .. tostring(dap_err), _levels.warn) end
   end
   return true
 end
@@ -268,7 +280,7 @@ local function drain_pendings()
   end
 
   for i = #pending_debuggers, 1, -1 do
-    if setup_debuggers(pending_debuggers[i].ft, pending_debuggers[i].tools) then table.remove(pending_debuggers, i) end
+    if setup_debuggers(pending_debuggers[i].ft, pending_debuggers[i].tools, pending_debuggers[i].on_dap) then table.remove(pending_debuggers, i) end
   end
 
   if #pending_testers > 0 and setup_testers(pending_testers) then pending_testers = {} end
@@ -341,10 +353,13 @@ end
 
 ---@param ft string|string[]
 ---@param debuggers string|string[] mason package names of the debug adapters
-M.add_debugger = function(ft, debuggers)
+---@param on_dap? fun(dap: table) optional callback receiving the nvim-dap
+---module, for adapter / configuration definitions
+M.add_debugger = function(ft, debuggers, on_dap)
   pending_debuggers[#pending_debuggers + 1] = {
     ft = type(ft) == 'string' and { ft } or ft,
     tools = type(debuggers) == 'string' and { debuggers } or debuggers,
+    on_dap = on_dap,
   }
   if activated then load_dependencies() end
 end

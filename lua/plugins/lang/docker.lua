@@ -1,37 +1,39 @@
 PackageManager.add_with_mason {
   'docker-language-server',
-  'docker-compose-language-service',
   'dockerfmt',
   'hadolint',
 }
 
 vim.lsp.config('dockerls', {
-  cmd = { 'docker-langserver', '--stdio' },
-  filetypes = { 'dockerfile' },
-  root_markers = { 'Dockerfile', 'Containerfile' },
+  cmd = { 'docker-language-server', 'start', '--stdio' },
+  filetypes = { 'dockerfile', 'yaml.docker-compose' },
+  get_language_id = function(_, ftype)
+    if ftype == 'yaml.docker-compose' or ftype:lower():find 'ya?ml' then
+      return 'dockercompose'
+    else
+      return ftype
+    end
+  end,
+  root_markers = {
+    'Dockerfile',
+    'docker-compose.yaml',
+    'docker-compose.yml',
+    'compose.yaml',
+    'compose.yml',
+    'docker-bake.json',
+    'docker-bake.hcl',
+    'docker-bake.override.json',
+    'docker-bake.override.hcl',
+  },
 })
 
-vim.lsp.config('docker_compose_language_service', {
-  cmd = { 'docker-compose-langserver', '--stdio' },
-  filetypes = { 'yaml.docker-compose' },
-  root_markers = { 'docker-compose.yaml', 'docker-compose.yml', 'compose.yaml', 'compose.yml' },
-})
-
-PackageManager.add_formatter(
-  'dockerfile',
-  'dockerfmt_fmt',
-  function(conform)
-    conform.formatters.dockerfmt_fmt = {
-      command = 'dockerfmt',
-      stdin = true,
-      args = { '-' },
-    }
-  end
-)
+-- conform's built-in `dockerfmt` runs the binary over stdin; the old
+-- `dockerfmt_fmt` wrapper with `args = { '-' }` made dockerfmt try to open a
+-- file literally named "-".
+PackageManager.add_formatter('dockerfile', 'dockerfmt')
 
 PackageManager.add_linter('dockerfile', 'hadolint')
 
 PackageManager.add_with_treesitter { 'dockerfile' }
 
 vim.lsp.enable 'dockerls'
-vim.lsp.enable 'docker_compose_language_service'
