@@ -1,6 +1,7 @@
 PackageManager.add_with_mason {
   'nil',
   'statix',
+  'nixfmt',
 }
 
 vim.lsp.config('nil_ls', {
@@ -9,7 +10,8 @@ vim.lsp.config('nil_ls', {
   root_markers = { 'flake.nix', 'shell.nix', '.git' },
 })
 
-PackageManager.add_formatter('nix', 'nixfmt', function(conform) conform.formatters.nixfmt = { command = 'nixfmt', stdin = true } end)
+-- conform's built-in nixfmt is `nixfmt` on stdin; no override needed.
+PackageManager.add_formatter('nix', 'nixfmt')
 
 PackageManager.add_linter('nix', 'statix')
 

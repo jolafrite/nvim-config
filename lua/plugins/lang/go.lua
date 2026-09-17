@@ -42,12 +42,34 @@ PackageManager.add {
       conform.formatters.gocondense = {
         command = 'gocondense',
         stdin = true,
+        -- gocondense has no mason package, so only run it when the binary is
+        -- present instead of always reporting it as unavailable.
+        condition = function() return vim.fn.executable 'gocondense' == 1 end,
       }
     end)
 
     PackageManager.add_linter('go', 'golangcilint')
 
-    PackageManager.add_debugger('go', 'delve')
+    -- delve is installed by mason above; nvim-dap's `delve` adapter is defined
+    -- by hand (the equivalent of nvim-dap-go) so no extra plugin is needed.
+    PackageManager.add_debugger('go', 'delve', function(dap)
+      local dlv = vim.fn.exepath 'dlv'
+      if dlv == '' then return end
+
+      dap.adapters.delve = function(callback, config)
+        if config.mode == 'remote' and config.request == 'attach' then
+          callback { type = 'server', host = config.host or '127.0.0.1', port = config.port or 38697 }
+        else
+          callback { type = 'server', port = '${port}', executable = { command = dlv, args = { 'dap', '-l', '127.0.0.1:${port}' } } }
+        end
+      end
+
+      dap.configurations.go = {
+        { type = 'delve', name = 'Debug', request = 'launch', program = '${file}' },
+        { type = 'delve', name = 'Debug test', request = 'launch', mode = 'test', program = '${file}' },
+        { type = 'delve', name = 'Debug (remote)', request = 'attach', mode = 'remote', port = 38697, host = '127.0.0.1' },
+      }
+    end)
 
     PackageManager.add_snippets 'go'
 

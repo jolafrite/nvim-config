@@ -5,6 +5,7 @@ local M = {}
 M.gh = function(repo) return 'https://github.com/' .. repo end
 
 M.install_with_mason = require('utils.install').install_with_mason
+M.mason_path = require('utils.install').mason_path
 M.on_buf_read = require('utils.autocmds').on_buf_read
 M.on_file_types = require('utils.autocmds').on_file_types
 M.package_manager = require 'utils.package_manager'

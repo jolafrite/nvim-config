@@ -3,7 +3,7 @@ vim.loader.enable()
 vim.opt.backspace = { 'start', 'eol', 'indent' }
 vim.opt.backup = false
 vim.opt.breakindent = true
-vim.opt.clipboard = 'unnamedplus'
+vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 vim.opt.cmdheight = 0
 vim.opt.conceallevel = 2
 vim.opt.fileencoding = 'utf-8'
@@ -22,7 +22,7 @@ vim.opt.title = true
 vim.opt.scrolloffpad = 2
 vim.opt.messagesopt = 'hit-enter,history:500,progress:c'
 vim.opt.winpinned = false
-vim.opt.shortmess:append('u')
+vim.opt.shortmess:append 'u'
 
 vim.g.autoformat = true
 vim.g.deprecation_warnings = true

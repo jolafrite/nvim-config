@@ -1,7 +1,13 @@
+-- mason's `solidity` package installs the `solc` binary; forge is not
+-- mason-installable, so the formatter only runs when foundry is on PATH.
 PackageManager.add_with_mason {
-  'solc',
+  'solidity',
 }
-PackageManager.add_formatter('solidity', 'forge_fmt')
+PackageManager.add_formatter('solidity', 'forge_fmt', function(conform)
+  conform.formatters.forge_fmt = {
+    condition = function() return vim.fn.executable 'forge' == 1 end,
+  }
+end)
 
 if vim.fn.executable 'solc' == 1 then
   vim.lsp.config('solidity_ls', {

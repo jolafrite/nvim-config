@@ -29,10 +29,18 @@ PackageManager.add {
         testUserInterface = 'Test Explorer',
       }
 
+      local attach = function() metals.initialize_or_attach(metals_config) end
+
       vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('nvim_metals', { clear = true }),
         pattern = { 'scala', 'sbt' },
-        callback = function() metals.initialize_or_attach(metals_config) end,
+        callback = attach,
       })
+
+      -- This spec is loaded from the first `scala` FileType event, so the
+      -- autocmd above cannot fire for the buffer that triggered it. Attach
+      -- that buffer directly; later buffers go through the autocmd.
+      if vim.list_contains({ 'scala', 'sbt' }, vim.bo.filetype) then attach() end
     end
   end,
 }

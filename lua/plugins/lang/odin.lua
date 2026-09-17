@@ -1,6 +1,7 @@
+-- `ols` is the mason package; its install also puts `odinfmt` on mason's PATH,
+-- so there is no separate `odinfmt` package to request.
 PackageManager.add_with_mason {
   'ols',
-  'odinfmt',
 }
 PackageManager.add_formatter('odin', 'odinfmt')
 

@@ -176,6 +176,10 @@
       "rev": "b7c084504cf8d2535fe5d79bd52d1633859ee561",
       "src": "https://github.com/comfysage/lynn.nvim"
     },
+    "markdown-preview.nvim": {
+      "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
+      "src": "https://github.com/iamcco/markdown-preview.nvim"
+    },
     "mason-lspconfig.nvim": {
       "rev": "40276c4df7e6bdce6801d6c035c6227f9115a855",
       "src": "https://github.com/mason-org/mason-lspconfig.nvim"
@@ -482,7 +486,7 @@
     },
     "vim-illuminate": {
       "rev": "1cc33d347c574c3bd21a4852fc9ffed677c1c58c",
-      "src": "https://github.com/RRethy/vim-illuminate.git"
+      "src": "https://github.com/RRethy/vim-illuminate"
     },
     "vimtex": {
       "rev": "cb81778aee678b513af3de7f1ca5943e7ee31b2f",
