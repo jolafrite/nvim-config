@@ -13,7 +13,7 @@ vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldmethod = 'expr'
-vim.opt.foldtext = '' -- Use treesitter for fold text
+vim.opt.foldtext = ''
 vim.opt.mousescroll = 'ver:1,hor:4'
 vim.opt.smoothscroll = true
 vim.opt.spell = true
@@ -58,14 +58,6 @@ vim.o.swapfile = false
 
 vim.cmd [[au BufNewFile,BufRead *.astro setf astro]]
 vim.cmd [[au BufNewFile,BufRead Podfile setf ruby]]
-
-local keymap_set = vim.keymap.set
----@diagnostic disable-next-line: duplicate-set-field
-vim.keymap.set = function(mode, lhs, rhs, opts)
-  opts = opts or {}
-  opts.silent = opts.silent ~= false
-  return keymap_set(mode, lhs, rhs, opts)
-end
 
 if vim.fn.has 'win32' == 1 then require('utils').terminal.setup 'pwsh' end
 

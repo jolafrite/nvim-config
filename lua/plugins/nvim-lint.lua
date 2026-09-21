@@ -1,6 +1,4 @@
 local gh = require('utils').gh
-
---
 local unpack = rawget(_G, 'unpack') or table.unpack
 
 PackageManager.add {
@@ -34,10 +32,6 @@ PackageManager.add {
 
     local function warn(msg, opts_) vim.notify(msg, vim.log_levels.WARN, vim.tbl_deep_extend('force', { title = 'nvim-lint' }, opts_ or {})) end
 
-    -- One timer per buffer: a single shared timer gets reset on every event,
-    -- so jumping between buffers faster than the debounce window would drop the
-    -- lint run for the buffer you left. Keying timers by bufnr keeps each
-    -- buffer's pending lint independent of the others.
     local timers = {}
     local function debounce(ms, fn)
       return function(bufnr, ...)
@@ -74,12 +68,7 @@ PackageManager.add {
       end, names)
 
       if #names > 0 then
-        -- nvim-lint always lints the current buffer, so run inside the target
-        -- buffer's context; this keeps the lint correct even if the user moved
-        -- to another buffer while the debounce timer was waiting.
-        if vim.api.nvim_buf_is_valid(bufnr) then
-          vim.api.nvim_buf_call(bufnr, function() lint.try_lint(names) end)
-        end
+        if vim.api.nvim_buf_is_valid(bufnr) then vim.api.nvim_buf_call(bufnr, function() lint.try_lint(names) end) end
       end
     end
 

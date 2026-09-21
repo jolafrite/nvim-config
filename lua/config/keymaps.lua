@@ -131,3 +131,6 @@ vim.keymap.set('n', '<leader>uI', function()
   vim.treesitter.inspect_tree()
   vim.api.nvim_input 'I'
 end, { desc = 'Inspect Tree' })
+
+vim.keymap.set('n', '<leader>-', '<C-W>s', { desc = 'Split Window Horizontally' })
+vim.keymap.set('n', '<leader>|', '<C-W>v', { desc = 'Split Window Vertically' })
