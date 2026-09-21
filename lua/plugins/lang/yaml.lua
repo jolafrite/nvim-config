@@ -1,5 +1,6 @@
 PackageManager.add_with_mason {
   'yaml-language-server',
+  'yamlfmt',
 }
 
 vim.lsp.config('yamlls', {
@@ -33,5 +34,12 @@ vim.lsp.config('yamlls', {
 })
 
 PackageManager.add_with_treesitter { 'yaml' }
+
+PackageManager.add_formatter('yaml', 'yamlfmt', function(conform)
+  conform.formatters.yamlfmt = {
+    command = 'yamlfmt',
+    timeout_ms = 10000,
+  }
+end)
 
 vim.lsp.enable 'yamlls'
