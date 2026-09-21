@@ -11,8 +11,7 @@ PackageManager.add {
       'rust-analyzer',
       'codelldb',
     }
-    -- rustaceanvim detects codelldb on PATH by default and builds the adapter
-    -- itself, so only the ft mapping (mason install is above) is recorded here.
+
     PackageManager.add_debugger('rust', 'codelldb')
 
     PackageManager.add_with_treesitter { 'rust' }
@@ -71,8 +70,6 @@ PackageManager.add {
 
     if vim.bo.filetype == 'rust' then pcall(function() require('rustaceanvim.lsp').start(vim.api.nvim_get_current_buf()) end) end
 
-    -- conform's built-in rustfmt reads the edition from Cargo.toml and runs from
-    -- the rustfmt.toml root; a custom definition would drop both.
     PackageManager.add_formatter('rust', 'rustfmt')
 
     PackageManager.add_linter('rust', 'clippy')

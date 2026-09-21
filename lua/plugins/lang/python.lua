@@ -60,13 +60,8 @@ PackageManager.add_formatter(
   end
 )
 
--- ruff implements the flake8 rule set, so flake8 is not registered (and not
--- installed); both linters below are installed by mason above.
 PackageManager.add_linter('python', { ruff, 'mypy' })
 
--- debugpy is installed by mason above. Prefer nvim-dap-python with mason's
--- debugpy venv (gives the test runners too); fall back to the `debugpy-adapter`
--- shim that mason puts on PATH.
 PackageManager.add_debugger('python', 'debugpy', function(dap)
   local is_win = vim.fn.has 'win32' == 1
   local venv = require('utils').mason_path('debugpy', 'venv', is_win and 'Scripts' or 'bin', is_win and 'python.exe' or 'python')

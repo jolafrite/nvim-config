@@ -1,4 +1,4 @@
--- Defines core plugins that are used by other plugins
+
 local gh = require('utils').gh
 
 PackageManager.add {

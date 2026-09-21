@@ -2,8 +2,6 @@ PackageManager.add_with_mason {
   'elixir-ls',
 }
 
--- ElixirLS ships the Elixir debug adapter; keep it installed via mason and
--- record the ft mapping.
 PackageManager.add_debugger('elixir', 'elixir-ls')
 
 PackageManager.add_snippets 'elixir'

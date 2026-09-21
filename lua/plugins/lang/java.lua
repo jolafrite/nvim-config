@@ -14,8 +14,6 @@ PackageManager.add {
 
     PackageManager.add_with_treesitter { 'java' }
 
-    -- conform's built-in google-java-format config is correct (`-` + stdin);
-    -- a custom override with `--stdin-path` makes the binary print usage.
     PackageManager.add_formatter('java', 'google-java-format')
 
     PackageManager.add_linter('java', 'checkstyle')
@@ -27,8 +25,6 @@ PackageManager.add {
     local function jdtls_cmd(root_dir)
       local cmd = { vim.fn.exepath 'jdtls' or 'jdtls' }
 
-      -- mason's jdtls package bundles lombok; resolve it through mason rather
-      -- than vim.env.MASON, which is only set by mason-lspconfig.
       local lombok = require('utils').mason_path('jdtls', 'lombok.jar')
       if lombok and vim.fn.filereadable(lombok) == 1 then vim.list_extend(cmd, { '--jvm-arg=-javaagent:' .. lombok }) end
       local project_name = vim.fs.basename(root_dir)
@@ -94,9 +90,6 @@ PackageManager.add {
 
     require('utils').on_file_types('java', attach_jdtls)
 
-    -- The autocmd above is registered from within the first java FileType
-    -- event, so it cannot fire for the buffer that triggered it. Attach
-    -- that buffer directly; later buffers go through on_file_types.
     if vim.bo.filetype == 'java' then attach_jdtls() end
   end,
 }

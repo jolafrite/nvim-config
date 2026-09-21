@@ -37,9 +37,6 @@ PackageManager.add {
         callback = attach,
       })
 
-      -- This spec is loaded from the first `scala` FileType event, so the
-      -- autocmd above cannot fire for the buffer that triggered it. Attach
-      -- that buffer directly; later buffers go through the autocmd.
       if vim.list_contains({ 'scala', 'sbt' }, vim.bo.filetype) then attach() end
     end
   end,

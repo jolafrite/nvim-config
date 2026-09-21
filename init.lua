@@ -1,7 +1,7 @@
 _G.Utils = require 'utils'
 
 local keymap_set = vim.keymap.set
----@diagnostic disable-next-line: duplicate-set-field
+
 vim.keymap.set = function(mode, lhs, rhs, opts)
   opts = opts or {}
   opts.silent = opts.silent ~= false

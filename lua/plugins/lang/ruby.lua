@@ -1,7 +1,6 @@
 local lsp = vim.g.ruby_lsp or 'ruby_lsp'
 local formatter = vim.g.ruby_formatter or 'rubocop'
 
--- lspconfig server names use underscores; mason package names use hyphens.
 local mason_lsp = lsp == 'ruby_lsp' and 'ruby-lsp' or lsp
 
 PackageManager.add_with_mason {
