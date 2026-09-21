@@ -27,7 +27,12 @@ vim.lsp.config('dockerls', {
   },
 })
 
-PackageManager.add_formatter('dockerfile', 'dockerfmt')
+PackageManager.add_formatter({ 'dockerfile', 'yaml.docker-compose' }, 'dockerfmt', function(conform)
+  conform.formatters.dockerfmt = {
+    command = 'dockerfmt',
+    timeout_ms = 10000,
+  }
+end)
 
 PackageManager.add_linter('dockerfile', 'hadolint')
 

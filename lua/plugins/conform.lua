@@ -30,7 +30,9 @@ PackageManager.add {
         if not vim.api.nvim_buf_is_valid(args.buf) or vim.bo[args.buf].buftype ~= '' then return end
         if not format_on_save(args.buf) then return end
         if not is_parseable(args.buf) then return end
-        conform.format { buf = args.buf, async = false, timeout_ms = 1000 }
+        local ft = vim.bo[args.buf].filetype
+        if not conform.formatters_by_ft[ft] then return end
+        conform.format { buf = args.buf, async = false, timeout_ms = 5000 }
       end,
     })
     vim.keymap.set({ 'n', 'x' }, '<leader>cf', function() conform.format { force = true } end, { desc = 'Format' })
