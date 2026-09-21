@@ -43,8 +43,6 @@ PackageManager.add {
         command = 'gocondense',
         stdin = true,
         condition = function() return vim.fn.executable('gocondense') == 1 end,
-
-        condition = function() return vim.fn.executable 'gocondense' == 1 end,
       }
     end)
 
