@@ -1,9 +1,29 @@
 
 
+---@class PackageManager.Spec
+---@field [1] string plugin repo url
+---@field dependencies? string[] dependencies to load along with the plugin
+---@field event? string|string[] event(s) to trigger loading
+---@field filetype? string|string[] filetypes to trigger loading
+---@field config? fun() config function
+---@field loaded? boolean is plugin loaded
+
+---@class PackageManager
+---@field add fun(spec: PackageManager.Spec)
+---@field add_with_mason fun(tools: string|string[])
+---@field add_formatter fun(ft: string|string[], formatters: string|string[], on_conform?: fun(conform: table))
+---@field add_linter fun(ft: string|string[], linters: string|string[], on_lint?: fun(lint: table))
+---@field add_debugger fun(ft: string|string[], debuggers: string|string[], on_dap?: fun(dap: table))
+---@field add_snippets fun(ft: string|string[], snippets? string|string[])
+---@field add_tester fun(ft: string|string[], adapters: table, on_test?: fun(test: table))
+---@field add_with_treesitter fun(tools: string|string[])
+---@field load fun()
 local M = {}
 
+---@type PackageManager.Spec[]
 local registry = {}
 
+---@type string[]
 local mason_tools = {}
 
 local pending_treesitter = {}
