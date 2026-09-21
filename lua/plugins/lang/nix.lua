@@ -10,7 +10,6 @@ vim.lsp.config('nil_ls', {
   root_markers = { 'flake.nix', 'shell.nix', '.git' },
 })
 
--- conform's built-in nixfmt is `nixfmt` on stdin; no override needed.
 PackageManager.add_formatter('nix', 'nixfmt')
 
 PackageManager.add_linter('nix', 'statix')

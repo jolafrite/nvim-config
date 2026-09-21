@@ -32,7 +32,7 @@ function M.detectors.lsp(buf)
   if not bufpath then return {} end
   local roots = {}
   local clients = vim.lsp.get_clients { bufnr = buf }
-  clients = vim.tbl_filter(function(client) return not vim.tbl_contains(vim.g.root_lsp_ignore or {}, client.name) end, clients) --[[@as any[] ]]
+  clients = vim.tbl_filter(function(client) return not vim.tbl_contains(vim.g.root_lsp_ignore or {}, client.name) end, clients)
   for _, client in pairs(clients) do
     local workspace = client.config.workspace_folders
     for _, ws in pairs(workspace or {}) do

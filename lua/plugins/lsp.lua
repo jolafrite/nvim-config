@@ -15,8 +15,7 @@ vim.diagnostic.config {
     border = 'rounded',
     source = true,
   },
-  -- virtual_lines.overflow controls how virtual lines
-  -- wider than the window are displayed
+
   virtual_lines = {
     overflow = 'wrap',
   },

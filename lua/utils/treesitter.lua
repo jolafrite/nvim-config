@@ -29,7 +29,7 @@ end
 ---@return boolean
 function M.have(what, query)
   what = what or vim.api.nvim_get_current_buf()
-  what = type(what) == 'number' and vim.bo[what].filetype or what --[[@as string]]
+  what = type(what) == 'number' and vim.bo[what].filetype or what
   local lang = vim.treesitter.language.get_lang(what)
   if lang == nil or M.get_installed()[lang] == nil then return false end
   if query and not M.have_query(lang, query) then return false end
@@ -40,18 +40,16 @@ function M.foldexpr() return M.have(nil, 'folds') and vim.treesitter.foldexpr() 
 
 function M.indentexpr() return M.have(nil, 'indents') and require('nvim-treesitter').indentexpr() or -1 end
 
----@return string?
 local function win_find_cl()
   local path = 'C:/Program Files (x86)/Microsoft Visual Studio'
   local pattern = '*/*/VC/Tools/MSVC/*/bin/Hostx64/x64/cl.exe'
   return vim.fn.globpath(path, pattern, true, true)[1]
 end
 
----@return boolean ok, lazyvim.util.treesitter.Health health
+---@return string?
 function M.check()
   local is_win = vim.fn.has 'win32' == 1
-  ---@param tool string
-  ---@param win boolean?
+
   local function have(tool, win) return (win == nil or is_win == win) and vim.fn.executable(tool) == 1 end
 
   local have_cc = vim.env.CC ~= nil or have('cc', false) or have('cl', true) or (is_win and win_find_cl() ~= nil)
@@ -61,7 +59,6 @@ function M.check()
     have_cc = true
   end
 
-  ---@class lazyvim.util.treesitter.Health: table<string,boolean>
   local ret = {
     ['tree-sitter (CLI)'] = have 'tree-sitter',
     ['C compiler'] = have_cc,
@@ -106,10 +103,8 @@ end
 function M.ensure_treesitter_cli(cb)
   if vim.fn.executable 'tree-sitter' == 1 then return cb(true) end
 
-  -- try installing with mason
   if not pcall(require, 'mason') then return cb(false, '`mason.nvim` is disabled in your config, so we cannot install it automatically.') end
 
-  -- check again since we might have installed it already
   if vim.fn.executable 'tree-sitter' == 1 then return cb(true) end
 
   local mr = require 'mason-registry'
@@ -134,4 +129,3 @@ end
 
 return M
 
--- vim: ts=2 sts=2 sw=2 et

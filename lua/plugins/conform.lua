@@ -6,10 +6,6 @@ PackageManager.add {
   config = function()
     local conform = require 'conform'
 
-    -- Formatters like stylua cannot parse syntactically-incomplete Lua (e.g.
-    -- a function block that is still being typed). Check the buffer parses
-    -- before handing it to a formatter so format-on-save silently skips
-    -- work-in-progress code instead of spamming errors into conform.log.
     local function is_parseable(bufnr)
       if vim.bo[bufnr].filetype ~= 'lua' then return true end
       local source = table.concat(vim.api.nvim_buf_get_lines(bufnr, 0, -1, false), '\n')

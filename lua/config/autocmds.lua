@@ -1,4 +1,4 @@
--- 1. Automatically reload files changed outside of Neovim
+
 local autoreload = vim.api.nvim_create_augroup('autoreload', { clear = true })
 vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
   group = autoreload,
@@ -7,7 +7,6 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
   end,
 })
 
--- 2. General FileType-specific settings
 local filetype_settings = vim.api.nvim_create_augroup('filetype_settings', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
   group = filetype_settings,
@@ -17,7 +16,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- 3. Persistent cleanup of formatoptions
 vim.api.nvim_create_autocmd('FileType', {
   group = filetype_settings,
   pattern = '*',
@@ -26,7 +24,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- 4. Highlight text actions (Yank & Put)
 vim.api.nvim_create_autocmd({ 'TextYankPost', 'TextPutPost' }, {
   group = vim.api.nvim_create_augroup('hl_actions', { clear = true }),
   callback = function()
@@ -34,7 +31,6 @@ vim.api.nvim_create_autocmd({ 'TextYankPost', 'TextPutPost' }, {
   end,
 })
 
--- 5. Smart Cursorline management (Active at rest, disabled during actions)
 local cursorline_toggle = vim.api.nvim_create_augroup('cursorline_toggle', { clear = true })
 vim.api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
   group = cursorline_toggle,
@@ -55,7 +51,6 @@ vim.api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, {
   end,
 })
 
--- 6. Optimized Relative Line Number Toggling
 local numbertoggle = vim.api.nvim_create_augroup('numbertoggle', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
   group = numbertoggle,

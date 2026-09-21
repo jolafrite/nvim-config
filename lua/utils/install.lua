@@ -21,7 +21,7 @@ M.install_with_mason = function(patterns)
   end)
 end
 
----Resolve a path inside a mason package's install directory. Returns nil when
+---Resolve a path inside a mason package install directory. Returns nil when
 ---mason (or the package) is unavailable, so callers can fall back to a PATH
 ---lookup or skip the feature entirely.
 ---@param pkg string mason package name, e.g. "debugpy"

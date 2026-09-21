@@ -1,3 +1,5 @@
+
+
 ---@class PackageManager.Spec
 ---@field [1] string plugin repo url
 ---@field dependencies? string[] dependencies to load along with the plugin
@@ -23,7 +25,7 @@ local registry = {}
 
 ---@type string[]
 local mason_tools = {}
----
+
 ---@type string[]
 local pending_treesitter = {}
 
@@ -50,14 +52,12 @@ local snippets_registered = false
 ---@type table[]
 local tester_adapters = {}
 
--- vim.log is nil on pre-0.13; guard vim.log.levels references to avoid crash
 local _levels = (vim.log and vim.log.levels) or { warn = 2, info = 1, error = 0 }
 
 local async = vim.async and vim.async.run or function(fn) return fn() end
 
 local activated = false
 
----@param s PackageManager.Spec
 local function load_spec(s)
   if s.loaded then return end
   s.loaded = true
@@ -77,7 +77,6 @@ local function load_spec(s)
   end
 end
 
----@param tools string[]
 local function install_with_mason(tools)
   local ok, mr = pcall(require, 'mason-registry')
   if not ok then return false end
@@ -100,10 +99,6 @@ local function install_with_mason(tools)
     cb()
   end
 
-  -- Refresh the registry first to avoid races with Mason's async setup.
-  -- `is_installed` checks whether a single package is on disk, so it cannot be
-  -- used to probe registry readiness; calling it as `mr:is_installed()` passes
-  -- the registry table itself as the package name and crashes table.concat.
   local ok_p, _ = pcall(mr.get_package, 'lua')
   if ok_p then
     do_install(function() end)
@@ -115,9 +110,6 @@ local function install_with_mason(tools)
   return true
 end
 
----@param filetypes string[]
----@param tools string[]
----@param on_conform? fun(conform: table)
 local function setup_formatters(filetypes, tools, on_conform)
   local ok, conform = pcall(require, 'conform')
   if not ok then return false end
@@ -135,9 +127,6 @@ local function setup_formatters(filetypes, tools, on_conform)
   return true
 end
 
----@param filetypes string[]
----@param tools string[]
----@param on_lint? fun(lint: table)
 local function setup_linters(filetypes, tools, on_lint)
   local ok, lint = pcall(require, 'lint')
   if not ok then return false end
@@ -155,10 +144,6 @@ local function setup_linters(filetypes, tools, on_lint)
   return true
 end
 
----@param filetypes string[]
----@param tools string[] mason package names of the debug adapters
----@param on_dap? fun(dap: table) optional callback receiving the nvim-dap
----module, for adapter / configuration definitions
 local function setup_debuggers(filetypes, tools, on_dap)
   local ok, dap = pcall(require, 'dap')
   if not ok then return false end
@@ -172,7 +157,6 @@ local function setup_debuggers(filetypes, tools, on_dap)
   return true
 end
 
----@param tools string[]
 local function setup_treesitter(tools)
   local ok, ts = pcall(require, 'nvim-treesitter')
   if not ok then return false end
@@ -180,14 +164,11 @@ local function setup_treesitter(tools)
   return true
 end
 
----@param pending { ft: string[], adapters: table }[]
 local function setup_testers(pending)
   local ok, neotest = pcall(require, 'neotest')
   if not ok then return false end
   for _, t in ipairs(pending) do
-    -- Accept the LazyVim-style keyed form { ['neotest-golang'] = { opts } }
-    -- as well as a plain list of adapter modules. neotest itself only
-    -- iterates adapters with ipairs, so keyed tables must be resolved here.
+
     for name, opts in pairs(t.adapters) do
       if type(name) == 'string' and type(opts) == 'table' then
         local ok_mod, mod = pcall(require, name)
@@ -202,22 +183,17 @@ local function setup_testers(pending)
     end
     if t.on_test then t.on_test(neotest) end
   end
-  -- neotest.setup replaces its config entirely, so always pass every adapter
-  -- registered so far.
+
   pcall(neotest.setup, { adapters = tester_adapters })
   return true
 end
 
----@param pending { ft: string[], tools: string[] }[]
 local function setup_snippets(pending)
   if snippets_registered then return true end
   snippets_registered = true
   return true
 end
 
--- ─── scheduling + drain ──────────────────────────────────────────────────────
-
----@param spec PackageManager.Spec
 local function schedule_spec(spec)
   if spec.event then
     local events = type(spec.event) == 'string' and { spec.event } or spec.event
@@ -256,9 +232,7 @@ local function schedule_spec(spec)
         once = true,
         callback = function()
           load_spec(spec)
-          -- Reproduce require('utils').on_file_types behaviour: source the
-          -- filetype's ftplugin after the spec's config has run, so ftplugin
-          -- overrides (e.g. buffer-local keymaps) take effect.
+
           vim.cmd('runtime! ftplugin/' .. vim.bo.filetype .. '.lua')
           vim.cmd('runtime! ftplugin/' .. vim.bo.filetype .. '.vim')
           return true
@@ -303,32 +277,23 @@ local function load_dependencies()
   drain_pendings()
 end
 
--- ─── public API ─────────────────────────────────────────────────────────────
-
----@param spec PackageManager.Spec
 M.add = function(spec)
   registry[#registry + 1] = spec
   if activated then load_dependencies() end
 end
 
----@param tools string|string[]
 M.add_with_mason = function(tools)
   local list = type(tools) == 'string' and { tools } or tools
   vim.list_extend(mason_tools, list)
   if activated then load_dependencies() end
 end
 
----@param tools string|string[]
 M.add_with_treesitter = function(tools)
   local list = type(tools) == 'string' and { tools } or tools
   vim.list_extend(pending_treesitter, list)
   if activated then load_dependencies() end
 end
 
----@param ft string|string[]
----@param formatters string|string[]
----@param on_conform? fun(conform: table) optional callback receiving the
----conform module, for custom formatter definitions / global opts
 M.add_formatter = function(ft, formatters, on_conform)
   pending_formatters[#pending_formatters + 1] = {
     ft = type(ft) == 'string' and { ft } or ft,
@@ -338,10 +303,6 @@ M.add_formatter = function(ft, formatters, on_conform)
   if activated then load_dependencies() end
 end
 
----@param ft string|string[]
----@param linters string|string[]
----@param on_lint? fun(lint: table) optional callback receiving the
----lint module, for custom linter definitions
 M.add_linter = function(ft, linters, on_lint)
   pending_linters[#pending_linters + 1] = {
     ft = type(ft) == 'string' and { ft } or ft,
@@ -351,10 +312,6 @@ M.add_linter = function(ft, linters, on_lint)
   if activated then load_dependencies() end
 end
 
----@param ft string|string[]
----@param debuggers string|string[] mason package names of the debug adapters
----@param on_dap? fun(dap: table) optional callback receiving the nvim-dap
----module, for adapter / configuration definitions
 M.add_debugger = function(ft, debuggers, on_dap)
   pending_debuggers[#pending_debuggers + 1] = {
     ft = type(ft) == 'string' and { ft } or ft,
@@ -364,8 +321,6 @@ M.add_debugger = function(ft, debuggers, on_dap)
   if activated then load_dependencies() end
 end
 
----@param ft string|string[]
----@param snippets? string|string[]
 M.add_snippets = function(ft, snippets)
   pending_snippets[#pending_snippets + 1] = {
     ft = type(ft) == 'string' and { ft } or ft,

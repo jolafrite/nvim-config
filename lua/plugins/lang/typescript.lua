@@ -1,6 +1,5 @@
 local gh = require('utils').gh
 
--- Filetypes served by ts_ls / oxlint / prettierd / js-debug-adapter.
 local js_fts = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }
 
 PackageManager.add_with_mason {
@@ -71,8 +70,6 @@ vim.lsp.config('oxlint', {
 PackageManager.add_formatter(js_fts, 'prettierd')
 PackageManager.add_linter(js_fts, 'oxlint')
 
--- js-debug-adapter is a node "server" adapter; mason ships the dapDebugServer.js
--- entry point, so resolve it through mason instead of assuming a global install.
 PackageManager.add_debugger(js_fts, 'js-debug-adapter', function(dap)
   local server = require('utils').mason_path('js-debug-adapter', 'js-debug', 'src', 'dapDebugServer.js')
   if not server or vim.fn.filereadable(server) == 0 or vim.fn.executable 'node' == 0 then return end
@@ -106,8 +103,6 @@ PackageManager.add {
 
     bth.config = bth.config or {}
 
-    -- This spec is only loaded once (for the first .ts/.tsx buffer), so map the
-    -- hover per filetype instead of only on the buffer that triggered the load.
     require('utils').on_file_types({ 'typescript', 'typescriptreact' }, function()
       vim.keymap.set('n', '<C-P>', bth.better_type_hover, { buffer = true, desc = 'Better type hover' })
     end)

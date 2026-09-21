@@ -27,9 +27,6 @@ vim.lsp.config('dockerls', {
   },
 })
 
--- conform's built-in `dockerfmt` runs the binary over stdin; the old
--- `dockerfmt_fmt` wrapper with `args = { '-' }` made dockerfmt try to open a
--- file literally named "-".
 PackageManager.add_formatter('dockerfile', 'dockerfmt')
 
 PackageManager.add_linter('dockerfile', 'hadolint')

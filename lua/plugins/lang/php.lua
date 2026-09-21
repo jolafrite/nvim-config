@@ -9,8 +9,6 @@ PackageManager.add_with_mason {
 PackageManager.add_formatter('php', 'php_cs_fixer')
 PackageManager.add_linter('php', 'phpcs')
 
--- php-debug-adapter is installed by mason above; it is a node based DAP
--- extension, so resolve its entry point through mason.
 PackageManager.add_debugger('php', 'php-debug-adapter', function(dap)
   local adapter = require('utils').mason_path('php-debug-adapter', 'extension', 'out', 'phpDebug.js')
   if not adapter or vim.fn.filereadable(adapter) == 0 or vim.fn.executable 'node' == 0 then return end

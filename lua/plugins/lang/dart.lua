@@ -5,8 +5,6 @@ PackageManager.add_with_mason {
 PackageManager.add_formatter('dart', 'dart_format')
 PackageManager.add_snippets 'dart'
 
--- dart-debug-adapter is installed by mason above; record the ft so
--- dap.configurations.dart exists for user supplied configurations.
 PackageManager.add_debugger('dart', 'dart-debug-adapter')
 
 vim.lsp.config('dartls', {

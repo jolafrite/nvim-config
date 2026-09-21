@@ -62,7 +62,6 @@ PackageManager.add {
       set = function(state) require('gitsigns').toggle_signs(state) end,
     }):map '<leader>uG'
 
-    -- stylua: ignore
     vim.keymap.set("n", "<leader>n", function()
       if Snacks.config.picker and Snacks.config.picker.enabled then
         Snacks.picker.notifications()

@@ -42,16 +42,13 @@ PackageManager.add {
       conform.formatters.gocondense = {
         command = 'gocondense',
         stdin = true,
-        -- gocondense has no mason package, so only run it when the binary is
-        -- present instead of always reporting it as unavailable.
+
         condition = function() return vim.fn.executable 'gocondense' == 1 end,
       }
     end)
 
     PackageManager.add_linter('go', 'golangcilint')
 
-    -- delve is installed by mason above; nvim-dap's `delve` adapter is defined
-    -- by hand (the equivalent of nvim-dap-go) so no extra plugin is needed.
     PackageManager.add_debugger('go', 'delve', function(dap)
       local dlv = vim.fn.exepath 'dlv'
       if dlv == '' then return end

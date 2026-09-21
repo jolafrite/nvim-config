@@ -23,7 +23,6 @@ vim.lsp.config('jsonls', {
   },
 })
 
--- fixjson uses conform's built-in definition (stdin, no args), so no override.
 PackageManager.add_formatter({ 'json', 'jsonc' }, { 'prettierd', 'fixjson' })
 
 PackageManager.add_linter({ 'json', 'jsonc' }, 'jsonlint')

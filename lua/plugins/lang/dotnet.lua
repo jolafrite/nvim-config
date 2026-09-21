@@ -8,8 +8,6 @@ PackageManager.add_with_mason {
 PackageManager.add_formatter('cs', 'csharpier')
 PackageManager.add_formatter('fsharp', 'fantomas')
 
--- netcoredbg is installed by mason above; wire the adapter and a launch
--- configuration for both C# and F#.
 PackageManager.add_debugger({ 'cs', 'fsharp' }, 'netcoredbg', function(dap)
   local netcoredbg = vim.fn.exepath 'netcoredbg'
   if netcoredbg == '' then return end
