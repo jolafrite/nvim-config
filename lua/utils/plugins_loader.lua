@@ -20,6 +20,7 @@ local function load_file(file)
   package.loaded[mod] = true
 end
 
+---@param path string Directory relative to lua/, e.g. "plugins".
 function M.load(path)
   local dir = vim.fn.stdpath 'config' .. '/lua/' .. path
   local pattern = dir .. '/**/*.lua'

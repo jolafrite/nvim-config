@@ -21,6 +21,12 @@ M.install_with_mason = function(patterns)
   end)
 end
 
+---Resolve a path inside a mason package install directory. Returns nil when
+---mason (or the package) is unavailable, so callers can fall back to a PATH
+---lookup or skip the feature entirely.
+---@param pkg string mason package name, e.g. "debugpy"
+---@vararg string path segments inside the package directory
+---@return string?
 M.mason_path = function(pkg, ...)
   local ok, mr = pcall(require, 'mason-registry')
   if not ok then return nil end

@@ -1,5 +1,14 @@
 local M = {}
 
+---@class LazyRoot
+---@field paths string[]
+---@field spec LazyRootSpec
+
+---@alias LazyRootFn fun(buf: number): (string|string[])
+
+---@alias LazyRootSpec string|string[]|LazyRootFn
+
+---@type LazyRootSpec[]
 M.spec = { 'lsp', { '.git', 'lua' }, 'cwd' }
 
 M.detectors = {}
@@ -37,8 +46,9 @@ function M.detectors.lsp(buf)
   end, roots)
 end
 
+---@param patterns string[]|string
 function M.detectors.pattern(buf, patterns)
-  patterns = type(patterns) == 'string' and { patterns } or patterns
+  patterns = type(patterns) == 'string' and { patterns } or patterns ---@type string[]
   local path = M.bufpath(buf) or vim.uv.cwd()
   local pattern = vim.fs.find(function(name)
     for _, p in ipairs(patterns) do
@@ -60,6 +70,8 @@ function M.realpath(path)
   return norm(path)
 end
 
+---@param spec LazyRootSpec
+---@return LazyRootFn
 function M.resolve(spec)
   if M.detectors[spec] then
     return M.detectors[spec]
@@ -69,6 +81,7 @@ function M.resolve(spec)
   return function(buf) return M.detectors.pattern(buf, spec) end
 end
 
+---@param opts? { buf?: number, spec?: LazyRootSpec[], all?: boolean }
 function M.detect(opts)
   opts = opts or {}
   opts.spec = opts.spec or type(vim.g.root_spec) == 'table' and vim.g.root_spec or M.spec
@@ -112,6 +125,7 @@ function M.info()
   return roots[1] and roots[1].paths[1] or vim.uv.cwd()
 end
 
+---@type table<number, string>
 M.cache = {}
 
 function M.setup()
@@ -122,6 +136,8 @@ function M.setup()
   })
 end
 
+---@param opts? { normalize?: boolean, buf?: number }
+---@return string
 function M.get(opts)
   opts = opts or {}
   local buf = opts.buf or vim.api.nvim_get_current_buf()
@@ -142,6 +158,7 @@ function M.git()
   return ret
 end
 
+---@param _opts? { hl_last?: string }
 function M.pretty_path(_opts) return '' end
 
 return M

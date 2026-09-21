@@ -1,5 +1,7 @@
 local M = {}
 
+---@param repo string
+---@return string
 M.gh = function(repo) return 'https://github.com/' .. repo end
 
 M.install_with_mason = require('utils.install').install_with_mason
