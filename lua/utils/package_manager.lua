@@ -26,20 +26,30 @@ local registry = {}
 ---@type string[]
 local mason_tools = {}
 
+---@type string[]
 local pending_treesitter = {}
 
+---@type { ft: string[], tools: string[] }[]
 local pending_formatters = {}
 
+---@type { ft: string[], tools: string[] }[]
 local pending_linters = {}
 
+---@type { ft: string[], tools: string[], on_dap?: fun(dap: table) }[]
 local pending_debuggers = {}
 
+---@type { ft: string[], tools: string[] }[]
 local pending_snippets = {}
 
+---@type { ft: string[], adapters: table }[]
 local pending_testers = {}
 
 local snippets_registered = false
 
+---Accumulated neotest adapters. neotest.setup replaces its whole config, so
+---we keep every registered adapter ourselves and always setup with the full
+---list.
+---@type table[]
 local tester_adapters = {}
 
 local _levels = (vim.log and vim.log.levels) or { warn = 2, info = 1, error = 0 }
@@ -52,6 +62,7 @@ local function load_spec(s)
   if s.loaded then return end
   s.loaded = true
 
+  ---@type string[]
   local to_add = {}
   for _, dep in ipairs(s.dependencies or {}) do
     to_add[#to_add + 1] = dep
@@ -70,6 +81,7 @@ local function install_with_mason(tools)
   local ok, mr = pcall(require, 'mason-registry')
   if not ok then return false end
 
+  ---@type fun(cb: fun())
   local function do_install(cb)
     local seen = {}
     for _, tool in ipairs(tools) do
@@ -317,6 +329,11 @@ M.add_snippets = function(ft, snippets)
   if activated then load_dependencies() end
 end
 
+---@param ft string|string[]
+---@param adapters table neotest adapters, either the LazyVim-style keyed form
+---({ ['neotest-golang'] = { opts } }) or a plain list of adapter modules
+---@param on_test? fun(neotest: table) optional callback receiving the
+---neotest module, for custom setup (keymaps, consumers, ...)
 M.add_tester = function(ft, adapters, on_test)
   pending_testers[#pending_testers + 1] = {
     ft = type(ft) == 'string' and { ft } or ft,
