@@ -23,9 +23,11 @@ end)
 -- terraform_validate shells out to the terraform binary (and needs an
 -- initialised working directory), so skip it unless terraform is installed.
 PackageManager.add_linter({ 'terraform', 'tf', 'terraform-vars' }, { 'tflint', 'terraform_validate' }, function(lint)
-  lint.linters.terraform_validate = vim.tbl_deep_extend('force', lint.linters.terraform_validate or {}, {
-    condition = function() return vim.fn.executable 'terraform' == 1 end,
-  })
+  local original = lint.linters.terraform_validate
+  lint.linters.terraform_validate = function(...)
+    if vim.fn.executable('terraform') == 0 then return nil end
+    return original(...)
+  end
 end)
 
 PackageManager.add_with_treesitter { 'terraform', 'hcl' }

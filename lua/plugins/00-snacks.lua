@@ -16,7 +16,9 @@ PackageManager.add {
       words = { enabled = true },
 
       picker = {
-        ui_select = true,
+        sources = {
+          files = { hidden = true, ignored = true, exclude = { '.git', 'node_modules', '.cache', '.DS_Store', '.jj' } },
+        },
         actions = {
           toggle_cwd = function(p)
             local root = Snacks.git.get_root(p.input.filter.current_buf)
@@ -74,7 +76,6 @@ PackageManager.add {
     vim.keymap.set('n', '<leader>/', function() Snacks.picker.pick 'live_grep' end, { desc = 'Grep (Root Dir)' })
     vim.keymap.set('n', '<leader>:', function() Snacks.picker.command_history() end, { desc = 'Command History' })
     vim.keymap.set('n', '<leader><space>', function() Snacks.picker.pick 'files' end, { desc = 'Find Files (Root Dir)' })
-
     vim.keymap.set('n', '<leader>fb', function() Snacks.picker.buffers() end, { desc = 'Buffers' })
     vim.keymap.set('n', '<leader>fB', function() Snacks.picker.buffers { hidden = true, nofile = true } end, { desc = 'Buffers (all)' })
     vim.keymap.set('n', '<leader>fc', function() Snacks.picker.pick 'config_files' end, { desc = 'Find Config File' })
