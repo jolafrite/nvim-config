@@ -52,6 +52,7 @@ PackageManager.add {
     local function lint_buf(bufnr)
       bufnr = bufnr or 0
       local names = lint._resolve_linter_by_ft(vim.bo[bufnr].filetype)
+      if not vim.api.nvim_buf_is_valid(bufnr) then return end
 
       names = vim.list_extend({}, names)
 
