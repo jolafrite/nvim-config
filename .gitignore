@@ -5,3 +5,4 @@
 docs/superpowers/
 .ua/.trash-*/
 .config/
+.remote-ssh.json
